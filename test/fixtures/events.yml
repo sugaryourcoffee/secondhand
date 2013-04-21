@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  event_date: 2013-04-21 20:59:01
+  location: MyString
+  fee: 9.99
+  deduction: 9.99
+  provision: 9.99
+  max_lists: 1
+  max_items_per_list: 1
+
+two:
+  title: MyString
+  event_date: 2013-04-21 20:59:01
+  location: MyString
+  fee: 9.99
+  deduction: 9.99
+  provision: 9.99
+  max_lists: 1
+  max_items_per_list: 1
