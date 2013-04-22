@@ -16,7 +16,7 @@
   </tr>
 
 <% @events.each do |event| %>
-  <tr>
+  <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
     <td><%= event.title %></td>
     <td><%= event.event_date %></td>
     <td><%= event.location %></td>
