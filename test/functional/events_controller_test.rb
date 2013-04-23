@@ -3,6 +3,16 @@ require 'test_helper'
 class EventsControllerTest < ActionController::TestCase
   setup do
     @event = events(:one)
+    @update = {
+      title:              'Herbstboerse Burthann',
+      event_date:         Time.now,
+      location:           'Mittelschule Burgthann',
+      fee:                3.00,
+      deduction:          20.00,
+      provision:          15.00,
+      max_lists:          250,
+      max_items_per_list: 40
+    }
   end
 
   test "should get index" do
@@ -18,7 +28,7 @@ class EventsControllerTest < ActionController::TestCase
 
   test "should create event" do
     assert_difference('Event.count') do
-      post :create, event: { deduction: @event.deduction, event_date: @event.event_date, fee: @event.fee, location: @event.location, max_items_per_list: @event.max_items_per_list, max_lists: @event.max_lists, provision: @event.provision, title: @event.title }
+      post :create, event: @update 
     end
 
     assert_redirected_to event_path(assigns(:event))
@@ -35,7 +45,7 @@ class EventsControllerTest < ActionController::TestCase
   end
 
   test "should update event" do
-    put :update, id: @event, event: { deduction: @event.deduction, event_date: @event.event_date, fee: @event.fee, location: @event.location, max_items_per_list: @event.max_items_per_list, max_lists: @event.max_lists, provision: @event.provision, title: @event.title }
+    put :update, id: @event, event: @update
     assert_redirected_to event_path(assigns(:event))
   end
 
