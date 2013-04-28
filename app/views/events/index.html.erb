@@ -13,6 +13,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
 <% @events.each do |event| %>
@@ -25,6 +26,11 @@
     <td><%= event.provision %></td>
     <td><%= event.max_lists %></td>
     <td><%= event.max_items_per_list %></td>
+    <% if event.active %>
+      <td><%= button_to 'Deactivate', activate_event_path(event) %></td>
+    <% else %>
+      <td><%= button_to 'Activate', activate_event_path(event) %></td>
+    <% end %>
     <td><%= link_to 'Show', event %></td>
     <td><%= link_to 'Edit', edit_event_path(event) %></td>
     <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>

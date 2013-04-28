@@ -1,5 +1,9 @@
 Secondhand::Application.routes.draw do
-  resources :events
+  resources :events do
+    member do
+      post :activate
+    end
+  end
 
 
   # The priority is based upon order of creation:

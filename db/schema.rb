@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130421185901) do
+ActiveRecord::Schema.define(:version => 20130428095137) do
 
   create_table "events", :force => true do |t|
     t.string   "title"
@@ -22,8 +22,9 @@ ActiveRecord::Schema.define(:version => 20130421185901) do
     t.decimal  "provision",          :precision => 2, :scale => 2
     t.integer  "max_lists"
     t.integer  "max_items_per_list"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.datetime "created_at",                                                          :null => false
+    t.datetime "updated_at",                                                          :null => false
+    t.boolean  "active",                                           :default => false
   end
 
 end

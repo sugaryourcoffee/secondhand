@@ -69,6 +69,28 @@ class EventsController < ApplicationController
     end
   end
 
+  # Inverts the the active flag of the event. If another event has a set active
+  # flag it is set to false. Only one event can have set the active event set
+  # POST /events/1/activate
+  def activate
+    @event = Event.find(params[:id])
+    @event.active = @event.active ? false : true
+    updated_events = []
+    updated_events << @event
+    Event.all.each do |event|
+      next if event.id == params[:id]
+      if event.active
+        event.active = false
+        updated_events << event
+      end 
+    end if @event.active
+    updated_events.each { |e| e.save }
+    respond_to do |format|
+      format.html { redirect_to events_url }
+      format.json { head :no_content }
+    end
+  end
+
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
