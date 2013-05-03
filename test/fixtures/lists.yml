@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  list_number: 1
+  registration_code: MyString
+  container: MyString
+  event_id: 1
+  user_id: 1
+
+two:
+  list_number: 1
+  registration_code: MyString
+  container: MyString
+  event_id: 1
+  user_id: 1

@@ -1,4 +1,7 @@
 Secondhand::Application.routes.draw do
+  resources :lists
+
+
   resources :events do
     member do
       post :activate

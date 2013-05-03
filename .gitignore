@@ -16,3 +16,6 @@
 
 # Ignore the screen_shot files
 /doc/screen_shots
+
+# Ignore the tasks
+/.tasks

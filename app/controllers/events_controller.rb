@@ -44,6 +44,7 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
+        create_lists(@event)
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render json: @event, status: :created, location: @event }
       else
@@ -58,6 +59,8 @@ class EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
 
+    params[:max_lists] = create_lists(@event, params[:event][:max_lists].to_i)
+
     respond_to do |format|
       if @event.update_attributes(params[:event])
         format.html { redirect_to @event, notice: 'Event was successfully updated.' }
@@ -67,6 +70,53 @@ class EventsController < ApplicationController
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def create_lists(event, max_lists=event.max_lists)
+    lists = List.find_all_by_event_id(event.id) || []
+    list_count_to_create = max_lists - lists.count
+
+    return max_lists if list_count_to_create == 0
+    
+    if list_count_to_create > 0
+      codes = lists.collect {|list| list.registration_code}
+      list_numbers = get_unassigned_list_numbers(lists, max_lists)
+      codes = create_registration_codes(list_numbers, codes, 7) 
+
+      list_numbers.each do |list_number|
+        list = {list_number: list_number, 
+                registration_code: codes[list_number - 1],
+                event_id: event.id} 
+        List.create(list)
+        list_count_to_create -= 1
+      end
+    elsif list_count_to_create < 0
+      list_count_to_delete = list_count_to_create * -1
+      1.upto(list_count_to_delete) do |i|
+        list = lists.pop
+        redo unless list.user_id.nil?
+        list.destroy
+        list_count_to_create += 1
+      end
+    end
+
+    max_lists + list_count_to_create 
+  end
+
+  def create_registration_codes(numbers, codes, size)
+    numbers.each do |number|
+      code = number.to_s.crypt("#{Random.new_seed}")[1..size]
+      redo if codes.find_index(code)
+      codes.insert(number-1, code)
+    end
+    codes
+  end
+
+  def get_unassigned_list_numbers(lists, list_count)
+    list_numbers = lists.collect {|list| list.list_number}
+    unassigned = Array.new(list_count)
+    unassigned.fill {|i| i+1}
+    unassigned - list_numbers
   end
 
   # Inverts the the active flag of the event. If another event has a set active
