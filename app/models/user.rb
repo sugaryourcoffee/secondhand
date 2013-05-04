@@ -19,4 +19,12 @@
 
 class User < ActiveRecord::Base
   attr_accessible :country, :email, :first_name, :last_name, :news, :password_digest, :phone, :street, :town, :zip_code
+
+  before_save {|user| user.email = email.downcase}
+
+  validates :first_name, :last_name, :street, :zip_code, :town, :country, :phone, presence: true
+  
+  EMAIL_PATTERN = /\A[\w!#\$%&'*+\/=?`{|}~^-]+(?:\.[\w!#\$%&'*+\/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}\Z/
+
+  validates :email, presence: true, format: {with: EMAIL_PATTERN}, uniqueness: {case_sensitive: false}
 end
