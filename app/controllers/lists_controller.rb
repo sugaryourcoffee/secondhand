@@ -2,7 +2,7 @@ class ListsController < ApplicationController
   # GET /lists
   # GET /lists.json
   def index
-    @lists = List.all
+    @lists = List.order(:event_id).order(:list_number)
 
     respond_to do |format|
       format.html # index.html.erb
