@@ -31,6 +31,7 @@ GEM
     annotate (2.5.0)
       rake
     arel (3.0.2)
+    bcrypt-ruby (3.0.1)
     builder (3.0.4)
     capybara (2.1.0)
       mime-types (>= 1.16)
@@ -162,6 +163,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate (~> 2.5.0)
+  bcrypt-ruby (~> 3.0.1)
   capybara (~> 2.1.0)
   coffee-rails (~> 3.2.1)
   guard-rspec (~> 0.5.5)

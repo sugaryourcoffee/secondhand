@@ -18,7 +18,9 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :country, :email, :first_name, :last_name, :news, :password_digest, :phone, :street, :town, :zip_code
+  attr_accessible :country, :email, :first_name, :last_name, :news, :password_digest, :password, :password_confirmation, :phone, :street, :town, :zip_code
+
+  has_secure_password
 
   before_save {|user| user.email = email.downcase}
 
@@ -27,4 +29,8 @@ class User < ActiveRecord::Base
   EMAIL_PATTERN = /\A[\w!#\$%&'*+\/=?`{|}~^-]+(?:\.[\w!#\$%&'*+\/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}\Z/
 
   validates :email, presence: true, format: {with: EMAIL_PATTERN}, uniqueness: {case_sensitive: false}
+
+  validates :password, presence: true, length: {minimum: 6}
+  validates :password_confirmation, presence: true
+
 end
