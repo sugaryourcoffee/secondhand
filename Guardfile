@@ -1,3 +1,4 @@
+require 'active_support/core_ext'
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAILS_ENV' => 'test' }, test_unit: false do
@@ -31,7 +32,7 @@ guard 'rspec', :version => 2, :all_after_pass => false do
   # Capybara request specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
 
-  watch(%r{^app/views/(.+)/}) { "spec/requests/#{m[1].singularize}_pages_spec.rb"}
+  watch(%r{^app/views/(.+)/}) { |m| "spec/requests/#{m[1].singularize}_pages_spec.rb"}
 end
 
 
