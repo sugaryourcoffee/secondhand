@@ -19,3 +19,5 @@
 
 # Ignore the tasks
 /.tasks
+
+bundler_stubs/
