@@ -1,7 +1,13 @@
 <% provide(:title, 'Home') %>
-<h1>Secondhand</h1>
-<p>
-  Welcome to <em>Secondhand</em> partner of
-  <a href="http://messe-burgthann.de/">Kinder und Kleiderbörse Burgthann</a>
-  to collect your items to sell at the secondhand event in Burgthann
-</p>
+<div class="center hero-unit">
+  <h1>Secondhand</h1>
+  <h2>
+    Welcome to <em>Secondhand</em> partner of
+    <a href="http://messe-burgthann.de/">Kinder und Kleiderbörse Burgthann</a>
+    to collect your items to sell at the secondhand event in Burgthann
+  </h2>
+
+  <%= link_to "Sign up now!", '#', class: "btn btn-large btn-primary" %>
+</div>
+
+<%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>

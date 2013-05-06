@@ -5,12 +5,16 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <%= render 'layouts/shim' %>
 </head>
-<body class='<%= controller.controller_name %>'>
+  <body class='<%= controller.controller_name %>'>
+    <%= render 'layouts/header' %>
+    <div class="container">
+      <%= yield %>
+      <%= render 'layouts/footer' %>
+    </div>
 
-<%= yield %>
+    <%= debug(params) if Rails.env.development? %>
 
-<%= debug(params) if Rails.env.development? %>
-
-</body>
+  </body>
 </html>
