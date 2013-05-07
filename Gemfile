@@ -21,6 +21,7 @@ group :test do
   gem 'capybara', '~> 2.1.0'
   gem 'rb-inotify', '~> 0.9.0'
   gem 'libnotify', '~> 0.5.9'
+  gem 'factory_girl_rails', '1.4.0'
 end
 
 # Gems used only for assets and not required
