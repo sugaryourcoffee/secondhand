@@ -142,3 +142,24 @@ aside {
   float: left;
   margin-right: 10px;
 }
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  padding: 10px;
+  height: auto;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+#error_explanation {
+  color: #f00;
+  ul {
+    list-style: none;
+  }
+}
+
+.field_with_errors {
+  @extend .control-group;
+  @extend .error;
+}
