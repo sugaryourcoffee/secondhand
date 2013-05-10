@@ -11,15 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130509090309) do
+ActiveRecord::Schema.define(:version => 20130510153622) do
 
   create_table "events", :force => true do |t|
     t.string   "title"
     t.datetime "event_date"
     t.string   "location"
-    t.decimal  "fee",                :precision => 2, :scale => 2
-    t.decimal  "deduction",          :precision => 2, :scale => 2
-    t.decimal  "provision",          :precision => 2, :scale => 2
+    t.decimal  "fee",                :precision => 5, :scale => 2
+    t.decimal  "deduction",          :precision => 5, :scale => 2
+    t.decimal  "provision",          :precision => 4, :scale => 2
     t.integer  "max_lists"
     t.integer  "max_items_per_list"
     t.datetime "created_at",                                                          :null => false
