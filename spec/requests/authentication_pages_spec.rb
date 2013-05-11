@@ -29,6 +29,7 @@ describe "Authentication" do
       before { sign_in(user) }
       
       it { should have_title("#{user.last_name}, #{user.first_name}") }
+      it { should have_link('Users', href: users_path) }
       it { should have_link('Profile', href: user_path(user)) }
       it { should have_link('Settings', href: edit_user_path(user)) }
       it { should have_link('Sign out', href: signout_path) }
@@ -72,6 +73,11 @@ describe "Authentication" do
         describe "submitting to the update action" do
           before { put user_path(user) }
           specify { response.should redirect_to(signin_path) }
+        end
+
+        describe "visiting the user index" do
+          before { visit users_path }
+          it { should have_title('Sign in') }
         end
       end
 

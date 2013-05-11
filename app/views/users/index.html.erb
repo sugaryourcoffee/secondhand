@@ -1,0 +1,23 @@
+<% provide(:title, "All users") %>
+
+<h1>All users</h1>
+
+<ul class="thumbnails">
+  <li class="span6">
+  <% @users.each do |user| %>
+    <div class="thumbnail"> 
+      <%= gravatar_for user, size: 52 %>
+      <address class="offset1">
+        <strong>
+          <%= link_to "#{user.first_name} #{user.last_name}", user %>
+        </strong><br>
+        <%= user.zip_code %> <%= user.town %><br>
+        <%= user.country %><br>
+        <%= user.phone %><br>
+        <a href="mailto:<%= user.email %>"><%= user.email %></a>
+      </address>
+    </div>
+  <% end %>
+  </li>
+</ul>
+
