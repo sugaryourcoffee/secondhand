@@ -7,19 +7,29 @@ describe "User pages" do
 
     let(:user) { FactoryGirl.create(:user) }
 
-    before(:each) do
+    before do
       sign_in user
       visit users_path
     end
 
-    it { should have_title('All users') }
-    it { should have_selector('h1', text: 'All users') }
+    it { should_not have_title('All users') }
+    it { should_not have_selector('h1', text: 'All users') }
 
-    it "should list each user" do
-      User.paginate(page: 1).each do |user|
-        page.should have_selector('li', 
-                                  text: "#{user.first_name} #{user.last_name}")
+    describe "as admin user" do
+      let(:admin) { FactoryGirl.create(:admin) }
+
+      before do
+        sign_in admin
+        visit users_path
       end
+
+      it "should list each user" do
+        User.paginate(page: 1).each do |user|
+          page.should have_selector('li', 
+                                   text: "#{user.first_name} #{user.last_name}")
+        end
+      end
+
     end
 
     describe "delete links" do
@@ -49,9 +59,21 @@ describe "User pages" do
     it { should have_title('Sign up') }
   end
 
-  describe "profile page" do
+  describe "another user's profile age" do
     let(:user) { FactoryGirl.create(:user) }
+
     before { visit user_path(user) }
+
+    it { should_not have_selector('h1', text: user.first_name) }
+    it { should_not have_title(user.first_name) }
+  end
+
+  describe "own profile page" do
+    let(:user) { FactoryGirl.create(:user) }
+    before do
+      sign_in user
+      visit user_path(user) 
+    end
 
     it { should have_selector('h1', text: user.first_name) }
     it { should have_title("#{user.first_name}") }
