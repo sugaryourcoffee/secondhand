@@ -1,29 +1,3 @@
 // Place all the styles related to the Events controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-.events {
-  table {
-    border-collapse: collapse;
-  }
-
-  table th {
-    padding: 10px;
-    color: white;
-    background-color: DimGrey;
-  }
-
-  table tr td {
-    padding: 5px;
-    vertical-align: top;
-    text-align: center;
-  }
-
-  .list_line_even {
-    background: LightGray;
-  }
-
-  .list_line_odd {
-    background: White;
-  }
-}
