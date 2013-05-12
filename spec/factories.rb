@@ -15,4 +15,20 @@ FactoryGirl.define do
       admin true
     end
   end
+
+  factory :event do
+    title "Herbstboerse Burgthann"
+    sequence(:event_date) { |n| "20#{n}-09-03" }
+    location "Mittelschule Burgthann"
+    fee 3
+    deduction 20
+    provision 15
+    max_lists 10
+    max_items_per_list 5
+    active false
+
+    factory :active do
+      active true
+    end
+  end
 end

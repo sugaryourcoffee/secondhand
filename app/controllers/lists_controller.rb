@@ -3,6 +3,7 @@ class ListsController < ApplicationController
   # GET /lists.json
   def index
     @lists = List.order(:event_id).order(:list_number)
+                 .paginate(page: params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

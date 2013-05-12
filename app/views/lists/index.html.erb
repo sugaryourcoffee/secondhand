@@ -1,4 +1,8 @@
-<h1>Listing lists</h1>
+<% provide(:title, 'All lists') %>
+
+<h1>All lists</h1>
+
+<%= will_paginate %>
 
 <table class="table table-hover">
   <thead>
@@ -33,4 +37,4 @@
 
 <br />
 
-<%= link_to 'New List', new_list_path %>
+<%= will_paginate %>
