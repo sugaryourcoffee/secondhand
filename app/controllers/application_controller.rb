@@ -7,10 +7,12 @@ class ApplicationController < ActionController::Base
   protected
 
   def authorize
-    if not current_user.nil? and not current_user.admin?
+    if current_user.nil? 
+      store_location
+      redirect_to signin_path, notice: "Please sign in"
+    elsif not current_user.admin?
       redirect_to root_path, 
-                  notice: "You need admin privieges to access this site. "+
-                          "Please log out and login in as admin user"
+                  notice: "You need admin privieges to access this site."
     end
   end
 end

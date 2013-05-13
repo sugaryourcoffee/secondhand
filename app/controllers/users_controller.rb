@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_filter :authorize, only: [:show, :edit, :update] 
+  skip_before_filter :authorize, only: [:show, :new, :create, :edit, :update] 
   before_filter :signed_in_user, only: [:show, :edit, :update]
   before_filter :correct_user, only: [:show, :edit, :update]
 
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
 
   def correct_user
     @user = User.find(params[:id])
-    redirect_to(root_path) unless current_user?(@user)
+    redirect_to(root_path) unless current_user?(@user) or current_user.admin?
   end
 
 end
