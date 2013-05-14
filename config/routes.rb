@@ -11,6 +11,8 @@ Secondhand::Application.routes.draw do
 
   resources :lists
   resources :users
+  resources :news
+
   resources :sessions, only: [:new, :create, :destroy]
 
   resources :events do
