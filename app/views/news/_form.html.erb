@@ -1,0 +1,18 @@
+<% if @news.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-error">
+      The form contains <%= pluralize(@news.errors.count, "error") %>.
+    </div>
+    <ul>
+      <% @news.errors.full_messages.each do |m| %>
+        <li><%= m %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= f.label :title %>
+<%= f.text_field :title %>
+
+<%= f.label :description %>
+<%= f.text_area :description, rows: 6 %>

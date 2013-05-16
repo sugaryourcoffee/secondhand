@@ -1,0 +1,17 @@
+<% provide(:title, "Edit News") %>
+<h1>Edit News</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@news) do |f| %>
+      <%= render 'form', f: f %>
+      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %> 
+    <% end %>
+    
+    <%= link_to 'Show', @news %> |
+    <%= link_to 'Back', news_index_path %>
+
+  </div>
+  
+
+</div>
