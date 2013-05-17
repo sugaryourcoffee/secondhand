@@ -1,9 +1,18 @@
 <% provide(:title, 'Home') %>
+
+<% unless @news.nil? %>
+  <div class="well">
+    <strong class="pull-right"><%= @news.created_at.strftime("%Y-%m-%d - %H:%M") %></strong><br>
+    <h3><%= @news.title %></h3>
+    <p><%= sanitize(@news.description) %></p>
+  </div>
+<% end %>
+
 <div class="center hero-unit">
   <h1>Secondhand</h1>
   <h2>
     Welcome to <em>Secondhand</em> partner of
-    <a href="http://messe-burgthann.de/">Kinder und Kleiderbörse Burgthann</a>
+    <a href="http://messe-burgthann.de/">Kinderkleider und Spielzeugboerse Burgthann</a>
     to collect your items to sell at the secondhand event in Burgthann
   </h2>
 
