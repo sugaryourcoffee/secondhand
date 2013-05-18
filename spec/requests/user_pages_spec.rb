@@ -79,6 +79,22 @@ describe "User pages" do
     it { should have_title("#{user.first_name}") }
 
     it { should have_button('Register List') }
+
+    describe "after registering list show list in administration section" do
+      pending "needs to be implemented"
+    end
+
+    describe "after registering taken list show error" do
+      pending "needs to be implemented"
+    end
+
+    describe "after registering empty list show error" do
+      pending "needs to be implemented"
+    end
+
+    describe "after registering with wrong registration code show error" do
+      pending "needs to be implemented"
+    end
   end
 
   describe "signup" do
