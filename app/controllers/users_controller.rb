@@ -49,6 +49,8 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     list = List.find_by_registration_code(params[:registration_code])
     if list
+      list.user_id = user.id
+      list.save
       flash[:success] = "List registered"
     else
       flash[:warning] = "Registration code not valid"
