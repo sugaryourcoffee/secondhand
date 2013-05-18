@@ -77,6 +77,8 @@ describe "User pages" do
 
     it { should have_selector('h1', text: user.first_name) }
     it { should have_title("#{user.first_name}") }
+
+    it { should have_button('Register List') }
   end
 
   describe "signup" do

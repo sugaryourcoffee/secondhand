@@ -45,6 +45,17 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  def register_list
+    user = User.find(params[:id])
+    list = List.find_by_registration_code(params[:registration_code])
+    if list
+      flash[:success] = "List registered"
+    else
+      flash[:warning] = "Registration code not valid"
+    end
+    redirect_to user
+  end
+
   private
 =begin
   def signed_in_user
