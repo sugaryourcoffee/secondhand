@@ -17,6 +17,9 @@
 #
 
 class Event < ActiveRecord::Base
+  has_many :lists
+  has_many :users, through: :lists
+
   attr_accessible :deduction, :event_date, :fee, :location, :max_items_per_list, :max_lists, :provision, :title, :active
 
   validates :deduction, :event_date, :fee, :location, :max_items_per_list,
