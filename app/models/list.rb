@@ -13,5 +13,7 @@
 #
 
 class List < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :event
   attr_accessible :container, :event_id, :list_number, :registration_code, :user_id
 end

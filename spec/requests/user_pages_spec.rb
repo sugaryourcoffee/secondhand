@@ -59,7 +59,7 @@ describe "User pages" do
     it { should have_title('Sign up') }
   end
 
-  describe "another user's profile age" do
+  describe "another user's profile page" do
     let(:user) { FactoryGirl.create(:user) }
 
     before { visit user_path(user) }
@@ -77,6 +77,108 @@ describe "User pages" do
 
     it { should have_selector('h1', text: user.first_name) }
     it { should have_title("#{user.first_name}") }
+
+    it { should have_content('List Registration') }
+    it { should have_selector('label', text: 'Enter registration code:') }
+    it { should have_button('Register List') }
+    it { should have_content('List Administration') }
+    it { should have_content('You have no registered lists yet') }
+
+  end
+
+  describe "list registration" do
+    let(:event) { FactoryGirl.create(:active) }
+    let!(:list1) do
+      FactoryGirl.create(:list, event: event, list_number: 1, 
+                         registration_code: "1abcde") 
+    end
+    let!(:list2) do
+      FactoryGirl.create(:list, event: event, list_number: 2,
+                         registration_code: "2fghij") 
+    end
+
+    let(:user) { FactoryGirl.create(:user) }
+    before do
+      sign_in user
+      visit user_path(user) 
+    end
+
+    it { should have_selector('h1', text: user.first_name) }
+    it { should have_title("#{user.first_name}") }
+
+    it { should have_content('List Registration') }
+    it { should have_selector('label', text: 'Enter registration code:') }
+    it { should have_button('Register List') }
+    it { should have_content('List Administration') }
+    it { should have_content('You have no registered lists yet') }
+
+    describe "with empty registration code" do
+      before do
+        register_list("")
+      end
+
+      it { should_not have_content('List registered') }
+      it { should have_content('Registration code not valid') }
+      it { should have_content('You have no registered lists yet') }
+    end
+
+    describe "with wrong registration code show error" do
+      before do
+        register_list("wrong")
+      end
+
+      it { should have_content('Registration code not valid') }
+      it { should have_content('You have no registered lists yet') }
+    end
+    
+    describe "with correct registration code" do
+      before do
+        register_list("1abcde")
+      end
+      
+      it { should_not have_content('You have no registered lists yet') }
+      it { should have_content('List registered') }
+      it { should have_button('List 1') }
+    end
+
+    describe "with multiple lists" do
+      before do
+        register_list("1abcde")
+        register_list("2fghij")
+      end
+
+      it { should_not have_content('You have no registered lists yet') }
+      it { should have_content('List registered') }
+      it { should have_button('List 1') }
+      it { should have_button('List 2') }
+    end
+
+    describe "with taken registration code" do
+      before do
+        register_list("1abcde")
+        register_list("1abcde")
+      end
+
+      it { should have_content('Registration code already taken') }
+    end
+
+    describe "with registration code from inactive event" do
+      let(:inactive) { FactoryGirl.create(:event) }
+      let!(:list3) { FactoryGirl.create(:list, event: inactive,
+                                        registration_code: "3klmno",
+                                        list_number: 3) }
+      let!(:list4) { FactoryGirl.create(:list, event: inactive,
+                                        registration_code: "4pqrst",
+                                        list_number: 4) }
+      before { register_list("3klmno") }
+
+      it { should have_content('Registration code not valid') }
+    end
+
+  end
+
+  describe "list administration" do
+    pending "needs to be implemented"
   end
 
   describe "signup" do

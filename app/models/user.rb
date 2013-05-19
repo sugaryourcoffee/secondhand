@@ -18,6 +18,8 @@
 #
 
 class User < ActiveRecord::Base
+  has_many :lists
+
   attr_accessible :country, :email, :first_name, :last_name, :news, :password_digest, :password, :password_confirmation, :phone, :street, :town, :zip_code
 
   has_secure_password

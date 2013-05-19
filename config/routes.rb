@@ -10,7 +10,13 @@ Secondhand::Application.routes.draw do
   match '/contact', to: 'static_pages#contact'
 
   resources :lists
-  resources :users
+
+  resources :users do
+    member do
+      post :register_list
+    end
+  end
+
   resources :news
 
   resources :sessions, only: [:new, :create, :destroy]
