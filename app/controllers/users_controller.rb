@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-  skip_before_filter :authorize, only: [:show, :new, :create, :edit, :update] 
-  before_filter :signed_in_user, only: [:show, :edit, :update]
-  before_filter :correct_user, only: [:show, :edit, :update]
+  skip_before_filter :authorize, only: [:register_list,
+                                        :show, :new, :create, :edit, :update] 
+  before_filter :signed_in_user, only: [:register_list, :show, :edit, :update]
+  before_filter :correct_user, only: [:register_list, :show, :edit, :update]
 
   def index
     @users = User.paginate(page: params[:page])
@@ -47,15 +48,22 @@ class UsersController < ApplicationController
 
   def register_list
     user = User.find(params[:id])
-    list = List.find_by_registration_code(params[:registration_code])
+    event = Event.find_by_active(true)
+    registration_code = params[:registration_code]
+    list = List.find_by_registration_code_and_event_id(registration_code, 
+                                                       event)
     if list
-      list.user_id = user.id
-      list.save
-      flash[:success] = "List registered"
+      if list.user_id
+        flash[:error] = "Registration code already taken"
+      else
+        list.user_id = user.id
+        list.save
+        flash[:success] = "List registered"
+      end
     else
       flash[:warning] = "Registration code not valid"
     end
-    redirect_to user
+    redirect_to user_path(user)
   end
 
   private

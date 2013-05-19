@@ -31,4 +31,11 @@ FactoryGirl.define do
       active true
     end
   end
+
+  factory :list do
+    sequence(:list_number) { |n| n }
+    sequence(:registration_code) { |n| "#{n}abcde" }
+    container "red"
+    event
+  end
 end
