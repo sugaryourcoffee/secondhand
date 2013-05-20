@@ -31,11 +31,15 @@
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu">
-                <li><%= link_to "Edit List", href: "#" %></li>
-                <li><%= link_to "...", href: "#" %></li>
+                <li class="nav-header">Process</li>
+                <li><%= link_to "Item collection", href: "#" %></li>
+                <li><%= link_to "Container color", href: "#" %></li>
                 <li class="divider"/>
-                <li><%= link_to "Print", href: "#" %></li>
+                <li class="nav-header">Print</li>
+                <li><%= link_to "List", href: "#" %></li>
                 <li><%= link_to "Labels", href: "#" %></li>
+                <li class="divider"/>
+                <li><%= link_to "Delete list", href: "#" %></li>
               </ul>
             </div>
           <% end %>

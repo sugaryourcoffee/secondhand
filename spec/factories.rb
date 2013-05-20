@@ -37,5 +37,9 @@ FactoryGirl.define do
     sequence(:registration_code) { |n| "#{n}abcde" }
     container "red"
     event
+
+    factory :assigned do
+      user
+    end
   end
 end

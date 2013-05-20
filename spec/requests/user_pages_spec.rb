@@ -178,7 +178,52 @@ describe "User pages" do
   end
 
   describe "list administration" do
-    pending "needs to be implemented"
+
+    let(:user) { FactoryGirl.create(:user) }
+    let(:event) { FactoryGirl.create(:active) }
+    let!(:list) { FactoryGirl.create(:assigned, list_number: 1, 
+                                    event: event, user: user) }
+
+    before do
+      sign_in user
+      visit user_path(user)
+    end
+
+    it { should have_selector('h1', text: user.first_name) }
+    it { should have_title("#{user.first_name}") }
+
+    it { should have_content('List Registration') }
+    it { should have_selector('label', text: 'Enter registration code:') }
+    it { should have_button('Register List') }
+    it { should have_content('List Administration') }
+    it { should have_button('List 1') }
+    it { should have_content('Process') }
+    it { should have_link('Item collection', href: list_items_path(list)) }
+    it { should have_link('Container color', href: list_edit_path(list)) }
+    it { should have_content('Print') }
+    it { should have_link('List', href: list_print_path(list)) }
+    it { should have_link('Label', href: list_labels_print_path(list)) }
+
+    describe "enter container color" do
+      pending "needs to be implemented"
+    end
+
+    describe "item collection" do
+      pending "needs to be implemented"
+    end
+
+    describe "print list" do
+      pending "needs to be implemented"
+    end
+
+    describe "create labels" do
+      pending "needs to be implemented"
+    end
+
+    describe "delete list" do
+      pending "needs to be implemented"
+    end
+
   end
 
   describe "signup" do
