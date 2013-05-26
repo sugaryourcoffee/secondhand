@@ -9,11 +9,22 @@ Secondhand::Application.routes.draw do
   match '/help',    to: 'static_pages#help'
   match '/contact', to: 'static_pages#contact'
 
-  resources :lists
+  resources :lists do
+    member do
+      get :items
+    end
+  end
 
   resources :users do
     member do
       post :register_list
+    end
+    resources :lists do
+      member do
+        post :print_list
+        post :print_labels
+      end
+      resources :items, only: :index
     end
   end
 

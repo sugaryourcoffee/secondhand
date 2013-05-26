@@ -25,23 +25,35 @@
         <% else %>
           <% @user.lists.each do |list| %>
             <div class="btn-group">
-              <%= link_to "<button class=\"btn\">List #{list.list_number}</button>".html_safe, 
-                          register_list_user_path(@user) %>
+              <%= link_to "<button class=\"btn\">
+                             List #{list.list_number}
+                           </button>".html_safe, 
+                           user_list_items_path(@user, list) %>
               <button class="btn dropdown-toggle" data-toggle="dropdown">
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu">
                 <li class="nav-header">Process</li>
-                <li><%= link_to "Item collection", href: "#" %></li>
-                <li><%= link_to "Container color", href: "#" %></li>
+                <li><%= link_to "Item collection", 
+                        user_list_items_path(@user, list) %></li>
+                <li class="divider"/>
+                <li><%= link_to "Delete list", 
+                                list_path(list), 
+                                method: :delete, 
+                                confirm: "Are you sure?" %></li>
                 <li class="divider"/>
                 <li class="nav-header">Print</li>
-                <li><%= link_to "List", href: "#" %></li>
-                <li><%= link_to "Labels", href: "#" %></li>
-                <li class="divider"/>
-                <li><%= link_to "Delete list", href: "#" %></li>
+                <li><%= link_to "List", 
+                                print_list_user_list_path(@user, list) %></li>
+                <li><%= link_to "Labels", 
+                                print_labels_user_list_path(@user, list) %></li>
               </ul>
             </div>
+            <%= form_tag(register_list_user_path(@user, params)) do %>
+              <%= label_tag :container_color, 'Enter container color:' %>
+              <%= text_field_tag :container_color, params[:container_color] %>
+              <%= submit_tag "Save Container Color", class: "btn btn-success" %>
+            <% end %>
           <% end %>
         <% end %>
       </div>

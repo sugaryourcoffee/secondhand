@@ -198,11 +198,16 @@ describe "User pages" do
     it { should have_content('List Administration') }
     it { should have_button('List 1') }
     it { should have_content('Process') }
-    it { should have_link('Item collection', href: list_items_path(list)) }
-    it { should have_link('Container color', href: list_edit_path(list)) }
+    it { should have_link('Item collection', 
+                          href: user_list_items_path(user, list)) }
+    it { should have_link('Delete list', href: list_path(list)) }
     it { should have_content('Print') }
-    it { should have_link('List', href: list_print_path(list)) }
-    it { should have_link('Label', href: list_labels_print_path(list)) }
+    it { should have_link('List', 
+                          href: print_list_user_list_path(user, list)) }
+    it { should have_link('Labels', 
+                          href: print_labels_user_list_path(user, list)) }
+    it { should have_content('Enter container color:') }
+    it { should have_button('Save Container Color') }
 
     describe "enter container color" do
       pending "needs to be implemented"
