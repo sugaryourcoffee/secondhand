@@ -210,7 +210,11 @@ describe "User pages" do
     it { should have_button('Save Container Color') }
 
     describe "enter container color" do
-      pending "needs to be implemented"
+      before do
+        fill_in "Enter container color:", with: "Red"
+        click_button "Save Container Color"
+      end
+      it { should have_text('List was successfully updated.') }
     end
 
     describe "item collection" do

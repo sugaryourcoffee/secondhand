@@ -9,21 +9,22 @@
     </section>
   </aside>
   <div class="span8">
-    <%= form_tag(register_list_user_path(@user, params)) do %>
-      <fieldset>
-        <legend>List Registration</legend>
+    <fieldset>
+      <legend>List Registration</legend>
+      <%= form_tag(register_list_user_path(@user, params)) do %>
         <%= label_tag :registration_code, 'Enter registration code:' %>
         <%= text_field_tag :registration_code, params[:registration_code] %>
         <%= submit_tag "Register List", class: "btn btn-success" %>
-      </fieldset>
-    <% end %>
+      <% end %>
+    </fieldset>
     <fieldset>
       <legend>List Administration</legend>
-      <div class="row-fluid">
+      <div class="row">
         <% if @user.lists.empty? %>
           <p>You have no registered lists yet</p>
         <% else %>
           <% @user.lists.each do |list| %>
+          <div class="span2">
             <div class="btn-group">
               <%= link_to "<button class=\"btn\">
                              List #{list.list_number}
@@ -49,11 +50,14 @@
                                 print_labels_user_list_path(@user, list) %></li>
               </ul>
             </div>
-            <%= form_tag(register_list_user_path(@user, params)) do %>
-              <%= label_tag :container_color, 'Enter container color:' %>
-              <%= text_field_tag :container_color, params[:container_color] %>
-              <%= submit_tag "Save Container Color", class: "btn btn-success" %>
+          </div>
+            <div class="span6">
+            <%= form_for(list) do |f| %>
+              <%= f.label :container, 'Enter container color:' %>
+              <%= f.text_field :container %>
+              <%= f.submit "Save Container Color", class: "btn btn-success" %>
             <% end %>
+          </div>
           <% end %>
         <% end %>
       </div>

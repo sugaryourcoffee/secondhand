@@ -1,4 +1,7 @@
 class ListsController < ApplicationController
+
+  skip_before_filter :authorize, only: :update
+
   # GET /lists
   # GET /lists.json
   def index
@@ -59,9 +62,12 @@ class ListsController < ApplicationController
   def update
     @list = List.find(params[:id])
 
+    return_url = request.referer.include?("/users/") ? request.referer : @list
+
     respond_to do |format|
       if @list.update_attributes(params[:list])
-        format.html { redirect_to @list, notice: 'List was successfully updated.' }
+        format.html { redirect_to return_url, 
+                      notice: 'List was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

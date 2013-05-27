@@ -21,8 +21,8 @@ Secondhand::Application.routes.draw do
     end
     resources :lists do
       member do
-        post :print_list
-        post :print_labels
+        get :print_list
+        get :print_labels
       end
       resources :items, only: :index
     end
