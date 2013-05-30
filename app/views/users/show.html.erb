@@ -36,12 +36,7 @@
               <ul class="dropdown-menu">
                 <li class="nav-header">Process</li>
                 <li><%= link_to "Item collection", 
-                        user_list_items_path(@user, list) %></li>
-                <li class="divider"/>
-                <li><%= link_to "Delete list", 
-                                list_path(list), 
-                                method: :delete, 
-                                confirm: "Are you sure?" %></li>
+                        user_list_items_path(list, @user) %></li>
                 <li class="divider"/>
                 <li class="nav-header">Print</li>
                 <li><%= link_to "List", 

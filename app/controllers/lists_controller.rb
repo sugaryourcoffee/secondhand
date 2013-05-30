@@ -2,6 +2,8 @@ class ListsController < ApplicationController
 
   skip_before_filter :authorize, only: :update
 
+  before_filter :correct_user, only: :items
+
   # GET /lists
   # GET /lists.json
   def index
@@ -12,6 +14,9 @@ class ListsController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @lists }
     end
+  end
+
+  def items
   end
 
   # GET /lists/1
@@ -48,7 +53,8 @@ class ListsController < ApplicationController
 
     respond_to do |format|
       if @list.save
-        format.html { redirect_to @list, notice: 'List was successfully created.' }
+        format.html { redirect_to @list, 
+                      notice: 'List was successfully created.' }
         format.json { render json: @list, status: :created, location: @list }
       else
         format.html { render action: "new" }
@@ -86,6 +92,13 @@ class ListsController < ApplicationController
       format.html { redirect_to lists_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_path) unless current_user?(@user) or current_user.admin?
   end
 
 end

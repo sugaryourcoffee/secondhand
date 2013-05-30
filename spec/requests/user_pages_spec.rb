@@ -200,7 +200,6 @@ describe "User pages" do
     it { should have_content('Process') }
     it { should have_link('Item collection', 
                           href: user_list_items_path(user, list)) }
-    it { should have_link('Delete list', href: list_path(list)) }
     it { should have_content('Print') }
     it { should have_link('List', 
                           href: print_list_user_list_path(user, list)) }
@@ -218,19 +217,41 @@ describe "User pages" do
     end
 
     describe "item collection" do
-      pending "needs to be implemented"
+
+      describe "with assigned list" do
+        before { click_link 'Item collection' }
+        
+        it { should have_text('Collect Items') }
+      end
+
+      describe "with unassigned list" do
+        let(:list) { FactoryGirl.create(:list,
+                                        list_number: 1, 
+                                        event: event) }
+
+        before { visit user_list_items_path(user, list) }
+
+        it { should have_text('List number not assigned') }
+      end
+
+      describe "admin accessing other users list" do
+        let(:admin) { FactoryGirl.create(:admin) }
+        
+        before do
+          sign_in admin
+          visit user_list_items_path(user, list)
+        end
+
+        it { should have_text('Collect Items') }
+      end
     end
 
     describe "print list" do
-      pending "needs to be implemented"
+      before { visit print_list_user_list_path(user, list) }
     end
 
     describe "create labels" do
-      pending "needs to be implemented"
-    end
-
-    describe "delete list" do
-      pending "needs to be implemented"
+      before { visit print_labels_user_list_path(user, list) }
     end
 
   end
