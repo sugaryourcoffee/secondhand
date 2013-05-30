@@ -1,8 +1,8 @@
 class ListsController < ApplicationController
 
-  skip_before_filter :authorize, only: :update
+  skip_before_filter :authorize, only: [:update, :print_list, :print_labels]
 
-  before_filter :correct_user, only: :items
+  before_filter :correct_user, only: [:print_list, :print_labels]
 
   # GET /lists
   # GET /lists.json
@@ -16,7 +16,24 @@ class ListsController < ApplicationController
     end
   end
 
-  def items
+  def print_list
+    @list = List.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        send_data @list.list_pdf, content_type: Mime::PDF
+      end
+    end
+  end
+
+  def print_labels
+    @list = List.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        send_data @list.labels_pdf, content_type: Mime::PDF
+      end
+    end
   end
 
   # GET /lists/1
@@ -97,7 +114,7 @@ class ListsController < ApplicationController
   private
 
   def correct_user
-    @user = User.find(params[:id])
+    @user = User.find(params[:user_id])
     redirect_to(root_path) unless current_user?(@user) or current_user.admin?
   end
 

@@ -21,8 +21,8 @@ Secondhand::Application.routes.draw do
     end
     resources :lists do
       member do
-        get :print_list
-        get :print_labels
+        get :print_list, defaults: { format: 'pdf' }
+        get :print_labels, defaults: { format: 'pdf' }
       end
       resources :items, only: :index
     end

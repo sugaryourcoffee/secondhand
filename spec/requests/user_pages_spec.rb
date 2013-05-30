@@ -247,11 +247,19 @@ describe "User pages" do
     end
 
     describe "print list" do
-      before { visit print_list_user_list_path(user, list) }
+      before { visit print_list_user_list_path(user, list, format: 'pdf') }
+      it "should render a pdf file" do
+        page.response_headers['Content-Disposition'].
+          should include("attachment")
+      end
     end
 
     describe "create labels" do
-      before { visit print_labels_user_list_path(user, list) }
+      before { visit print_labels_user_list_path(user, list, format: 'pdf') }
+      it "should render a pdf file" do
+        page.response_headers['Content-Disposition'].
+          should include("attachment")
+      end
     end
 
   end

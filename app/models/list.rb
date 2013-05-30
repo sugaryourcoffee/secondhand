@@ -18,4 +18,35 @@ class List < ActiveRecord::Base
   has_many :items
 
   attr_accessible :container, :event_id, :list_number, :registration_code, :user_id
+
+  def list_pdf
+    items_list = items.map do |item|
+      [item.number, item.description, item.size, item.price]
+    end
+
+    pdf = Prawn::Document.new
+    pdf.table([[ "Number", "Description", "Size", "Price"], *items_list]) do |t|
+      t.header = true
+      t.row(0).style(background_color: '44844', text_color: 'ffffff')
+      t.columns(1).align = :right
+    end
+    pdf.render
+  end
+
+  def labels_pdf
+    items_list = items.map do |item|
+      [item.number, item.description, item.size, item.price]
+    end
+
+    create_pdf_labels items_list
+  end
+
+  private
+
+  def create_pdf_labels(items_list)
+    pdf = Prawn::Document.new
+    pdf.text("Needs to be implemented")
+    pdf.render
+  end
+
 end
