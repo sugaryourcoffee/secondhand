@@ -26,6 +26,41 @@ describe Item do
     it { should_not be_valid }
   end
 
+  describe "when item_number is not present" do
+    before { @item.item_number = nil }
+    it { should_not be_valid }
+  end
+
+  describe "when description is not present" do
+    before { @item.description = nil }
+    it { should_not be_valid }
+  end
+
+  describe "when size is not present" do
+    before { @item.size = nil }
+    it { should be_valid }
+  end
+
+  describe "when price is not present" do
+    before { @item.price = nil }
+    it { should_not be_valid }
+  end
+
+  describe "when price is less than 0.5" do
+    before { @item.price = 0.4 }
+    it { should_not be_valid }
+  end
+
+  describe "when price is 0.5" do
+    before { @item.price = 0.5 }
+    it { should be_valid }
+  end
+
+  describe "when price is not divisible by 0.5" do
+    before { @item.price = 1.6 }
+    it { should_not be_valid }
+  end
+
   describe "accessible attributes" do
     it "should not allow access to list_id" do
       expect do
