@@ -1,0 +1,11 @@
+<%= provide(:title, 'New Item') %>
+
+<%= form_for [@user, @list, @item] do |f| %>
+  <%= f.label :description %>
+  <%= f.text_field :description %>
+  <%= f.label :size %>
+  <%= f.text_field :size %>
+  <%= f.label :price %>
+  <%= f.number_field :price %>
+  <%= f.submit class: "btn btn-primary"%>
+<% end %>

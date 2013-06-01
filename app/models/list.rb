@@ -17,7 +17,8 @@ class List < ActiveRecord::Base
   belongs_to :event
   has_many :items
 
-  attr_accessible :container, :event_id, :list_number, :registration_code, :user_id
+  attr_accessible :container, :event_id, :list_number, :registration_code, 
+                  :user_id
 
   def list_pdf
     items_list = items.map do |item|
@@ -39,6 +40,13 @@ class List < ActiveRecord::Base
     end
 
     create_pdf_labels items_list
+  end
+
+  def next_item_number
+    numbers = Array.new(40)
+    numbers.fill { |i| i + 1 }
+    numbers -= items.map { |i| i.item_number }    
+    numbers.first
   end
 
   private

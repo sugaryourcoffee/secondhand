@@ -13,6 +13,7 @@ Secondhand::Application.routes.draw do
     member do
       get :items
     end
+    resources :items
   end
 
   resources :users do
@@ -24,7 +25,7 @@ Secondhand::Application.routes.draw do
         get :print_list, defaults: { format: 'pdf' }
         get :print_labels, defaults: { format: 'pdf' }
       end
-      resources :items, only: :index
+      resources :items, only: [:index, :new, :create]
     end
   end
 

@@ -26,11 +26,6 @@ describe Item do
     it { should_not be_valid }
   end
 
-  describe "when item_number is not present" do
-    before { @item.item_number = nil }
-    it { should_not be_valid }
-  end
-
   describe "when description is not present" do
     before { @item.description = nil }
     it { should_not be_valid }
