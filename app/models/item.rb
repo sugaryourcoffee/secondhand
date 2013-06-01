@@ -12,6 +12,6 @@ class Item < ActiveRecord::Base
   private
 
   def add_item_number
-    item_number = List.find(list_id).next_item_number
+    self.item_number = List.find(list_id).next_item_number
   end
 end

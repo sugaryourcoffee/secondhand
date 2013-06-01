@@ -1,0 +1,16 @@
+<%= provide(:title, 'Edit Item') %>
+
+<h1>Edit Item</h1>
+
+<%= form_for [@user, @list, @item] do |f| %>
+  <%= f.label :description %>
+  <%= f.text_field :description %>
+  <%= f.label :size %>
+  <%= f.text_field :size %>
+  <%= f.label :price %>
+  <%= f.number_field :price %>
+  <%= f.submit class: "btn btn-primary"%>
+<% end %>
+
+<%= link_to 'Show', user_list_item_path(@user, @list, @item) %> |
+<%= link_to 'Back', user_list_items_path(@user, @list) %>

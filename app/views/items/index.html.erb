@@ -1,4 +1,37 @@
 <h1>Collect Items</h1>
 
-<%= link_to "Create New Item", new_user_list_item_path(@user, @list) %> 
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Item number</th>
+      <th>Description</th>
+      <th>Size</th>
+      <th>Price</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
 
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.item_number %></td>
+        <td><%= item.description %></td>
+        <td><%= item.size %></td>
+        <td><%= item.price %></td>
+        <td><%= link_to 'Show', user_list_item_path(@user, @list, item) %></td>
+        <td><%= link_to 'Edit', edit_user_list_item_path(@user, @list, item) %></td>
+        <td><%= link_to 'Destroy', [@user, @list, item], method: :delete, 
+                data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Create New Item", new_user_list_item_path(@user, @list), 
+            class: "btn btn-primary" %> 
+
+<br/><br/>
+
+<%= link_to "Back", @user %>

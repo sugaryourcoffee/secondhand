@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
 
-  skip_before_filter :authorize, only: [:index, :new, :create]
+  skip_before_filter :authorize, only: [:index, :new, :create, :destroy, 
+                                        :show, :edit]
 
   before_filter :correct_user
 
@@ -27,6 +28,26 @@ class ItemsController < ApplicationController
       flash[:error] = @item.errors.full_messages.join(" | ")
       render 'new'
     end 
+  end
+
+  def show
+    @item = Item.find(params[:id])
+    @list = List.find(params[:list_id])
+    @user = User.find(params[:user_id]) 
+  end
+
+  def edit
+    @item = Item.find(params[:id])
+    @list = List.find(params[:list_id])
+    @user = User.find(params[:user_id])
+  end
+
+  def destroy
+    Item.find(params[:id]).destroy
+    flash[:success] = "Item destroyed!"
+    @list = List.find(params[:list_id])
+    @user = User.find(params[:user_id])
+    redirect_to user_list_items_path(@user, @list)
   end
 
   private

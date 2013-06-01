@@ -1,0 +1,25 @@
+<%= provide(:title, "Show Item") %>
+
+<h1>Show Item</h1>
+
+<p>
+  <strong>Item Number:</strong>
+  <%= @item.item_number %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%= @item.description %>
+</p>
+<p>
+  <strong>Size:</strong>
+  <%= @item.size %>
+</p>
+<p>
+  <strong>Price:</strong>
+  <%= @item.price %>
+</p>
+
+<br/>
+
+<%= link_to 'Edit', edit_user_list_item_path(@user, @list, @item) %> |
+<%= link_to 'Back', user_list_items_path(@user, @list) %>
