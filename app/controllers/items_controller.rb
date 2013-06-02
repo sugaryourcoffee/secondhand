@@ -25,7 +25,7 @@ class ItemsController < ApplicationController
       flash[:success] = "Item created!"
       redirect_to user_list_items_path(@user, @list)
     else
-      flash[:error] = @item.errors.full_messages.join(" | ")
+      flash[:error] = "Could not create item!"
       render 'new'
     end 
   end
