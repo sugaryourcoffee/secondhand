@@ -22,7 +22,7 @@ class List < ActiveRecord::Base
 
   def list_pdf
     items_list = items.map do |item|
-      [item.number, item.description, item.size, item.price]
+      [item.item_number, item.description, item.size, item.price]
     end
 
     pdf = Prawn::Document.new
