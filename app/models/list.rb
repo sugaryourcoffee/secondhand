@@ -26,14 +26,57 @@ class List < ActiveRecord::Base
     header_center = "www.boerse-burgthann.de"
     header_right  = "Liste #{self.list_number}"
 
+    footer_left   = Time.now.strftime("%Y-%m-%d / %H:%M")
+    footer_center = "mail@boerse-burgthann.de"
+
+    seller_label = "Seller:"
+    seller_contact = "#{user.first_name} #{user.last_name}\n" +
+                     "#{user.street}\n" +
+                     "#{user.zip_code} #{user.town}\n" +
+                     "#{user.phone}"
+
+    container_label = "Korbfarbe:"
+    container_color = container
+
     items_list = items.map do |item|
       [item.item_number, item.description, item.size, item.price]
     end
 
-    pdf = Prawn::Document.new
-    pdf.move_down 10
-    pdf.table([[ "No", "Description", "Size", "Price"], 
-               *items_list], column_widths: [30, 350, 80, 80]) do |t|
+    pdf = Prawn::Document.new(page_size: "A4")
+
+    pdf.text_box(seller_label, options = {
+        at: [pdf.bounds.left, pdf.bounds.top - 25],
+        width: 50,
+        align: :left,
+        size: 10
+      })
+
+    pdf.text_box(seller_contact, options = {
+      at: [pdf.bounds.left + 50, pdf.bounds.top - 25],
+      width: 200,
+      align: :left,
+      size: 10
+    })
+
+    pdf.text_box(container_label, options = {
+        at: [pdf.bounds.left + 300, pdf.bounds.top - 25],
+        width: 60,
+        align: :left,
+        size: 10
+      })
+
+    pdf.text_box(container_color, options = {
+      at: [pdf.bounds.left + 360, pdf.bounds.top - 25],
+      width: 200,
+      align: :left,
+      size: 10
+    })
+
+    pdf.move_down 85
+
+    pdf.table([[ "No", "Description", "Size", "Price"], *items_list], 
+              cell_style: { size: 10, padding: 2 }, 
+              column_widths: [29, 350, 71, 71]) do |t|
       t.header = true
       t.columns(0).align = :right
       t.columns(1).align = :left
@@ -45,17 +88,55 @@ class List < ActiveRecord::Base
     end
 
     pdf.repeat(:all) do
-      pdf.draw_text header_left, at: pdf.bounds.top_left
-      pdf.draw_text header_center, at: [pdf.bounds.left+200,pdf.bounds.top]
-      pdf.draw_text header_right, at: pdf.bounds.top_right
+      pdf.text_box(header_left, options = {
+        at: pdf.bounds.top_left,
+        width: pdf.bounds.width,
+        align: :left,
+        single_line: true,
+        size: 10
+      })
+
+      pdf.text_box(header_center, options = {
+        at: pdf.bounds.top_left,
+        width: pdf.bounds.width,
+        align: :center,
+        single_line: true,
+        size: 10
+      })
+      
+      pdf.text_box(header_right, options = {
+        at: pdf.bounds.top_left,
+        width: pdf.bounds.width,
+        align: :right,
+        single_line: true,
+        size: 10
+      })
     end
 
     pdf.repeat(:all, dynamic: true) do
+      pdf.text_box(footer_left, options = {
+        at: [pdf.bounds.left, 12],
+        width: pdf.bounds.width,
+        align: :left,
+        valign: :bottom,
+        single_line: true,
+        size: 10
+      })
+
+      pdf.text_box(footer_center, options = {
+        at: [pdf.bounds.left, 12],
+        width: pdf.bounds.width,
+        align: :center,
+        valign: :bottom,
+        single_line: true,
+        size: 10
+      })
+
       pdf.number_pages "<page>/<total>",
                        { start_count_at: 1,
-                         at: [pdf.bounds.right - 50, 0],
+                         at: [pdf.bounds.right - 50, 10],
                          align: :right,
-                         size: 14 }
+                         size: 10 }
     end
 
     pdf.render
