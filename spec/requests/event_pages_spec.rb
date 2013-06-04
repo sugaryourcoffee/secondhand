@@ -61,6 +61,48 @@ describe "event pages" do
         
       end
 
+      describe "delete button" do
+        let!(:list) { FactoryGirl.create(:list, 
+                                        list_number: 10, 
+                                        registration_code: "acgd/e.", 
+                                        event: event) } 
+
+        before { visit events_path }
+
+        it "should delete event" do
+          expect { first(:link, 'Destroy').click }.
+            to change(Event, :count).by(-1)
+        end
+
+        it "should delete lists along with the event" do
+          event.lists.should have_exactly(1).items
+          
+          List.all.should have(1).items
+
+          expect { event.destroy }.to change(Event, :count).by(-1)
+          expect { Event.find(event) }.
+            to raise_error(ActiveRecord::RecordNotFound)
+          
+          List.all.should have(0).items
+        end
+
+        it "should not delete active event" do
+          should_not have_button('Deactivate')
+          first(:button, 'Activate').click
+          should have_button('Deactivate') 
+
+          expect { first(:link, 'Destroy').click }.
+            to change(Event, :count).by(0)
+
+          should have_text('Cannot delete active event')
+        end
+
+        it "should not delete event with list register by a user" do
+          pending "needs to be implemented"
+        end
+
+      end
+
     end
 
   end

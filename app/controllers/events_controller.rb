@@ -145,7 +145,14 @@ class EventsController < ApplicationController
   # DELETE /events/1.json
   def destroy
     @event = Event.find(params[:id])
+
     @event.destroy
+
+    if @event.errors.any?
+      flash[:error] = @event.errors.full_messages.first
+    else
+      flash[:notice] = "Event #{@event.title} deleted"
+    end
 
     respond_to do |format|
       format.html { redirect_to events_url }

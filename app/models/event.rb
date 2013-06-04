@@ -17,7 +17,7 @@
 #
 
 class Event < ActiveRecord::Base
-  has_many :lists
+  has_many :lists, dependent: :destroy
   has_many :users, through: :lists
 
   attr_accessible :deduction, :event_date, :fee, :location, :max_items_per_list, :max_lists, :provision, :title, :active
@@ -29,4 +29,17 @@ class Event < ActiveRecord::Base
     numericality: {greater_than_or_equal_to: 1}
 
   validates :deduction, :fee, divisable: {divisor: 0.5}
+
+  before_destroy :ensure_not_active
+
+  private
+
+    def ensure_not_active
+      if self.active
+        errors.add(:base, 'Cannot delete active event')
+        false
+      else
+        true
+      end
+    end
 end
