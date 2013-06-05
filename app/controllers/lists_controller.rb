@@ -105,6 +105,12 @@ class ListsController < ApplicationController
     @list = List.find(params[:id])
     @list.destroy
 
+    if @list.errors.any?
+      flash[:error] = @list.errors.full_messages.first
+    else
+      flash[:notice] = "List #{@list.list_number} deleted"
+    end
+
     respond_to do |format|
       format.html { redirect_to lists_url }
       format.json { head :no_content }

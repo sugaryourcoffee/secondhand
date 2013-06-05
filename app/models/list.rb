@@ -20,6 +20,8 @@ class List < ActiveRecord::Base
   attr_accessible :container, :event_id, :list_number, :registration_code, 
                   :user_id
 
+  before_destroy :ensure_not_registered_by_a_user
+
   def list_pdf
 
     header_left   = event.title
@@ -163,6 +165,15 @@ class List < ActiveRecord::Base
     pdf = Prawn::Document.new
     pdf.text("Needs to be implemented")
     pdf.render
+  end
+
+  def ensure_not_registered_by_a_user
+    unless self.user_id.nil?
+      errors.add(:base, 'Cannot delete list registered by a user')
+      false
+    else
+      true
+    end
   end
 
 end

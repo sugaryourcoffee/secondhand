@@ -5,6 +5,7 @@ describe "event pages" do
 
   describe "index" do
     let(:event) { FactoryGirl.create(:event) }
+    let(:event_other) { FactoryGirl.create(:event) }
  
     describe "with user not signed in" do
       before { visit events_path }
@@ -67,6 +68,10 @@ describe "event pages" do
                                         registration_code: "acgd/e.", 
                                         event: event) } 
 
+        let!(:assigned_list) { FactoryGirl.create(:assigned,
+                                                  list_number: 11,
+                                                  registration_code: "kdke..",
+                                                  event: event_other) }
         before { visit events_path }
 
         it "should delete event" do
@@ -77,13 +82,13 @@ describe "event pages" do
         it "should delete lists along with the event" do
           event.lists.should have_exactly(1).items
           
-          List.all.should have(1).items
+          List.all.should have(2).items
 
           expect { event.destroy }.to change(Event, :count).by(-1)
           expect { Event.find(event) }.
             to raise_error(ActiveRecord::RecordNotFound)
           
-          List.all.should have(0).items
+          List.all.should have(1).items
         end
 
         it "should not delete active event" do
@@ -98,7 +103,15 @@ describe "event pages" do
         end
 
         it "should not delete event with list register by a user" do
-          pending "needs to be implemented"
+          event_other.lists.should have(1).items
+
+          List.all.should have(2).items
+
+          expect { event_other.destroy }.to change(Event, :count).by(0)
+          expect { event_other.save }.
+            not_to raise_error(ActiveRecord::RecordNotFound)
+
+          List.all.should have(2).items
         end
 
       end

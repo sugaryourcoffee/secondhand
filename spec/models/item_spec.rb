@@ -7,11 +7,13 @@ describe Item do
   let(:list) { FactoryGirl.create(:list, user: user) }
 
   before do
-    @item = list.items.build(item_number: 1, description: "Description", size: "123", price: 1.5)
+    @item = list.items.build(item_number: 1, description: "Description", 
+                             size: "123", price: 1.5)
   end
 
   subject { @item }
 
+  it { list.items.should have(1).items }
   it { should respond_to(:item_number) }
   it { should respond_to(:description) }
   it { should respond_to(:size) }
@@ -63,4 +65,13 @@ describe Item do
       end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
   end
+
+  describe "delete item" do
+    it "should destroy item" do
+      list.items.should have(1).items
+      list.items.destroy(@item)
+      list.items.should have(0).items
+    end
+  end
+
 end

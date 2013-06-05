@@ -30,7 +30,7 @@ class Event < ActiveRecord::Base
 
   validates :deduction, :fee, divisable: {divisor: 0.5}
 
-  before_destroy :ensure_not_active
+  before_destroy :ensure_not_active, :ensure_has_no_registered_lists
 
   private
 
@@ -42,4 +42,14 @@ class Event < ActiveRecord::Base
         true
       end
     end
+
+    def ensure_has_no_registered_lists
+      if self.users.empty?
+        true
+      else
+        errors.add(:base, 'Cannot delete event with registered lists')
+        false
+      end
+    end
+
 end
