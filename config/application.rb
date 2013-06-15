@@ -9,6 +9,8 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+require 'interleave2of5'
+
 module Secondhand
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

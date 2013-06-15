@@ -164,6 +164,8 @@ class List < ActiveRecord::Base
   def create_pdf_labels(items_list)
     pdf = Prawn::Document.new
     pdf.text("Needs to be implemented")
+    barcode = Interleave2of5.new("1234")
+    barcode.encode.to_pdf(pdf)
     pdf.render
   end
 

@@ -183,6 +183,8 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.7)
+    syc-barcode (0.0.1)
+      prawn
     thor (0.18.1)
     tilt (1.4.1)
     treetop (1.4.12)
@@ -223,5 +225,6 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   spork (~> 0.9.0)
   sqlite3
+  syc-barcode
   uglifier (>= 1.0.3)
   will_paginate (= 3.0.3)
