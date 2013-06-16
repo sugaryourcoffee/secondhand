@@ -146,7 +146,7 @@ class List < ActiveRecord::Base
 
   def labels_pdf
     items_list = items.map do |item|
-      [item.number, item.description, item.size, item.price]
+      [item.item_number, item.description, item.size, item.price]
     end
 
     create_pdf_labels items_list
@@ -162,10 +162,55 @@ class List < ActiveRecord::Base
   private
 
   def create_pdf_labels(items_list)
-    pdf = Prawn::Document.new
-    pdf.text("Needs to be implemented")
-    barcode = Interleave2of5.new("1234")
-    barcode.encode.to_pdf(pdf)
+    item_index = 0
+    pdf_options = { height: 30, width: 1, factor: 2, y: 10 }
+    pdf = Prawn::Document.new(page_size: "A4")
+    page_height = pdf.bounds.height
+    label_height = page_height / 10
+    label_width  = pdf.bounds.width / 2
+    pages = (
+              (items_list.size / 20) + (0.5 * items_list.size % 20 > 0 ? 1 : 0)
+            ).round
+    1.upto(pages) do |page|
+      page_height.step(label_height, -label_height) do |y|
+        0.step(label_width, label_width) do |x|
+          pdf.bounding_box([x,y], width: label_width, height: label_height) do
+            pdf.dash(2, space: 2, phase: 0)
+            pdf.transparent(0.5) { pdf.stroke_bounds }
+
+            pdf.text_box(items_list[item_index][1], 
+                         at: [2, label_height - 2],
+                         size: 10,
+                         width: label_width - 4,
+                         height: 30)
+
+            value = sprintf("%03d%02d", list_number, items_list[item_index][0])
+            barcode = Interleave2of5.new(value).encode.to_pdf(pdf, pdf_options)
+
+            value[3,0] = "/"
+            pdf.text_box(value, at: [0,15], 
+                         width: barcode[:total_width], 
+                         height: 20,
+                         align: :center)
+
+            pdf.fill_ellipse([barcode[:total_width] + 10, label_height / 2], 5)
+            
+            pdf.bounding_box([barcode[:total_width] + 20, 
+                             barcode[:total_height] + 7],
+                             width: label_width - barcode[:total_width]) do
+          
+              pdf.table([
+                         ["Size:",  items_list[item_index][2]],
+                         ["Price:", sprintf("%.02f", items_list[item_index][3])]
+                        ],
+                        cell_style: { borders: [] })
+            end
+          end
+          item_index += 1 if item_index < items_list.size - 1
+        end
+      end
+      pdf.start_new_page if page < pages 
+    end
     pdf.render
   end
 
