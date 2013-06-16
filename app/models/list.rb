@@ -13,6 +13,9 @@
 #
 
 class List < ActiveRecord::Base
+
+  include ActionView::Helpers::NumberHelper
+
   belongs_to :user
   belongs_to :event
   has_many :items
@@ -38,13 +41,16 @@ class List < ActiveRecord::Base
                      "#{user.phone}"
 
     container_label = "Korbfarbe:"
-    container_color = container
-
-    items_list = items.map do |item|
-      [item.item_number, item.description, item.size, item.price]
-    end
+    container_color = container || "-"
 
     pdf = Prawn::Document.new(page_size: "A4")
+
+    items_list = items.map do |item|
+      [item.item_number, 
+       cut_to_fit(pdf, 400, item.description), 
+       cut_to_fit(pdf, 71, item.size), 
+       number_to_currency(item.price, locale: :de)]
+    end
 
     pdf.text_box(seller_label, options = {
         at: [pdf.bounds.left, pdf.bounds.top - 25],
@@ -171,6 +177,23 @@ class List < ActiveRecord::Base
     pages = (
               (items_list.size / 20) + (0.5 * items_list.size % 20 > 0 ? 1 : 0)
             ).round
+
+    pdf.repeat(:all, dynamic: true) do
+      pdf.number_pages "#{event.title} - List #{list_number}",
+                       { start_count_at: 1,
+                         at: [pdf.bounds.left, pdf.bounds.top + 15],
+                         align: :center,
+                         size: 10 }
+    end
+
+    pdf.repeat(:all, dynamic: true) do
+      pdf.number_pages "<page>/<total>",
+                       { start_count_at: 1,
+                         at: [pdf.bounds.left, -10],
+                         align: :right,
+                         size: 10 }
+    end
+
     1.upto(pages) do |page|
       page_height.step(label_height, -label_height) do |y|
         0.step(label_width, label_width) do |x|
@@ -199,19 +222,38 @@ class List < ActiveRecord::Base
                              barcode[:total_height] + 7],
                              width: label_width - barcode[:total_width]) do
           
-              pdf.table([
-                         ["Size:",  items_list[item_index][2]],
-                         ["Price:", sprintf("%.02f", items_list[item_index][3])]
-                        ],
-                        cell_style: { borders: [] })
+              pdf.table(
+                [
+                  ["Size:",  cut_to_fit(pdf, 90, items_list[item_index][2])],
+                  ["Price:", number_to_currency(items_list[item_index][3], 
+                                                locale: :de)]
+                ],
+                cell_style: { borders: [] })
             end
           end
-          item_index += 1 if item_index < items_list.size - 1
+          item_index += 1 
+          break if item_index > items_list.size - 1
         end
+        break if item_index > items_list.size - 1
       end
       pdf.start_new_page if page < pages 
     end
     pdf.render
+  end
+
+  def cut_to_fit(pdf, width, value)
+    return value if pdf.width_of(value) <= width
+    words = value.split(" ")
+    if words.size > 1
+      words.each_with_index do |word,i|
+        return words[0..i-1].
+          join(" ") + " ..." if pdf.width_of(words[0..i].join(" ")) > width
+      end
+    else
+      (value.size - 1).step(0, -1) do |i|
+        return value[0..i] + " ..." if pdf.width_of(value[0..i]) <= width
+      end
+    end
   end
 
   def ensure_not_registered_by_a_user
