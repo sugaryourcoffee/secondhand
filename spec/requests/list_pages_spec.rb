@@ -34,6 +34,10 @@ describe List do
 
     end
 
+    it "should not create more than max items" do
+      pending "Needs to be implemented"
+    end
+
   end
 
   describe "process items" do
