@@ -7,7 +7,7 @@ def valid_signin(user)
 end
 
 def sign_in(user)
-  visit signin_path
+  visit signin_path(locale: :en)
   fill_in "E-Mail", with: user.email
   fill_in "Password", with: user.password
   click_button "Sign in"

@@ -9,7 +9,7 @@ describe "User pages" do
 
     before do
       sign_in user
-      visit users_path
+      visit users_path(locale: :en)
     end
 
     it { should_not have_title('All users') }
@@ -20,7 +20,7 @@ describe "User pages" do
 
       before do
         sign_in admin
-        visit users_path
+        visit users_path(locale: :en)
       end
 
       it "should list each user" do
@@ -39,21 +39,21 @@ describe "User pages" do
         let(:admin) { FactoryGirl.create(:admin) }
         before do
           sign_in admin
-          visit users_path
+          visit users_path(locale: :en)
         end
 
-        it { should have_link('delete', href: user_path(User.first)) }
+        it { should have_link('delete', href: user_path(User.first, locale: :en)) }
         it "should be able to delete another user" do
           expect { click_link('delete') }.to change(User, :count).by(-1)
         end
-        it { should_not have_link('delete', href: user_path(admin)) }
+        it { should_not have_link('delete', href: user_path(admin, locale: :en)) }
       end
     end
 
   end
 
   describe "signup page" do
-    before { visit signup_path }
+    before { visit signup_path(locale: :en) }
 
     it { should have_selector('h1',    text: 'Sign up') }
     it { should have_title('Sign up') }
@@ -62,7 +62,7 @@ describe "User pages" do
   describe "another user's profile page" do
     let(:user) { FactoryGirl.create(:user) }
 
-    before { visit user_path(user) }
+    before { visit user_path(user, locale: :en) }
 
     it { should_not have_selector('h1', text: user.first_name) }
     it { should_not have_title(user.first_name) }
@@ -72,7 +72,7 @@ describe "User pages" do
     let(:user) { FactoryGirl.create(:user) }
     before do
       sign_in user
-      visit user_path(user) 
+      visit user_path(user, locale: :en) 
     end
 
     it { should have_selector('h1', text: user.first_name) }
@@ -100,7 +100,7 @@ describe "User pages" do
     let(:user) { FactoryGirl.create(:user) }
     before do
       sign_in user
-      visit user_path(user) 
+      visit user_path(user, locale: :en) 
     end
 
     it { should have_selector('h1', text: user.first_name) }
@@ -186,7 +186,7 @@ describe "User pages" do
 
     before do
       sign_in user
-      visit user_path(user)
+      visit user_path(user, locale: :en)
     end
 
     it { should have_selector('h1', text: user.first_name) }
@@ -199,12 +199,12 @@ describe "User pages" do
     it { should have_button('List 1') }
     it { should have_content('Process') }
     it { should have_link('Item collection', 
-                          href: user_list_items_path(user, list)) }
+                          href: user_list_items_path(user, list, locale: :en)) }
     it { should have_content('Print') }
     it { should have_link('List', 
-                          href: print_list_user_list_path(user, list)) }
+                          href: print_list_user_list_path(user, list, locale: :en)) }
     it { should have_link('Labels', 
-                          href: print_labels_user_list_path(user, list)) }
+                          href: print_labels_user_list_path(user, list, locale: :en)) }
     it { should have_content('Enter container color:') }
     it { should have_button('Save Container Color') }
 
@@ -229,7 +229,7 @@ describe "User pages" do
                                         list_number: 1, 
                                         event: event) }
 
-        before { visit user_list_items_path(user, list) }
+        before { visit user_list_items_path(user, list, locale: :en) }
 
         it { should have_text('List number not assigned') }
       end
@@ -239,7 +239,7 @@ describe "User pages" do
         
         before do
           sign_in admin
-          visit user_list_items_path(user, list)
+          visit user_list_items_path(user, list, locale: :en)
         end
 
         it { should have_text('Collect Items') }
@@ -247,7 +247,7 @@ describe "User pages" do
     end
 
     describe "print list" do
-      before { visit print_list_user_list_path(user, list, format: 'pdf') }
+      before { visit print_list_user_list_path(user, list, format: 'pdf', locale: :en) }
       it "should render a pdf file" do
         page.response_headers['Content-Disposition'].
           should include("attachment")
@@ -255,7 +255,7 @@ describe "User pages" do
     end
 
     describe "create labels" do
-      before { visit print_labels_user_list_path(user, list, format: 'pdf') }
+      before { visit print_labels_user_list_path(user, list, format: 'pdf', locale: :en) }
       it "should render a pdf file" do
         page.response_headers['Content-Disposition'].
           should include("attachment")
@@ -265,7 +265,7 @@ describe "User pages" do
   end
 
   describe "signup" do
-    before { visit signup_path }
+    before { visit signup_path(locale: :en) }
 
     let(:submit) { "Create my account" }
 
@@ -308,7 +308,7 @@ describe "User pages" do
     let(:user) { FactoryGirl.create(:user) }
     before do
       sign_in user
-      visit edit_user_path(user) 
+      visit edit_user_path(user, locale: :en) 
     end
 
     describe "page" do
@@ -336,7 +336,7 @@ describe "User pages" do
 
       it { should have_title("#{user.last_name}, #{new_first_name}") }
       it { should have_selector('div.alert.alert-success') }
-      it { should have_link('Sign out', href: signout_path) }
+      it { should have_link('Sign out', href: signout_path(locale: :en)) }
       specify { user.reload.first_name.should == new_first_name }
       specify { user.reload.email.should == new_email }
     end

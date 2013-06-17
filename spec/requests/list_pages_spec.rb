@@ -11,12 +11,12 @@ describe List do
 
     before do
       sign_in user
-      visit user_list_items_path(user, list)
+      visit user_list_items_path(user, list, locale: :en)
     end
 
     it { should have_text("Collect Items") }
     it { should have_link("Create New Item", 
-                          href: new_user_list_item_path(user, list)) }
+                          href: new_user_list_item_path(user, list, locale: :en)) }
 
     it "should create item" do
       click_link "Create New Item"
@@ -48,7 +48,7 @@ describe List do
     before do
       sign_in user
 
-      visit user_list_items_path(user, list)
+      visit user_list_items_path(user, list, locale: :en)
 
       click_link "Create New Item"
 

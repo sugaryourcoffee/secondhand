@@ -4,7 +4,7 @@ describe "news pages" do
   subject { page }
 
   describe "index" do
-    before { visit news_index_path}
+    before { visit news_index_path(locale: :en)}
 
     describe "visting by not signed in user" do
       it { should_not have_title("News") }
@@ -16,7 +16,7 @@ describe "news pages" do
 
       before do
         sign_in(user)
-        visit news_index_path
+        visit news_index_path(locale: :en)
       end
 
       it { should_not have_title("News") }
@@ -28,7 +28,7 @@ describe "news pages" do
 
       before do
         sign_in(admin)
-        visit news_index_path
+        visit news_index_path(locale: :en)
       end
 
       it { should have_title("News") }

@@ -1,45 +1,46 @@
 Secondhand::Application.routes.draw do
-  root to: 'static_pages#home'
+  scope '(:locale)' do
+    root to: 'static_pages#home'
 
-  match '/signup',  to: 'users#new'
-  match '/signin',  to: 'sessions#new'
-  match '/signout', to: 'sessions#destroy', via: :delete
+    match '/signup',  to: 'users#new'
+    match '/signin',  to: 'sessions#new'
+    match '/signout', to: 'sessions#destroy', via: :delete
 
-  match '/about',   to: 'static_pages#about'
-  match '/help',    to: 'static_pages#help'
-  match '/contact', to: 'static_pages#contact'
+    match '/about',   to: 'static_pages#about'
+    match '/help',    to: 'static_pages#help'
+    match '/contact', to: 'static_pages#contact'
 
-  resources :lists do
-    member do
-      get :items
-    end
-    resources :items
-  end
-
-  resources :users do
-    member do
-      post :register_list
-    end
     resources :lists do
       member do
-        get :print_list, defaults: { format: 'pdf' }
-        get :print_labels, defaults: { format: 'pdf' }
+        get :items
       end
-      resources :items, only: [:index, :new, :create, :show, :edit, :destroy,
-                               :update]
+      resources :items
+    end
+
+    resources :users do
+      member do
+        post :register_list
+      end
+      resources :lists do
+        member do
+          get :print_list, defaults: { format: 'pdf' }
+          get :print_labels, defaults: { format: 'pdf' }
+        end
+        resources :items, only: [:index, :new, :create, :show, :edit, :destroy,
+                                 :update]
+      end
+    end
+
+    resources :news
+
+    resources :sessions, only: [:new, :create, :destroy]
+
+    resources :events do
+      member do
+        post :activate
+      end
     end
   end
-
-  resources :news
-
-  resources :sessions, only: [:new, :create, :destroy]
-
-  resources :events do
-    member do
-      post :activate
-    end
-  end
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
