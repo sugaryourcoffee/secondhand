@@ -11,12 +11,10 @@
 <div class="center hero-unit">
   <h1>Secondhand</h1>
   <h2>
-    Welcome to <em>Secondhand</em> partner of
-    <a href="http://messe-burgthann.de/">Kinderkleider und Spielzeugboerse Burgthann</a>
-    to collect your items to sell at the secondhand event in Burgthann
+    <%= t('.welcome_html') %>
   </h2>
 
-  <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
+  <%= link_to t('.sign_up_now'), signup_path, class: "btn btn-large btn-primary" %>
 </div>
 
 <%= link_to image_tag("SugarYourCoffee_48x48.png", alt: "SugarYourCoffee"), 

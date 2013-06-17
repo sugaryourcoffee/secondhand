@@ -10,3 +10,9 @@ en:
         separator: "."
         delimiter: ","
         format:    "%u%n"
+
+  static_pages:
+    home:
+      welcome_html: "Welcome to <em>Secondhand</em> partner of <a href=\"http://messe-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a> to collect your items to sell at the secondhand event in Burgthann"
+      sign_up_now: "Sign up now!"
+
