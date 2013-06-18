@@ -16,3 +16,103 @@ en:
       welcome_html: "Welcome to <em>Secondhand</em> partner of <a href=\"http://messe-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a> to collect your items to sell at the secondhand event in Burgthann"
       sign_up_now: "Sign up now!"
 
+  layouts:
+    header:
+      Home:     "Home"
+      Help:     "Help" 
+      Admin:    "Admin"
+      Events:   "Events"
+      Lists:    "Lists"
+      News:     "News"
+      Users:    "Users"
+      Account:  "Account"
+      Profile:  "Profile"
+      Settings: "Settings"
+      Sign_out: "Sign out"
+      Sign_in:  "Sign in"
+
+    footer:
+      About:   "About"
+      Contact: "Contact"
+      News:    "News"
+
+  users:
+    index:
+      All_users: "All users"
+
+    new:
+      Sign_up: "Sign up"
+      Create_my_account: "Create my account"
+
+    show:
+      List_Registration: "List Registration" 
+      Enter_registration_code: "Enter registration code:"
+      Register_List: "Register List"
+      List_Administration: "List Administration"
+      No_Registered_Lists: "You have no registered lists yet"
+      List: "List"
+      Process: "Process"
+      Item_collection: "Item collection"
+      Print: "Print"
+      Labels: "Labels"
+      Enter_container_color: "Enter container color:"
+      Save_Container_Color:  "Save Container Color"
+
+    edit:
+      Edit_user:    "Edit user"
+      Update_your_profile: "Update your profile"
+      Save_changes: "Save changes"
+
+    fields:
+      First_name: "First name"
+      Last_name:  "Last name"
+      Street:     "Street"
+      Zip_code:   "Zip code"
+      Town:       "Town"
+      Country:    "Country"
+      Phone:      "Phone"
+      E_Mail:     "E-Mail"
+      News:       "I want to recieve new per e-mail"
+      Password:   "Password"
+      Confirm_Password: "Confirm Password"
+
+    user:
+      delete: "delete"
+      confirm: "Are you sure?"
+
+  items:
+    index:
+      Collect_Items: "Collect Items"
+      Item_number:     "Item number"
+      Description:     "Description"
+      Size:            "Size"
+      Price:           "Price"
+      Show:            "Show"
+      Edit:            "Edit"
+      Destroy:         "Destroy"
+      confirm:         "Are you sure?"
+      Create_New_Item: "Create New Item"
+      Back:            "Back"
+
+    new:
+      New_Item: "New Item"
+      Back:     "Back"
+
+    edit:
+      Edit_Item: "Edit Item"
+      Show:      "Show"
+      Back:      "Back" 
+
+    show:
+      Show_Item: "Show Item"
+      Item_Number: "Item Number:"
+      Description: "Description:"
+      Size:        "Size:"
+      Price:       "Price:" 
+      Edit:        "Edit"
+      Back:        "Back"
+
+    form:
+      description: "Description"
+      size:        "Size"
+      price:       "Price"

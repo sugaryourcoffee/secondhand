@@ -1,12 +1,12 @@
-<%= provide(:title, 'New Item') %>
+<%= provide(:title, t('.New_Item')) %>
 
-<h1>New Item</h1>
+<h1><%= t('.New_Item') %></h1>
 
 <div class="row">
   <div class="span6 offset3">
 
     <%= render 'form' %>
 
-    <%= link_to 'Back', user_list_items_path(@user, @list) %>
+    <%= link_to t('.Back'), user_list_items_path(@user, @list) %>
   </div>
 </div>

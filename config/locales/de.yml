@@ -14,3 +14,104 @@ de:
       welcome_html: "Willkommen zu <em>Secondhand</em> dem Partner von <a href=\"http://messe-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a>. Hier können Sie Ihre Artikel die Sie auf der Börse verkaufen wollen erfassen."
       sign_up_now: "Jetzt anmelden!"
 
+  layouts:
+    header:
+      Home:     "Home"
+      Help:     "Hilfe" 
+      Admin:    "Admin"
+      Events:   "Events"
+      Lists:    "Listen"
+      News:     "News"
+      Users:    "Benutzer"
+      Account:  "Account"
+      Profile:  "Profil"
+      Settings: "Einstellungen"
+      Sign_out: "Abmelden"
+      Sign_in:  "Anmelden"
+
+    footer:
+      About:   "Über uns"
+      Contact: "Kontakt"
+      News:    "Aktuell"
+
+  users:
+    index:
+      All_users: "Alle Benutzer"
+
+    new:
+      Sign_up: "Registrieren"
+      Create_my_account: "Mein Konto erstellen"
+
+    show:
+      List_Registration: "Listen Registrierung" 
+      Enter_registration_code: "Registrierungscode eingeben:"
+      Register_List: "Liste Registrieren"
+      List_Administration: "Listen Administration"
+      No_Registered_Lists: "Sie haben noch keine registrierten Listen"
+      List: "Liste"
+      Process: "Bearbeitung"
+      Item_collection: "Artikel erfassen"
+      Print: "Drucken"
+      Labels: "Etiketten"
+      Enter_container_color: "Korbfarbe eingeben:"
+      Save_Container_Color:  "Korbfarbe Speichern"
+
+    edit:
+      Edit_user:    "Benutzer bearbeiten"
+      Update_your_profile: "Aktualisiere Dein Profil"
+      Save_changes: "Änderungen speichern"
+
+    fields:
+      First_name: "Vorname"
+      Last_name:  "Nachname"
+      Street:     "Straße"
+      Zip_code:   "PLZ"
+      Town:       "Stadt"
+      Country:    "Land"
+      Phone:      "Telefon"
+      E_Mail:     "E-Mail"
+      News:       "Ich möchte Neuigkeiten über E-Mail erhalten"
+      Password:   "Passwort"
+      Confirm_Password: "Passwort bestätigen"
+
+    user:
+      delete: "löschen"
+      confirm: "Sind Sie sicher?"
+      
+  items:
+    index:
+      Collect_Items:   "Artikel Erfassen"
+      Item_number:     "Artikelnummer"
+      Description:     "Beschreibung"
+      Size:            "Größe"
+      Price:           "Preis"
+      Show:            "Anzeigen"
+      Edit:            "Bearbeiten"
+      Destroy:         "Löschen"
+      confirm:         "Sind Sie sicher?"
+      Create_New_Item: "Neuen Artikel Erstellen"
+      Back:            "Zurück"
+
+    new:
+      New_Item: "Neuer Artikel"
+      Back:     "Zurück"
+
+    show:
+      Show_Item: "Artikel Anzeigen"
+      Item_Number: "Artikelnummer:"
+      Description: "Beschreibung:"
+      Size:        "Größe:"
+      Price:       "Preis:" 
+      Edit:        "Bearbeiten"
+      Back:        "Zurück"
+
+    edit:
+      Edit_Item: "Artikel Bearbeiten"
+      Show:      "Anzeigen"
+      Back:      "Zurück" 
+
+    form:
+      description: "Beschreibung"
+      size:        "Größe"
+      price:       "Preis"
+

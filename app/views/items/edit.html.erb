@@ -1,13 +1,13 @@
-<%= provide(:title, 'Edit Item') %>
+<%= provide(:title, t('.Edit_Item')) %>
 
-<h1>Edit Item</h1>
+<h1><%= t('.Edit_Item') %></h1>
 
 <div class="row">
   <div class="span6 offset3">
 
     <%= render 'form' %>
 
-    <%= link_to 'Show', user_list_item_path(@user, @list, @item) %> |
-    <%= link_to 'Back', user_list_items_path(@user, @list) %>
+    <%= link_to t('.Show'), user_list_item_path(@user, @list, @item) %> |
+    <%= link_to t('.Back'), user_list_items_path(@user, @list) %>
   </div>
 </div>

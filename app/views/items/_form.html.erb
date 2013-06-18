@@ -1,11 +1,11 @@
 <%= render partial: 'shared/generic_error_message', locals: { topic: @item } %>
 
 <%= form_for [@user, @list, @item] do |f| %>
-  <%= f.label :description %>
+  <%= f.label :description, t('.description') %>
   <%= f.text_field :description, autofocus: true %>
-  <%= f.label :size %>
+  <%= f.label :size, t('.size') %>
   <%= f.text_field :size %>
-  <%= f.label :price %>
+  <%= f.label :price, t('.price') %>
   <%= f.number_field :price %>
   <%= f.submit class: "btn btn-primary"%>
 <% end %>

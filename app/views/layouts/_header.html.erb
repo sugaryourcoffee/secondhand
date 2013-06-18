@@ -4,38 +4,54 @@
       <%= link_to "secondhand", root_path, id: "logo" %>
       <nav>
         <ul class="nav pull-right">
-          <li><%= link_to "Home",    root_path %></li>
-          <li><%= link_to "Help",    help_path %></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <%= "Language" %> <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <%= form_tag root_path do %>
+                <%= select_tag 'set_locale',
+                               options_for_select(LANGUAGES, I18n.locale.to_s),
+                               onchange: 'this.form.submit()' %>
+                <%= submit_tag 'submit' %>
+                <%= javascript_tag "$('.locale input').hide()" %>
+              <% end %>
+            </ul>
+          </li>
+          <li><%= link_to t('.Home'),    root_path %></li>
+          <li><%= link_to t('.Help'),    help_path %></li>
           <% if signed_in? %>
             <% if current_user.admin? %>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  Admin <b class="caret"></b>
+                  <%= t('.Admin') %> <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><%= link_to "Events", events_path %></li>
-                  <li><%= link_to "Lists", lists_path %></li>
-                  <li><%= link_to "News", news_index_path %></li>
+                  <li><%= link_to t('.Events'), events_path %></li>
+                  <li><%= link_to t('.Lists'), lists_path %></li>
+                  <li><%= link_to t('.News'), news_index_path %></li>
                   <li class="divider"></li>
-                  <li><%= link_to "Users", users_path %></li>
+                  <li><%= link_to t('.Users'), users_path %></li>
                 </ul>
               </li>
             <% end %>
             <li id="fat-menu" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Account <b class="caret"></b>
+                <%= t('.Account') %> <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <li><%= link_to "Profile", current_user %></li>
-                <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+                <li><%= link_to t('.Profile'), current_user %></li>
+                <li>
+                  <%= link_to t('.Settings'), edit_user_path(current_user) %>
+                </li>
                 <li class="divider"></li>
                 <li>
-                  <%= link_to "Sign out", signout_path, method: "delete" %>
+                  <%= link_to t('.Sign_out'), signout_path, method: "delete" %>
                 </li>
               </ul>
             </li>
           <% else %>
-            <li><%= link_to "Sign in", signin_path %></li>
+            <li><%= link_to t('.Sign_in'), signin_path %></li>
           <% end %>
         </ul>
       </nav>

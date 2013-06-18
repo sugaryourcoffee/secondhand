@@ -1,11 +1,11 @@
-<% provide(:title, "Edit user") %>
-<h1>Update your profile</h1>
+<% provide(:title, t('.Edit_user')) %>
+<h1><%= t('.Update_your_profile') %></h1>
 
 <div class="row">
   <div class="span6 offset3">
     <%= form_for(@user) do |f| %>
       <%= render 'fields', f: f %>
-      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %> 
+      <%= f.submit t('.Save_changes'), class: "btn btn-large btn-primary" %> 
     <% end %>
 
     <%= gravatar_for @user %>
