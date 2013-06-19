@@ -6,15 +6,11 @@
         <ul class="nav pull-right">
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <%= "Language" %> <b class="caret"></b>
+              <%= selected_language %> <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <%= form_tag root_path do %>
-                <%= select_tag 'set_locale',
-                               options_for_select(LANGUAGES, I18n.locale.to_s),
-                               onchange: 'this.form.submit()' %>
-                <%= submit_tag 'submit' %>
-                <%= javascript_tag "$('.locale input').hide()" %>
+              <% LANGUAGES.each do |language| %>
+                <li><%= link_to language[0], root_path(language[1]) %></li>
               <% end %>
             </ul>
           </li>
