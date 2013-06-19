@@ -1,49 +1,49 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Title:</b>
+  <b><%= t('.Title') %></b>
   <%= @event.title %>
 </p>
 
 <p>
-  <b>Event date:</b>
+  <b><%= t('.Event_date') %></b>
   <%= @event.event_date.strftime("%Y-%m-%d") %>
 </p>
 
 <p>
-  <b>Location:</b>
+  <b><%= t('.Location') %></b>
   <%= @event.location %>
 </p>
 
 <p>
-  <b>Fee:</b>
+  <b><%= t('.Fee') %></b>
   <%= @event.fee %>
 </p>
 
 <p>
-  <b>Deduction:</b>
+  <b><%= t('.Deduction') %></b>
   <%= @event.deduction %>
 </p>
 
 <p>
-  <b>Provision:</b>
+  <b><%= t('.Provision') %></b>
   <%= @event.provision %>
 </p>
 
 <p>
-  <b>Max lists:</b>
+  <b><%= t('.Max_lists') %></b>
   <%= @event.max_lists %>
 </p>
 
 <p>
-  <b>Max items per list:</b>
+  <b><%= t('.Max_items_per_list') %></b>
   <%= @event.max_items_per_list %>
 </p>
 
 <p>
-  <b>Active:</b>
+  <b><%= t('.Active') %></b>
   <%= @event.active %>
 </p>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+<%= link_to t('.Edit'), edit_event_path(@event) %> |
+<%= link_to t('.Back'), events_path %>

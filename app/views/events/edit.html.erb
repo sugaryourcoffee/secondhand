@@ -1,6 +1,7 @@
-<h1>Editing event</h1>
+<% provide(:title, t('.Edit_event')) %>
+<h1><%= t('.Editing_event') %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @event %> |
-<%= link_to 'Back', events_path %>
+<%= link_to t('.Show'), @event %> |
+<%= link_to t('.Back'), events_path %>

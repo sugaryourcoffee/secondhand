@@ -1,7 +1,10 @@
 <%= form_for(@event) do |f| %>
   <% if @event.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+      <h2>
+        <%= pluralize(@event.errors.count, t('.error')) %> 
+        <%= t('.error_message') %> 
+      </h2>
 
       <ul>
       <% @event.errors.full_messages.each do |msg| %>
@@ -12,35 +15,35 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :title %><br />
+    <%= f.label :title, t('.title') %><br />
     <%= f.text_field :title %>
   </div>
   <div class="field">
-    <%= f.label :event_date %><br />
+    <%= f.label :event_date, t('.event_date') %><br />
     <%= f.date_select :event_date %>
   </div>
   <div class="field">
-    <%= f.label :location %><br />
+    <%= f.label :location, t('.location') %><br />
     <%= f.text_field :location %>
   </div>
   <div class="field">
-    <%= f.label :fee %><br />
+    <%= f.label :fee, t('.fee') %><br />
     <%= f.text_field :fee %>
   </div>
   <div class="field">
-    <%= f.label :deduction %><br />
+    <%= f.label :deduction, t('.deduction') %><br />
     <%= f.text_field :deduction %>
   </div>
   <div class="field">
-    <%= f.label :provision %><br />
+    <%= f.label :provision, t('.provision') %><br />
     <%= f.text_field :provision %>
   </div>
   <div class="field">
-    <%= f.label :max_lists %><br />
+    <%= f.label :max_lists, t('.max_lists') %><br />
     <%= f.number_field :max_lists %>
   </div>
   <div class="field">
-    <%= f.label :max_items_per_list %><br />
+    <%= f.label :max_items_per_list, t('.max_items_per_list') %><br />
     <%= f.number_field :max_items_per_list %>
   </div>
   <div class="actions">

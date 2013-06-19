@@ -116,3 +116,54 @@ en:
       description: "Description"
       size:        "Size"
       price:       "Price"
+
+  events:
+    index:
+      All_events:    "All events"
+      Title:         "Title"
+      Date:          "Date"
+      Location:      "Location"
+      Fee:           "Fee"
+      Deduction:     "Deduction"
+      Provision:     "Provision"
+      List:          "Lists"
+      Items:         "Items"
+      Deactivate:    "Deactivate"
+      Activate:      "Activate"
+      Show:          "Show"
+      Edit:          "Edit"
+      Destroy:       "Destroy"
+      confirm:       "Are you sure?"
+      New_Event:     "New Event"
+
+    edit:
+      Edit_event:    "Edit event"
+      Editing_event: "Editing event"
+      Show:          "Show"
+      Back:          "Back"
+
+    show:
+      Title:              "Title:"
+      Event_date:         "Event Date:"
+      Location:           "Location:"
+      Fee:                "Fee:"
+      Deduction:          "Deduction:"
+      Provision:          "Provision:"
+      Max_lists:          "Maximum Lists:"
+      Max_items_per_list: "Maximum Items Per List:"
+      Active:             "Active:"
+      Edit:               "Edit"
+      Back:               "Back"
+
+    form:
+      error:              "error"
+      error_message:      "prohibited this event from being saved:"
+      title:              "Title"
+      event_date:         "Event date"
+      location:           "Location"
+      fee:                "Fee"
+      deduction:          "Deduction"
+      provision:          "Provision"
+      max_lists:          "Maximum count of lists"
+      max_items_per_list: "Maximum items count per list"
+
