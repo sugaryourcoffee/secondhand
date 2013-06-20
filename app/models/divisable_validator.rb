@@ -4,7 +4,7 @@
 class DivisableValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     record.errors[attribute] << (
-      options[:message] || "has to be divisable by #{options[:divisor]}"
+      options[:message] || I18n.t('.divisable', divisor: options[:divisor])
     ) unless
       not value.nil? and value % options[:divisor] == 0
   end

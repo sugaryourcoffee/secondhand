@@ -2,13 +2,13 @@
   <% if @event.errors.any? %>
     <div id="error_explanation">
       <h2>
-        <%= pluralize(@event.errors.count, t('.error')) %> 
-        <%= t('.error_message') %> 
+        <%= raw t('errors.template.header', count: @event.errors.count,
+                  model: t('activerecord.models.event')) %>
       </h2>
 
       <ul>
       <% @event.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <li><%= raw msg %></li>
       <% end %>
       </ul>
     </div>

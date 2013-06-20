@@ -136,6 +136,10 @@ en:
       confirm:       "Are you sure?"
       New_Event:     "New Event"
 
+    new:
+      New_event: "New event"
+      Back:      "Back"
+
     edit:
       Edit_event:    "Edit event"
       Editing_event: "Editing event"
@@ -241,4 +245,11 @@ en:
       confirm_message: "Are you sure?"
       New_News:        "New News"
 
-
+  errors:
+    template:
+      body:    "There were problems with the following fields:"
+      header:
+        one:   "1 error prohibited this %{model} from being saved"
+        other: "%{count} erros prohibited this %{model} from being saved"
+ 
+  divisable: "has to be divisable by %{divisor}"

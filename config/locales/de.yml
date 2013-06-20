@@ -134,6 +134,10 @@ de:
       confirm:       "Sind Sie sicher?"
       New_Event:     "Neue Veranstaltung"
 
+    new:
+      New_event: "Neue Veranstaltung"
+      Back:      "Zurück"
+
     edit:
       Edit_event:    "Veranstaltung bearbeiten"
       Editing_event: "Veranstaltung bearbeiten"
@@ -336,3 +340,38 @@ de:
       second: Sekunden
       year: Jahr
 
+  activerecord:
+    models:
+      news:  "die Nachricht"
+      event: "die Veranstaltung"
+      list:  "die Liste"
+    attributes:
+      news:
+        description: "Beschreibung"
+        title:       "Titel"
+      event:
+        deduction:          "Mindestumsatz"
+        fee:                "Gebühr"
+        location:           "Lokalität"
+        max_items_per_list: "Maximale Anzahl Artikel pro Liste"
+        max_lists:          "Maximale Anzahl Listen"
+        provision:          "Provision"
+        title:              "Titel" 
+    errors:
+      messages:
+        blank:        "darf nicht leer sein"
+        not_a_number: "muss eine Zahl sein"
+        
+  errors:
+    template:
+      body:    "Es gab Probleme mit folgenden Feldern:"
+      header:
+        one:   "1 Fehler hat verhindert %{model} zu speichern"
+        other: "%{count} Fehler haben verhindert %{model} zu speichern"
+      
+  divisable: "muss durch %{divisor} teilbar sein"
+
+  helpers:
+    submit:
+      create: "Erstelle %{model}"
+      update: "Aktualisiere %{model}"

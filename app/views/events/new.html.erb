@@ -1,5 +1,7 @@
-<h1>New event</h1>
+<%= provide(:title, t('.New_event')) %>
+
+<h1><%= t('.New_event') %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', events_path %>
+<%= link_to t('.Back'), events_path %>
