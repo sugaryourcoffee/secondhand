@@ -1,14 +1,18 @@
+<%= provide(:title, t('.Show_news')) %>
+
+<h1><%= t('.Show_news') %></h1>
+
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Title:</b>
+  <b><%= t('.Title') %></b>
   <%= @news.title %>
 </p>
 
 <p>
-  <b>Description:</b>
+  <b><%= t('.Description') %></b>
   <%= sanitize(@news.description) %>
 </p>
 
-<%= link_to 'Edit', edit_news_path(@news) %> |
-<%= link_to 'Back', news_index_path %>
+<%= link_to t('.Edit'), edit_news_path(@news) %> |
+<%= link_to t('.Back'), news_index_path %>

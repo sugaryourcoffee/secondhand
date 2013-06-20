@@ -1,30 +1,34 @@
+<%= provide(:title, t('.show_list')) %>
+
+<h1><%= t('.show_list') %></h1>
+
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>List number:</b>
+  <b><%= t('.List_number') %></b>
   <%= @list.list_number %>
 </p>
 
 <p>
-  <b>Registration code:</b>
+  <b><%= t('.Registration_code') %></b>
   <%= @list.registration_code %>
 </p>
 
 <p>
-  <b>Container:</b>
+  <b><%= t('.Container') %></b>
   <%= @list.container %>
 </p>
 
 <p>
-  <b>Event:</b>
+  <b><%= t('.Event') %></b>
   <%= @list.event_id %>
 </p>
 
 <p>
-  <b>User:</b>
+  <b><%= t('.User') %></b>
   <%= @list.user_id %>
 </p>
 
 
-<%= link_to 'Edit', edit_list_path(@list) %> |
-<%= link_to 'Back', lists_path %>
+<%= link_to t('.Edit'), edit_list_path(@list) %> |
+<%= link_to t('.Back'), lists_path %>

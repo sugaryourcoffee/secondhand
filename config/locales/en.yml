@@ -143,6 +143,7 @@ en:
       Back:          "Back"
 
     show:
+      Show_event:         "Show event"
       Title:              "Title:"
       Event_date:         "Event Date:"
       Location:           "Location:"
@@ -168,6 +169,18 @@ en:
       max_items_per_list: "Maximum items count per list"
 
   lists:
+    index:
+      All_lists:            "All lists"
+      List_number:          "List number"
+      Registration_code:    "Code"
+      Container:            "Container"
+      Event:                "Event"
+      User:                 "User"
+      Show:                 "Show"
+      Edit:                 "Edit"
+      Destroy:              "Destroy"
+      confirm_message:      "Are you sure?"
+
     edit:
       Editing_list: "Editing list"
       Show:         "Show"
@@ -181,5 +194,51 @@ en:
       container:         "Container color"
       event_id:          "Event"
       user_id:           "User"
+
+    show:
+      show_list:         "Show list"
+      List_number:       "List number:"
+      Registration_code: "Registration code:"
+      Container:         "Container:"
+      Event:             "Event:"
+      User:              "User:" 
+      Edit:              "Edit"
+      Back:              "Back"
+
+  news:
+    new:
+      New_News:        "New news"
+      Create_news:     "Create news"
+      Create_new_news: "Create new news"
+      Show:            "Show"
+      Back:            "Back"
+
+    show:
+      Show_news:     "Show news"
+      Title:         "Title:"
+      Description:   "Description:"
+      Edit:          "Edit"
+      Back:          "Back"
+
+    edit:
+      Edit_News:     "Edit news"
+      Save_changes:  "Save changes"
+      Show:          "Show"
+      Back:          "Back"
+
+    form:
+      error:         "error"
+      title:         "Title"
+      description:   "Description"
+
+    index:
+      News:            "News"
+      Title:           "Title"
+      Description:     "Description"
+      Show:            "Show"
+      Edit:            "Edit"
+      Destroy:         "Destroy"
+      confirm_message: "Are you sure?"
+      New_News:        "New News"
 
 

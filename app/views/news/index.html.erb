@@ -1,12 +1,12 @@
-<% provide(:title, 'News') %>
+<% provide(:title, t('.News')) %>
 
-<h1>News</h1>
+<h1><%= t('.News') %></h1>
 
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Description</th>
+      <th><%= t('.Title') %></th>
+      <th><%= t('.Description') %></th>
       <th></th>
       <th></th>
       <th></th>
@@ -18,10 +18,10 @@
       <tr>
         <td><%= news.title %></td>
         <td><%= sanitize(news.description) %></td>
-        <td><%= link_to 'Show', news %></td>
-        <td><%= link_to 'Edit', edit_news_path(news) %></td>
-        <td><%= link_to 'Destroy', news, method: :delete, 
-          data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t('.Show'), news %></td>
+        <td><%= link_to t('.Edit'), edit_news_path(news) %></td>
+        <td><%= link_to t('.Destroy'), news, method: :delete, 
+          data: { confirm: t('.confirm_message') } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -29,5 +29,5 @@
 
 <br />
 
-<%= link_to 'New News', new_news_path %>
+<%= link_to t('.New_News'), new_news_path %>
 

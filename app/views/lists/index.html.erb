@@ -1,17 +1,17 @@
-<% provide(:title, 'All lists') %>
+<% provide(:title, t('.All_lists')) %>
 
-<h1>All lists</h1>
+<h1><%= t('.All_lists') %></h1>
 
 <%= will_paginate %>
 
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>List number</th>
-      <th>Registration code</th>
-      <th>Container</th>
-      <th>Event</th>
-      <th>User</th>
+      <th><%= t('.List_number') %></th>
+      <th><%= t('.Registration_code') %></th>
+      <th><%= t('.Container') %></th>
+      <th><%= t('.Event') %></th>
+      <th><%= t('.User') %></th>
       <th></th>
       <th></th>
       <th></th>
@@ -26,10 +26,10 @@
         <td><%= list.container %></td>
         <td><%= list.event_id %></td>
         <td><%= list.user_id %></td>
-        <td><%= link_to 'Show', list %></td>
-        <td><%= link_to 'Edit', edit_list_path(list) %></td>
-        <td><%= link_to 'Destroy', list, method: :delete, 
-                data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t('.Show'), list %></td>
+        <td><%= link_to t('.Edit'), edit_list_path(list) %></td>
+        <td><%= link_to t('.Destroy'), list, method: :delete, 
+                data: { confirm: t('.confirm_message') } %></td>
       </tr>
     <% end %>
   </tbody>

@@ -18,10 +18,10 @@ de:
     header:
       Home:     "Home"
       Help:     "Hilfe" 
-      Admin:    "Admin"
+      Admin:    "Verwaltung"
       Events:   "Veranstaltungen"
       Lists:    "Listen"
-      News:     "News"
+      News:     "Nachrichten"
       Users:    "Benutzer"
       Account:  "Mein Konto"
       Profile:  "Profil"
@@ -141,6 +141,7 @@ de:
       Back:          "Zurück"
 
     show:
+      Show_event:         "Veranstaltung"
       Title:              "Titel:"
       Event_date:         "Veranstaltungstag:"
       Location:           "Lokalität:"
@@ -166,6 +167,18 @@ de:
         max_items_per_list: "Maximale Anzahl Artikel pro Liste"
 
   lists:
+    index:
+      All_lists:            "Listen"
+      List_number:          "Listennummer"
+      Registration_code:    "Code"
+      Container:            "Korbfarbe"
+      Event:                "Veranstaltung"
+      User:                 "Benutzer"
+      Show:                 "Anzeigen"
+      Edit:                 "Bearbeiten"
+      Destroy:              "Löschen"
+      confirm_message:      "Sind Sie sicher?"
+
     edit:
       Editing_list: "Liste bearbeiten"
       Show:         "Anzeigen"
@@ -179,6 +192,52 @@ de:
       container:         "Korbfarbe"
       event_id:          "Veranstaltung"
       user_id:           "Benutzer"
+
+    show:
+      show_list:         "Liste"
+      List_number:       "Listennummer:"
+      Registration_code: "Registrierungs Code:"
+      Container:         "Korbfarbe:"
+      Event:             "Veranstaltung:"
+      User:              "Benutzer:" 
+      Edit:              "Bearbeiten"
+      Back:              "Zurück"
+
+  news:
+    new:
+      New_News:        "Neue Nachricht"
+      Create_news:     "Erstelle Nachricht"
+      Create_new_news: "Erstelle neue Nachricht"
+      Show:            "Anzeigen"
+      Back:            "Zurück"
+
+    show:
+      Show_news:     "Nachricht anzeigen"
+      Title:         "Titel:"
+      Description:   "Beschreibung:"
+      Edit:          "Bearbeiten"
+      Back:          "Zurück"
+
+    edit:
+      Edit_News:     "Nachrichten bearbeiten"
+      Save_changes:  "Änderungen speichern"
+      Show:          "Anzeigen"
+      Back:          "Zurück"
+
+    form:
+      error:         "Fehler"
+      title:         "Titel"
+      description:   "Beschreibung"
+      
+    index:
+      News:            "Nachrichten"
+      Title:           "Titel"
+      Description:     "Beschreibung"
+      Show:            "Anzeigen"
+      Edit:            "Bearbeiten"
+      Destroy:         "Löschen"
+      confirm_message: "Sind Sie sicher?"
+      New_News:        "Neue Nachricht"
 
   date:
     abbr_day_names:
@@ -276,3 +335,4 @@ de:
       month: Monat
       second: Sekunden
       year: Jahr
+
