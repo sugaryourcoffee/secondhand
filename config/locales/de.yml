@@ -165,6 +165,21 @@ de:
         max_lists:          "Maximale Anzahl Listen"
         max_items_per_list: "Maximale Anzahl Artikel pro Liste"
 
+  lists:
+    edit:
+      Editing_list: "Liste bearbeiten"
+      Show:         "Anzeigen"
+      Back:         "Zurück" 
+
+    form:
+      error:             "Fehler"
+      error_message:     "hat das Speichern der Liste verhindert"
+      list_number:       "Listennummer"
+      registration_code: "Registrierungscode"
+      container:         "Korbfarbe"
+      event_id:          "Veranstaltung"
+      user_id:           "Benutzer"
+
   date:
     abbr_day_names:
     - So

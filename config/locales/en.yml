@@ -167,3 +167,19 @@ en:
       max_lists:          "Maximum count of lists"
       max_items_per_list: "Maximum items count per list"
 
+  lists:
+    edit:
+      Editing_list: "Editing list"
+      Show:         "Show"
+      Back:         "Back" 
+
+    form:
+      error:             "error"
+      error_message:     "prohibited this list from being saved:"
+      list_number:       "List number"
+      registration_code: "Registration code"
+      container:         "Container color"
+      event_id:          "Event"
+      user_id:           "User"
+
+
