@@ -45,11 +45,14 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.save
         create_lists(@event)
-        format.html { redirect_to @event, notice: 'Event was successfully created.' }
+        format.html { redirect_to @event, 
+                      notice: I18n.t('.created', 
+                                     model: 'activerecord.models.event') }
         format.json { render json: @event, status: :created, location: @event }
       else
         format.html { render action: "new" }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+        format.json { render json: @event.errors, 
+                      status: :unprocessable_entity }
       end
     end
   end
@@ -63,7 +66,9 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.update_attributes(params[:event])
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+        format.html { redirect_to @event, 
+                      notice: I18n.t('.updated',
+                                     model: 'activerecord.models.event') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -151,7 +156,8 @@ class EventsController < ApplicationController
     if @event.errors.any?
       flash[:error] = @event.errors.full_messages.first
     else
-      flash[:notice] = "Event #{@event.title} deleted"
+      flash[:notice] = I18n.t('.destroyed', 
+                              model: t('activerecord.models.event'))
     end
 
     respond_to do |format|

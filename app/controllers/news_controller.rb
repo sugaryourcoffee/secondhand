@@ -20,7 +20,7 @@ class NewsController < ApplicationController
     @news = News.find(params[:id])
     
     if @news.update_attributes(params[:news])
-      flash[:success] = "News updated"
+      flash[:success] = I18n.t('.updated', model: t('activerecord.models.news'))
       redirect_to @news
     else
       render 'edit'
@@ -30,7 +30,7 @@ class NewsController < ApplicationController
   def create
     @news = News.new(params[:news])
     if @news.save
-      flash[:success] = "Successfully created new news entry!"
+      flash[:success] = I18n.t('.created', model: t('activerecord.models.news'))
       redirect_to @news
     else
       render 'new'
@@ -39,7 +39,7 @@ class NewsController < ApplicationController
 
   def destroy
     News.find(params[:id]).destroy
-    flash[:success] = "News destroyed."
+    flash[:success] = I18n.t('.destroyed', model: t('activerecord.models.news'))
     redirect_to news_index_path
   end
 

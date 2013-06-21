@@ -71,7 +71,8 @@ class ListsController < ApplicationController
     respond_to do |format|
       if @list.save
         format.html { redirect_to @list, 
-                      notice: 'List was successfully created.' }
+                      notice: I18n.t('.created',
+                                     model: t('activerecord.models.list')) }
         format.json { render json: @list, status: :created, location: @list }
       else
         format.html { render action: "new" }
@@ -90,7 +91,8 @@ class ListsController < ApplicationController
     respond_to do |format|
       if @list.update_attributes(params[:list])
         format.html { redirect_to return_url, 
-                      notice: 'List was successfully updated.' }
+                      notice: I18n.t('.updated',
+                                     model: t('activerecord.models.list')) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -108,7 +110,7 @@ class ListsController < ApplicationController
     if @list.errors.any?
       flash[:error] = @list.errors.full_messages.first
     else
-      flash[:notice] = "List #{@list.list_number} deleted"
+      flash[:notice] = I18n.t('.destroyed', model: t('activerecord.models.list'))
     end
 
     respond_to do |format|

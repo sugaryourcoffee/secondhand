@@ -342,9 +342,11 @@ de:
 
   activerecord:
     models:
-      news:  "die Nachricht"
-      event: "die Veranstaltung"
-      list:  "die Liste"
+      news:  "Nachricht"
+      event: "Veranstaltung"
+      list:  "Liste"
+      user:  "Benutzer"
+      item:  "Artikel"
     attributes:
       news:
         description: "Beschreibung"
@@ -357,19 +359,50 @@ de:
         max_lists:          "Maximale Anzahl Listen"
         provision:          "Provision"
         title:              "Titel" 
+      user:
+        password:   "Passwort"
+        password_confirmation: "Passwortbestätigung"
+        first_name: "Vorname"
+        last_name:  "Nachname"
+        street:     "Straße"
+        zip_code:   "PLZ"
+        town:       "Stadt"
+        country:    "Land"
+        phone:      "Telefon"
+        email:      "E-Mail"
+      item:
+        description: "Beschreibung"
+        size:        "Größe"
+        price:       "Preis"
     errors:
       messages:
         blank:        "darf nicht leer sein"
         not_a_number: "muss eine Zahl sein"
+        invalid:      "ist ungültig"
+        too_short:    "ist zu kurz"
         
   errors:
     template:
       body:    "Es gab Probleme mit folgenden Feldern:"
       header:
-        one:   "1 Fehler hat verhindert %{model} zu speichern"
-        other: "%{count} Fehler haben verhindert %{model} zu speichern"
+        one:   "%{model} konnte wegen folgendem Fehler nicht gespeichert werden:"
+        other: "%{model} konnte wegen foglenden %{count} Fehlern nicht gespeichert werden:"
       
   divisable: "muss durch %{divisor} teilbar sein"
+
+  created:           "%{model} wurde erstellt!"
+  not_created:       "%{model} konnte nicht erstellt werden!"
+  updated:           "%{model} wurde aktualisiert!"
+  not_updated:       "%{model} konnte nicht aktualisiert werden!"
+  destroyed:         "%{model} wurde gelöscht!"
+  list_not_assigned: "Listennummer ist nicht zugeordnet!"
+  sign_in:           "Bitte melden Sie sich an"
+  admin_privileges:  "Administrationsrechte erforderlich!"
+  invalid_email_password: "Invalid email/password combination"
+  welcome:                "Willkommen zu Sugar Your Coffee!"
+  taken:                  "%{model} ist schon vergeben!"
+  registered:             "%{model} wurde registriert!"
+  not_valid:              "Registrierungscode nicht gültig!"
 
   helpers:
     submit:

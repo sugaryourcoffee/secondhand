@@ -202,9 +202,11 @@ describe "User pages" do
                           href: user_list_items_path(user, list, locale: :en)) }
     it { should have_content('Print') }
     it { should have_link('List', 
-                          href: print_list_user_list_path(user, list, locale: :en)) }
+                          href: print_list_user_list_path(user, list, 
+                                                          locale: :en)) }
     it { should have_link('Labels', 
-                          href: print_labels_user_list_path(user, list, locale: :en)) }
+                          href: print_labels_user_list_path(user, list, 
+                                                            locale: :en)) }
     it { should have_content('Enter container color:') }
     it { should have_button('Save Container Color') }
 
@@ -213,7 +215,7 @@ describe "User pages" do
         fill_in "Enter container color:", with: "Red"
         click_button "Save Container Color"
       end
-      it { should have_text('List was successfully updated.') }
+      it { should have_text('List updated!') }
     end
 
     describe "item collection" do

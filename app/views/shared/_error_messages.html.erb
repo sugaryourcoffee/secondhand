@@ -1,11 +1,12 @@
 <% if @user.errors.any? %>
   <div id="error_explanation">
     <div class="alert alert-error">
-      The form contains <%= pluralize(@user.errors.count, "error") %>.
+      <%= raw t('errors.template.header', count: @user.errors.count,
+          model: t('activerecord.models.user')) %>
     </div>
     <ul>
       <% @user.errors.full_messages.each do |m| %>
-        <li><%= m %></li>
+        <li><%= raw m %></li>
       <% end %>
     </ul>
   </div>

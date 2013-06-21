@@ -22,10 +22,12 @@ class ItemsController < ApplicationController
     @item = @list.items.build(params[:item])
     @user = User.find(params[:user_id])
     if @item.save
-      flash[:success] = "Item created!"
+      flash[:success] = I18n.t('.created', 
+                               model: t('activerecord.models.item'))
       redirect_to user_list_items_path(@user, @list)
     else
-      flash[:error] = "Could not create item!"
+      flash[:error] = I18n.t('.not_created', 
+                             model: t('activerecord.models.item'))
       render 'new'
     end 
   end
@@ -44,17 +46,18 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update_attributes(params[:item])
-      flash[:success] = "Item udpated!"
+      flash[:success] = I18n.t('.updated', model: t('activerecord.models.item'))
       redirect_to user_list_items_path(@user, @list)
     else
-      flash[:error] = "Could not update item!"
+      flash[:error] = I18n.t('.not_updated', 
+                             model: t('activerecord.models.item'))
       render action: 'edit'
     end  
   end
 
   def destroy
     Item.find(params[:id]).destroy
-    flash[:success] = "Item destroyed!"
+    flash[:success] = I18n.t('.destroyed', model: t('activerecord.models.item'))
     @list = List.find(params[:list_id])
     @user = User.find(params[:user_id])
     redirect_to user_list_items_path(@user, @list)
@@ -68,7 +71,8 @@ class ItemsController < ApplicationController
     users_list = List.find(params[:list_id]).user_id == user.id
     
     unless users_list or current_user.admin?
-      flash[:warning] = "List number not assigned"
+      flash[:warning] = I18n.t('.list_not_assigned', 
+                               model: t('activerecord.models.item'))
       redirect_to(root_path)
     end
   end

@@ -11,17 +11,17 @@ class ApplicationController < ActionController::Base
   def signed_in_user
     unless signed_in?
       store_location
-      redirect_to signin_path, notice: "Please sign in." unless signed_in?
+      redirect_to signin_path, notice: I18n.t('.sign_in') unless signed_in?
     end
   end
 
   def authorize
     if current_user.nil? 
       store_location
-      redirect_to signin_path, notice: "Please sign in"
+      redirect_to signin_path, notice: I18n.t('.sign_in') 
     elsif not current_user.admin?
       redirect_to root_path, 
-                  notice: "You need admin privieges to access this site."
+                  notice: I18n.t('.admin_previleges')
     end
   end
 
