@@ -36,6 +36,11 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: {minimum: 6}
   validates :password_confirmation, presence: true
 
+  def lists_for_active_event
+    event = Event.find_by_active(true)
+    List.where(user_id: id, event_id: event).order(:list_number)
+  end
+
   private
 
   def create_remember_token

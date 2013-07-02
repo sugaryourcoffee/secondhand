@@ -23,7 +23,7 @@
         <% if @user.lists.empty? %>
           <p><%= t('.No_Registered_Lists') %></p>
         <% else %>
-          <% @user.lists.each do |list| %>
+          <% @user.lists_for_active_event.each do |list| %>
           <div class="span2">
             <div class="btn-group">
               <%= link_to "<button class=\"btn\">

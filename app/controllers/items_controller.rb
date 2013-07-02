@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
   before_filter :correct_user, :set_instance_vars
 
   def index
-    @items = Item.where({ list_id: params[:list_id] }).all
+    @items = Item.where({ list_id: params[:list_id] }).order(:item_number).all
     @list = List.find(params[:list_id])
     @user = User.find(params[:user_id])
   end
