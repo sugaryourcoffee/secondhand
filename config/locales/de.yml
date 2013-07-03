@@ -8,6 +8,10 @@ de:
         separator: ","
         delimiter: "."
         format:    "%n %u"
+    format:
+      separator: ","
+      delimiter: "."
+      precision: 2
 
   static_pages:
     home:
@@ -24,8 +28,8 @@ de:
       News:     "Nachrichten"
       Users:    "Benutzer"
       Account:  "Mein Konto"
-      Profile:  "Profil"
-      Settings: "Einstellungen"
+      Profile:  "Meine Listen"
+      Settings: "Profil"
       Sign_out: "Abmelden"
       Sign_in:  "Anmelden"
 
@@ -376,10 +380,11 @@ de:
         price:       "Preis"
     errors:
       messages:
-        blank:        "darf nicht leer sein"
-        not_a_number: "muss eine Zahl sein"
-        invalid:      "ist ungültig"
-        too_short:    "ist zu kurz"
+        blank:                    "darf nicht leer sein"
+        not_a_number:             "muss eine Zahl sein"
+        invalid:                  "ist ungültig"
+        too_short:                "muss mindestens %{count} Zeichen haben"
+        greater_than_or_equal_to: "muss mindestens %{count} sein"
         
   errors:
     template:

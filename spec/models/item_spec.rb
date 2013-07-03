@@ -58,6 +58,11 @@ describe Item do
     it { should_not be_valid }
   end
 
+  describe "when price is zero" do
+    before { @item.price = 0.0 }
+    it { should_not be_valid }
+  end
+
   describe "accessible attributes" do
     it "should not allow access to list_id" do
       expect do

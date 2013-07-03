@@ -6,7 +6,10 @@
   <%= f.label :size, t('.size') %>
   <%= f.text_field :size %>
   <%= f.label :price, t('.price') %>
-  <%= f.number_field :price %>
+  <%= f.number_field :price, 
+      value: number_with_precision(f.object.price, 
+                                   precision: 2, 
+                                   locale: I18n.locale) %>
   <%= f.submit class: "btn btn-primary"%>
 <% end %>
 

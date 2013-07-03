@@ -32,7 +32,7 @@ describe "Authentication" do
       it { should_not have_link('Events', href: events_path(locale: :en)) }
       it { should_not have_link('Lists', href: lists_path(locale: :en)) }
       it { should_not have_link('Users', href: users_path(locale: :en)) }
-      it { should have_link('Profile', href: user_path(user, locale: :en)) }
+      it { should have_link('My Lists', href: user_path(user, locale: :en)) }
       it { should have_link('Settings', href: edit_user_path(user, locale: :en)) }
       it { should have_link('Sign out', href: signout_path(locale: :en)) }
       it { should_not have_link('Sign in', href: signin_path(locale: :en)) }
