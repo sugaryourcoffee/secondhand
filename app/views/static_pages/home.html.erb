@@ -14,7 +14,18 @@
     <%= t('.welcome_html') %>
   </h2>
 
-  <%= link_to t('.sign_up_now'), signup_path, class: "btn btn-large btn-primary" %>
+  <% if signed_in? %>
+    <%= link_to t('.profile'), 
+                current_user, 
+                class: "btn btn-large btn-primary" %>
+  <% else %>
+    <%= link_to t('.sign_up_now'), 
+                signup_path, 
+                class: "btn btn-large btn-primary" %>
+    <%= link_to t('.sign_in'),
+                signin_path,
+                class: "btn btn-large" %>
+  <% end %>
 </div>
 
 <%= link_to image_tag("SugarYourCoffee_48x48.png", alt: "SugarYourCoffee"), 

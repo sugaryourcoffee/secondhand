@@ -15,8 +15,10 @@ de:
 
   static_pages:
     home:
-      welcome_html: "Willkommen zu <em>Secondhand</em> dem Partner von <a href=\"http://messe-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a>. Hier können Sie Ihre Artikel die Sie auf der Börse verkaufen wollen erfassen."
-      sign_up_now: "Jetzt anmelden!"
+      welcome_html: "Willkommen zu <em>Secondhand</em> dem Partner von <a href=\"http://boerse-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a>. Hier können Sie Ihre Artikel die Sie auf der Börse verkaufen wollen erfassen."
+      sign_up_now: "Jetzt registrieren!"
+      sign_in:     "An meinem Konto anmelden"
+      profile:     "Meine Listen"
 
   layouts:
     header:
