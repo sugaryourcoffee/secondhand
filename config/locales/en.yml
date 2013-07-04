@@ -116,6 +116,7 @@ en:
       description: "Description"
       size:        "Size"
       price:       "Price"
+      create_and_new: "Save and create new item"
 
   events:
     index:

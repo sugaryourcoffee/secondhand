@@ -24,7 +24,11 @@ class ItemsController < ApplicationController
     if @item.save
       flash[:success] = I18n.t('.created', 
                                model: t('activerecord.models.item'))
-      redirect_to user_list_items_path(@user, @list)
+      if params[:commit] == I18n.t('.items.form.create_and_new')
+        redirect_to new_user_list_item_path(@user, @list)
+      else
+        redirect_to user_list_items_path(@user, @list)
+      end
     else
       flash[:error] = I18n.t('.not_created', 
                              model: t('activerecord.models.item'))

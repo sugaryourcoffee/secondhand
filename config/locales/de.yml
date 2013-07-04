@@ -118,6 +118,7 @@ de:
       description: "Beschreibung"
       size:        "Größe"
       price:       "Preis"
+      create_and_new: "Speichern und neuen Artikel erstellen"
 
   events:
     index:
