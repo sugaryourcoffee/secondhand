@@ -93,24 +93,25 @@ de:
       
   items:
     index:
-      Collect_Items:   "Artikel Erfassen"
-      Item_number:     "Artikelnummer"
-      Description:     "Beschreibung"
-      Size:            "Größe"
-      Price:           "Preis"
-      Show:            "Anzeigen"
-      Edit:            "Bearbeiten"
-      Destroy:         "Löschen"
-      confirm:         "Sind Sie sicher?"
-      Create_New_Item: "Neuen Artikel Erstellen"
-      Back:            "Zurück"
+      Collect_Items:      "Artikel Erfassen"
+      Item_number:        "Artikelnummer"
+      Description:        "Beschreibung"
+      Size:               "Größe"
+      Price:              "Preis"
+      Show:               "Anzeigen"
+      Edit:               "Bearbeiten"
+      Destroy:            "Löschen"
+      confirm:            "Sind Sie sicher?"
+      Create_New_Item:    "Neuen Artikel Erstellen"
+      Back:               "Zurück"
+      max_items_per_list: "Es können keine weiteren Artikel hinzugefügt werden"
 
     new:
       New_Item: "Neuer Artikel"
       Back:     "Zurück"
 
     show:
-      Show_Item: "Artikel Anzeigen"
+      Show_Item:   "Artikel Anzeigen"
       Item_Number: "Artikelnummer:"
       Description: "Beschreibung:"
       Size:        "Größe:"

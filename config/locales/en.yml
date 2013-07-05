@@ -91,17 +91,18 @@ en:
 
   items:
     index:
-      Collect_Items: "Collect Items"
-      Item_number:     "Item number"
-      Description:     "Description"
-      Size:            "Size"
-      Price:           "Price"
-      Show:            "Show"
-      Edit:            "Edit"
-      Destroy:         "Destroy"
-      confirm:         "Are you sure?"
-      Create_New_Item: "Create New Item"
-      Back:            "Back"
+      Collect_Items:      "Collect Items"
+      Item_number:        "Item number"
+      Description:        "Description"
+      Size:               "Size"
+      Price:              "Price"
+      Show:               "Show"
+      Edit:               "Edit"
+      Destroy:            "Destroy"
+      confirm:            "Are you sure?"
+      Create_New_Item:    "Create New Item"
+      Back:               "Back"
+      max_items_per_list: "Cannot add additional items"
 
     new:
       New_Item: "New Item"

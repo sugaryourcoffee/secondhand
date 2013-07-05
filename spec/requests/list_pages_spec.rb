@@ -6,8 +6,9 @@ describe List do
 
   describe "item collection" do
 
+    let(:event) { FactoryGirl.create(:active) }
     let(:user) { FactoryGirl.create(:user) }
-    let(:list) { FactoryGirl.create(:assigned, user: user) }
+    let(:list) { FactoryGirl.create(:assigned, user: user, event: event) }
 
     before do
       sign_in user
@@ -35,7 +36,16 @@ describe List do
     end
 
     it "should not create more than max items" do
-      pending "Needs to be implemented"
+      1.upto(event.max_items_per_list) do |i|
+        click_link "Create New Item"
+        fill_in "Description", with: "This is my #{i}. item"
+        fill_in "Size", with: "#{i}"
+        fill_in "Price", with: i
+        expect { click_button("Create Item") }.to change(Item, :count).by(1)
+      end 
+
+      should_not have_link "Create New Item"
+      should have_text "Cannot add additional items"
     end
 
   end

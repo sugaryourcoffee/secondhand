@@ -33,8 +33,14 @@
   </tbody>
 </table>
 
-<%= link_to t('.Create_New_Item'), new_user_list_item_path(@user, @list), 
-            class: "btn btn-primary" %> 
+<% if @list.max_items_per_list? %>
+  <div class="alert">
+    <%= t('.max_items_per_list') %>
+  </div>
+<% else %>
+  <%= link_to t('.Create_New_Item'), new_user_list_item_path(@user, @list), 
+              class: "btn btn-primary" %> 
+<% end %>
 
 <br/><br/>
 

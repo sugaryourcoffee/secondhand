@@ -159,10 +159,16 @@ class List < ActiveRecord::Base
   end
 
   def next_item_number
-    numbers = Array.new(40)
+    return 0 if event.nil?
+
+    numbers = Array.new(event.max_items_per_list)
     numbers.fill { |i| i + 1 }
     numbers -= items.map { |i| i.item_number }    
     numbers.first
+  end
+
+  def max_items_per_list?
+    event.nil? or event.max_items_per_list == items.size
   end
 
   private
