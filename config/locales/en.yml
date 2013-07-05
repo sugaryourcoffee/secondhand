@@ -18,6 +18,13 @@ en:
       sign_in:     "Sign in at my account"
       profile:     "My Lists"
 
+  sessions:
+    new:
+      Sign_in: "Sign in"
+      e_mail:  "E-Mail"
+      New_user: "New user?"
+      Sign_up_now: "Sign up now!"
+
   layouts:
     header:
       Home:     "Home"

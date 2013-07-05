@@ -20,6 +20,13 @@ de:
       sign_in:     "An meinem Konto anmelden"
       profile:     "Meine Listen"
 
+  sessions:
+    new:
+      Sign_in: "Anmelden"
+      e_mail:  "E-Mail"
+      New_user: "Noch kein Konto?"
+      Sign_up_now: "Jetzt registrieren!"
+
   layouts:
     header:
       Home:     "Home"
