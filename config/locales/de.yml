@@ -68,6 +68,7 @@ de:
       Labels: "Etiketten"
       Enter_container_color: "Korbfarbe eingeben:"
       Save_Container_Color:  "Korbfarbe Speichern"
+      close_and_send: "schliessen und senden"
 
     edit:
       Edit_user:    "Benutzer bearbeiten"

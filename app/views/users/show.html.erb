@@ -19,45 +19,54 @@
     </fieldset>
     <fieldset>
       <legend><%= t('.List_Administration') %></legend>
-      <div class="row">
-        <% if @user.lists.empty? %>
-          <p><%= t('.No_Registered_Lists') %></p>
-        <% else %>
-          <% @user.lists_for_active_event.each do |list| %>
-          <div class="span2">
-            <div class="btn-group">
-              <%= link_to "<button class=\"btn\">
-                             #{t('.List')} #{list.list_number}
-                           </button>".html_safe, 
-                           user_list_items_path(@user, list) %>
-              <button class="btn dropdown-toggle" data-toggle="dropdown">
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu">
-                <li class="nav-header"><%= t('.Process') %></li>
-                <li><%= link_to t('.Item_collection'), 
-                        user_list_items_path(@user, list) %></li>
-                <li class="divider"/>
-                <li class="nav-header"><%= t('.Print') %></li>
-                <li><%= link_to t('.List'), 
+      <% if @user.lists.empty? %>
+        <div class="row">
+          <div class="span8">
+            <strong><%= t('.No_Registered_Lists') %></strong>
+          </div>
+        </div>
+      <% else %>
+        <% @user.lists_for_active_event.each do |list| %>
+          <div class="row">
+            <div class="span2">
+              <div class="btn-group">
+                <%= link_to "<button class=\"btn\">
+                               #{t('.List')} #{list.list_number}
+                             </button>".html_safe, 
+                             user_list_items_path(@user, list) %>
+                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li class="nav-header"><%= t('.Process') %></li>
+                  <li><%= link_to t('.Item_collection'), 
+                          user_list_items_path(@user, list) %></li>
+                  <li class="divider"/>
+                  <li class="nav-header"><%= t('.Print') %></li>
+                  <li><%= link_to t('.List'), 
                                 print_list_user_list_path(@user, list) %></li>
-                <li><%= link_to t('.Labels'), 
+                  <li><%= link_to t('.Labels'), 
                                 print_labels_user_list_path(@user, list) %></li>
-              </ul>
+                </ul>
+              </div>
             </div>
-            <%= link_to "Finish and send list", '#' %>
+            <div class="span4">
+              <%= form_for(list) do |f| %>
+                <%= f.label :container, t('.Enter_container_color') %>
+                <%= f.text_field :container %>
+                <%= f.submit t('.Save_Container_Color'), 
+                             class: "btn btn-success" %>
+              <% end %>
+            </div>
+            <div class="span2">
+              <%= link_to "<button class=\"btn\">
+                      #{t('.List')} #{list.list_number} #{t('.close_and_send')}
+                           </button>".html_safe, 
+                           "#" %>
+            </div>
           </div>
-          <div class="span6">
-            <%= form_for(list) do |f| %>
-              <%= f.label :container, t('.Enter_container_color') %>
-              <%= f.text_field :container %>
-              <%= f.submit t('.Save_Container_Color'), 
-                           class: "btn btn-success" %>
-            <% end %>
-          </div>
-          <% end %>
         <% end %>
-      </div>
+      <% end %>
     </fieldset>
   </div>
 </div>

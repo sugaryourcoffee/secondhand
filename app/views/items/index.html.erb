@@ -19,9 +19,9 @@
     <% @items.each do |item| %>
       <tr>
         <td><%= item.item_number %></td>
-        <td><%= item.description %></td>
-        <td><%= item.size %></td>
-        <td><%= item.price %></td>
+        <td><%= truncate(item.description, length: 40) %></td>
+        <td><%= truncate(item.size, length: 10) %></td>
+        <td><%= number_to_currency item.price %></td>
         <td><%= link_to t('.Show'), 
                 user_list_item_path(@user, @list, item) %></td>
         <td><%= link_to t('.Edit'), 

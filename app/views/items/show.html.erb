@@ -10,7 +10,7 @@
     </p>
     <p>
       <strong><%= t('.Description') %></strong>
-      <%= @item.description %>
+      <%= word_wrap(@item.description, line_width: 40) %>
     </p>
     <p>
       <strong><%= t('.Size') %></strong>
@@ -18,7 +18,7 @@
     </p>
     <p>
       <strong><%= t('.Price') %></strong>
-      <%= @item.price %>
+      <%= number_to_currency @item.price %>
     </p>
 
     <br/>

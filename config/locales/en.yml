@@ -66,6 +66,7 @@ en:
       Labels: "Labels"
       Enter_container_color: "Enter container color:"
       Save_Container_Color:  "Save Container Color"
+      close_and_send: "close and send"
 
     edit:
       Edit_user:    "Edit user"
