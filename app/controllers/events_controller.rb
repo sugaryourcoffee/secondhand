@@ -21,6 +21,16 @@ class EventsController < ApplicationController
     end
   end
 
+  def print_pickup_tickets
+    @event = Event.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        send_data @event.pickup_tickets_pdf, content_type: Mime::PDF
+      end
+    end
+  end
+
   # GET /events/new
   # GET /events/new.json
   def new

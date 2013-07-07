@@ -38,6 +38,7 @@ Secondhand::Application.routes.draw do
     resources :events do
       member do
         post :activate
+        get :print_pickup_tickets, defaults: { format: 'pdf' }
       end
     end
   end

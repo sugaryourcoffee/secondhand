@@ -49,5 +49,7 @@
   <%= @event.active %>
 </p>
 
+<%= link_to t('.print_pickup_tickets'), 
+            print_pickup_tickets_event_path(@event) %> |
 <%= link_to t('.Edit'), edit_event_path(@event) %> |
 <%= link_to t('.Back'), events_path %>

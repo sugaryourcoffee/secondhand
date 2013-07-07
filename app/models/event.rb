@@ -32,6 +32,70 @@ class Event < ActiveRecord::Base
 
   before_destroy :ensure_not_active, :ensure_has_no_registered_lists
 
+  def pickup_tickets_pdf
+    list_index = 0
+    pdf = Prawn::Document.new(page_size: "A4")
+    page_height = pdf.bounds.height
+    label_height = page_height / 10
+    label_width  = pdf.bounds.width
+    pages = (
+              (lists.size / 10) + (0.5 * (lists.size % 10 > 0 ? 1 : 0))
+            ).round
+
+    pdf.repeat(:all, dynamic: true) do
+      pdf.number_pages "#{title}",
+                       { start_count_at: 1,
+                         at: [pdf.bounds.left, pdf.bounds.top + 15],
+                         align: :center,
+                         size: 10 }
+    end
+
+    pdf.repeat(:all, dynamic: true) do
+      pdf.number_pages "<page>/<total>",
+                       { start_count_at: 1,
+                         at: [pdf.bounds.left, -10],
+                         align: :right,
+                         size: 10 }
+    end
+
+    1.upto(pages) do |page|
+      page_height.step(label_height, -label_height) do |y|
+        x = 0
+        pdf.bounding_box([x,y], width: label_width, height: label_height) do
+          pdf.dash(2, space: 2, phase: 0)
+          pdf.transparent(0.5) { pdf.stroke_bounds }
+
+          pdf.move_down 3
+          pdf.text "#{title} - "+
+            "Listennummer: <b>#{lists[list_index].list_number}</b> - "+
+            "Registrierungscode: <b>#{lists[list_index].registration_code}</b>",
+            align: :center,
+            inline_format:true
+
+          message = "Termin Listenruecksendung 18.09.2013\n"+
+                    "Abgabe Koerbe: 20.09.2013, 15:00 bis 16:30 Uhr"+
+                    "Mittelschule Burgthann, Eingang Sandstrasse\n"+
+                    "Abholen Koerbe: 21.09.2013, 14:30 bis 15:00 Uhr"+
+                    "Mittelschule Burgthann, Eingang Mimberger Strasse\n"+
+                    "Ausgabe der Koerbe nur gegen Vorlage dieses Ausgabescheins\n"+
+                    "Informationen: www.boerse-burgthann.de - "+
+                    "Menue 'Infos fuer Verkaeufer' - Alle Informationen "+
+                    "vorher lesen!"
+
+          pdf.text_box(message,
+                       at: [x+2, pdf.cursor],
+                       width: label_width-4, height: label_height-19,
+                       overflow: :shrink_to_fit)
+
+        end
+        list_index += 1 
+        break if list_index > lists.size - 1
+      end
+      pdf.start_new_page if page < pages 
+    end
+    pdf.render
+  end
+
   private
 
     def ensure_not_active
