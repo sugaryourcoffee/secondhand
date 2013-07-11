@@ -22,10 +22,13 @@ de:
 
   sessions:
     new:
-      Sign_in: "Anmelden"
-      e_mail:  "E-Mail"
-      New_user: "Noch kein Konto?"
-      Sign_up_now: "Jetzt registrieren!"
+      Sign_in:         "Anmelden"
+      e_mail:          "E-Mail"
+      password:        "Passwort"
+      New_user:        "Noch kein Konto?"
+      Sign_up_now:     "Jetzt registrieren!"
+      forgot_password: "Passwort vergessen?"
+      send_password:   "Passwort anfordern"
 
   layouts:
     header:

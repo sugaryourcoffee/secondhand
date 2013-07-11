@@ -59,6 +59,12 @@ describe "User pages" do
     it { should have_title('Sign up') }
   end
 
+  describe "sign in page" do
+    before { visit signin_path(locale: :en) }
+
+    it { should have_link('Send password') }
+  end
+
   describe "another user's profile page" do
     let(:user) { FactoryGirl.create(:user) }
 

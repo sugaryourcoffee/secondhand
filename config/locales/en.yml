@@ -20,10 +20,13 @@ en:
 
   sessions:
     new:
-      Sign_in: "Sign in"
-      e_mail:  "E-Mail"
-      New_user: "New user?"
-      Sign_up_now: "Sign up now!"
+      Sign_in:         "Sign in"
+      e_mail:          "E-Mail"
+      password:        "Password"
+      New_user:        "New user?"
+      Sign_up_now:     "Sign up now!"
+      forgot_password: "Forgot password?"
+      send_password:   "Send password"
 
   layouts:
     header:
