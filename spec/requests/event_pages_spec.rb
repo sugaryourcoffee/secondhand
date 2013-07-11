@@ -119,4 +119,15 @@ describe "event pages" do
     end
 
   end
+
+  describe "show page" do
+
+    it "should show message when no items in list" do
+    end
+
+    it "should show items count and close list button" do
+    end
+
+  end
+
 end
