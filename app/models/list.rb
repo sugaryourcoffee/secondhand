@@ -184,21 +184,21 @@ class List < ActiveRecord::Base
               (items_list.size / 20) + (0.5 * items_list.size % 20 > 0 ? 1 : 0)
             ).round
 
-    pdf.repeat(:all, dynamic: true) do
+    pdf.repeat(:all) do
       pdf.number_pages "#{event.title} - List #{list_number}",
-                       { start_count_at: 1,
+                       { # start_count_at: 1,
                          at: [pdf.bounds.left, pdf.bounds.top + 15],
                          align: :center,
                          size: 10 }
     end
 
-    pdf.repeat(:all, dynamic: true) do
-      pdf.number_pages "<page>/<total>",
-                       { start_count_at: 1,
-                         at: [pdf.bounds.left, -10],
-                         align: :right,
-                         size: 10 }
-    end
+#    pdf.repeat(:all) do
+#      pdf.number_pages "<page>/<total>",
+#                       { start_count_at: 1,
+#                         at: [pdf.bounds.left, -10],
+#                         align: :right,
+#                         size: 10 }
+#    end
 
     1.upto(pages) do |page|
       page_height.step(label_height, -label_height) do |y|
@@ -208,9 +208,9 @@ class List < ActiveRecord::Base
             pdf.transparent(0.5) { pdf.stroke_bounds }
 
             pdf.text_box(items_list[item_index][1], 
-                         at: [2, label_height - 2],
+                         at: [4, label_height - 4],
                          size: 10,
-                         width: label_width - 4,
+                         width: label_width - 8,
                          height: 30)
 
             value = sprintf("%03d%02d", list_number, items_list[item_index][0])
