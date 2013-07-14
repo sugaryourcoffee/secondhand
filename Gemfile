@@ -51,12 +51,13 @@ gem 'bcrypt-ruby', '~> 3.0.1'
 # gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'rvm-capistrano'
 
 # To use debugger
 # gem 'debugger'
 
 group :production do
-  gem 'pg', '0.12.2'
+#  gem 'pg', '0.12.2'
+  gem 'mysql2'
 end
 
