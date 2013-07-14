@@ -42,21 +42,21 @@ class Event < ActiveRecord::Base
               (lists.size / 10) + (0.5 * (lists.size % 10 > 0 ? 1 : 0))
             ).round
 
-    pdf.repeat(:all, dynamic: true) do
+    pdf.repeat(:all) do
       pdf.number_pages "#{title}",
-                       { start_count_at: 1,
+                       { # start_count_at: 1,
                          at: [pdf.bounds.left, pdf.bounds.top + 15],
                          align: :center,
                          size: 10 }
     end
 
-    pdf.repeat(:all, dynamic: true) do
-      pdf.number_pages "<page>/<total>",
-                       { start_count_at: 1,
-                         at: [pdf.bounds.left, -10],
-                         align: :right,
-                         size: 10 }
-    end
+#    pdf.repeat(:all, dynamic: true) do
+#      pdf.number_pages "<page>/<total>",
+#                       { start_count_at: 1,
+#                         at: [pdf.bounds.left, -10],
+#                         align: :right,
+#                         size: 10 }
+#    end
 
     1.upto(pages) do |page|
       page_height.step(label_height, -label_height) do |y|
