@@ -10,10 +10,10 @@
       value: number_with_precision(f.object.price, 
                                    precision: 2, 
                                    locale: I18n.locale) %>
-  <%= f.submit class: "btn btn-primary"%>
   <% unless f.object.id %>
-    <%= f.submit t('.create_and_new'), class: "btn"%>
+    <%= f.submit t('.create_and_new'), class: "btn btn-primary"%>
   <% end %>
+  <%= f.submit class: "btn"%>
 <% end %>
 
 
