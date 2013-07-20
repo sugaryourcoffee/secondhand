@@ -20,6 +20,6 @@ class Item < ActiveRecord::Base
 
   def add_item_number
     return if list_id.nil?
-    self.item_number = List.find(list_id).next_item_number
+    self.item_number = List.find(list_id).next_item_number unless item_number
   end
 end
