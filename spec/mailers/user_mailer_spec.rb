@@ -3,6 +3,7 @@ require "spec_helper"
 describe UserMailer do
   describe "password_reset" do
     let(:user) { FactoryGirl.create(:user, email: "to@example.com") }
+    I18n.locale = :en
     let(:mail) { user.send_password_reset }
 
     it "renders the headers" do

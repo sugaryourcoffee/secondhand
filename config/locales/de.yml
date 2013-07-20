@@ -30,6 +30,10 @@ de:
       forgot_password: "Passwort vergessen?"
       reset_password:  "Passwort zurücksetzen"
 
+  user_mailer:
+    password_reset:
+      subject: "Passwort zurücksetzen"
+
   layouts:
     header:
       Home:     "Home"
@@ -436,6 +440,11 @@ de:
   taken:                  "%{model} ist schon vergeben!"
   registered:             "%{model} wurde registriert!"
   not_valid:              "Registrierungscode nicht gültig!"
+
+  password_reset_instructions: "Rücksetzanleitung für Ihr Passwort wurde versendet"
+  email_address_not_valid:     "Ungültige E-Mail-Adresse"
+  password_reset_expired:      "Rücksetzanforderung für Ihr Passwort ist abgelaufen"
+  password_reset_success:      "Passwort wurde zurückgesetzt"
 
   helpers:
     submit:

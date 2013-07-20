@@ -6,10 +6,10 @@ class PasswordResetsController < ApplicationController
     if user
       user.send_password_reset
       redirect_to root_url, 
-                  notice: "Email sent with password reset instructions"
+                  notice: I18n.t('.password_reset_instructions')
     else
       redirect_to root_url,
-                  notice: "Email address not valid"
+                  notice: I18n.t('.email_address_not_valid')
     end
   end
 
@@ -20,9 +20,10 @@ class PasswordResetsController < ApplicationController
   def update
     @user = User.find_by_password_reset_token!(params[:id])
     if @user.password_reset_sent_at < 2.hours.ago
-      redirect_to new_password_reset_path, alert: "Password reset has expired"
+      redirect_to new_password_reset_path, 
+                  alert: I18n.('.password_reset_expired')
     elsif @user.update_attributes(params[:user])
-      redirect_to root_url, notice: "Password has been reset"
+      redirect_to root_url, notice: I18n.t('.password_reset_success')
     else
       render :edit
     end

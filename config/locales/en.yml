@@ -28,6 +28,10 @@ en:
       forgot_password: "Forgot password?"
       reset_password:  "Reset password"
 
+  user_mailer:
+    password_reset:
+      subject: "Password Reset"
+
   layouts:
     header:
       Home:     "Home"
@@ -301,5 +305,10 @@ en:
   taken:                  "Registration code already taken!"
   registered:             "%{model} registered"
   not_valid:              "Registration code not valid!"
+
+  password_reset_instructions: "Password reset instruction has been sent"
+  email_address_not_valid:     "E-Mail address is not valid"
+  password_reset_expired:      "Password reset request has been expired"
+  password_reset_success:      "Password has been reset"
 
 
