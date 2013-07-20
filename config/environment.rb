@@ -14,5 +14,4 @@ Secondhand::Application.configure do
   config.action_mailer.raise_delivery_errors = true
 end
 
-ActionMailer::Base.smtp_settings[:enable_starttls_auto] = true
-ActionMailer::Base.smtp_settings[:openssl_verify_mode] = false
+ActionMailer::Base.smtp_settings[:enable_starttls_auto] = false
