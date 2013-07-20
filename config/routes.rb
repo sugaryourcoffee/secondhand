@@ -1,4 +1,5 @@
 Secondhand::Application.routes.draw do
+
   scope '(:locale)' do
     root to: 'static_pages#home'
 
@@ -25,6 +26,7 @@ Secondhand::Application.routes.draw do
         member do
           get :print_list, defaults: { format: 'pdf' }
           get :print_labels, defaults: { format: 'pdf' }
+          get :send_list
         end
         resources :items, only: [:index, :new, :create, :show, :edit, :destroy,
                                  :update]
@@ -34,6 +36,8 @@ Secondhand::Application.routes.draw do
     resources :news
 
     resources :sessions, only: [:new, :create, :destroy]
+
+    resources :password_resets
 
     resources :events do
       member do

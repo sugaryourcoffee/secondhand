@@ -27,6 +27,8 @@ class User < ActiveRecord::Base
   before_save {|user| user.email = email.downcase}
   before_save :create_remember_token
 
+#  before_create { generate_token(:auth_token) }
+
   validates :first_name, :last_name, :street, :zip_code, :town, :country, :phone, presence: true
   
   EMAIL_PATTERN = /\A[\w!#\$%&'*+\/=?`{|}~^-]+(?:\.[\w!#\$%&'*+\/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}\Z/
@@ -35,6 +37,21 @@ class User < ActiveRecord::Base
 
   validates :password, presence: true, length: {minimum: 6}
   validates :password_confirmation, presence: true
+
+  def send_password_reset
+    generate_token(:password_reset_token)
+    self.password_reset_sent_at = Time.zone.now
+    self.password = :password_reset_token
+    self.password_confirmation = :password_reset_token
+    save!
+    UserMailer.password_reset(self).deliver
+  end
+
+  def generate_token(column)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while User.exists?(column => self[column])
+  end
 
   def lists_for_active_event
     event = Event.find_by_active(true)

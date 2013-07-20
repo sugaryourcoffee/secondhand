@@ -28,7 +28,7 @@ de:
       New_user:        "Noch kein Konto?"
       Sign_up_now:     "Jetzt registrieren!"
       forgot_password: "Passwort vergessen?"
-      send_password:   "Passwort anfordern"
+      send_password:   "Passwort zurücksetzen"
 
   layouts:
     header:
@@ -49,6 +49,17 @@ de:
       About:   "Über uns"
       Contact: "Kontakt"
       News:    "Aktuell"
+
+  password_resets:
+    new:
+      email:               "Geben Sie Ihre E-Mail Adresse ein" 
+      reset_password:      "Passwort zurücksetzen"
+      send_password_reset: "Senden"
+    edit:
+      reset_password:        "Passwort zurücksetzen"
+      password:              "Passwort"
+      password_confirmation: "Passwort bestätigen"
+      update_password:       "Speichern"
 
   users:
     index:
@@ -411,6 +422,7 @@ de:
       
   divisable: "muss durch %{divisor} teilbar sein"
 
+  send_list:         "Liste wurde an Kinderkleider und Spielzeugbörse gesendet"
   created:           "%{model} wurde erstellt!"
   not_created:       "%{model} konnte nicht erstellt werden!"
   updated:           "%{model} wurde aktualisiert!"

@@ -1,0 +1,16 @@
+<%= provide(:title, t('.reset_password')) %>
+
+<h1><%= t('.reset_password') %> </h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for @user, url: password_reset_path(params[:id]) do |f| %>
+      <% render 'shared/error_messages' %>
+      <%= f.label :password, t('.password') %>
+      <%= f.password_field :password %>
+      <%= f.label :password_confirmation, t('.password_confirmation') %>
+      <%= f.password_field :password_confirmation %>
+      <%= f.submit t('.update_password'), class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

@@ -26,7 +26,7 @@ en:
       New_user:        "New user?"
       Sign_up_now:     "Sign up now!"
       forgot_password: "Forgot password?"
-      send_password:   "Send password"
+      reset_password:  "Reset password"
 
   layouts:
     header:
@@ -47,6 +47,17 @@ en:
       About:   "About"
       Contact: "Contact"
       News:    "News"
+
+  password_resets:
+    new:
+      email:               "Enter your email address" 
+      password_reset:      "Password Reset"
+      send_password_reset: "Send"
+    edit:
+      reset_password:        "Reset Password"
+      password:              "Password"
+      password_confirmation: "Password confirmation"
+      update_password:       "Save"
 
   users:
     index:

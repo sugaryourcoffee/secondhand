@@ -1,8 +1,9 @@
 class ListsController < ApplicationController
 
-  skip_before_filter :authorize, only: [:update, :print_list, :print_labels]
+  skip_before_filter :authorize, only: [:update, :print_list, :print_labels,
+                                        :send_list]
 
-  before_filter :correct_user, only: [:print_list, :print_labels]
+  before_filter :correct_user, only: [:print_list, :print_labels, :send_list]
 
   # GET /lists
   # GET /lists.json
@@ -33,6 +34,15 @@ class ListsController < ApplicationController
       format.pdf do
         send_data @list.labels_pdf, content_type: Mime::PDF
       end
+    end
+  end
+
+  def send_list
+    @list = List.find(params[:id])
+    @user = User.find(params[:user_id])
+    respond_to do |format|
+      ListNotifier.received(@list).deliver
+      format.html { redirect_to @user, notice: I18n.t('.send_list') }
     end
   end
 

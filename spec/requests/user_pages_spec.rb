@@ -62,7 +62,7 @@ describe "User pages" do
   describe "sign in page" do
     before { visit signin_path(locale: :en) }
 
-    it { should have_link('Send password') }
+    it { should have_link('Reset password') }
   end
 
   describe "another user's profile page" do

@@ -62,7 +62,7 @@
               <%= link_to "<button class=\"btn\">
                       #{t('.List')} #{list.list_number} #{t('.close_and_send')}
                            </button>".html_safe, 
-                           "#" %>
+                           send_list_user_list_path(@user, list) %>
             </div>
           </div>
         <% end %>
