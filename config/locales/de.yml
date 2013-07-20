@@ -28,7 +28,7 @@ de:
       New_user:        "Noch kein Konto?"
       Sign_up_now:     "Jetzt registrieren!"
       forgot_password: "Passwort vergessen?"
-      send_password:   "Passwort zurücksetzen"
+      reset_password:  "Passwort zurücksetzen"
 
   layouts:
     header:
