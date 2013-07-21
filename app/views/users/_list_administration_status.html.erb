@@ -1,0 +1,7 @@
+<div class="well">
+  <% if list.items.empty? %>
+    <%= t('.no_items') %>
+  <% else %>
+    <%= link_to t('.close_and_send'), send_list_user_list_path(@user, list) %>
+  <% end %>
+</div>

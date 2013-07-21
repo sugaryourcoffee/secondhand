@@ -86,7 +86,10 @@ de:
       Labels: "Etiketten"
       Enter_container_color: "Korbfarbe eingeben:"
       Save_Container_Color:  "Korbfarbe Speichern"
-      close_and_send: "schliessen und senden"
+
+    list_administration_status:
+      close_and_send: "Liste abschließen und versenden"
+      no_items:       "Liste enthält noch keine Artikel"
 
     edit:
       Edit_user:    "Benutzer bearbeiten"

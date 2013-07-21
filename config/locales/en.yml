@@ -84,7 +84,10 @@ en:
       Labels: "Labels"
       Enter_container_color: "Enter container color:"
       Save_Container_Color:  "Save Container Color"
-      close_and_send: "close and send"
+
+    list_administration_status:
+      close_and_send: "Close and send list"
+      no_items:       "List doesn't contain any items yet"
 
     edit:
       Edit_user:    "Edit user"
