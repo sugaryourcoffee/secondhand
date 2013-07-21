@@ -45,7 +45,7 @@ class List < ActiveRecord::Base
 
     pdf = Prawn::Document.new(page_size: "A4")
 
-    items_list = items.map do |item|
+    items_list = (items.sort_by { |item| item.item_number }).map do |item|
       [item.item_number, 
        cut_to_fit(pdf, 400, item.description), 
        cut_to_fit(pdf, 71, item.size), 
@@ -151,7 +151,7 @@ class List < ActiveRecord::Base
   end
 
   def labels_pdf
-    items_list = items.map do |item|
+    items_list = (items.sort_by { |item| item.item_number }).map do |item|
       [item.item_number, item.description, item.size, item.price]
     end
 

@@ -3,6 +3,8 @@ class Item < ActiveRecord::Base
 
   attr_accessible :description, :item_number, :price, :size
 
+  scope :by_item_number, order(:item_number)
+
   validates :list_id, :description, :price, presence: true
   validates :item_number, numericality: { greater_than_or_equal_to: 1 }
   validates :price, numericality: { greater_than_or_equal_to: 0.5 }
