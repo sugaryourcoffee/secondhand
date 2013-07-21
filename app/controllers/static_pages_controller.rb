@@ -6,6 +6,7 @@ class StaticPagesController < ApplicationController
       redirect_to root_path(locale: params[:set_locale])
     else
       @news = News.last
+      @event = Event.find_by_active(true)
     end
   end
 

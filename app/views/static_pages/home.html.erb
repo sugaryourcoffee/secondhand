@@ -2,7 +2,9 @@
 
 <% unless @news.nil? %>
   <div class="well">
-    <strong class="pull-right"><%= @news.created_at.strftime("%Y-%m-%d - %H:%M") %></strong><br>
+    <strong class="pull-right">
+      <%= @news.created_at.strftime("%Y-%m-%d - %H:%M") %>
+    </strong><br>
     <h3><%= @news.title %></h3>
     <p><%= sanitize(@news.description) %></p>
   </div>
@@ -11,7 +13,7 @@
 <div class="center hero-unit">
   <h1>Secondhand</h1>
   <h2>
-    <%= t('.welcome_html') %>
+    <%= t('.welcome_html', event: @event ? @event.title : t('.event_title')) %>
   </h2>
 
   <% if signed_in? %>
@@ -29,4 +31,4 @@
 </div>
 
 <%= link_to image_tag("SugarYourCoffee_48x48.png", alt: "SugarYourCoffee"), 
-            'http://syc.dyndns.org/' %>
+            'http://syc.dyndns.org/drupal' %>
