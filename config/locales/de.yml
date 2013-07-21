@@ -75,7 +75,7 @@ de:
 
     show:
       List_Registration: "Listen Registrierung" 
-      Enter_registration_code: "Registrierungscode eingeben:"
+      Enter_registration_code: "Registrierungscode eingeben. Achtung: 0 (Nummer), O (Buchstabe)"
       Register_List: "Liste Registrieren"
       List_Administration: "Listen Administration"
       No_Registered_Lists: "Sie haben noch keine registrierten Listen"

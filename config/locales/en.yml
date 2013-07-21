@@ -73,7 +73,7 @@ en:
 
     show:
       List_Registration: "List Registration" 
-      Enter_registration_code: "Enter registration code:"
+      Enter_registration_code: "Enter registration code. Note: 0 (number), O (letter)"
       Register_List: "Register List"
       List_Administration: "List Administration"
       No_Registered_Lists: "You have no registered lists yet"
