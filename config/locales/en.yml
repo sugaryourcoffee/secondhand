@@ -86,7 +86,7 @@ en:
       Save_Container_Color:  "Save Container Color"
 
     list_administration_status:
-      close_and_send: "Close and send list"
+      close_and_send: "Close and submit list"
       no_items:       "List doesn't contain any items yet"
 
     edit:
