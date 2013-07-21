@@ -85,7 +85,7 @@ describe "User pages" do
     it { should have_title("#{user.first_name}") }
 
     it { should have_content('List Registration') }
-    it { should have_selector('label', text: 'Enter registration code:') }
+    it { should have_selector('label', text: 'Enter registration code') }
     it { should have_button('Register List') }
     it { should have_content('List Administration') }
     it { should have_content('You have no registered lists yet') }
@@ -113,7 +113,7 @@ describe "User pages" do
     it { should have_title("#{user.first_name}") }
 
     it { should have_content('List Registration') }
-    it { should have_selector('label', text: 'Enter registration code:') }
+    it { should have_selector('label', text: 'Enter registration code') }
     it { should have_button('Register List') }
     it { should have_content('List Administration') }
     it { should have_content('You have no registered lists yet') }
@@ -199,7 +199,7 @@ describe "User pages" do
     it { should have_title("#{user.first_name}") }
 
     it { should have_content('List Registration') }
-    it { should have_selector('label', text: 'Enter registration code:') }
+    it { should have_selector('label', text: 'Enter registration code') }
     it { should have_button('Register List') }
     it { should have_content('List Administration') }
     it { should have_button('List 1') }

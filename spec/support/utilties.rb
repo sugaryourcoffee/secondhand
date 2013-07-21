@@ -15,7 +15,7 @@ def sign_in(user)
 end
 
 def register_list(registration_code)
-  fill_in "Enter registration code:", with: registration_code
+  fill_in "Enter registration code. Note: 0 (number), O (letter)", with: registration_code
   click_button "Register List"
 end
 

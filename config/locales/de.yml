@@ -128,7 +128,7 @@ de:
 
     new:
       New_Item: "Neuer Artikel"
-      Back:     "Zurück"
+      Back:     "Abbrechen und nicht speichern"
 
     show:
       Show_Item:   "Artikel Anzeigen"
@@ -149,6 +149,8 @@ de:
       size:        "Größe"
       price:       "Preis"
       create_and_new: "Speichern und neuen Artikel erstellen"
+      create_and_new_tooltip: "Nachdem Speichern, kann unmittelbar ein neuer Artikel eingegeben werden"
+      submit_tooltip: "Kehrt nach dem Speichern in die Übersicht zurück"
 
   events:
     index:

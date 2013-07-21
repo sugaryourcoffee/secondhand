@@ -126,7 +126,7 @@ en:
 
     new:
       New_Item: "New Item"
-      Back:     "Back"
+      Back:     "Cancel and don't save"
 
     edit:
       Edit_Item: "Edit Item"
@@ -147,6 +147,9 @@ en:
       size:        "Size"
       price:       "Price"
       create_and_new: "Save and create new item"
+      create_and_new_tooltip: "After save, next item can be entered"
+      submit_tooltip: "After save returns to the overview page"
+
 
   events:
     index:
