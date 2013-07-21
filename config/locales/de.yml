@@ -90,6 +90,7 @@ de:
 
     edit:
       Edit_user:    "Benutzer bearbeiten"
+      password_obligation_notice: "Bitte beachten Sie, dass Sie bei jeder Profiländerung Ihr Passwort und die Passwortbestätigung eingeben müssen. Dies ist notwendig da wir aus Sicherheitsgründen keine Passwörter speichern."
       Update_your_profile: "Aktualisieren Sie Ihr Profil"
       Save_changes: "Änderungen speichern"
 
