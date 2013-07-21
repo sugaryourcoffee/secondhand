@@ -34,6 +34,10 @@ de:
     password_reset:
       subject: "Passwort zurücksetzen"
 
+  list_notifier:
+    received:
+      subject: "Liste für Kinderkleider und Spielzeugbörse Burgthann"
+
   layouts:
     header:
       Home:     "Home"
