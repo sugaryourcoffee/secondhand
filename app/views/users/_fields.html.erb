@@ -16,7 +16,7 @@
 <%= f.text_field :town %>
 
 <%= f.label :country, t('.Country') %>
-<%= f.text_field :country %>
+<%= f.text_field :country, value: f.object.country || "Deutschland" %>
 
 <%= f.label :phone, t('.Phone') %>
 <%= f.text_field :phone %>
