@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @event = Event.find_by_active(true)
   end
 
   def new

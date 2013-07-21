@@ -1,0 +1,36 @@
+<section>
+  <details>
+    <summary><strong>List submission</strong></summary>
+    <ul>
+      <li>
+      Latest date for list submissions is <strong><%= @event ? (@event.event_date - (24*60*60*3)).strftime("%d.%m.%Y") : "not defined yet" %></strong>
+      </li>
+      <li>
+      Pressing the button 'Close and Submit List' closes and submits the list
+      </li>
+      <li>
+      After the submission date it is not possible to register or change lists and hence cannot be sold at the secondhand event.
+      </li>
+    </ul>
+  </details>
+  <details>
+    <summary><strong>List registration</strong></summary>
+    <ul>
+      <li>
+      The registration code can be found on the pickup ticket
+      </li>
+    </ul>
+  </details>
+  <details>
+    <summary><strong>List transfer to another seller</strong></summary>
+    <ul>
+      <li>
+      Already registered lists can only be deallocated for transfer to another seller by the Börse Burgthann team.
+      </li>
+      <li>
+      To deallcoate a list for transferring to another seller please send an email to mail@boerse-burgthann.de with list number, registration code and your user name. Use 'Listenweitergabe' as the email subject.
+      </li>
+    </ul>
+  </details>
+</section>
+

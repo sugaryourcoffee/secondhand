@@ -1,0 +1,36 @@
+<section>
+  <details>
+    <summary><strong>Listenabgabe</strong></summary>
+    <ul>
+      <li>
+      Spätester Termin für Listenabgabe ist <strong><%= @event ? (@event.event_date - (24*60*60*3)).strftime("%d.%m.%Y") : "noch nicht festgelegt" %></strong>
+      </li>
+      <li>
+      Liste abschließen mit betätigend der Schaltfläche 'Liste schließen und versenden'
+      </li>
+      <li>
+      Nach dem Abgabetermin sind keine Neueingaben oder Listenänderungen mehr möglich und stehen damit auch nicht zum Verkauf bei der Börse zur Verfügung.
+      </li>
+    </ul>
+  </details>
+  <details>
+    <summary><strong>Listenregistrierung</strong></summary>
+    <ul>
+      <li>
+      Den Registrierungscode finden Sie auf dem Abholzettel
+      </li>
+    </ul>
+  </details>
+  <details>
+    <summary><strong>Weitergabe von Listen</strong></summary>
+    <ul>
+      <li>
+      Bereits registrierte Listen können nur durch das Börsenteam für einen anderen Verkäufer freigegeben werden
+      </li>
+      <li>
+      Dafür eine E-Mail an mail@boerse-burgthann.de mit Listennummer, Registrierungscode und eigenem Benutzernamen schicken. Als Betreff 'Listenweitergabe' angeben.
+      </li>
+    </ul>
+  </details>
+</section>
+
