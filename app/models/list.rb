@@ -27,9 +27,9 @@ class List < ActiveRecord::Base
   before_destroy :ensure_not_registered_by_a_user
 
   def as_csv
-    csv_file = "#{list_number}.csv"
+    csv_file = "#{sprintf("%03d", list_number)}.csv"
     CSV.open(csv_file, 'w', encoding: 'u', col_sep: ';') do |csv|
-      csv << ["Listennummer", sprintf("%03s", list_number)]
+      csv << ["Listennummer", list_number]
       csv << ["Name", user.last_name]
       csv << ["Vorname", user.first_name]
       csv << ["Strasse", user.street]
