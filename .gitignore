@@ -25,3 +25,5 @@ bundler_stubs/
 /config/database.yml
 
 /.~lock*
+
+/*.csv

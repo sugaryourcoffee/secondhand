@@ -8,7 +8,8 @@ class ListNotifier < ActionMailer::Base
   #
   def received(list)
     @list = list
-    mail to: list.user.email, subject: "Empfangsbestaetigung fuer Liste "+
-                                       "#{ list.list_number }"
+    attachments["#{list.list_number}.csv"] = File.read(list.as_csv)
+    mail to: list.user.email, bcc: "mail@boerse-burgthann.de", 
+         subject: "Empfangsbestaetigung fuer Liste #{ list.list_number }"
   end
 end

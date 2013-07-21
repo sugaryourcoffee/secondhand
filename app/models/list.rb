@@ -11,6 +11,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
+require 'csv'
 
 class List < ActiveRecord::Base
 
@@ -24,6 +25,26 @@ class List < ActiveRecord::Base
                   :user_id
 
   before_destroy :ensure_not_registered_by_a_user
+
+  def as_csv
+    csv_file = "#{list_number}.csv"
+    CSV.open(csv_file, 'w', encoding: 'u', col_sep: ';') do |csv|
+      csv << ["Listennummer", sprintf("%03s", list_number)]
+      csv << ["Name", user.last_name]
+      csv << ["Vorname", user.first_name]
+      csv << ["Strasse", user.street]
+      csv << ["PLZ", user.zip_code]
+      csv << ["Stadt", user.town]
+      csv << ["Telefon", user.phone]
+      csv << ["E-Mail", user.email]
+      csv << ["Korbfarbe", container || "-"]
+      csv << ["Nummer", "Beschreibung", "Groesse", "Preis"]
+      (items.sort_by { |item| item.item_number }).each do |item|
+        csv << [item.item_number, item.description, item.size, item.price]
+      end
+    end
+    csv_file
+  end
 
   def list_pdf
 
