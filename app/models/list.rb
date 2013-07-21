@@ -171,6 +171,11 @@ class List < ActiveRecord::Base
     event.nil? or event.max_items_per_list == items.size
   end
 
+  def free_item_capacity
+    return 0 if event.nil?
+    event.max_items_per_list - items.size 
+  end
+
   private
 
   def create_pdf_labels(items_list)

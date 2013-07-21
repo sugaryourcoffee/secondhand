@@ -10,7 +10,7 @@
       value: number_with_precision(f.object.price, 
                                    precision: 2, 
                                    locale: I18n.locale) %>
-  <% unless f.object.id %>
+  <% unless f.object.id or @list.free_item_capacity < 2 %>
     <%= f.submit t('.create_and_new'), class: "btn btn-primary"%>
   <% end %>
   <%= f.submit class: "btn"%>
