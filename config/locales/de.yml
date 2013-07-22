@@ -87,7 +87,9 @@ de:
       Process: "Bearbeitung"
       Item_collection: "Artikel erfassen"
       Print: "Drucken"
+      print_list: "Liste drucken"
       Labels: "Etiketten"
+      print_labels: "Etiketten drucken"
       Enter_container_color: "Korbfarbe eingeben:"
       Save_Container_Color:  "Korbfarbe Speichern"
 
@@ -156,7 +158,7 @@ de:
       description: "Beschreibung"
       size:        "Größe"
       price:       "Preis"
-      create_and_new: "Speichern und neuen Artikel erstellen"
+      create_and_new: "Erstelle Artikel und neuen Artikel eingeben"
       create_and_new_tooltip: "Nachdem Speichern, kann unmittelbar ein neuer Artikel eingegeben werden"
       submit_tooltip: "Kehrt nach dem Speichern in die Übersicht zurück"
 
@@ -459,5 +461,5 @@ de:
 
   helpers:
     submit:
-      create: "Erstelle %{model}"
+      create: "Erstelle %{model} und zurück zur Übersicht"
       update: "Aktualisiere %{model}"

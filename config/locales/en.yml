@@ -85,14 +85,16 @@ en:
       Process: "Process"
       Item_collection: "Item collection"
       Print: "Print"
+      print_list: "Print list"
       Labels: "Labels"
+      print_labels: "Print labels"
       Enter_container_color: "Enter container color:"
       Save_Container_Color:  "Save Container Color"
 
     list_administration_status:
       close_and_send: "Close and submit list"
       no_items:       "List doesn't contain any items yet"
-      list_sent_on:   "List has been sent %{sent_on}"
+      list_sent_on:   "List has been sent %{sent_on} ago"
       
     edit:
       Edit_user:    "Edit user"
