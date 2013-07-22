@@ -11,8 +11,8 @@
                                    precision: 2, 
                                    locale: I18n.locale) %>
   <% unless f.object.id or @list.free_item_capacity < 2 %>
-    <%= f.submit t('.create_and_new'), title: t('.create_and_new_tooltip'), 
-                 class: "btn btn-primary"%>
+    <p><%= f.submit t('.create_and_new'), title: t('.create_and_new_tooltip'), 
+                    class: "btn btn-primary"%></p>
   <% end %>
   <%= f.submit title: t('.submit_tooltip'), class: "btn"%>
 <% end %>
