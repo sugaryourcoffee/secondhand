@@ -22,9 +22,11 @@ class List < ActiveRecord::Base
   has_many :items
 
   attr_accessible :container, :event_id, :list_number, :registration_code, 
-                  :user_id
+                  :user_id, :sent_on
 
   before_destroy :ensure_not_registered_by_a_user
+
+  before_update :reset_sent_on
 
   def as_csv
     csv_file = "#{sprintf("%03d", list_number)}.csv"
@@ -295,6 +297,10 @@ class List < ActiveRecord::Base
     else
       true
     end
+  end
+
+  def reset_sent_on
+    self.sent_on = nil unless sent_on_changed?
   end
 
 end

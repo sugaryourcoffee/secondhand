@@ -94,6 +94,7 @@ de:
     list_administration_status:
       close_and_send: "Liste abschließen und versenden"
       no_items:       "Liste enthält noch keine Artikel"
+      list_sent_on:   "Liste wurde vor %{sent_on} versendet"
 
     edit:
       Edit_user:    "Benutzer bearbeiten"

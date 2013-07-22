@@ -42,7 +42,12 @@ class ListsController < ApplicationController
     @user = User.find(params[:user_id])
     respond_to do |format|
       ListNotifier.received(@list).deliver
-      format.html { redirect_to @user, notice: I18n.t('.send_list') }
+      @list.sent_on = Time.now
+      if @list.save
+        format.html { redirect_to @user, notice: I18n.t('.send_list') }
+      else
+        format.html { redirect_to @user, alert: I18n.t('.send_list_error') }
+      end
     end
   end
 

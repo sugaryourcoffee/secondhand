@@ -13,6 +13,8 @@ class Item < ActiveRecord::Base
   before_validation :delocalize_number
   before_validation :add_item_number
 
+  before_save :reset_list_sent_on
+
   private
 
   def delocalize_number
@@ -24,4 +26,12 @@ class Item < ActiveRecord::Base
     return if list_id.nil?
     self.item_number = List.find(list_id).next_item_number unless item_number
   end
+
+  def reset_list_sent_on
+    if list.sent_on
+      list.sent_on = nil
+      list.save
+    end
+  end
+
 end

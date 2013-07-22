@@ -92,7 +92,8 @@ en:
     list_administration_status:
       close_and_send: "Close and submit list"
       no_items:       "List doesn't contain any items yet"
-
+      list_sent_on:   "List has been sent %{sent_on}"
+      
     edit:
       Edit_user:    "Edit user"
       password_obligation_notice: "Please note that for any change in your profile you need to provide your password and the password confirmation. This is due to the fact that we don't save passwords for security reasons."

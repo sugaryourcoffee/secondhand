@@ -1,6 +1,8 @@
 <div class="well">
   <% if list.items.empty? %>
     <%= t('.no_items') %>
+  <% elsif list.sent_on %>
+    <%= t('.list_sent_on', sent_on: time_ago_in_words(list.sent_on)) %>
   <% else %>
     <%= link_to t('.close_and_send'), send_list_user_list_path(@user, list) %>
   <% end %>
