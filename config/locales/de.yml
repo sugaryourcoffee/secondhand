@@ -105,17 +105,19 @@ de:
       Save_changes: "Änderungen speichern"
 
     fields:
-      First_name: "Vorname"
-      Last_name:  "Nachname"
-      Street:     "Straße"
-      Zip_code:   "PLZ"
-      Town:       "Stadt"
-      Country:    "Land"
-      Phone:      "Telefon"
-      E_Mail:     "E-Mail"
+      mandatory_fields: "Mit ° gekennzeichnet Felder müssen ausgefüllt werden"
+
+      First_name: "Vorname°"
+      Last_name:  "Nachname°"
+      Street:     "Straße°"
+      Zip_code:   "PLZ°"
+      Town:       "Stadt°"
+      Country:    "Land°"
+      Phone:      "Telefon°"
+      E_Mail:     "E-Mail°"
       News:       "Ich möchte Neuigkeiten über E-Mail erhalten"
-      Password:   "Passwort"
-      Confirm_Password: "Passwort bestätigen"
+      Password:   "Passwort°"
+      Confirm_Password: "Passwort bestätigen°"
 
     user:
       delete: "Löschen"

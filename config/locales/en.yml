@@ -103,17 +103,19 @@ en:
       Save_changes: "Save changes"
 
     fields:
-      First_name: "First name"
-      Last_name:  "Last name"
-      Street:     "Street"
-      Zip_code:   "Zip code"
-      Town:       "Town"
-      Country:    "Country"
-      Phone:      "Phone"
-      E_Mail:     "E-Mail"
-      News:       "I want to recieve new per e-mail"
-      Password:   "Password"
-      Confirm_Password: "Confirm Password"
+      mandatory_fields: "Fields marked with ° have to be filled in"
+
+      First_name: "First name°"
+      Last_name:  "Last name°"
+      Street:     "Street°"
+      Zip_code:   "Zip code°"
+      Town:       "Town°"
+      Country:    "Country°"
+      Phone:      "Phone°"
+      E_Mail:     "E-Mail°"
+      News:       "I want to recieve news per e-mail"
+      Password:   "Password°"
+      Confirm_Password: "Confirm Password°"
 
     user:
       delete: "delete"
