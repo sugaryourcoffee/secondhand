@@ -227,7 +227,7 @@ describe "User pages" do
     describe "item collection" do
 
       describe "with assigned list" do
-        before { click_link 'Item collection' }
+        before { click_link 'Item collection', match: :first }
         
         it { should have_text('Collect Items') }
       end
@@ -293,7 +293,7 @@ describe "User pages" do
         fill_in "Country", with: "Country"
         fill_in "Phone", with: "1234567890"
         fill_in "E-Mail", with: "user@example.com"
-        fill_in "Password", with: "pa55w0rd"
+        fill_in "Password *", with: "pa55w0rd"
         fill_in "Confirm Password", with: "pa55w0rd"
       end
 
@@ -337,7 +337,7 @@ describe "User pages" do
       before do
         fill_in "First name", with: new_first_name
         fill_in "E-Mail", with: new_email
-        fill_in "Password", with: user.password
+        fill_in "Password *", with: user.password
         fill_in "Confirm Password", with: user.password
         click_button "Save changes"
       end
