@@ -15,6 +15,8 @@ class Item < ActiveRecord::Base
 
   before_save :reset_list_sent_on
 
+  before_destroy :reset_list_sent_on
+
   private
 
   def delocalize_number
