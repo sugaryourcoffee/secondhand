@@ -24,8 +24,8 @@
         <td><%= list.list_number %></td>
         <td><%= list.registration_code %></td>
         <td><%= list.container %></td>
-        <td><%= list.event_id %></td>
-        <td><%= list.user_id %></td>
+        <td><%= event_title_for(list) %></td>
+        <td><%= user_for(list) %></td>
         <td><%= link_to t('.Show'), list %></td>
         <td><%= link_to t('.Edit'), edit_list_path(list) %></td>
         <td><%= link_to t('.Destroy'), list, method: :delete, 
