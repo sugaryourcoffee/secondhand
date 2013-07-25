@@ -299,6 +299,9 @@ en:
       list:  "List"
       user:  "User"
       item:  "Item"
+    attributes:
+      user:
+        password_digest: "Password"
 
   errors:
     template:

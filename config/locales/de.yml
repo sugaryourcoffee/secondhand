@@ -411,6 +411,7 @@ de:
         title:              "Titel" 
       user:
         password:   "Passwort"
+        password_digest: "Passwort"
         password_confirmation: "Passwortbestätigung"
         first_name: "Vorname"
         last_name:  "Nachname"
@@ -431,6 +432,12 @@ de:
         invalid:                  "ist ungültig"
         too_short:                "muss mindestens %{count} Zeichen haben"
         greater_than_or_equal_to: "muss mindestens %{count} sein"
+      models:
+        user:
+          attributes:
+            password:
+              confirmation: "stimmt nicht mit Passwortbestätigung überein"
+      
         
   errors:
     template:

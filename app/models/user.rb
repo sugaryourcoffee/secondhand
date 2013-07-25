@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true, format: {with: EMAIL_PATTERN}, uniqueness: {case_sensitive: false}
 
-  validates :password, presence: true, length: {minimum: 6}
+  validates :password, length: {minimum: 6}
   validates :password_confirmation, presence: true
 
   def send_password_reset
