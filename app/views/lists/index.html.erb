@@ -20,7 +20,11 @@
 
   <tbody>
     <% @lists.each do |list| %>
-      <tr>
+      <% if list.sent_on %>
+        <tr class="success">
+      <% else %>
+        <tr>
+      <% end %>
         <td><%= list.list_number %></td>
         <td><%= list.registration_code %></td>
         <td><%= list.container %></td>
