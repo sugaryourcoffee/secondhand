@@ -26,8 +26,10 @@
 <%= f.label :email, t('.E_Mail') %>
 <%= f.text_field :email %>
 
-<%= f.label :news, t('.News') %>
-<%= f.check_box :news %>
+<p>
+  <%= f.check_box :news %>
+  <%= f.label :news, t('.News'), class: "checkbox inline" %>
+<p>
 
 <%= f.label :password, t('.Password') %>
 <%= f.password_field :password %>
