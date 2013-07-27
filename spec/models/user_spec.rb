@@ -129,4 +129,12 @@ subject {@user}
       specify {user_for_invalid_password.should be_false }
     end
   end
+
+  describe "search user by name" do
+    before { @user.save }
+    it { should == User.search("Example")[0] }
+    it { should == User.search("example")[0] }
+    it { should == User.search("User")[0] }
+    it { should == User.search("ser")[0] }    
+  end
 end

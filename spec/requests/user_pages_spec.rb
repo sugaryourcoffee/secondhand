@@ -23,6 +23,8 @@ describe "User pages" do
         visit users_path(locale: :en)
       end
 
+      it { should have_button('Search') }
+
       it "should list each user" do
         User.paginate(page: 1).each do |user|
           page.should have_selector('li', 

@@ -70,6 +70,7 @@ en:
   users:
     index:
       All_users: "All users"
+      search:    "Search"
 
     new:
       Sign_up: "Sign up"

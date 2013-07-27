@@ -58,6 +58,22 @@ class User < ActiveRecord::Base
     List.where(user_id: id, event_id: event).order(:list_number)
   end
 
+  def self.search(search)
+    if search
+      find(:all, conditions: ['first_name LIKE ? or last_name LIKE ?', "%#{search}%", "%#{search}%"])
+    else
+      find(:all)
+    end 
+  end
+
+  def self.search_conditions(search)
+    if search
+      ['first_name LIKE ? or last_name LIKE ?', "%#{search}%", "%#{search}%"]
+    else
+      nil
+    end
+  end
+
   private
 
   def create_remember_token

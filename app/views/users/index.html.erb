@@ -2,6 +2,13 @@
 
 <h1><%= t('.All_users') %></h1>
 
+<%= form_tag users_path, method: 'get', class: "form-search" do %>
+  <p>
+    <%= text_field_tag :search, params[:search], class: "input-medium search-query" %>
+    <%= submit_tag t('.search'), name: nil, class: "btn" %>
+  </p>
+<% end %>
+
 <%= will_paginate %>
 
 <ul class="thumbnails">

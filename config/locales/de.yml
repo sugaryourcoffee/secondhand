@@ -72,6 +72,7 @@ de:
   users:
     index:
       All_users: "Alle Benutzer"
+      search:    "Suchen"
 
     new:
       Sign_up: "Registrieren"
