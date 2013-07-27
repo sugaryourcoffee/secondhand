@@ -9,7 +9,8 @@ class ListsController < ApplicationController
   # GET /lists.json
   def index
     @lists = List.order(:event_id).order(:list_number)
-                 .paginate(page: params[:page])
+                 .paginate(page: params[:page], 
+                           conditions: List.search_conditions(params[:search]))
 
     respond_to do |format|
       format.html # index.html.erb

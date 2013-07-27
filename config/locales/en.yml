@@ -232,6 +232,7 @@ en:
       Edit:                 "Edit"
       Destroy:              "Destroy"
       confirm_message:      "Are you sure?"
+      search:               "Search"
 
     edit:
       Editing_list: "Editing list"
