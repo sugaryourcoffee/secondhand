@@ -40,11 +40,38 @@ class List < ActiveRecord::Base
     end
   end
 
-  def self.search_conditions(search)
-    if search
-      ['list_number == ? or registration_code LIKE ?', search, "%#{search}%"]
+  def self.search_conditions(params)
+    if params[:search]
+      ['list_number == ? or registration_code LIKE ?', 
+       params[:search], "%#{params[:search]}%"]
     else
-      nil
+      search_params = params.select { |k,v| not v.empty? and k =~ /^search_/ }
+      unless search_params.empty?
+        query_string = ""
+        values       = []
+        first_value  = true
+        search_params.each do |k,v|
+          if first_value
+            first_value = false
+          else
+            query_string << " and "
+          end
+
+          key = k.sub("search_", "")
+
+          if key == "user_id" or key == "sent_on"
+            query_string << "#{key} IS NOT ?" if v == "0"
+            query_string << "#{key} IS ?" if v == "1"
+            values << nil 
+          else
+            query_string << "#{key} LIKE ?"
+            values << "%#{v}%"
+          end
+        end
+        [query_string, values].flatten
+      else
+        nil
+      end
     end
   end
 

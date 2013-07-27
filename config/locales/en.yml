@@ -233,6 +233,11 @@ en:
       Destroy:              "Destroy"
       confirm_message:      "Are you sure?"
       search:               "Search"
+      search_options:       "Search options ..."
+      registered:           "Registered"
+      closed:               "Closed"
+      yep:                  "Yes"
+      nope:                 "No"
 
     edit:
       Editing_list: "Editing list"

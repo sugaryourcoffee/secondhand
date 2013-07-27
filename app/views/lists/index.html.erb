@@ -2,12 +2,97 @@
 
 <h1><%= t('.All_lists') %></h1>
 
-<%= form_tag lists_path, method: 'get', class: "form-search" do %>
-  <p>
-    <%= text_field_tag :search, params[:search], class: "input-medium search-query" %>
-    <%= submit_tag t('.search'), name: nil, class: "btn" %>
-  </p>
-<% end %>
+<div class="row">
+  <div class="span4">
+    <%= form_tag lists_path, method: 'get', class: "form-search" do %>
+      <p>
+        <%= text_field_tag :search, params[:search], 
+                           class: "input-medium search-query" %>
+        <%= submit_tag t('.search'), name: nil, class: "btn" %>
+      </p>
+    <% end %>
+  </div>
+
+  <div class="span8">
+    <p>
+      <button type="button" class="btn", 
+              data-toggle="collapse" data-target="#search_options">
+        <%= t('.search_options') %>
+      </button>
+    </p>
+    <div id="search_options" class="collapse"> 
+    <div class="well">
+      <%= form_tag lists_path, method: 'get', class: "form-horizontal" do %>
+        <div class="control-group field">
+          <%= label_tag :search_list_number, 
+                        t('.List_number'), class: "control-label" %>
+          <div class="controls">
+            <%= text_field_tag :search_list_number, 
+                               params[:search_list_number], class: "span2" %>
+          </div>
+        </div>
+        <div class="control-group field">
+          <%= label_tag :search_registration_code, 
+                        t('.Registration_code'), class: "control-label" %>
+          <div class="controls">
+            <%= text_field_tag :search_registration_code, 
+                               params[:search_registration_code], 
+                               class: "span2" %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= label_tag :search_container, 
+                        t('.Container'), class: "control-label" %>
+          <div class="controls">
+            <%= text_field_tag :search_container, 
+                               params[:search_container], class: "span2" %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= label_tag :search_event_id, 
+                        t('.Event'), class: "control-label" %>
+          <div class="controls">
+            <%= select_tag :search_event_id, 
+                           options_from_collection_for_select(Event.find(:all),
+                                                     "id", 
+                                                     "title",
+                                                     params[:search_event_id]),
+                           include_blank: true,
+                           class: "span5" %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= label_tag :search_user_id, 
+                        t('.registered'), class: "control-label" %>
+          <div class="controls">
+            <%= select_tag :search_user_id, 
+                           options_for_select([[t('.yep'), 0], [t('.nope'), 1]],
+                                              params[:search_user_id]), 
+                           include_blank: true,
+                           class: "span2" %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= label_tag :search_sent_on, 
+                        t('.closed'), class: "control-label" %>
+          <div class="controls">
+            <%= select_tag :search_sent_on, 
+                           options_for_select([[t('.yep'), 0], [t('.nope'), 1]],
+                                              params[:search_sent_on]),
+                           include_blank: true,
+                           class: "span2" %>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <%= submit_tag t('.search'), name: nil, class: "btn" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  </div>
+</div>
 
 <%= will_paginate %>
 

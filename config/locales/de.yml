@@ -234,6 +234,11 @@ de:
       Destroy:              "Löschen"
       confirm_message:      "Sind Sie sicher?"
       search:               "Suchen"
+      search_options:       "Suchoptionen ..."
+      registered:           "Registriert"
+      closed:               "Abgeschlossen"
+      yep:                  "Ja"
+      nope:                 "Nein"
 
     edit:
       Editing_list: "Liste bearbeiten"

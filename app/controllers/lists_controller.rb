@@ -10,7 +10,7 @@ class ListsController < ApplicationController
   def index
     @lists = List.order(:event_id).order(:list_number)
                  .paginate(page: params[:page], 
-                           conditions: List.search_conditions(params[:search]))
+                           conditions: List.search_conditions(params))
 
     respond_to do |format|
       format.html # index.html.erb
