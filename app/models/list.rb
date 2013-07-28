@@ -33,7 +33,7 @@ class List < ActiveRecord::Base
   def self.search(search)
     if search
       find(:all,
-           conditions: ['list_number == ? or registration_code LIKE ?', 
+           conditions: ['list_number = ? or registration_code LIKE ?', 
                         search, "%#{search}%"])
     else
       find(:all)
@@ -42,7 +42,7 @@ class List < ActiveRecord::Base
 
   def self.search_conditions(params)
     if params[:search]
-      ['list_number == ? or registration_code LIKE ?', 
+      ['list_number = ? or registration_code LIKE ?', 
        params[:search], "%#{params[:search]}%"]
     else
       search_params = params.select { |k,v| not v.empty? and k =~ /^search_/ }
