@@ -138,8 +138,20 @@ en:
       max_items_per_list: "Cannot add additional items"
 
     new:
-      New_Item: "New Item"
-      Back:     "Cancel and don't save"
+      New_Item:           "New Item for List %{list_number}"
+      Back:               "Cancel and don't save"
+      capacity:           "Capacity"
+      items_to_add:       "You can add %{count} more items"
+      volume:             "Volumen"
+      volume_of_list:     "Total volume of your list is %{volume}"
+      items_in_list:      "Items in List %{list_number}"
+      last_entered_item:  "Last created item"
+      no_items_yet:       "List doesn't contain any items yet"
+      show_items:         "All Items"
+      Item_number:        "Item Number"
+      Description:        "Description"
+      Size:               "Size"
+      Price:              "Price"
 
     edit:
       Edit_Item: "Edit Item"

@@ -246,6 +246,12 @@ class List < ActiveRecord::Base
     event.max_items_per_list - items.size 
   end
 
+  def total_value
+    items.inject(0) do |total, item| 
+      total + (item.price.nil? ? 0 :  item.price)
+    end
+  end
+
   private
 
   def create_pdf_labels(items_list)

@@ -140,8 +140,20 @@ de:
       max_items_per_list: "Es können keine weiteren Artikel hinzugefügt werden"
 
     new:
-      New_Item: "Neuer Artikel"
-      Back:     "Abbrechen und nicht speichern"
+      New_Item:           "Neuer Artikel für Liste %{list_number}"
+      Back:               "Abbrechen und nicht speichern"
+      capacity:           "Kapazität"
+      items_to_add:       "Sie können noch %{count} Artikel hinzufügen"
+      volume:             "Listenwert"
+      volume_of_list:     "Der Gesamtwert Ihrer Liste beträgt %{volume}"
+      items_in_list:      "Artikel in Liste %{list_number}"
+      last_entered_item:  "Zuletzt erfasster Artikel"
+      no_items_yet:       "Liste enthält noch keine Artikel"
+      show_items:         "Alle Artikel"
+      Item_number:        "Artikelnummer"
+      Description:        "Beschreibung"
+      Size:               "Größe"
+      Price:              "Preis"
 
     show:
       Show_Item:   "Artikel Anzeigen"

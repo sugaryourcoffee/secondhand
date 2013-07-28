@@ -146,6 +146,21 @@ input, textarea, select, .uneditable-input {
   @include box_sizing;
 }
 
+.value-view {
+  display: block;
+  width: 175px;
+  float: left;
+  margin-bottom: 10px;
+}
+
+.label-view {
+  display: block;
+  text-align: right;
+  float: left;
+  width: 75px;
+  padding-right: 20px;
+}
+
 #error_explanation {
   color: #f00;
   ul {

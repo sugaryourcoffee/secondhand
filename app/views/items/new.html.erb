@@ -1,12 +1,80 @@
-<%= provide(:title, t('.New_Item')) %>
+<%= provide(:title, t('.New_Item', list_number: @list.list_number)) %>
 
-<h1><%= t('.New_Item') %></h1>
+<h1><%= t('.New_Item', list_number: @list.list_number) %></h1>
 
 <div class="row">
-  <div class="span6 offset3">
+  <aside class="span3">
+    <article>
+      <header>
+        <h5><%= t('.capacity') %></h5>
+      </header>
+      <section>
+        <%= t('.items_to_add', count: @list.free_item_capacity) %> 
+      </section>
+      <header>
+        <h5><%= t('.volume') %></h5>
+      </header>
+      <section>
+        <%= t('.volume_of_list', 
+              volume: number_to_currency(@list.total_value)) %>
+      </section>
+      <header>
+        <h5><%= t('.last_entered_item') %></h5>
+      </header>
+      <section>
+        <% if @list.items.last %>
+        <p>
+          <%= @list.items.last.description %><br/>
+          <table class="table table-bordered table-condensed">
+            <tr>
+            <th><%= t('.Size') %></th><td><%= @list.items.last.size %></td>
+          </tr>
+          <tr>
+            <th><%= t('.Price') %></th><td><%= number_to_currency(@list.items.last.price) %></td>
+          </tr>
+        </table>
+        </p>
+        <button type="button" class="btn", 
+                data-toggle="collapse" data-target="#show_items">
+          <%= t('.show_items') %>
+        </button>
+      <% else %>
+        <%= t('.no_items_yet') %>
+      <% end %>
+      </section>
+    </article>
+  </aside>
+  <div class="span9">
 
     <%= render 'form' %>
 
     <%= link_to t('.Back'), user_list_items_path(@user, @list) %>
   </div>
+</div>
+
+<div id="show_items" class="collapse"> 
+  <fieldset>
+    <legend>
+      <%= t('.items_in_list', list_number: @list.list_number) %> 
+    </legend>
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th><%= t('.Item_number') %></th>
+          <th><%= t('.Description') %></th>
+          <th><%= t('.Size') %></th>
+          <th><%= t('.Price') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render(@list.items) %>
+        <tr>
+          <td colspan="3"><strong>Total</strong></td>
+          <td>
+            <strong><%= number_to_currency(@list.total_value) %></strong>
+          </td>
+        </tr>
+      <tbody>
+    </table>
+  </fieldset>    
 </div>
