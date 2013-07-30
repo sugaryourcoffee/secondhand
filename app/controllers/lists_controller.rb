@@ -59,6 +59,8 @@ class ListsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.csv { send_data @list.as_csv, 
+                        filename: "#{sprintf("%03d", @list.list_number)}.csv" }
       format.json { render json: @list }
     end
   end

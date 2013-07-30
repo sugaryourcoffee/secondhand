@@ -240,6 +240,7 @@ en:
       Container:            "Container"
       Event:                "Event"
       User:                 "User"
+      Export:               "CSV"
       Show:                 "Show"
       Edit:                 "Edit"
       Destroy:              "Destroy"
@@ -350,4 +351,8 @@ en:
   password_reset_expired:      "Password reset request has been expired"
   password_reset_success:      "Password has been reset"
 
+  will_paginate:
+    previous_label:     "Previous"
+    page_gap:           "..."
+    next_label:         "Next"
 

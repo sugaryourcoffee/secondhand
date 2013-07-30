@@ -76,21 +76,17 @@ class List < ActiveRecord::Base
   end
 
   def as_csv
+    (data = "").tap do
+      CSV.generate(data, encoding: 'u', col_sep: ';') do |csv|
+        to_csv(csv)
+      end
+    end
+  end
+
+  def as_csv_file
     csv_file = "#{sprintf("%03d", list_number)}.csv"
     CSV.open(csv_file, 'w', encoding: 'u', col_sep: ';') do |csv|
-      csv << ["Listennummer", list_number]
-      csv << ["Name", user.last_name]
-      csv << ["Vorname", user.first_name]
-      csv << ["Strasse", user.street]
-      csv << ["PLZ", user.zip_code]
-      csv << ["Stadt", user.town]
-      csv << ["Telefon", user.phone]
-      csv << ["E-Mail", user.email]
-      csv << ["Korbfarbe", container || "-"]
-      csv << ["Nummer", "Beschreibung", "Groesse", "Preis"]
-      (items.sort_by { |item| item.item_number }).each do |item|
-        csv << [item.item_number, item.description, item.size, item.price]
-      end
+      to_csv(csv)
     end
     csv_file
   end
@@ -340,6 +336,22 @@ class List < ActiveRecord::Base
       (value.size - 1).step(0, -1) do |i|
         return value[0..i] + " ..." if pdf.width_of(value[0..i]) <= width
       end
+    end
+  end
+
+  def to_csv(csv)
+    csv << ["Listennummer", list_number]
+    csv << ["Name", user.last_name]
+    csv << ["Vorname", user.first_name]
+    csv << ["Strasse", user.street]
+    csv << ["PLZ", user.zip_code]
+    csv << ["Stadt", user.town]
+    csv << ["Telefon", user.phone]
+    csv << ["E-Mail", user.email]
+    csv << ["Korbfarbe", container || "-"]
+    csv << ["Nummer", "Beschreibung", "Groesse", "Preis"]
+    (items.sort_by { |item| item.item_number }).each do |item|
+      csv << [item.item_number, item.description, item.size, item.price]
     end
   end
 

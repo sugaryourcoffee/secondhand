@@ -241,6 +241,7 @@ de:
       Container:            "Korbfarbe"
       Event:                "Veranstaltung"
       User:                 "Benutzer"
+      Export:               "CSV"
       Show:                 "Anzeigen"
       Edit:                 "Bearbeiten"
       Destroy:              "Löschen"
@@ -486,6 +487,11 @@ de:
   email_address_not_valid:     "Ungültige E-Mail-Adresse"
   password_reset_expired:      "Rücksetzanforderung für Ihr Passwort ist abgelaufen"
   password_reset_success:      "Passwort wurde zurückgesetzt"
+
+  will_paginate:
+    previous_label:     "Zurück"
+    page_gap:           "..."
+    next_label:         "Vor"
 
   helpers:
     submit:
