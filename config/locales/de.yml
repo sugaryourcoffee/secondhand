@@ -488,6 +488,8 @@ de:
   password_reset_expired:      "Rücksetzanforderung für Ihr Passwort ist abgelaufen"
   password_reset_success:      "Passwort wurde zurückgesetzt"
 
+  who_registered:              "Neu registrierte Benutzer bei Secondhand"
+
   will_paginate:
     previous_label:     "Zurück"
     page_gap:           "..."

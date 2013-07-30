@@ -5,7 +5,8 @@ class UsersController < ApplicationController
   before_filter :correct_user, only: [:register_list, :show, :edit, :update]
 
   def index
-    @users = User.paginate(page: params[:page], conditions: User.search_conditions(params[:search]))
+    @users = User.paginate(page: params[:page], 
+                           conditions: User.search_conditions(params[:search]))
   end
 
   def show
@@ -46,6 +47,13 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     flash[:success] = I18n.t('.destroyed', model: t('activerecord.models.user'))
     redirect_to users_path
+  end
+
+  def who_registered
+    @users = User.all
+    respond_to do |format|
+      format.atom
+    end
   end
 
   def register_list
