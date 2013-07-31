@@ -353,6 +353,12 @@ en:
 
   who_registered:              "New registered users at Secondhand"
 
+  which_list:                  "New registered and closed lists at Secondhand"
+  list_registered:             "List %{list_number} registered"
+  list_registered_on:          "List has been registered %{time} ago"
+  list_closed:                 "List %{list_number} closed"
+  list_closed_on:              "List has been closed %{time} ago"
+
   will_paginate:
     previous_label:     "Previous"
     page_gap:           "..."

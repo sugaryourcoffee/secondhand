@@ -3,7 +3,6 @@ Secondhand::Application.routes.draw do
   scope '(:locale)' do
     root to: 'static_pages#home'
 
-
     match '/signup',  to: 'users#new'
     match '/signin',  to: 'sessions#new'
     match '/signout', to: 'sessions#destroy', via: :delete
@@ -12,7 +11,10 @@ Secondhand::Application.routes.draw do
     match '/help',    to: 'static_pages#help'
     match '/contact', to: 'static_pages#contact'
 
-    get   '/who_registered' => 'users#who_registered'
+    get   '/who_registered' => 'users#who_registered', 
+                               defaults: { format: 'atom' }
+    get   '/which_list'     => 'lists#which_list_is_registered_or_closed',
+                               defaults: { format: 'atom' }
 
     resources :lists do
       member do
@@ -24,7 +26,6 @@ Secondhand::Application.routes.draw do
     resources :users do
       member do
         post :register_list
-    #    get  :who_registered
       end
       resources :lists do
         member do

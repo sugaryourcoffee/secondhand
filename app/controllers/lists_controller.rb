@@ -52,6 +52,13 @@ class ListsController < ApplicationController
     end
   end
 
+  def which_list_is_registered_or_closed
+    @lists = List.where('user_id > ? or sent_on != ?', 0, nil)
+    respond_to do |format|
+      format.atom
+    end
+  end
+
   # GET /lists/1
   # GET /lists/1.json
   def show
