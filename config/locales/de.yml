@@ -241,6 +241,7 @@ de:
       Container:            "Korbfarbe"
       Event:                "Veranstaltung"
       User:                 "Benutzer"
+      closed_lists_as_csv:  "CSV abgeschlossene Listen"
       Export:               "CSV"
       Show:                 "Anzeigen"
       Edit:                 "Bearbeiten"

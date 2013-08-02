@@ -240,6 +240,7 @@ en:
       Container:            "Container"
       Event:                "Event"
       User:                 "User"
+      closed_lists_as_csv:  "Closed lists as CSV"
       Export:               "CSV"
       Show:                 "Show"
       Edit:                 "Edit"

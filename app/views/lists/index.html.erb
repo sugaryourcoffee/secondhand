@@ -104,10 +104,11 @@
       <th><%= t('.Container') %></th>
       <th><%= t('.Event') %></th>
       <th><%= t('.User') %></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th colspan="4">
+        <%= link_to t('.closed_lists_as_csv'), 
+                    lists_path(format: :zip), 
+                    class: "btn btn-block btn-success " %>
+      </th>
     </tr>
   </thead>
 
