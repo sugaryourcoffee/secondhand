@@ -12,6 +12,7 @@
 #  updated_at        :datetime         not null
 #
 require 'csv'
+require 'open3'
 
 class List < ActiveRecord::Base
 
@@ -89,6 +90,24 @@ class List < ActiveRecord::Base
       to_csv(csv)
     end
     csv_file
+  end
+
+  def self.as_csv_zip
+    closed_lists = List.where('sent_on IS NOT ?', nil)
+    if closed_lists.empty?
+      errors.add(:base, I18n.('.no_closed_files_to_zip'))
+    else
+      csvs = []
+      closed_lists.each { |list| csvs << list.as_csv_file }
+      compress_file = "csv.tar.gz"
+      tar_command = "tar cfz #{compress_file} #{csvs.join(" ")}"
+      stdout, stderr, status = Open3.capture3(tar_command)
+      unless status.exitstatus == 0
+        errors.add(:base, stderr)
+      else
+        compress_file
+      end
+    end
   end
 
   def list_pdf
