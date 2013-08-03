@@ -10,6 +10,7 @@ Secondhand::Application.routes.draw do
     match '/about',   to: 'static_pages#about'
     match '/help',    to: 'static_pages#help'
     match '/contact', to: 'static_pages#contact'
+    match '/message', to: 'static_pages#message'
 
     get   '/who_registered' => 'users#who_registered', 
                                defaults: { format: 'atom' }

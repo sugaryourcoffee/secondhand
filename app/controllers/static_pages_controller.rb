@@ -17,5 +17,16 @@ class StaticPagesController < ApplicationController
   end
 
   def contact
+    @message = Message.new
+  end
+
+  def message
+    @message = Message.new(params[:message])
+    unless @message.valid?
+      render 'contact'
+    else
+      UserMailer.user_request(@message).deliver
+      redirect_to root_path, notice: I18n.t('.contact_success') 
+    end
   end
 end

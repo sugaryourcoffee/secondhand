@@ -27,3 +27,4 @@ bundler_stubs/
 /.~lock*
 
 /*.csv
+/*.gzip

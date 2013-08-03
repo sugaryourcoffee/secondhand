@@ -18,6 +18,22 @@ en:
       sign_in:     "Sign in at my account"
       profile:     "My Lists"
 
+    contact:
+      contact:             "Contact"
+      contact_description: "You can leave a message using the contact form below"
+      email:               "Your E-Mail Address *"
+      subject:             "Subject *"
+      category:            "Category *"
+      category_selections:
+      - 
+      - List transfer
+      - Support
+      - Feedback
+      - Question
+      message:             "Message *"
+      copy_me:             "Send yourself a copy"
+      send_email:          "Send email"
+
   sessions:
     new:
       Sign_in:         "Sign in"
@@ -359,6 +375,8 @@ en:
   list_registered_on:          "List has been registered %{time} ago"
   list_closed:                 "List %{list_number} closed"
   list_closed_on:              "List has been closed %{time} ago"
+
+  contact_success:             "Your message has been sent"
 
   will_paginate:
     previous_label:     "Previous"

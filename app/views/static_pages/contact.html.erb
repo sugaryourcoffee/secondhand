@@ -1,5 +1,31 @@
-<% provide(:title, 'Contact') %>
-<h1>Contact</h1>
-<p>
-  You can contact us at <a href="http://localhost:3000/contact">Contact</a>
-</p>
+<% provide(:title, t('.contact')) %>
+
+<h1> <%= t('.contact') %> </h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <p> <%= t('.contact_description') %> </p>
+
+    <%= render partial: 'shared/generic_error_message', 
+                        locals: { topic: @message } %>
+
+    <%= form_for @message, url: message_path do |f| %>
+      <%= f.label :email, t('.email') %>
+      <%= f.text_field :email, class: "span4" %>
+      <%= f.label :subject, t('.subject') %>
+      <%= f.text_field :subject, class: "span6" %>
+      <%= f.label :category, t('.category') %>
+      <%= f.select :category, 
+                   options_for_select(t('.category_selections'), 
+                   f.object.category),
+                   class: "span2" %>
+      <%= f.label :message, t('.message') %>
+      <%= f.text_area :message, rows: 10, class: "span6" %>
+      <p>
+        <%= f.check_box :copy_me %>
+        <%= f.label :copy_me, t('.copy_me'), class: "checkbox inline" %>
+      <p>
+      <%= f.submit t('.send_email'), class: "btn" %>
+    <% end %>
+  </div>
+</div>

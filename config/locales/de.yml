@@ -20,6 +20,22 @@ de:
       sign_in:     "An meinem Konto anmelden"
       profile:     "Meine Listen"
 
+    contact:
+      contact:    "Kontakt"
+      contact_description: "Senden Sie uns eine Nachricht über das folgende Kontaktformular:"
+      email:      "Ihre E-Mail-Adresse *"
+      subject:    "Betreff *"
+      category:   "Kategorie *"
+      category_selections:
+      - 
+      - Listenweitergabe
+      - Untersützung
+      - Feedback
+      - Frage
+      message:    "Nachricht *"
+      copy_me:    "Kopie an meine E-Mail-Adresse"
+      send_email: "E-Mail Abschicken"
+
   sessions:
     new:
       Sign_in:         "Anmelden"
@@ -411,13 +427,26 @@ de:
       second: Sekunden
       year: Jahr
 
+  activemodel:
+    attributes:
+      message:
+        subject: "Betreff"
+        category: "Kategorie"
+        message:  "Nachricht"
+        email:    "E-Mail"
+    errors:
+      messages:
+        blank:     "darf nicht leer sein"
+        invalid:   "ist ungültig"
+             
   activerecord:
     models:
-      news:  "Nachricht"
-      event: "Veranstaltung"
-      list:  "Liste"
-      user:  "Benutzer"
-      item:  "Artikel"
+      news:    "Nachricht"
+      event:   "Veranstaltung"
+      list:    "Liste"
+      user:    "Benutzer"
+      item:    "Artikel"
+      message: "Nachricht"
     attributes:
       news:
         description: "Beschreibung"
@@ -465,7 +494,7 @@ de:
       body:    "Es gab Probleme mit folgenden Feldern:"
       header:
         one:   "%{model} konnte wegen folgendem Fehler nicht gespeichert werden:"
-        other: "%{model} konnte wegen foglenden %{count} Fehlern nicht gespeichert werden:"
+        other: "%{model} konnte wegen folgenden %{count} Fehlern nicht gespeichert werden:"
       
   divisable: "muss durch %{divisor} teilbar sein"
 
@@ -496,6 +525,8 @@ de:
   list_registered_on:          "Liste wurde vor %{time} registriert"
   list_closed:                 "Liste %{list_number} abgeschlossen"
   list_closed_on:              "Liste wurde vor %{time} abgeschlossen"
+
+  contact_success:             "Ihr Nachricht wurde gesendet"
 
   will_paginate:
     previous_label:     "Zurück"
