@@ -122,19 +122,19 @@ de:
       Save_changes: "Änderungen speichern"
 
     fields:
-      mandatory_fields: "Mit ° gekennzeichnet Felder müssen ausgefüllt werden"
+      mandatory_fields: "Mit * gekennzeichnet Felder müssen ausgefüllt werden"
 
-      First_name: "Vorname°"
-      Last_name:  "Nachname°"
-      Street:     "Straße°"
-      Zip_code:   "PLZ°"
-      Town:       "Stadt°"
-      Country:    "Land°"
-      Phone:      "Telefon°"
-      E_Mail:     "E-Mail°"
+      First_name: "Vorname *"
+      Last_name:  "Nachname *"
+      Street:     "Straße *"
+      Zip_code:   "PLZ *"
+      Town:       "Stadt *"
+      Country:    "Land *"
+      Phone:      "Telefon *"
+      E_Mail:     "E-Mail *"
       News:       "Ich möchte Neuigkeiten über E-Mail erhalten"
-      Password:   "Passwort°"
-      Confirm_Password: "Passwort bestätigen°"
+      Password:   "Passwort *"
+      Confirm_Password: "Passwort bestätigen *"
 
     user:
       delete: "Löschen"
@@ -527,6 +527,12 @@ de:
   list_closed_on:              "Liste wurde vor %{time} abgeschlossen"
 
   contact_success:             "Ihr Nachricht wurde gesendet"
+
+  contact:           "Kontaktformular"
+  user_name:         "Benutzername"
+  list_number:       "Listennummer"
+  registration_code: "Registrierungscode"
+  forwarding_to:     "Weitergabe an"
 
   will_paginate:
     previous_label:     "Zurück"

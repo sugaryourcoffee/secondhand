@@ -17,7 +17,7 @@ class StaticPagesController < ApplicationController
   end
 
   def contact
-    @message = Message.new
+    @message = Message.new(params[:message])
   end
 
   def message

@@ -118,7 +118,7 @@ en:
       password_obligation_notice: "Please note that for any change in your profile you need to provide your password and the password confirmation. This is due to the fact that we don't save passwords for security reasons."
       Update_your_profile: "Update your profile"
       Save_changes: "Save changes"
-
+      
     fields:
       mandatory_fields: "Fields marked with * have to be filled in"
 
@@ -377,6 +377,12 @@ en:
   list_closed_on:              "List has been closed %{time} ago"
 
   contact_success:             "Your message has been sent"
+  
+  contact:           "contact form"
+  user_name:         "User name"
+  list_number:       "List number"
+  registration_code: "Registration code"
+  forwarding_to:     "Forwarding to"
 
   will_paginate:
     previous_label:     "Previous"
