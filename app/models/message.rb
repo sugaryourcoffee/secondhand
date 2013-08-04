@@ -11,13 +11,11 @@ class Message
   validates :email, presence: true, format: {with: EMAIL_PATTERN}
 
   def method_missing(m, *args, &block)
-    attribute = @attributes[m]
-    return attribute unless attribute.nil?
-    super
+    @attributes[m]
   end
 
   def initialize(attributes = {})
-    @attributes = attributes
+    @attributes = attributes || {}
   end
 
   def read_attribute_for_validation(key)
