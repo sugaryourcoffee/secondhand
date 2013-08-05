@@ -26,4 +26,12 @@ class UserMailer < ActionMailer::Base
            subject: "[#{message.category}] #{message.subject}"
     end
   end
+
+  def registered(user)
+    @user = user
+    mail from: user.email,
+         to:   "mail@boerse-burgthann.de",
+         bcc:  "pierre@sugaryourcoffee.de",
+         subject: "[User registration] #{user.email}"
+  end
 end

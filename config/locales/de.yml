@@ -482,6 +482,7 @@ de:
         invalid:                  "ist ungültig"
         too_short:                "muss mindestens %{count} Zeichen haben"
         greater_than_or_equal_to: "muss mindestens %{count} sein"
+        taken:                    "ist schon vergeben"
       models:
         user:
           attributes:
