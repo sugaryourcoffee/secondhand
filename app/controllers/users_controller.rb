@@ -69,10 +69,13 @@ class UsersController < ApplicationController
       else
         list.user_id = user.id
         list.save
-        flash[:success] = I18n.t('.registered', model: t('activerecord.models.list'))
+        UserMailer.list_registered(user, list).deliver
+        flash[:success] = I18n.t('.registered', 
+                                 model: t('activerecord.models.list'))
       end
     else
-      flash[:warning] = I18n.t('.not_valid', model: t('activerecord.models.list'))
+      flash[:warning] = I18n.t('.not_valid', 
+                               model: t('activerecord.models.list'))
     end
     redirect_to user_path(user)
   end

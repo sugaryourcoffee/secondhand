@@ -34,4 +34,13 @@ class UserMailer < ActionMailer::Base
          bcc:  "pierre@sugaryourcoffee.de",
          subject: "[User registration] #{user.email}"
   end
+
+  def list_registered(user, list)
+    @user = user
+    @list = list
+    mail from: user.email,
+         to:   "mail@boerse-burgthann.de",
+         bcc:  "pierre@sugaryourcoffee.de",
+         subject: "[List registration] #{list.list_number}"
+  end
 end

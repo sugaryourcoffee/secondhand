@@ -1,0 +1,4 @@
+User <%= @user.email %> has registered a new list with list number <%= @list.list_number %>
+
+To visit the user's page follow <%= user_url(@user, locale: I18n.locale) %>
+To visit the list's page follow <%= list_url(@list, locale: I18n.locale) %>
