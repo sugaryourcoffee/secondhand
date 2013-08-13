@@ -23,6 +23,7 @@ en:
       contact_description: "You can leave a message using the contact form below"
       email:               "Your E-Mail Address *"
       subject:             "Subject *"
+      help:                "I need help regarding ..."
       category:            "Category *"
       category_selections:
       - 
@@ -158,7 +159,7 @@ en:
       Back:               "Cancel and don't save"
       capacity:           "Capacity"
       items_to_add:       "You can add %{count} more items"
-      volume:             "Volumen"
+      volume:             "Total"
       volume_of_list:     "Total volume of your list is %{volume}"
       items_in_list:      "Items in List %{list_number}"
       last_entered_item:  "Last created item"

@@ -21,4 +21,10 @@ module UsersHelper
 
     link_to I18n.t('.contact'), contact_path(message: message)
   end
+
+  def link_to_help
+    message = { category: I18n.t('static_pages.contact.category_selections')[2],
+                subject:  I18n.t('static_pages.contact.help') }
+    link_to I18n.t('.contact'), contact_path(message: message)
+  end
 end

@@ -25,6 +25,7 @@ de:
       contact_description: "Senden Sie uns eine Nachricht über das folgende Kontaktformular:"
       email:      "Ihre E-Mail-Adresse *"
       subject:    "Betreff *"
+      help:       "Ich benötige Hilfe zu ..."
       category:   "Kategorie *"
       category_selections:
       - 
