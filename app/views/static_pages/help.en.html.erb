@@ -1,0 +1,168 @@
+<% provide(:title, 'Help') %>
+<h1>Help</h1>
+<p>
+  We put a lot emphasis to make the <em>Secondhand</em> application as easy to use as possible. But things that might seem obvious to us might be incomprehensible to you. Therefore we want to give you some guidance on how to use the application. If you still need help feel free to contact us by phone or over the contact form.
+</p>
+<p>
+  Here is an outline of our explanations. This is also a typical workflow when working with <em>Secondhand</em>
+</p>
+<ul>
+  <li><a href="#access">Get access to the application</a></li>
+  <li><a href="#register">Registering lists</a></li>
+  <li><a href="#collect">Collecting items</a></li>
+  <li><a href="#finish">Finish your list</a></li>
+  <li><a href="#print">Print your list and your labels</a></li>
+</ul>
+<p>
+  Following are workflows you will use only occasionally
+</p>
+<ul>
+  <li><a href="#forward">Forward list to another seller</a></li>
+  <li><a href="#sign">Sign out and sign in</a></li>
+  <li><a href="#profile">Change your profile</a></li>
+</ul>
+
+<section id="access">
+  <header>
+    <h3>Get access to the application</h3><hr/>
+  </header>
+  <section>
+  <p>
+    At the home page you find a button called <em>Sign up now!</em>. This is where you start not having an account yet. 
+  </p>
+  <p> <%= image_tag("help/welcome.png", class: "well") %> </p>
+  <p>
+    When you press the <em>Sign up now!</em> button you will be forwarded to the <em>Sign up</em> page. 
+  </p>
+  <p> <%= image_tag("help/sign_up.png", class: "well") %> </p>
+  <p>
+    Fill in all fields that are indicated with a * (star). You can also optionally check the <em>I want to recieve news per email</em> check box to get emails about news on <em>Kinderkleider und Spielzeugbörse Burgthann</em>. When done press the <em>Create my account</em> button.
+  </p>
+  <p>
+    Your account will be created and you will be forwarded to your user page. 
+  </p>
+  <p> <%= image_tag("help/user_page.png", class: "well") %> </p>
+  </section>
+</section>
+
+<section id="register">
+  <header>
+    <h3>Registering Lists</h3><hr/>
+  </header>
+  <section>
+  <p>
+    Initially in the <em>List Administration</em> section it says that you don't have registered lists yet. In you user page you can register lists at the top part of the page. The registration code you will find on your pickup ticket. Enter the registration code and press the <em>Register List</em> button. 
+  </p>
+  <p> <%= image_tag("help/list_registration.png", class: "well") %> </p>
+  <p>
+    After registration your user page will contain a list indicating that it contains no items yet. 
+  </p>
+  <p> <%= image_tag("help/list_administration.png", class: "well") %> </p>
+  </section>
+</section>
+
+<section id="collect">
+  <header>
+    <h3>Collecting Items</h3><hr/>
+  </header>
+  <section>
+  <p>
+    To add items to your list press the <em>Item collection</em> link. You then will be forwarded to the <em>Collect Items</em> page. 
+  </p> 
+  <p> <%= image_tag("help/collect_items_index.png", class: "well") %> </p>
+  <p>
+    To add a new item to your list press the <em>Create New Item</em> button. This will forward you to the <em>New Item for List ...</em> page. 
+  </p>
+  <p> <%= image_tag("help/new_item.png", class: "well") %> </p>
+  <p>
+    Now fill in the description, the size and the price. If you want to enter subsequent items press the <em>Save and create new item</em> button. If you just want to save this one item press <em>Create item</em>. If you don't want to save the already entered item or if you just want to return without changing anything press the <em>Cancel and don't save</em> link. 
+  </p>
+  <p>
+    After pressing <em>Save and create new item</em> on the left hand side you will see the last created item. There is also a button <em>All Items</em> that shows all items of this list. 
+  </p>
+  <p> <%= image_tag("help/new_item_overview.png", class: "well") %> </p>
+  <p>
+    If you have entered the maximum items per list than you will only see the <eem>Create Item</em> button and the <em>Cancel and don't save</em> link. 
+  </p>
+  <p>
+  In the Collect Items page you will see all items of the list. In this overview page you can view (<em>Show</em> link) the item, edit (<em>Edit</em> link) the item or delete (<em>Destroy</em> link) the item by pressing the respective link in the item's line. To go back to your user page press the <em>Back</em> link.
+  </p>
+  <p> <%= image_tag("help/list_overview.png", class: "well") %> </p>
+  </section>
+</section>
+
+<section id="finish">
+  <header>
+    <h3>Submit Your List</h3><hr/>
+  </header>
+  <section>
+  <p>
+  Back in your user page you will see a link at the right side of your list called <em>Close and submit list</em>. 
+  </p>
+  <p> <%= image_tag("help/list_administration_before_submit.png", class: "well") %> </p>
+  <p>
+    If you already know the container color enter it and press update. If you are done with collecting the items for the list press the <em>Close and submit list</em> link.
+  </p>
+  <p>
+    Then on the right site the link will be replaced with the information when you have sent the list. On the left site you will see two additional links saying <em>Print list</em> and <em>Print labels</em>. The labels have to be tagged to the items. 
+  </p>
+  <p> <%= image_tag("help/list_administration_after_submit.png", class: "well") %> </p>
+  </section>
+</section>
+
+<section id="print">
+  <header>
+    <h3>Print your list and your labels</h3><hr/>
+  </header>
+  <section>
+  <p>
+    Printing your list is optional and it is meant if you want to have a print out for your files. Printing the labels is necessary as you need to tag to each item the respective label. On the label there is a black bullet that is where you should tag the label to your item. Please be careful not to destroy the barcode when tagging your labels.
+  </p>
+  </section>
+</section>
+
+<section id="forward">
+  <header>
+    <h3>List forwarding to other users</h3><hr/>
+  </header>
+  <section>
+  <p>
+    If you don't need an obtained list you can forward it to another seller. If you have already registered the list you have to inform us so we can dealocate your list so another seller can register the list. To do that go to the contact page and fill in the contact form as indicated in the picture. 
+  </p>
+  <p> <%= image_tag("help/list_forwarding.png", class: "well") %> </p>
+  </section>
+</section>
+
+<section id="sign">
+  <header>
+    <h3>Sign out and sign in</h3><hr/>
+  </header>
+  <section>
+  <p>
+    When logged in you won't be signed off automaticaly. If you want to log off you can do that over the menu in the header. 
+  </p>
+  <p> <%= image_tag("help/header.png", class: "well") %> </p>
+  <p>
+    When you click on the <em>Account</em> button a drop down menu will be opened. 
+  </p>
+  <p> <%= image_tag("help/account.png", class: "well") %> </p>
+  <p>
+    To sign off press the <em>Sign out</em> link in the <em>Account</em> menu. You then will be returned to the welcome page. When pressing the <em>Log in to my account</em> button you will be forwarded to the <em>Sign in</em> page. There you have to provide the email address as login and your password. 
+  </p>
+  <p> <%= image_tag("help/sign_in.png", class: "well") %> </p>
+  <p>
+    If you have forgotten your password press the <em>Reset password</em> link and you will be forwarded to the reset password page. Enter your email address and an email will be send to you with a link where you can reset your password.
+  </p>
+  </section>
+</section>
+
+<section id="profile">
+  <header>
+    <h3>Change your profile</h3><hr/>
+  </header>
+  <section>
+  <p>
+    If you want to change your profile settings in the <em>Account</em> menu select the <em>Settings</em> link and change your settings as necessary. 
+  </p>
+  </section>
+</section>
