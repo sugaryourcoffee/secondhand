@@ -530,6 +530,8 @@ de:
   list_closed:                 "Liste %{list_number} abgeschlossen"
   list_closed_on:              "Liste wurde vor %{time} abgeschlossen"
 
+  list_full:                   "Liste %{list_number} können keine weiteren Artikel hinzugefügt werden!"
+
   contact_success:             "Ihr Nachricht wurde gesendet"
 
   contact:           "Kontaktformular"

@@ -379,6 +379,8 @@ en:
   list_closed:                 "List %{list_number} closed"
   list_closed_on:              "List has been closed %{time} ago"
 
+  list_full:                   "No more items can be added to list %{list_number}!"
+
   contact_success:             "Your message has been sent"
   
   contact:           "contact form"

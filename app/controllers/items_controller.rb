@@ -12,8 +12,12 @@ class ItemsController < ApplicationController
   end
 
   def new
-    @item = Item.new
     @list = List.find(params[:list_id])
+    if @list.max_items_per_list?
+      flash[:warning] = I18n.t('.list_full', list_number: @list.list_number)
+      redirect_to root_path
+    end
+    @item = Item.new
     @user = User.find(params[:user_id])
   end
 
