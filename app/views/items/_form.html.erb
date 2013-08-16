@@ -7,6 +7,7 @@
   <%= f.text_field :size %>
   <%= f.label :price, t('.price') %>
   <%= f.number_field :price, 
+      step: "any",
       value: number_with_precision(f.object.price, 
                                    precision: 2, 
                                    locale: I18n.locale) %>
