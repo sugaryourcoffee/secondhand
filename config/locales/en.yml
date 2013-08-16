@@ -136,8 +136,10 @@ en:
       Confirm_Password: "Confirm Password *"
 
     user:
-      delete: "delete"
-      confirm: "Are you sure?"
+      delete:     "delete"
+      confirm:    "Are you sure?"
+      list:       "list"
+      registered: "registered"
 
   items:
     index:

@@ -1,17 +1,27 @@
 <div class="thumbnail"> 
-  <%= gravatar_for user, size: 52 %>
-  <address class="offset1">
-    <strong>
-      <%= link_to "#{user.first_name} #{user.last_name}", user %>
-    </strong><br>
-    <%= user.zip_code %> <%= user.town %><br>
-    <%= user.country %><br>
-    <%= user.phone %><br>
-    <a href="mailto:<%= user.email %>"><%= user.email %></a><br>
-    <% if current_user.admin? && !current_user?(user) %>
-      <%= link_to t('.delete'), user, method: :delete, confirm: t('.confirm'),
-          class: "btn btn-warning" %>
-    <% end %>
-  </address>
+  <div class="row">
+    <div class="span4">
+    <%= gravatar_for user, size: 52 %>
+    <address class="offset1">
+      <strong>
+        <%= link_to "#{user.first_name} #{user.last_name}", user %>
+      </strong><br>
+      <%= user.zip_code %> <%= user.town %><br>
+      <%= user.country %><br>
+      <%= user.phone %><br>
+      <a href="mailto:<%= user.email %>"><%= user.email %></a><br>
+      <% if current_user.admin? && !current_user?(user) %>
+        <%= link_to t('.delete'), user, method: :delete, confirm: t('.confirm'),
+            class: "btn btn-warning" %>
+      <% end %>
+    </address>
+    </div>
+    <div class="span2">
+      <span class="badge badge-info pull-right">
+        <%= pluralize(user.lists_for_active_event.size, t('.list')) %>
+        <%= t('.registered') %>
+      </span>
+    </div>
+  </div>
 </div>
 

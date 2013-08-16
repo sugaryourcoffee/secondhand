@@ -138,8 +138,10 @@ de:
       Confirm_Password: "Passwort bestätigen *"
 
     user:
-      delete: "Löschen"
-      confirm: "Sind Sie sicher?"
+      delete:     "Löschen"
+      confirm:    "Sind Sie sicher?"
+      list:       "Liste"
+      registered: "registriert"
       
   items:
     index:
@@ -497,7 +499,7 @@ de:
       header:
         one:   "%{model} konnte wegen folgendem Fehler nicht gespeichert werden:"
         other: "%{model} konnte wegen folgenden %{count} Fehlern nicht gespeichert werden:"
-      
+
   divisable: "muss durch %{divisor} teilbar sein"
 
   send_list:         "Liste wurde an Kinderkleider und Spielzeugbörse gesendet"
