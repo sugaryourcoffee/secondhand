@@ -366,6 +366,7 @@ en:
   taken:                  "Registration code already taken!"
   registered:             "%{model} registered"
   deregistered:           "%{model} deregistered"
+  not_own_list:           "Only own lists can be deregistered!"
   not_valid:              "Registration code not valid!"
 
   password_reset_instructions: "Password reset instruction has been sent"

@@ -517,6 +517,7 @@ de:
   taken:                  "%{model} ist schon vergeben!"
   registered:             "%{model} wurde registriert!"
   deregistered:           "%{model} wurde freigegeben!"
+  not_own_list:           "Nur eigene Listen können freigegeben werden!"
   not_valid:              "Registrierungscode nicht gültig!"
 
   password_reset_instructions: "Rücksetzanleitung für Ihr Passwort wurde versendet"

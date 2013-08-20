@@ -198,6 +198,8 @@ describe "User pages" do
                          registration_code: "2fghij") 
     end
 
+    let(:other_user) { FactoryGirl.create(:user) }
+
     let(:user) { FactoryGirl.create(:user) }
     before do
       sign_in user
@@ -237,6 +239,47 @@ describe "User pages" do
           it { should have_content('List registered') }
           it { should have_button "List 2" }
         end
+
+      end
+
+    end
+
+    describe "with list of another user" do
+
+      before do
+        register_list("1abcde")
+        list1.items.create(description: "Item 1.1", size: "S", price: 2.5)
+        list1.items.create(description: "Item 1.2", size: "L", price: 3.0)
+      end
+
+      it { list1.items.size.should eq 2 }
+      it { list1.reload.user_id.should eq user.id }
+
+      describe "deregister other user's list with own user id" do
+        before do
+          sign_in other_user
+          post deregister_list_user_path(other_user, 
+                                         list_id: list1.id, 
+                                         locale: :en)
+        end
+
+        it { list1.items.size.should eq 2 }
+        it { list1.reload.user_id.should eq user.id }
+
+        specify { response.should redirect_to user_path(other_user, 
+                                                        locale: :en) }
+      end
+
+      describe "deregister other user's list with other user's id" do
+
+        before do
+          sign_in other_user
+          post deregister_list_user_path(user, list_id: list1.id, locale: :en)
+        end
+
+        it { list1.items.size.should eq 2 }
+        it { list1.reload.user_id.should eq user.id }
+        specify { response.should redirect_to(root_path) }
 
       end
 

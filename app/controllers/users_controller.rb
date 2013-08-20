@@ -1,8 +1,10 @@
 class UsersController < ApplicationController
   skip_before_filter :authorize, only: [:register_list, :deregister_list,
                                         :show, :new, :create, :edit, :update] 
-  before_filter :signed_in_user, only: [:register_list, :show, :edit, :update]
-  before_filter :correct_user, only: [:register_list, :show, :edit, :update]
+  before_filter :signed_in_user, only: [:register_list, 
+                                        :deregister_list, :show, :edit, :update]
+  before_filter :correct_user, only: [:register_list, 
+                                      :deregister_list, :show, :edit, :update]
 
   def index
     @users = User.paginate(page: params[:page], 
@@ -84,8 +86,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     list = List.find_by_id_and_user_id(params[:list_id], user.id)
     unless list
-      flash[:error] = I18n.t('.not_list_of_user',
-                             model: t('activerecord.models.list'))
+      flash[:error] = I18n.t('.not_own_list')
     else
       list.user_id = nil
       list.container = nil
