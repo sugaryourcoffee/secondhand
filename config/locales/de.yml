@@ -99,6 +99,7 @@ de:
       List_Registration: "Listen Registrierung" 
       Enter_registration_code: "Registrierungscode eingeben. Achtung: 0 (Nummer), O (Buchstabe)"
       Register_List: "Liste Registrieren"
+      Deregister_list: "Freigeben"
       List_Administration: "Listen Administration"
       No_Registered_Lists: "Sie haben noch keine registrierten Listen"
       List: "Liste"
@@ -515,6 +516,7 @@ de:
   welcome:                "Willkommen zu Sugar Your Coffee!"
   taken:                  "%{model} ist schon vergeben!"
   registered:             "%{model} wurde registriert!"
+  deregistered:           "%{model} wurde freigegeben!"
   not_valid:              "Registrierungscode nicht gültig!"
 
   password_reset_instructions: "Rücksetzanleitung für Ihr Passwort wurde versendet"

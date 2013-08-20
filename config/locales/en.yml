@@ -97,6 +97,7 @@ en:
       List_Registration: "List Registration" 
       Enter_registration_code: "Enter registration code. Note: 0 (number), O (letter)"
       Register_List: "Register List"
+      Deregister_list: "Deregister"
       List_Administration: "List Administration"
       No_Registered_Lists: "You have no registered lists yet"
       List: "List"
@@ -364,6 +365,7 @@ en:
   welcome:                "Welcome to Sugar Your Coffee!"
   taken:                  "Registration code already taken!"
   registered:             "%{model} registered"
+  deregistered:           "%{model} deregistered"
   not_valid:              "Registration code not valid!"
 
   password_reset_instructions: "Password reset instruction has been sent"

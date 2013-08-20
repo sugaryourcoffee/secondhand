@@ -27,6 +27,7 @@ Secondhand::Application.routes.draw do
     resources :users do
       member do
         post :register_list
+        post :deregister_list
       end
       resources :lists do
         member do

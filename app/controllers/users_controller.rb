@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_filter :authorize, only: [:register_list,
+  skip_before_filter :authorize, only: [:register_list, :deregister_list,
                                         :show, :new, :create, :edit, :update] 
   before_filter :signed_in_user, only: [:register_list, :show, :edit, :update]
   before_filter :correct_user, only: [:register_list, :show, :edit, :update]
@@ -76,6 +76,28 @@ class UsersController < ApplicationController
     else
       flash[:warning] = I18n.t('.not_valid', 
                                model: t('activerecord.models.list'))
+    end
+    redirect_to user_path(user)
+  end
+
+  def deregister_list
+    user = User.find(params[:id])
+    list = List.find_by_id_and_user_id(params[:list_id], user.id)
+    unless list
+      flash[:error] = I18n.t('.not_list_of_user',
+                             model: t('activerecord.models.list'))
+    else
+      list.user_id = nil
+      list.container = nil
+      list.items.destroy_all
+      if list.save
+        UserMailer.list_deregistered(user, list).deliver
+        flash[:success] = I18n.t('.deregistered',
+                                 model: t('activerecord.models.list'))
+      else
+        flash[:error] = I18n.t('.deregistration_error',
+                               model: t('activerecord.models.list'))
+      end
     end
     redirect_to user_path(user)
   end

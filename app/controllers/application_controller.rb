@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
       redirect_to signin_path, notice: I18n.t('.sign_in') 
     elsif not current_user.admin?
       redirect_to root_path, 
-                  notice: I18n.t('.admin_previleges')
+                  notice: I18n.t('.admin_privileges')
     end
   end
 

@@ -155,6 +155,8 @@ describe "User pages" do
         register_list("2fghij")
       end
 
+      it { list1.reload.user_id.should eq user.id }
+
       it { should_not have_content('You have no registered lists yet') }
       it { should have_content('List registered') }
       it { should have_button('List 1') }
@@ -181,6 +183,63 @@ describe "User pages" do
       before { register_list("3klmno") }
 
       it { should have_content('Registration code not valid') }
+    end
+
+  end
+
+  describe "list deregistration" do
+    let(:event) { FactoryGirl.create(:active) }
+    let!(:list1) do
+      FactoryGirl.create(:list, event: event, list_number: 1, 
+                         registration_code: "1abcde") 
+    end
+    let!(:list2) do
+      FactoryGirl.create(:list, event: event, list_number: 2,
+                         registration_code: "2fghij") 
+    end
+
+    let(:user) { FactoryGirl.create(:user) }
+    before do
+      sign_in user
+      visit user_path(user, locale: :en) 
+    end
+
+    it { should have_content('You have no registered lists yet') }
+
+    describe "with list asigned to user" do
+      before do
+        register_list("2fghij")
+        list2.items.create(description: "Item 1", size: "XL", price: "2.5")
+        list2.items.create(description: "Item 2", size: "S", price: "1.0")
+      end
+
+      it { should have_content('List registered') }
+      it { should have_button('List 2') }
+
+      it { list2.items.size.should eq 2 }
+      it { list2.reload.user_id.should eq user.id }
+
+      describe "deregister list" do
+        before do
+          click_link "Deregister"
+        end
+        
+        it { should have_content('List deregistered') }
+        it { should_not have_button "List 2" }
+        it { list2.reload.items.size.should eq 0 }
+        it { list2.user_id.should eq nil }
+
+        describe "and register deregistered list" do
+          before do
+            register_list("2fghij")
+          end
+
+          it { should have_content('List registered') }
+          it { should have_button "List 2" }
+        end
+
+      end
+
     end
 
   end
