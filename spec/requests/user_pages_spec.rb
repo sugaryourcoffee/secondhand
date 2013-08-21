@@ -44,11 +44,36 @@ describe "User pages" do
           visit users_path(locale: :en)
         end
 
-        it { should have_link('delete', href: user_path(User.first, locale: :en)) }
+        it { should have_link('delete', 
+                              href: user_path(User.first, locale: :en)) }
         it "should be able to delete another user" do
           expect { click_link('delete') }.to change(User, :count).by(-1)
         end
-        it { should_not have_link('delete', href: user_path(admin, locale: :en)) }
+        it { should_not have_link('delete', 
+                                  href: user_path(admin, locale: :en)) }
+      end
+
+      describe "not active when user has registered list" do
+        let(:admin) { FactoryGirl.create(:admin) }
+        let(:event) { FactoryGirl.create(:active) }
+        let!(:list1) { FactoryGirl.create(:list, event: event, list_number: 1,
+                                          registration_code: "2a.b.c") }
+        let!(:list2) { FactoryGirl.create(:list, event: event, list_number: 2,
+                                          registration_code: ".3.d.e") }
+        before do
+          sign_in user
+          visit user_path(user, locale: :en)
+          register_list("2a.b.c")
+          register_list(".3.d.e")
+          sign_in admin
+          visit users_path(locale: :en)
+        end
+
+        it { should have_selector("li", 
+                                text: "#{user.first_name} #{user.last_name}") }
+        it { should_not have_link("delete",
+                                  href: user_path(user, locale: :en)) } 
+
       end
     end
 

@@ -10,7 +10,7 @@
       <%= user.country %><br>
       <%= user.phone %><br>
       <a href="mailto:<%= user.email %>"><%= user.email %></a><br>
-      <% if current_user.admin? && !current_user?(user) %>
+      <% if current_user.admin? && !current_user?(user) && user.lists.empty? %>
         <%= link_to t('.delete'), user, method: :delete, confirm: t('.confirm'),
             class: "btn btn-warning" %>
       <% end %>
