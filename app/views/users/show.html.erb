@@ -54,7 +54,8 @@
                                   deregister_list_user_path(@user, 
                                                             list_id: list.id),
                                   method: :post,
-                                  data: { confirm: "Are you sure?" } %></li>
+                                  data: { confirm: t('.sure_deregister') } %>
+                  </li>
                 </ul>
               </div>
               <ul>

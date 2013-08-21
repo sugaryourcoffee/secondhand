@@ -100,6 +100,7 @@ de:
       Enter_registration_code: "Registrierungscode eingeben. Achtung: 0 (Nummer), O (Buchstabe)"
       Register_List: "Liste Registrieren"
       Deregister_list: "Freigeben"
+      sure_deregister: "Wenn Sie Ihre Liste freigeben werden alle Artikel daraus gelöscht und die Liste entfernt.\n\nMöchten Sie Ihre Liste jetzt freigeben?"
       List_Administration: "Listen Administration"
       No_Registered_Lists: "Sie haben noch keine registrierten Listen"
       List: "Liste"
