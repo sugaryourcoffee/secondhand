@@ -1,21 +1,20 @@
 <%= render partial: 'shared/generic_error_message', locals: { topic: @item } %>
 
-<%= form_for [@user, @list, @item] do |f| %>
+<%= form_for([@user, @list, @item]) do |f| %>
   <%= f.label :description, t('.description') %>
   <%= f.text_field :description, autofocus: true %>
   <%= f.label :size, t('.size') %>
   <%= f.text_field :size %>
   <%= f.label :price, t('.price') %>
-  <%= f.number_field :price, 
-      step: "any",
+  <%= f.text_field :price, 
       value: number_with_precision(f.object.price, 
                                    precision: 2, 
                                    locale: I18n.locale) %>
   <% unless f.object.id or @list.free_item_capacity < 2 %>
     <%= f.submit t('.create_and_new'), title: t('.create_and_new_tooltip'), 
-                 class: "btn btn-primary"%>
+      class: "btn btn-primary" %>
   <% end %>
-  <%= f.submit title: t('.submit_tooltip'), class: "btn"%>
+  <%= f.submit title: t('.submit_tooltip'), class: "btn" %>
 <% end %>
 
 
