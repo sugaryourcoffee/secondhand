@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.paginate(page: params[:page], 
-                           conditions: User.search_conditions(params[:search]))
+                           conditions: User.search_conditions(params))
   end
 
   def show

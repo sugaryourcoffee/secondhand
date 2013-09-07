@@ -86,8 +86,19 @@ en:
 
   users:
     index:
-      All_users: "All users"
-      search:    "Search"
+      All_users:      "All users"
+      search:         "Search"
+      search_options: "Search options ..."
+      name:           "Name"
+      first_name:     "First Name"
+      last_name:      "Last Name"
+      street:         "Street number"
+      zip_code:       "Zip Code"
+      town:           "Town"
+      country:        "Country"
+      phone:          "Phone"
+      email:          "E-Mail"
+      news:           "News"
 
     new:
       Sign_up: "Sign up"

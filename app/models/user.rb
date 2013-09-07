@@ -66,11 +66,37 @@ class User < ActiveRecord::Base
     end 
   end
 
-  def self.search_conditions(search)
-    if search
-      ['first_name LIKE ? or last_name LIKE ?', "%#{search}%", "%#{search}%"]
+  def self.search_conditions(params)
+    if params[:search]
+      ['first_name LIKE ? or last_name LIKE ?', 
+       "%#{params[:search]}%", "%#{params[:search]}%"]
     else
-      nil
+      search_params = params.select { |k,v| not v.empty? and k =~ /^search_/ }
+      unless search_params.empty?
+        query_string = ""
+        values       = []
+        first_value  = true
+        search_params.each do |k,v|
+          if first_value
+            first_value = false
+          else
+            query_string << " and "
+          end
+
+          key = k.sub("search_", "")
+
+          if key == "news"
+            query_string << "#{key} = ?" if v == "on"
+            values << true 
+          else
+            query_string << "#{key} LIKE ?"
+            values << "%#{v}%"
+          end
+        end
+        [query_string, values].flatten
+      else
+        nil
+      end
     end
   end
 

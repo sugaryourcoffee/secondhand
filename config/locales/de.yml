@@ -88,8 +88,19 @@ de:
 
   users:
     index:
-      All_users: "Alle Benutzer"
-      search:    "Suchen"
+      All_users:      "Alle Benutzer"
+      search:         "Suchen"
+      search_options: "Suchoptionen ..."
+      name:           "Name"
+      first_name:     "Vorname"
+      last_name:      "Nachname"
+      zip_code:       "PLZ"
+      street:         "Straße Hausnummer"
+      town:           "Stadt"
+      country:        "Land"
+      phone:          "Telefon"
+      email:          "E-Mail"
+      news:      "News"
 
     new:
       Sign_up: "Registrieren"

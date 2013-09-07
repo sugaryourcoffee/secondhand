@@ -1,14 +1,103 @@
 <% provide(:title, t('.All_users')) %>
 
-<h1><%= t('.All_users') %></h1>
+<h1><%= "#{t('.All_users')} (#{@users.count})" %></h1>
 
-<%= form_tag users_path, method: 'get', class: "form-search" do %>
-  <p>
-    <%= text_field_tag :search, params[:search], 
-                       class: "input-medium search-query" %>
-    <%= submit_tag t('.search'), name: nil, class: "btn" %>
-  </p>
-<% end %>
+<div class="row">
+  <div class="span4">
+    <%= form_tag users_path, method: 'get', class: "form-search" do %>
+      <p>
+        <%= text_field_tag :search, params[:search], 
+                           class: "input-medium search-query" %>
+        <%= submit_tag t('.search'), name: nil, class: "btn" %>
+      </p>
+    <% end %>
+  </div>
+  <div class="span8">
+    <p>
+      <button type="button" class="btn", 
+              data-toggle="collapse" data-target="#search_options">
+        <%= t('.search_options') %>
+      </button>
+    </p>
+    <div id="search_options" class="collapse"> 
+      <div class="well">
+        <%= form_tag users_path, method: 'get', class: "form-horizontal" do %>
+          <div class="control-group">
+            <%= label_tag :search_last_name, 
+                          t('.name'), class: "control-label" %>
+            <div class="controls">
+              <%= text_field_tag :search_first_name, 
+                params[:search_first_name],
+                placeholder: t('.first_name'),
+                class: "span2" %>
+              <%= text_field_tag :search_last_name, 
+                params[:search_last_name],
+                placeholder: t('.last_name'),
+                class: "span3" %>
+            </div>
+          </div>
+          <div class="control-group field">
+            <%= label_tag :search_street, 
+                          t('.street'), class: "control-label" %>
+            <div class="controls">
+              <%= text_field_tag :search_street, 
+                                 params[:search_street], class: "span5" %>
+            </div>
+          </div>
+          <div class="control-group field">
+            <%= label_tag :search_town, 
+                          t('.town'), class: "control-label" %>
+            <div class="controls">
+              <%= text_field_tag :search_zip_code, 
+                params[:search_zip_code], class: "span2",
+                placeholder: t('.zip_code') %>
+              <%= text_field_tag :search_town, 
+                params[:search_town], class: "span3",
+                placeholder: t('.town') %>
+            </div>
+          </div>
+          <div class="control-group field">
+            <%= label_tag :search_country, 
+                          t('.country'), class: "control-label" %>
+            <div class="controls">
+              <%= text_field_tag :search_country, 
+                                 params[:search_country], class: "span5" %>
+            </div>
+          </div>
+          <div class="control-group field">
+            <%= label_tag :search_phone, 
+                          t('.phone'), class: "control-label" %>
+            <div class="controls">
+              <%= text_field_tag :search_phone, 
+                                 params[:search_phone], class: "span5" %>
+            </div>
+          </div>
+          <div class="control-group field">
+            <%= label_tag :search_email, 
+                          t('.email'), class: "control-label" %>
+            <div class="controls">
+              <%= text_field_tag :search_email, 
+                                 params[:search_email], class: "span5" %>
+            </div>
+          </div>
+          <div class="control-group field">
+            <%= label_tag :search_news, 
+                          t('.news'), class: "control-label" %>
+            <div class="controls">
+              <%= check_box_tag :search_news, params[:search_news],
+                                params[:search_news] == "on" %>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <%= submit_tag t('.search'), name: nil, class: "btn" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 
 <%= will_paginate %>
 
