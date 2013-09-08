@@ -32,6 +32,18 @@ class Event < ActiveRecord::Base
 
   before_destroy :ensure_not_active, :ensure_has_no_registered_lists
 
+  def registered_lists
+    List.registered(id)
+  end
+
+  def open_lists
+    List.open(id)
+  end
+
+  def closed_lists
+    List.closed(id)
+  end
+
   def pickup_tickets_pdf
     list_index = 0
     pdf = Prawn::Document.new(page_size: "A4")

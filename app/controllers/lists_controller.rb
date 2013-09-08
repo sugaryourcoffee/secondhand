@@ -12,6 +12,8 @@ class ListsController < ApplicationController
                  .paginate(page: params[:page], 
                            conditions: List.search_conditions(params))
 
+    @event = Event.find_by_active(true)
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @lists }

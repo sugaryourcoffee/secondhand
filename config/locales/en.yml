@@ -282,6 +282,8 @@ en:
       search_options:       "Search options ..."
       registered:           "Registered"
       closed:               "Closed"
+      open:                 "Open"
+      total:                "Total"
       yep:                  "Yes"
       nope:                 "No"
 

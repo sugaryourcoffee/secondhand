@@ -283,6 +283,8 @@ de:
       search_options:       "Suchoptionen ..."
       registered:           "Registriert"
       closed:               "Abgeschlossen"
+      open:                 "Offen"
+      total:                "Gesamt"
       yep:                  "Ja"
       nope:                 "Nein"
 

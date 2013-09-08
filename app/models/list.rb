@@ -31,6 +31,30 @@ class List < ActiveRecord::Base
 
   before_update :reset_sent_on
 
+  def self.registered(event_id)
+    condition = "user_id is not ? and sent_on is ?"
+    if event_id
+      condition = "event_id = ? and " + condition
+    end
+    List.where(condition, event_id, nil, nil)
+  end
+
+  def self.closed(event_id)
+    condition = "sent_on is not ?"
+    if event_id
+      condition = "event_id = ? and " + condition
+    end
+    List.where(condition, event_id, nil)
+  end
+
+  def self.open(event_id)
+    condition = "user_id is ?"
+    if event_id
+      condition = "event_id = ? and " + condition
+    end
+    List.where(condition, event_id, nil)
+  end
+
   def self.search(search)
     if search
       find(:all,
