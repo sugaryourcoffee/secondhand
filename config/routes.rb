@@ -28,6 +28,7 @@ Secondhand::Application.routes.draw do
       member do
         post :register_list
         post :deregister_list
+        get :print_address_labels, defaults: { format: 'pdf' }
       end
       resources :lists do
         member do

@@ -120,7 +120,11 @@ de:
       Print: "Drucken"
       print_list: "Liste drucken"
       Labels: "Etiketten"
+      Address_labels: "Adressetiketten"
       print_labels: "Etiketten drucken"
+      print_address_labels: "Adressetiketten drucken"
+      cancel: "Abbrechen"
+      list_number: "Listennummer %{list_number}"
       Enter_container_color: "Korbfarbe eingeben:"
       Save_Container_Color:  "Korbfarbe Speichern"
 
@@ -556,6 +560,8 @@ de:
   list_number:       "Listennummer"
   registration_code: "Registrierungscode"
   forwarding_to:     "Weitergabe an"
+
+  labels_print_note: "Adressen auf weißes oder auf Papier in Etikettenfarbe drucken"
 
   will_paginate:
     previous_label:     "Zurück"

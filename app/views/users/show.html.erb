@@ -19,7 +19,11 @@
       <% end %>
     </fieldset>
     <fieldset>
-      <legend><%= t('.List_Administration') %></legend>
+      <legend><%= t('.List_Administration') %>
+        <%= link_to t('.print_address_labels'), 
+                    print_address_labels_user_path(@user), 
+                    class: "btn pull-right" %>
+      </legend>
       <% if @user.lists.empty? %>
         <div class="row">
           <div class="span8">

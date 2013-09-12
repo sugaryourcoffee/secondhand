@@ -103,6 +103,18 @@ class UsersController < ApplicationController
     redirect_to user_path(user)
   end
 
+  def print_address_labels
+    user = User.find(params[:id])
+    respond_to do |format|
+      format.pdf do
+        send_data user.address_labels_as_pdf(count: 20,
+                                             labels_per_page: 20,
+                                             labels_per_row: 2), 
+                                             content_type: Mime::PDF
+      end
+    end
+  end
+
   private
 =begin
   def signed_in_user

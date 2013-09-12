@@ -117,7 +117,11 @@ en:
       Item_collection: "Item collection"
       Print: "Print"
       print_list: "Print list"
+      print_address_labels: "Print address labels"
+      cancel: "Cancel"
+      list_number: "List number %{list_number}"
       Labels: "Labels"
+      Address_labels: "Address labels"
       print_labels: "Print labels"
       Enter_container_color: "Enter container color:"
       Save_Container_Color:  "Save Container Color"
@@ -405,6 +409,8 @@ en:
   list_number:       "List number"
   registration_code: "Registration code"
   forwarding_to:     "Forwarding to"
+
+  labels_print_note: "Print addresses on white paper or on paper in item label color"
 
   will_paginate:
     previous_label:     "Previous"
