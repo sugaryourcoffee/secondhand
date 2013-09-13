@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   skip_before_filter :authorize, only: [:register_list, :deregister_list,
-                                        :show, :new, :create, :edit, :update] 
+                                        :show, :new, :create, :edit, :update,
+                                        :print_address_labels] 
   before_filter :signed_in_user, only: [:register_list, 
                                         :deregister_list, :show, :edit, :update]
   before_filter :correct_user, only: [:register_list, 
