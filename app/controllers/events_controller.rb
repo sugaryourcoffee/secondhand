@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  include EventsHelper
   # GET /events
   # GET /events.json
   def index
