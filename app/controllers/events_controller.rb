@@ -117,7 +117,7 @@ class EventsController < ApplicationController
 
     max_lists + list_count_to_create 
   end
-
+=begin
   def create_registration_codes(numbers, codes, size)
     numbers.each do |number|
       code = number.to_s.crypt("#{Random.new_seed}")[1..size]
@@ -126,6 +126,7 @@ class EventsController < ApplicationController
     end
     codes
   end
+=end
 
   def get_unassigned_list_numbers(lists, list_count)
     list_numbers = lists.collect {|list| list.list_number}
