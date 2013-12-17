@@ -46,6 +46,42 @@
     <%= f.label :max_items_per_list, t('.max_items_per_list') %><br />
     <%= f.number_field :max_items_per_list %>
   </div>
+  <div class="field">
+    <%= f.label :list_closing_date, t('.list_closing_date') %><br />
+    <%= f.date_select :list_closing_date %>
+  </div>
+  <div class="field">
+    <%= f.label :delivery_location, t('.delivery_location') %><br />
+    <%= f.text_field :delivery_location %>
+  </div>
+  <div class="field">
+    <%= f.label :delivery_date, t('.delivery_date') %><br />
+    <%= f.date_select :delivery_date %>
+  </div>
+  <div class="field">
+    <%= f.label :delivery_start_time, t('.delivery_start_time') %><br />
+    <%= f.time_select :delivery_start_time %>
+  </div>
+  <div class="field">
+    <%= f.label :delivery_end_time, t('.delivery_end_time') %><br />
+    <%= f.time_select :delivery_end_time %>
+  </div>
+  <div class="field">
+    <%= f.label :collection_location, t('.collection_location') %><br />
+    <%= f.text_field :collection_location %>
+  </div>
+  <div class="field">
+    <%= f.label :collection_date, t('.collection_date') %><br />
+    <%= f.date_select :collection_date %>
+  </div>
+  <div class="field">
+    <%= f.label :collection_start_time, t('.collection_start_time') %><br />
+    <%= f.time_select :collection_start_time %>
+  </div>
+  <div class="field">
+    <%= f.label :collection_end_time, t('.collection_end_time') %><br />
+    <%= f.time_select :collection_end_time %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

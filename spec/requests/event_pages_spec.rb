@@ -130,4 +130,45 @@ describe "event pages" do
 
   end
 
+  describe "new event page" do
+    let(:admin) { FactoryGirl.create(:admin) }
+
+    before do
+      sign_in(admin) 
+      visit new_event_path
+    end
+
+    it "should create new event" do
+      fill_in "Title", with: "a title"
+      select '2013', from: "event_event_date_1i"
+      select 'December', from: "event_event_date_2i"
+      select '17', from: "event_event_date_3i"
+      fill_in "Location", with: "town"
+      fill_in "Fee", with: "3"
+      fill_in "Deduction", with: "20"
+      fill_in "Provision", with: "15"
+      fill_in "Maximum count of lists", with: "300"
+      fill_in "Maximum items count per list", with: "40"
+      select '2014', from: "event_list_closing_date_1i"
+      select 'March', from: "event_list_closing_date_2i"
+      select '18', from: "event_list_closing_date_3i"
+      fill_in "Delivery Location", with: "Back door of school"
+      select '2014', from: "event_delivery_date_1i"
+      select 'March', from: "event_delivery_date_2i"
+      select '20', from: "event_delivery_date_3i"
+      select '12', from: "event_delivery_start_time_4i"
+      select '30', from: "event_delivery_start_time_5i"
+      select '14', from: "event_delivery_end_time_4i"
+      select '30', from: "event_delivery_end_time_5i"
+      fill_in "Collection Location", with: "Front door of school"
+      select '2014', from: "event_collection_date_1i"
+      select 'March', from: "event_collection_date_2i"
+      select '21', from: "event_collection_date_3i"
+      select '14', from: "event_collection_start_time_4i"
+      select '30', from: "event_collection_start_time_5i"
+      select '15', from: "event_collection_end_time_4i"
+      select '30', from: "event_collection_end_time_5i"
+      expect { click_button "Create Event" }.to change(Event, :count).by(1)
+    end
+  end
 end
