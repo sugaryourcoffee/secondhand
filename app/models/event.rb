@@ -90,12 +90,17 @@ class Event < ActiveRecord::Base
             align: :center,
             inline_format:true
 
-          message = "Termin Listenruecksendung 18.09.2013\n"+
-                    "Abgabe Koerbe: 20.09.2013, 15:00 bis 16:30 Uhr"+
-                    "Mittelschule Burgthann, Eingang Sandstrasse\n"+
-                    "Abholen Koerbe: 21.09.2013, 14:30 bis 15:00 Uhr"+
-                    "Mittelschule Burgthann, Eingang Mimberger Strasse\n"+
-                    "Ausgabe der Koerbe nur gegen Vorlage dieses Ausgabescheins\n"+
+          message = "Termin Listenruecksendung #{list_closing_date}\n"+
+                    "Abgabe Koerbe: #{delivery_date}, "+
+                    "#{delivery_start_time.to_s(:time)}"+
+                    " bis #{delivery_end_time.to_s(:time)} Uhr "+
+                    "#{delivery_location}\n"+
+                    "Abholen Koerbe: #{collection_date}, "+
+                    "#{collection_start_time.to_s(:time)}"+
+                    " bis #{collection_end_time.to_s(:time)} Uhr "+
+                    "#{collection_location}\n"+
+                    "Ausgabe der Koerbe nur gegen Vorlage "+
+                    "dieses Ausgabescheins\n"+
                     "Informationen: www.boerse-burgthann.de - "+
                     "Menue 'Infos fuer Verkaeufer' - Alle Informationen "+
                     "vorher lesen!"
