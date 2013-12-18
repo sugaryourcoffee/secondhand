@@ -394,7 +394,10 @@ class List < ActiveRecord::Base
     csv << ["Korbfarbe", container || "-"]
     csv << ["Nummer", "Beschreibung", "Groesse", "Preis"]
     (items.sort_by { |item| item.item_number }).each do |item|
-      csv << [item.item_number, item.description, item.size, item.price]
+      csv << [item.item_number, 
+              item.description.gsub(';', ','), 
+              item.size.gsub(';', ','), 
+              item.price]
     end
   end
 

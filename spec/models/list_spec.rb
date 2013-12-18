@@ -58,4 +58,13 @@ describe List do
     it { List.search("%s").should_not be_empty }
     it { List.search("1").should be_empty }
   end
+
+  describe "export to CSV" do
+    let!(:item) { list.items.create!(item_number: 1, description: "Ab;cd;ef",
+                                    size: "ab;de", price: 2.5) }
+
+    it "should not have ';' in any field" do
+      list.as_csv.split(';').size.should eq 16
+    end
+  end
 end
