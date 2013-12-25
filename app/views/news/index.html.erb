@@ -15,9 +15,10 @@
 
   <tbody>
     <% @all_news.each do |news| %>
+      <% translation = news.news_translation(I18n.locale) %>
       <tr>
-        <td><%= news.title %></td>
-        <td><%= sanitize(news.description) %></td>
+        <td><%= translation.title %></td>
+        <td><%= sanitize(translation.description) %></td>
         <td><%= link_to t('.Show'), news %></td>
         <td><%= link_to t('.Edit'), edit_news_path(news) %></td>
         <td><%= link_to t('.Destroy'), news, method: :delete, 

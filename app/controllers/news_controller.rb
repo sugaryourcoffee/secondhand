@@ -9,7 +9,7 @@ class NewsController < ApplicationController
   end
 
   def new
-    @news = News.new
+    @news = News.new(issue: next_issue)
   end
 
   def edit
@@ -43,4 +43,12 @@ class NewsController < ApplicationController
     redirect_to news_index_path
   end
 
+  private
+
+    def next_issue
+      start_time = Time.new(Time.now.year-1, 12, 31)
+      end_time = Time.new(Time.now.year+1, 1, 1) 
+      issue = "#{News.where({ updated_at: start_time...end_time }).count+1}"+
+              "/#{Time.now.year}"
+    end
 end

@@ -4,15 +4,34 @@
 
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b><%= t('.Title') %></b>
-  <%= @news.title %>
-</p>
+<section>
+  <table>
+    <tr><th><%= t('.author') %></th><td><%= @news.author %></td></tr>
+    <tr><th><%= t('.issue') %></th><td><%= @news.issue %></td></tr>
+    <tr>
+      <th><%= t('.promote_to_frontpage') %></th>
+      <td><%= @news.promote_to_frontpage %></td>
+    </tr>
+    <tr><th><%= t('.released') %></th><td><%= @news.released %></td></tr>
+    <tr><th><%= t('.created_at') %></th><td><%= @news.created_at %></td></tr>
+    <tr><th><%= t('.updated_at') %></th><td><%= @news.updated_at %></td></tr>
+  </table>
+</section>
+
+<% @news.news_translations.each do |translation| %>
+  <section>
+    <table>
+      <tr><th><%= t('.language') %></th><td><%= translation.language %></td></tr>
+      <tr><th><%= t('.Title') %></th><td><%= translation.title %></td></tr>
+      <tr>
+        <th><%= t('.Description') %></th>
+        <td><%= sanitize(translation.description) %></td>
+      </tr>
+    </table>
+  </section>
+<% end %>
 
 <p>
-  <b><%= t('.Description') %></b>
-  <%= sanitize(@news.description) %>
+  <%= link_to t('.Edit'), edit_news_path(@news) %> |
+  <%= link_to t('.Back'), news_index_path %>
 </p>
-
-<%= link_to t('.Edit'), edit_news_path(@news) %> |
-<%= link_to t('.Back'), news_index_path %>

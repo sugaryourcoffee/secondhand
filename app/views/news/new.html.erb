@@ -3,14 +3,18 @@
 
 <div class="row">
   <div class="span6 offset3">
-    <%= form_for(@news) do |f| %>
+    <%= form_for(@news.with_translations) do |f| %>
       <%= render 'form', f: f %>
 
-      <%= f.submit t('.Create_new_news'), class: "btn btn-large btn-primary" %>
+      <p>
+        <%= f.submit t('.Create_new_news'), class: "btn btn-large btn-primary" %>
+      </p>
     <% end %>
 
-    <%= link_to t('.Show'), @news %> |
-    <%= link_to t('.Back'), news_index_path %>
+    <p>
+      <%= link_to t('.Show'), @news %> |
+      <%= link_to t('.Back'), news_index_path %>
+    </p>
 
   </div>
 </div>

@@ -324,11 +324,18 @@ en:
       Back:            "Back"
 
     show:
-      Show_news:     "Show news"
-      Title:         "Title:"
-      Description:   "Description:"
-      Edit:          "Edit"
-      Back:          "Back"
+      Show_news:            "Show news"
+      author:               "Author"
+      issue:                "Issue"
+      promote_to_frontpage: "To Frontpage"
+      released:             "Released"
+      created_at:           "Created at"
+      updated_at:           "Updated at"
+      language:             "Language"
+      Title:                "Title:"
+      Description:          "Description:"
+      Edit:                 "Edit"
+      Back:                 "Back"
 
     edit:
       Edit_News:     "Edit news"
@@ -337,9 +344,14 @@ en:
       Back:          "Back"
 
     form:
-      error:         "error"
-      title:         "Title"
-      description:   "Description"
+      error:                "error"
+      author:               "Author"
+      issue:                "Issue"
+      language:             "Language"
+      title:                "Title"
+      description:          "Description"
+      promote_to_frontpage: "Promote to Frontpage"
+      released:             "Released"
 
     index:
       News:            "News"

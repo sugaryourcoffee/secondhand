@@ -42,4 +42,18 @@ FactoryGirl.define do
       user
     end
   end
+
+  factory :news_translation do
+    language "en"
+    title "Title of news"
+    description "Description of news"
+    news
+  end
+
+  factory :news do
+    sequence(:issue) { |n| "#{n}/2013" }
+    user
+    promote_to_frontpage true
+    released true 
+  end
 end

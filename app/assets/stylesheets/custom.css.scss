@@ -146,6 +146,20 @@ input, textarea, select, .uneditable-input {
 /*  @include box_sizing; */
 }
 
+section {
+  padding: 10px 0 10px 0;
+
+  table {
+    tr {
+      vertical-align: top;
+      th {
+        text-align: left;
+        padding: 0 10px 0 0;
+      }
+    }
+  }
+}
+
 .value-view {
   display: block;
   width: 175px;

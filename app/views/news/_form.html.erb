@@ -12,8 +12,27 @@
   </div>
 <% end %>
 
-<%= f.label :title, t('.title') %>
-<%= f.text_field :title %>
+<%= f.label :user_id, t('.author') %>
+<%= f.select :user_id, User.find_all_by_admin(true).collect { |u| ["#{u.first_name} #{u.last_name}", u.id] }, { selected: "#{current_user.first_name} #{current_user.last_name}" } %>
 
-<%= f.label :description, t('.description') %>
-<%= f.text_area :description, rows: 6 %>
+<%= f.label :issue, t('.issue') %>
+<%= f.text_field :issue %>
+
+<%= f.fields_for(:news_translations) do |translations_form| %>
+  <%= translations_form.label :language %>
+  <%= translations_form.select :language, LANGUAGES %>
+  <%= translations_form.label :title %>
+  <%= translations_form.text_field :title %>
+  <%= translations_form.label :description %>
+  <%= translations_form.text_area :description %>
+<% end %>
+
+<p>
+  <%= f.check_box :promote_to_frontpage %>
+  <%= f.label :promote_to_frontpage, t('.promote_to_frontpage') %>
+</p>
+
+<p>
+  <%= f.check_box :released %>
+  <%= f.label :released, t('.released') %>
+</p>

@@ -325,11 +325,18 @@ de:
       Back:            "Zurück"
 
     show:
-      Show_news:     "Nachricht anzeigen"
-      Title:         "Titel:"
-      Description:   "Beschreibung:"
-      Edit:          "Bearbeiten"
-      Back:          "Zurück"
+      Show_news:            "Nachricht anzeigen"
+      author:               "Autor"
+      issue:                "Ausgabe"
+      promote_to_frontpage: "Auf Titelseite"
+      released:             "Freigegeben"
+      created_at:           "Erstellt am"
+      updated_at:           "Aktualisiert am"
+      language:             "Sprache"
+      Title:                "Titel:"
+      Description:          "Beschreibung:"
+      Edit:                 "Bearbeiten"
+      Back:                 "Zurück"
 
     edit:
       Edit_News:     "Nachrichten bearbeiten"
@@ -338,10 +345,15 @@ de:
       Back:          "Zurück"
 
     form:
-      error:         "Fehler"
-      title:         "Titel"
-      description:   "Beschreibung"
-      
+      error:                "Fehler"
+      author:               "Autor"
+      issue:                "Ausgabe"
+      language:             "Sprache"
+      title:                "Titel"
+      description:          "Beschreibung"
+      promote_to_frontpage: "Auf der Titelseite veröffenlichen"
+      released:             "Freigegeben"
+ 
     index:
       News:            "Nachrichten"
       Title:           "Titel"
