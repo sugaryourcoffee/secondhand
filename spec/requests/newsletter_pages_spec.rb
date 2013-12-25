@@ -62,12 +62,33 @@ describe "Newsletter" do
 
   end
 
+  describe 'destroy' do
+    
+    describe 'by regular user' do
+      before { sign_in user }
+
+      it 'should not destroy news'
+    end
+
+    describe 'by admin user' do
+      before { sign_in admin }
+
+      it 'should destroy news and associated news_translations'
+    end
+  end
+
   describe 'send' do
     before { sign_in admin }
 
+    it 'should show send button for unsent messages'
+    
     it 'should succeed for subscribers'
 
     it 'should fail for non subscribers'
+
+    it 'should not send already sent messages'
+
+    it 'should show send button for updated messages'
   end
 
 end
