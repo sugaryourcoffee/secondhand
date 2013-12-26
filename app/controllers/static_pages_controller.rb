@@ -5,7 +5,8 @@ class StaticPagesController < ApplicationController
     if params[:set_locale]
       redirect_to root_path(locale: params[:set_locale])
     else
-      @news = News.last
+      @news = News.
+        where("released = ? and promote_to_frontpage = ?", true, true).last
       @event = Event.find_by_active(true)
     end
   end

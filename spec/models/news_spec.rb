@@ -23,13 +23,23 @@ describe News do
     it { should_not be_valid }
   end
   
-  describe "when released is not present" do
-    before { news.released = nil }
-    it { should_not be_valid }
+  describe "when released is false" do
+    before { news.released = false }
+    it { should be_valid }
+  end
+  
+  describe "when released is true" do
+    before { news.released = true }
+    it { should be_valid }
   end
 
-  describe "when promote_to_frontpage is not present" do
-    before { news.promote_to_frontpage = nil }
-    it { should_not be_valid }
+  describe "when promote_to_frontpage is false" do
+    before { news.promote_to_frontpage = false }
+    it { should be_valid }
+  end
+
+  describe "when promote_to_frontpage is true" do
+    before { news.promote_to_frontpage = true }
+    it { should be_valid }
   end
 end

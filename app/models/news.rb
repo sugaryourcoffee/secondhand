@@ -3,11 +3,11 @@ class News < ActiveRecord::Base
 
   belongs_to :user
 
-  has_many :news_translations
+  has_many :news_translations, dependent: :destroy
 
   accepts_nested_attributes_for :news_translations
 
-  validates :issue, :promote_to_frontpage, :released, :user, presence: true
+  validates :issue, :user, presence: true
 
   def author
     "#{user.first_name} #{user.last_name}"
@@ -18,9 +18,13 @@ class News < ActiveRecord::Base
   end
 
   def with_translations
-    LANGUAGES.each do |name, code|
-      news_translations.build(language: code)
+    languages = news_translations.map { |translation| translation.language }
+    available_languages = LANGUAGES.map { |name, code| code }
+
+    (available_languages - languages).each do |language|
+      news_translations.build(language: language)
     end
+
     self
   end
 end
