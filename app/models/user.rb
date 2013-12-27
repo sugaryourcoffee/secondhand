@@ -20,7 +20,8 @@
 class User < ActiveRecord::Base
   has_many :lists
 
-  attr_accessible :country, :email, :first_name, :last_name, :news, :password_digest, :password, :password_confirmation, :phone, :street, :town, :zip_code
+  attr_accessible :country, :email, :first_name, :last_name, :news, :password_digest,    :password, :password_confirmation, :phone, :street, :town, :zip_code, 
+    :preferred_language
 
   has_secure_password
 
@@ -37,6 +38,12 @@ class User < ActiveRecord::Base
 
   validates :password, length: {minimum: 6}
   validates :password_confirmation, presence: true
+
+  def self.subscribers(language = LANGUAGES.map { |language, code| code })
+    select(:email).
+      where(news: true, preferred_language: language).
+      map { |user| user.email }
+  end
 
   def send_password_reset
     generate_token(:password_reset_token)

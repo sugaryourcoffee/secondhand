@@ -41,7 +41,11 @@ Secondhand::Application.routes.draw do
       end
     end
 
-    resources :news
+    resources :news do
+      member do
+        get :send_newsletter
+      end
+    end
 
     resources :sessions, only: [:new, :create, :destroy]
 

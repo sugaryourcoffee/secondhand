@@ -43,6 +43,17 @@ class NewsController < ApplicationController
     redirect_to news_index_path
   end
 
+  def send_newsletter
+    @news = News.find(params[:id])
+    @news.sent_on = Time.now
+    if @news.save
+      flash[:success] = I18n.t('.newsletter_success')
+    else
+      flash[:error] = I18n.t('.newsletter_error')
+    end
+    redirect_to news_index_path
+  end
+
   private
 
     def next_issue

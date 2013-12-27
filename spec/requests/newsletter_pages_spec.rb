@@ -5,7 +5,7 @@ describe "Newsletter" do
 
   let(:user) { FactoryGirl.create(:user) }
   let(:admin) { FactoryGirl.create(:admin) }
-  let!(:news) { FactoryGirl.create(:news) }
+  let!(:news) { FactoryGirl.create(:news, released: false) }
   let!(:news_translation_de) { FactoryGirl.create(:news_translation, news: news,
                                                   language: "de") }
   let!(:news_translation_en) { FactoryGirl.create(:news_translation, news: news,
@@ -194,20 +194,49 @@ describe "Newsletter" do
   end
 
   describe 'send' do
+
     before { sign_in admin }
 
-    it 'should show send link for released and unsent messages' do
-      visit news_index_path(:en)
-      page.should have_link 'Send'
+    describe 'behaviour for unreleased newsletters' do
+      it 'should not show send link' do
+        visit news_index_path(:en)
+        page.should_not have_link 'Send'
+      end
     end
-    
-    it 'should succeed for subscribers'
 
-    it 'should fail for non subscribers'
+    describe 'behaviour for released newsletters' do
+      let!(:news) { FactoryGirl.create(:news) }
+      let!(:news_translation_de) { FactoryGirl.create(:news_translation, news: news,
+                                                      language: "de") }
+      let!(:news_translation_en) { FactoryGirl.create(:news_translation, news: news,
+                                                      language: "en") }
 
-    it 'should not send already sent messages'
+      it 'should show send link' do
+        visit news_index_path(:en)
+        page.should have_link 'Send'
+      end
 
-    it 'should show send button for released updated messages'
+      it 'should not show send link for already send newsletters' do
+        visit news_index_path(:en)
+        click_link 'Send'
+        page.should have_text 'Newsletter has been sent to subscribers'
+        page.current_path.should eq news_index_path(locale: :en)
+        page.should_not have_link 'Send'
+      end
+      
+      it 'should show send link for already send but updated newsletters' do
+        visit news_index_path(:en)
+        click_link 'Send'
+        page.should have_text 'Newsletter has been sent to subscribers'
+        page.should_not have_link 'Send'
+        click_link 'Edit'
+        click_button 'Save changes'
+        visit news_index_path(:en)
+        page.should have_link 'Send'
+      end
+
+    end
+
   end
 
 end

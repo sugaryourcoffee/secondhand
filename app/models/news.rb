@@ -9,8 +9,14 @@ class News < ActiveRecord::Base
 
   validates :issue, :user, presence: true
 
+  before_update :send_newsletter
+
   def author
     "#{user.first_name} #{user.last_name}"
+  end
+
+  def send_pending?
+    released and not sent_on
   end
 
   def news_translation(locale = I18n.locale)
@@ -27,4 +33,18 @@ class News < ActiveRecord::Base
 
     self
   end
+
+  private
+
+    def send_newsletter
+      if sent_on_changed?
+        LANGUAGES.each do |name, code|
+          Newsletter.publish(self.news_translation(code), 
+                             User.subscribers(code)).deliver
+        end
+      else
+        self.sent_on = nil
+      end
+    end
+
 end

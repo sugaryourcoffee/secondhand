@@ -31,6 +31,9 @@
   <%= f.label :news, t('.News'), class: "checkbox inline" %>
 <p>
 
+<%= f.label :preferred_language, t('.preferred_language') %>
+<%= f.select :preferred_language, LANGUAGES %>
+
 <%= f.label :password, t('.Password') %>
 <%= f.password_field :password %>
 

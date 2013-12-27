@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131225060213) do
+ActiveRecord::Schema.define(:version => 20131226231608) do
 
   create_table "events", :force => true do |t|
     t.string   "title"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20131225060213) do
     t.string   "issue"
     t.boolean  "promote_to_frontpage"
     t.boolean  "released"
+    t.datetime "sent_on"
   end
 
   create_table "news_translations", :force => true do |t|
@@ -93,6 +94,7 @@ ActiveRecord::Schema.define(:version => 20131225060213) do
     t.string   "auth_token"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
+    t.string   "preferred_language"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
