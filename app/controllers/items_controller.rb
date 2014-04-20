@@ -1,7 +1,6 @@
 class ItemsController < ApplicationController
 
-  skip_before_filter :authorize, only: [:index, :new, :create, :destroy, 
-                                        :show, :edit, :update]
+  skip_before_filter :authorize, only: [:index, :new, :create, :destroy, :show, :edit, :update]
 
   before_filter :correct_user, :set_instance_vars
 
@@ -26,16 +25,14 @@ class ItemsController < ApplicationController
     @item = @list.items.build(params[:item])
     @user = User.find(params[:user_id])
     if @item.save
-      flash[:success] = I18n.t('.created', 
-                               model: t('activerecord.models.item'))
+      flash[:success] = I18n.t('.created', model: t('activerecord.models.item'))
       if params[:commit] == I18n.t('.items.form.create_and_new')
         redirect_to new_user_list_item_path(@user, @list)
       else
         redirect_to user_list_items_path(@user, @list)
       end
     else
-      flash[:error] = I18n.t('.not_created', 
-                             model: t('activerecord.models.item'))
+      flash[:error] = I18n.t('.not_created', model: t('activerecord.models.item'))
       render 'new'
     end 
   end
@@ -53,14 +50,22 @@ class ItemsController < ApplicationController
   end
 
   def update
-    if @item.update_attributes(params[:item])
-      flash[:success] = I18n.t('.updated', model: t('activerecord.models.item'))
-      redirect_to user_list_items_path(@user, @list)
-    else
-      flash[:error] = I18n.t('.not_updated', 
-                             model: t('activerecord.models.item'))
-      render action: 'edit'
-    end  
+    respond_to do |format|
+      if @item.update_attributes(params[:item])
+        return_url = request.referer.include?("/items/") ? 
+                     user_list_items_path(@user, @list) : request.referer
+        format.html { redirect_to return_url, 
+                      notice: I18n.t('.updated', model: t('activerecord.models.item')) }
+        format.js { redirect_to return_url }
+      else
+        flash[:error] = I18n.t('.not_updated', model: t('activerecord.models.item'))
+        if request.referer.include?("/items/")
+          format.html { render action: 'edit' } 
+        else
+          format.js { redirect_to request.referer }
+        end
+      end  
+    end
   end
 
   def destroy

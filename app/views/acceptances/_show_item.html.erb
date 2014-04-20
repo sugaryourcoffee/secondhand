@@ -1,6 +1,11 @@
 <table class="table table-hover">
   <thead>
-    <tr><th>Item Number</th><th>Description</th><th>Size</th><th>Price</th><th></th><th></th>
+    <tr>
+      <th><%= t('.item_number') %></th>
+      <th><%= t('.description') %></th>
+      <th><%= t('.size')        %></th>
+      <th><%= t('.price')       %></th><th></th><th></th>
+    </tr>
   </thead>
   <tbody>
     <% @list.items.each do |item| %>
@@ -11,7 +16,10 @@
           <td><%= f.text_field :size %></td>
           <td><%= f.text_field :price%></td>
           <td><%= f.submit t('.update'), class: "btn btn-link" %></td>
-          <td><%= link_to t('.cancel'), acceptances_path(utf8: true, search_list: @list.list_number), remote: true %></td>
+          <td><%= link_to t('.cancel'), 
+                          acceptances_path(utf8: true, search_list: @list.list_number), 
+                          remote: true %>
+          </td>
         <% else %>
           <td><%= item.item_number %></td>
           <td><%= item.description %></td>

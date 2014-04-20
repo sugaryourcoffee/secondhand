@@ -16,24 +16,17 @@ en:
       acceptance:  "Acceptance"
       select_list: "Select List"
       search:      "Search"
-      list_number: "List number"
-      container:   "Container"
-      item_number: "Item Number"
+      accept:      "Accept List"
+      cancel:      "Cancel"
+    show_item:
+      item_number: "Number"
       description: "Description"
       size:        "Size"
       price:       "Price"
       edit:        "Edit"
-      delete:      "Delete"
-      save:        "Save"
-      accept:      "Accept List"
-      cancel:      "Cancel"
-    edit_item_inline:
-      edit:        "Edit"
       update:      "Update"
       cancel:      "Cancel"
       delete:      "Delete"
-      confirm:     "Delete selected item?"
-    show_item:
       confirm:     "Delete selected item?"
 
   static_pages:
