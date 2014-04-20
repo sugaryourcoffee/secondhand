@@ -1,0 +1,9 @@
+<%= form_for @list do |f| %>
+  <table>
+    <tr>
+      <th><%= f.label :container %></th>
+      <td><%= f.text_field :container %></td>
+      <td><%= f.submit class: "btn btn-link" %></td>
+  </tr>
+  </table>
+<% end %>

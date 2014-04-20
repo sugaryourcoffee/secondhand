@@ -11,6 +11,31 @@ en:
         delimiter: ","
         format:    "%u%n"
 
+  acceptances:
+    index:
+      acceptance:  "Acceptance"
+      select_list: "Select List"
+      search:      "Search"
+      list_number: "List number"
+      container:   "Container"
+      item_number: "Item Number"
+      description: "Description"
+      size:        "Size"
+      price:       "Price"
+      edit:        "Edit"
+      delete:      "Delete"
+      save:        "Save"
+      accept:      "Accept List"
+      cancel:      "Cancel"
+    edit_item_inline:
+      edit:        "Edit"
+      update:      "Update"
+      cancel:      "Cancel"
+      delete:      "Delete"
+      confirm:     "Delete selected item?"
+    show_item:
+      confirm:     "Delete selected item?"
+
   static_pages:
     home:
       welcome_html: "Welcome to <em>Secondhand</em> the list collection program of <a href=\"http://messe-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a> where you can collect your items you want to sell at <strong>%{event}</strong>"

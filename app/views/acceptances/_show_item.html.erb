@@ -1,0 +1,30 @@
+<table class="table table-hover">
+  <thead>
+    <tr><th>Item Number</th><th>Description</th><th>Size</th><th>Price</th><th></th><th></th>
+  </thead>
+  <tbody>
+    <% @list.items.each do |item| %>
+      <tr>
+        <% if @item == item %>
+          <td><%= item.item_number %></td>
+          <td><%= f.text_field :description, size: 50 %></td>
+          <td><%= f.text_field :size %></td>
+          <td><%= f.text_field :price%></td>
+          <td><%= f.submit t('.update'), class: "btn btn-link" %></td>
+          <td><%= link_to t('.cancel'), acceptances_path(utf8: true, search_list: @list.list_number), remote: true %></td>
+        <% else %>
+          <td><%= item.item_number %></td>
+          <td><%= item.description %></td>
+          <td><%= item.size        %></td>
+          <td><%= item.price       %></td>
+          <td><%= link_to t('.edit'), edit_item_acceptance_path(item), remote: true %></td>
+          <td><%= link_to t('.delete'), 
+                          [@list.user, @list, item], 
+                          method: :delete, 
+                          data: { confirm: t('.confirm') } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

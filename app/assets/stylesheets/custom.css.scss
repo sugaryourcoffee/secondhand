@@ -108,6 +108,19 @@ footer {
   @include box_sizing;
 }
 
+article {
+  header {
+    hgroup {
+      h1 {
+        font-size: 1.6em;
+        text-align: left;
+        letter-spacing: -1px;
+        margin-bottom: 3px;
+      }
+    }
+  }
+}
+
 /* sidebar */
 
 aside {

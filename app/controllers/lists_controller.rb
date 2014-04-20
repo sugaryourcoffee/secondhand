@@ -115,7 +115,8 @@ class ListsController < ApplicationController
   def update
     @list = List.find(params[:id])
 
-    return_url = request.referer.include?("/users/") ? request.referer : @list
+    # return_url = request.referer.include?("/users/") ? request.referer : @list
+    return_url = request.referer.include?("/lists/") ? @list : request.referer
 
     respond_to do |format|
       if @list.update_attributes(params[:list])

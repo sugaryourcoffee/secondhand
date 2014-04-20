@@ -1,0 +1,10 @@
+<%= form_for @list do |f| %>
+  <table id="edit-list" class="table">
+    <tr><th>List Number</th><td><%= @list.list_number %></td><td></td></tr>
+      <tr>
+        <th><%= f.label :container %></th>
+        <td><%= f.text_field :container %></td>
+        <td><%= f.submit class: "btn btn-link" %></td>
+      </tr>
+  </table>
+<% end %>

@@ -13,6 +13,23 @@ de:
       delimiter: "."
       precision: 2
 
+  acceptances:
+    index:
+      acceptance:  "Annahme"
+      select_list: "Liste wählen"
+      search:      "Suchen"
+      list_number: "Listennummer"
+      container:   "Korb"
+      item_number: "Artikelnummer"
+      description: "Beschreibung"
+      size:        "Größe"
+      price:       "Preis"
+      edit:        "Bearbeiten"
+      delete:      "Löschen"
+      save:        "Speichern"
+      accept:      "Liste annehmen"
+      cancel:      "Abbrechen"
+
   static_pages:
     home:
       welcome_html: "Willkommen zu <em>Secondhand</em> dem Listenerfassungsprogramm der <a href=\"http://boerse-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a>. Hier können Sie Ihre Artikel, die Sie bei der <strong>%{event}</strong> verkaufen wollen, erfassen"

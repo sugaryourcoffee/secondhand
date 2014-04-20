@@ -12,10 +12,19 @@ Secondhand::Application.routes.draw do
     match '/contact', to: 'static_pages#contact'
     match '/message', to: 'static_pages#message'
 
+    # match '/acceptance',  to: 'acceptance#acceptance'
+
     get   '/who_registered' => 'users#who_registered', 
                                defaults: { format: 'atom' }
     get   '/which_list'     => 'lists#which_list_is_registered_or_closed',
                                defaults: { format: 'atom' }
+
+    resources :acceptances, only: :index do
+      member do
+        get :edit_list
+        get :edit_item
+      end
+    end
 
     resources :lists do
       member do

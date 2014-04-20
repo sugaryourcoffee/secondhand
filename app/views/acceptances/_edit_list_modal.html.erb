@@ -1,0 +1,14 @@
+<%= form_for @list do |f| %>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+    <h3 id="edit-container-label">Edit Container Color</h3>
+  </div>
+  <div class="modal-body">
+    <%= f.label :container %>
+    <%= f.text_field :container %>
+  </div>
+  <div class="modal-footer">
+    <%= f.submit class: "btn btn-success" %>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+  </div>
+<% end %>
