@@ -1,1 +1,5 @@
+<% if @item.errors.any? %>
+  <%= add_gritter item_errors(@item), title: t('.error'), image: :error %>
+<% end %>
+
 $("#items-table").html('<%= escape_javascript(render 'edit_item_inline') %>')

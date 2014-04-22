@@ -21,8 +21,11 @@ Secondhand::Application.routes.draw do
 
     resources :acceptances, only: :index do
       member do
-        get :edit_list
-        get :edit_item
+        get    :edit_list
+        put    :update_list
+        get    :edit_item
+        put    :update_item
+        delete :delete_item
       end
     end
 

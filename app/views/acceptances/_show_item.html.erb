@@ -10,7 +10,7 @@
   <tbody>
     <% @list.items.each do |item| %>
       <tr>
-        <% if @item == item %>
+        <% if edit and @item == item %>
           <td><%= item.item_number %></td>
           <td><%= f.text_field :description, size: 50 %></td>
           <td><%= f.text_field :size %></td>
@@ -27,8 +27,9 @@
           <td><%= item.price       %></td>
           <td><%= link_to t('.edit'), edit_item_acceptance_path(item), remote: true %></td>
           <td><%= link_to t('.delete'), 
-                          [@list.user, @list, item], 
-                          method: :delete, 
+                          delete_item_acceptance_path(item),
+                          method: :delete,
+                          remote: true,
                           data: { confirm: t('.confirm') } %></td>
         <% end %>
       </tr>

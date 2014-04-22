@@ -28,6 +28,8 @@ en:
       cancel:      "Cancel"
       delete:      "Delete"
       confirm:     "Delete selected item?"
+    edit_item:
+      error:       "Item Update"
 
   static_pages:
     home:
@@ -413,9 +415,11 @@ en:
   welcome:                "Welcome to Sugar Your Coffee!"
   taken:                  "Registration code already taken!"
   registered:             "%{model} registered"
+  unregistered:           "%{model} hasn't been registered yet"
   deregistered:           "%{model} deregistered"
   not_own_list:           "Only own lists can be deregistered!"
   not_valid:              "Registration code not valid!"
+  no_list:                "%{model} doesn't exist"
 
   password_reset_instructions: "Password reset instruction has been sent"
   email_address_not_valid:     "E-Mail address is not valid"

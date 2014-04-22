@@ -31,6 +31,12 @@ class List < ActiveRecord::Base
 
   before_update :reset_sent_on
 
+  # Returns true if the list has been registered
+  def registered?
+    not user.nil?
+  end
+
+  # Returns all registered and not send (closed) lists for the provided event
   def self.registered(event_id)
     condition = "user_id is not ? and sent_on is ?"
     if event_id
@@ -39,6 +45,7 @@ class List < ActiveRecord::Base
     List.where(condition, event_id, nil, nil)
   end
 
+  # Returns all closed (send) lists for the provided event
   def self.closed(event_id)
     condition = "sent_on is not ?"
     if event_id
@@ -47,6 +54,7 @@ class List < ActiveRecord::Base
     List.where(condition, event_id, nil)
   end
 
+  # Returns all unregistered lists for the provided event
   def self.open(event_id)
     condition = "user_id is ?"
     if event_id
@@ -55,6 +63,7 @@ class List < ActiveRecord::Base
     List.where(condition, event_id, nil)
   end
 
+  # Searches for the provided registration code or list number
   def self.search(search)
     if search
       find(:all,
@@ -65,6 +74,7 @@ class List < ActiveRecord::Base
     end
   end
 
+  # Searches for lists that meet the provided list values
   def self.search_conditions(params)
     if params[:search]
       ['list_number = ? or registration_code LIKE ?', 

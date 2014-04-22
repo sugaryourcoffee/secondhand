@@ -10,18 +10,11 @@
   </p>
 <% end %>
 
-<% if @list %>
+<% if @list and @list.registered? %>
   <article class="well well-small">
     <h2>List</h2>
     <div id="list-table">
-      <table class="table">
-        <tr><th>List Number</th><td><%= @list.list_number %></td><td></td></tr>
-        <tr>
-          <th>Container</th>
-          <td><%= @list.container %></td>
-          <td><%= link_to "Edit", edit_list_acceptance_path(@list), remote: true %></td>
-        </tr>
-      </table>
+      <%= render partial: 'show_list', locals: { edit: false } %>
     </div>
   </article>
 
@@ -46,7 +39,7 @@
   <article id="items" class="well well-small">
     <h2>Items</h2>
     <div id="items-table">
-      <%= render 'show_item' %>
+      <%= render partial: 'show_item', locals: { edit: false } %>
     </div>
   </article>
   <%= button_to "Accept List" %> <%= link_to "Cancel" %>
