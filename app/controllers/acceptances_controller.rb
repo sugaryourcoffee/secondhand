@@ -64,4 +64,15 @@ class AcceptancesController < ApplicationController
     end
   end
 
+  def accept
+    list = List.find(params[:id])
+    list.accepted_on = Time.now
+    if list.save
+      flash.now[:success] = I18n.t('.accepted', model: t('activerecord.models.list'))
+    else
+      flash.now[:error] = I18n.t('.no_list', model: t('activerecord.models.list'))
+    end
+    redirect_to acceptances_path
+  end
+
 end

@@ -42,6 +42,6 @@
       <%= render partial: 'show_item', locals: { edit: false } %>
     </div>
   </article>
-  <%= button_to "Accept List" %> <%= link_to "Cancel" %>
+  <%= button_to "Accept List", accept_acceptance_path(@list) %> <%= link_to "Cancel" %>
 <% end %>
 

@@ -14,10 +14,12 @@ en:
   acceptances:
     index:
       acceptance:  "Acceptance"
-      select_list: "Select List"
+      select_list: "List"
       search:      "Search"
       accept:      "Accept List"
       cancel:      "Cancel"
+    show_list:
+      update:      "Update"
     show_item:
       item_number: "Number"
       description: "Description"

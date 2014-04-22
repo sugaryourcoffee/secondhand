@@ -26,6 +26,7 @@ Secondhand::Application.routes.draw do
         get    :edit_item
         put    :update_item
         delete :delete_item
+        post   :accept
       end
     end
 

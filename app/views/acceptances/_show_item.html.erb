@@ -25,12 +25,14 @@
           <td><%= item.description %></td>
           <td><%= item.size        %></td>
           <td><%= item.price       %></td>
-          <td><%= link_to t('.edit'), edit_item_acceptance_path(item), remote: true %></td>
+          <td><%= link_to t('.edit'), edit_item_acceptance_path(item), remote: true,
+                          id: "edit-item-#{item.item_number}" %></td>
           <td><%= link_to t('.delete'), 
                           delete_item_acceptance_path(item),
                           method: :delete,
                           remote: true,
-                          data: { confirm: t('.confirm') } %></td>
+                          data: { confirm: t('.confirm') },
+                          id: "delete-item-#{item.item_number}" %></td>
         <% end %>
       </tr>
     <% end %>

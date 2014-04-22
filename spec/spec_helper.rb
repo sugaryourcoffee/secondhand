@@ -17,6 +17,8 @@ Spork.prefork do
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+  DatabaseCleaner.strategy = :truncation
+
   RSpec.configure do |config|
     # ## Mock Framework
     #
@@ -33,7 +35,12 @@ Spork.prefork do
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
-    config.use_transactional_fixtures = true
+    
+    # To test JavaScript we need to set transactional to false and clean database with
+    # DatabaseCleaner instead
+    config.use_transactional_fixtures = false # before was true and added below two lines
+    config.before(:each) { DatabaseCleaner.start }
+    config.after(:each)  { DatabaseCleaner.clean }
 
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of

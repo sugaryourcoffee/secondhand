@@ -45,6 +45,14 @@ FactoryGirl.define do
     end
   end
 
+  factory :item do
+    sequence(:item_number) { |n| n }
+    sequence(:description) { |n| "My item number #{n}" }
+    sequence(:size)        { |n| "#{n}00" }
+    sequence(:price)       { |n| n }
+    list
+  end
+
   factory :news_translation do
     language "en"
     title "Title of news"
