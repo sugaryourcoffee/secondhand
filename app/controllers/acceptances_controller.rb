@@ -5,12 +5,14 @@ class AcceptancesController < ApplicationController
     @list = List.find_by_list_number_and_event_id(list_number, active_event)
 
     respond_to do |format|
-      if @list.nil?
-        flash.now[:warning] = I18n.t('.no_list',
-                                     model: t('activerecord.models.list'))
-      elsif not @list.registered?
-        flash.now[:warning] = I18n.t('.unregistered', 
-                                     model: t('activerecord.models.list'))
+      unless list_number.nil?
+        if @list.nil?
+          flash.now[:warning] = I18n.t('.no_list',
+                                       model: t('activerecord.models.list'))
+        elsif not @list.registered?
+          flash.now[:warning] = I18n.t('.unregistered', 
+                                       model: t('activerecord.models.list'))
+        end
       end
       format.html
       format.js
@@ -68,9 +70,9 @@ class AcceptancesController < ApplicationController
     list = List.find(params[:id])
     list.accepted_on = Time.now
     if list.save
-      flash.now[:success] = I18n.t('.accepted', model: t('activerecord.models.list'))
+      flash[:success] = I18n.t('.accepted', model: t('activerecord.models.list'))
     else
-      flash.now[:error] = I18n.t('.no_list', model: t('activerecord.models.list'))
+      flash[:error] = I18n.t('.save_failed', model: t('activerecord.models.list'))
     end
     redirect_to acceptances_path
   end

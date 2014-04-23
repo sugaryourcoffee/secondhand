@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Acceptances" do
 
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin)  { FactoryGirl.create(:admin) }
   let(:seller) { FactoryGirl.create(:user) }
   let(:event)  { FactoryGirl.create(:active) }
   let(:list)   { FactoryGirl.create(:assigned, user: seller, event: event) }

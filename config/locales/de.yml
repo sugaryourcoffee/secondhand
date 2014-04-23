@@ -559,6 +559,7 @@ de:
   updated:           "%{model} wurde aktualisiert!"
   not_updated:       "%{model} konnte nicht aktualisiert werden!"
   destroyed:         "%{model} wurde gelöscht!"
+  save_failed:       "%{model} konnte nicht gespeichert werden"
   list_not_assigned: "Listennummer ist nicht zugeordnet!"
   sign_in:           "Bitte melden Sie sich an"
   admin_privileges:  "Administrationsrechte erforderlich!"
@@ -571,6 +572,7 @@ de:
   not_own_list:           "Nur eigene Listen können freigegeben werden!"
   not_valid:              "Registrierungscode nicht gültig!"
   no_list:                "%{model} existiert nicht"
+  accepted:               "%{model} wurde angenommen"
 
   password_reset_instructions: "Rücksetzanleitung für Ihr Passwort wurde versendet"
   email_address_not_valid:     "Ungültige E-Mail-Adresse"

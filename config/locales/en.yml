@@ -410,6 +410,7 @@ en:
   updated:             "%{model} updated!"
   not_updated:         "Could not update %{model}!"
   destroyed:           "%{model} destroyed!"
+  save_failed:         "%{model} could not be saved!"
   list_not_assigned:   "List number not assigned!"
   sign_in:             "Please sign in"
   admin_privileges:    "You need admin privileges to view this page!"
@@ -422,6 +423,7 @@ en:
   not_own_list:           "Only own lists can be deregistered!"
   not_valid:              "Registration code not valid!"
   no_list:                "%{model} doesn't exist"
+  accepted:               "%{model} has been accepted"
 
   password_reset_instructions: "Password reset instruction has been sent"
   email_address_not_valid:     "E-Mail address is not valid"
