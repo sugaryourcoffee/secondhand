@@ -43,6 +43,11 @@ FactoryGirl.define do
     factory :assigned do
       user
     end
+
+    factory :accepted do
+      user
+      accepted_on Time.now
+    end
   end
 
   factory :item do

@@ -2,10 +2,11 @@ require 'spec_helper'
 
 describe "Acceptances" do
 
-  let(:admin)  { FactoryGirl.create(:admin) }
-  let(:seller) { FactoryGirl.create(:user) }
-  let(:event)  { FactoryGirl.create(:active) }
-  let(:list)   { FactoryGirl.create(:assigned, user: seller, event: event) }
+  let(:admin)         { FactoryGirl.create(:admin) }
+  let(:seller)        { FactoryGirl.create(:user) }
+  let(:event)         { FactoryGirl.create(:active) }
+  let(:list)          { FactoryGirl.create(:assigned, user: seller, event: event) }
+  let(:accepted_list) { FactoryGirl.create(:accepted, user: seller, event: event) }
 
   before do
     sign_in(admin)
@@ -84,6 +85,41 @@ describe "Acceptances" do
 
       list.accepted_on.should be_nil
     end
+
+    context "accepted list" do
+      it "should show an accepted list" do
+        accepted_list.items.create!(item_attributes)
+
+        accepted_list.accepted_on.should_not be_nil
+
+        fill_in "List", with: accepted_list.list_number
+        click_button "Search"
+
+        page.should_not have_link   "Edit"
+        page.should_not have_link   "Delete"
+        page.should_not have_button "Accept List"
+        page.should     have_button "Release List"
+      end
+
+      it "should release list" do
+        accepted_list.items.create!(item_attributes)
+
+        accepted_list.accepted_on.should_not be_nil
+
+        fill_in "List", with: accepted_list.list_number
+        click_button "Search"
+
+        click_button "Release List"
+
+        accepted_list.reload.accepted_on.should be_nil
+
+        page.should     have_link   "Edit"
+        page.should     have_link   "Delete"
+        page.should     have_button "Accept List"
+        page.should_not have_button "Release List"
+      end
+    end
+
   end
 
   context "JavaScript" do

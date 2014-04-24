@@ -25,9 +25,9 @@
           <td><%= item.description %></td>
           <td><%= item.size        %></td>
           <td><%= item.price       %></td>
-          <td><%= link_to t('.edit'), edit_item_acceptance_path(item), remote: true,
+          <td><%= link_to_if @list.accepted_on.nil?, t('.edit'), edit_item_acceptance_path(item), remote: true,
                           id: "edit-item-#{item.item_number}" %></td>
-          <td><%= link_to t('.delete'), 
+          <td><%= link_to_if @list.accepted_on.nil?, t('.delete'), 
                           delete_item_acceptance_path(item),
                           method: :delete,
                           remote: true,

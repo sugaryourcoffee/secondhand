@@ -66,15 +66,21 @@ class AcceptancesController < ApplicationController
     end
   end
 
+  # Toggles the accepted_on field to Nil or to the current time.
   def accept
     list = List.find(params[:id])
-    list.accepted_on = Time.now
+    list.accepted_on = list.accepted_on.nil? ? Time.now : nil
     if list.save
-      flash[:success] = I18n.t('.accepted', model: t('activerecord.models.list'))
+      if list.accepted_on.nil?
+        flash[:success] = I18n.t('.released', model: t('activerecord.models.list'))
+        params[:search_list] = list.list_number
+      else
+        flash[:success] = I18n.t('.accepted', model: t('activerecord.models.list'))
+      end
     else
       flash[:error] = I18n.t('.save_failed', model: t('activerecord.models.list'))
     end
-    redirect_to acceptances_path
+    redirect_to action: :index, search_list: params[:search_list]
   end
 
 end

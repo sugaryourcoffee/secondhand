@@ -573,6 +573,7 @@ de:
   not_valid:              "Registrierungscode nicht gültig!"
   no_list:                "%{model} existiert nicht"
   accepted:               "%{model} wurde angenommen"
+  released:               "%{model} zum Bearbeiten freigegeben"
 
   password_reset_instructions: "Rücksetzanleitung für Ihr Passwort wurde versendet"
   email_address_not_valid:     "Ungültige E-Mail-Adresse"

@@ -17,8 +17,6 @@ Spork.prefork do
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
-  DatabaseCleaner.strategy = :truncation
-
   RSpec.configure do |config|
     # ## Mock Framework
     #
@@ -38,9 +36,32 @@ Spork.prefork do
     
     # To test JavaScript we need to set transactional to false and clean database with
     # DatabaseCleaner instead
-    config.use_transactional_fixtures = false # before was true and added below two lines
-    config.before(:each) { DatabaseCleaner.start }
-    config.after(:each)  { DatabaseCleaner.clean }
+    # Uncomment to to use rack and comment DatabaseCleaner
+    # config.use_transactional_fixtures = true
+
+    # Uncomment until 'end of DatabaseCleaner' to use DatabaseCleaner
+    config.use_transactional_fixtures = false
+    
+    config.before(:suite) do
+      DatabaseCleaner.clean_with(:truncation)
+    end
+
+    config.before(:each) do
+      DatabaseCleaner.strategy = :transaction
+    end
+
+    config.before(:each, :js => true) do
+      DatabaseCleaner.strategy = :truncation
+    end
+
+    config.before(:each) do
+      DatabaseCleaner.start
+    end
+
+    config.after(:each) do
+      DatabaseCleaner.clean
+    end
+    # 'end of DatabaseCleaner'
 
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of

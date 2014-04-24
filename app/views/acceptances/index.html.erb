@@ -42,7 +42,11 @@
       <%= render partial: 'show_item', locals: { edit: false } %>
     </div>
   </article>
-  <%= button_to "Accept List", accept_acceptance_path(@list), class: "btn btn-primary" %> 
+  <% if @list.accepted_on.nil? %>
+    <%= button_to "Accept List", accept_acceptance_path(@list), class: "btn btn-primary" %> 
+  <% else %>
+    <%= button_to "Release List", accept_acceptance_path(@list), class: "btn btn-warning" %>
+  <% end %>
   <%= link_to "Cancel" %>
 <% end %>
 

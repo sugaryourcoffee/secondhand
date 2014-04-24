@@ -13,7 +13,7 @@
     <tr>
       <th>Container</th>
       <td><%= @list.container %></td>
-      <td><%= link_to "Edit", edit_list_acceptance_path(@list), remote: true %></td>
+      <td><%= link_to_if @list.accepted_on.nil?, "Edit", edit_list_acceptance_path(@list), remote: true %></td>
     </tr>
   <% end %>
 </table>
