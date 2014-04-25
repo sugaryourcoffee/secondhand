@@ -38,14 +38,17 @@ class Event < ActiveRecord::Base
 
   before_destroy :ensure_not_active, :ensure_has_no_registered_lists
 
+  # Returns the registered lists for the this event
   def registered_lists
     List.registered(id)
   end
 
+  # Returns the open (not send) lists for this event
   def open_lists
     List.open(id)
   end
 
+  # Returns the closed (send) lists for this event
   def closed_lists
     List.closed(id)
   end

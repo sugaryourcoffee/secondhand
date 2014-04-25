@@ -1,0 +1,43 @@
+<% list_statistics_for do |stats| %>
+  <article>
+    <header>
+      <h5><%= t('.acceptance_status') %></h5>
+    </header>
+    <section>
+      <table class="table">
+        <tr>
+          <td><%= t('.accepted_list_count') %></th>
+          <td class="list_count"><%= stats.accepted_lists_count %></td>
+        </tr>
+        <tr>
+          <td><%= t('.not_yet_accepted_list_count') %></th>
+          <td class="list_count"><%= stats.not_yet_accepted_lists_count %></td>
+        </tr>
+        <tr class="total_line">
+          <td><%= t('.total_list_count') %></th>
+          <td class="list_count"><%= stats.total_list_count %></td>
+        </tr>
+      </table>
+    </section>
+  </article>
+  <article>
+    <header>
+      <h5><%= t('.list_status') %></h5>
+    </header>
+    <section>
+      <% if @list %>
+        <% if @list.accepted? %>
+          <p>List has already been <strong>accepted</strong>.</p>
+          <p>To edit the list you have to release the list by pressing the 
+            <strong>Release List</strong> button
+          </p>
+          <%= button_to "Release List", accept_acceptance_path(@list), class: "btn btn-warning" %>
+        <% else %>
+          <p>List has not been accepted</p>
+        <% end %>
+      <% else %>
+        <p>No list selected</p>
+      <% end %>
+    </section>
+  </article>
+<% end %>
