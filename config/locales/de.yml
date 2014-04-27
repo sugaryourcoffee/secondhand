@@ -18,6 +18,20 @@ de:
       acceptance:  "Annahme"
       accept:      "Liste Annehmen"
       cancel:      "Beenden"
+    edit:
+      acceptance:        "Annahme"
+      accept_list:       "Liste annehmen"
+      revoke_acceptance: "Listenanname rückgängig machen"
+      edit:              "Bearbeiten"
+      cancel:            "Zurück zur Listenübersicht"
+    show_list:
+      list_number_on_container_html: "<strong>Wichtig:</strong><p>Korb mit Listenummer etikettieren 
+                                      und alte Aufkleber entfernen!</p>"
+      list_number: "Liste %{list}"
+      container:   "Korb"
+      edit:        "Bearbeiten"
+      update:      "Aktualisieren"
+      cancel:      "Abbrechen"
     show_item:
       item_number: "Nummer"
       description: "Beschreibung"
@@ -33,7 +47,7 @@ de:
     header:
       select_list: "Liste"
       search:      "Suchen"
-      missing_event: "<h2>Fehlende aktive Veranstaltung</h2><h5>Für die Listenannahme ist es erforderlich, dass eine Veranstaltung aktiv ist. Unter %{link} kann eine Veranstaltung aktiviert werden. Danach können Sie hier mit der Listenannahme beginnen.</h5>"
+      missing_event_html: "<h2>Fehlende aktive Veranstaltung</h2><h5>Für die Listenannahme ist es erforderlich, dass eine Veranstaltung aktiv ist. Unter %{link} kann eine Veranstaltung aktiviert werden. Danach können Sie hier mit der Listenannahme beginnen.</h5>"
       events:        "Veranstaltungen"
     acceptance_status:
       acceptance_status:         "Listen Annahmestatus"
@@ -42,6 +56,25 @@ de:
       registered_list_count:     "Registriert"
       not_registered_list_count: "Nicht registriert"
       total_list_count:          "Gesamt"
+    list_status:
+      list_status:              "Listenstatus"
+      accepted_status_html:     "<p><strong>Liste wurde schon angenommen</strong>.</p>
+      <p>Um die Liste zu bearbeiten müssen Sie die Listenannahme über die Schaltfläche rückgängig 
+      machen %{button}</p>"
+      not_accepted_status_html: "<p><strong>Liste wurde noch nicht angenommen</strong></p>
+      <p>Vor der Listenannahme die folgenden Prüfungen durchführen</p>
+      <ul>
+        <li><strong>Korbfarbe</strong></li>
+        <li>Benutzer <strong>Name</strong> und <strong>Adresse</strong></li>
+        <li><strong>Etiketten</strong> mit richtiger <strong>Farbe</strong> und mit der richtigen 
+        <strong>Listennummer</strong></li>
+        <li>Liste enthält nur <strong>erlaubte Artikel</strong></li>
+      </ul>
+      <p><strong>Elektronische Spiele</strong> aus der Schachtel entnehmen und mit der Listen- und
+      Artikelnummer beschriften.</p><p>Elektronische Spiele werden dem Käufer an der Kasse 
+      ausgehändigt.</p>"
+      revoke_list: "Listenannahme rückgängig machen"
+      cancel:      "Zurück zur Listenübersicht"
     lists:
       list_number:            "Listennummer"
       container:              "Korb"

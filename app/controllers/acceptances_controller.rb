@@ -1,37 +1,37 @@
 class AcceptancesController < ApplicationController
-=begin
-  def index
-    active_event = Event.find_by_active(true)
-    list_number  = params[:search_list]
-    @list = List.find_by_list_number_and_event_id(list_number, active_event)
-
-    respond_to do |format|
-      unless list_number.nil?
-        if @list.nil?
-          flash.now[:warning] = I18n.t('.no_list',
-                                       model: t('activerecord.models.list'))
-        elsif not @list.registered?
-          flash.now[:warning] = I18n.t('.unregistered', 
-                                       model: t('activerecord.models.list'))
-        end
-      end
-      format.html
-      format.js
-    end
-  end
-=end
 
   def index
     @event = Event.find_by_active(true)
     
     if @event
-      @lists = List.order(:list_number)
-                   .paginate(page: params[:page],
-                             conditions: List.list_status_query_string(params[:filter]))
+      @list = List.find_by_list_number_and_event_id(params[:search_list_number], @event)
+      unless @list and @list.registered?
+        @lists = List.order(:list_number)
+                     .paginate(page: params[:page],
+                               conditions: List.list_status_query_string(params[:filter]))
+      end
     end
 
     respond_to do |format|
+      if @list and @list.registered?
+        format.html { redirect_to edit_acceptance_path @list }
+      else
+        if @list and !@list.registered?
+          flash[:warning] = "List #{params[:search_list_number]} is not registered. "+
+                            "Acceptance is only possible for registered lists!"
+        elsif @list.nil? and params[:search_list_number]
+          flash[:warning] = "List #{params[:search_list_number]} doesn't exist!"
+        end
+        format.html
+      end
+    end
+  end
+
+  def edit
+    @list = List.find(params[:id])
+    respond_to do |format|
       format.html
+      format.js
     end
   end
 
@@ -86,17 +86,21 @@ class AcceptancesController < ApplicationController
   def accept
     list = List.find(params[:id])
     list.accepted_on = list.accepted_on.nil? ? Time.now : nil
-    if list.save
-      if list.accepted_on.nil?
-        flash[:success] = I18n.t('.released', model: t('activerecord.models.list'))
-        params[:search_list] = list.list_number
+
+    respond_to do |format|
+      if list.save
+        if list.accepted_on.nil?
+          flash[:success] = I18n.t('.released', model: t('activerecord.models.list'))
+          format.html { redirect_to edit_acceptance_path(list) }
+        else
+          flash[:success] = I18n.t('.accepted', model: t('activerecord.models.list'))
+          format.html { redirect_to acceptances_path }
+        end
       else
-        flash[:success] = I18n.t('.accepted', model: t('activerecord.models.list'))
+        flash[:error] = I18n.t('.save_failed', model: t('activerecord.models.list'))
+        format.html { redirect_to edit_acceptance_path(list) }
       end
-    else
-      flash[:error] = I18n.t('.save_failed', model: t('activerecord.models.list'))
     end
-    redirect_to action: :index, search_list: params[:search_list]
   end
 
 end

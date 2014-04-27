@@ -1,0 +1,6 @@
+$("#list-table").html('<%= escape_javascript(render partial: 'show_list', 
+                                                    locals: { edit: false }) %>')
+
+$("#items-table").html('<%= escape_javascript(render partial: 'show_item', 
+                                                     locals: { edit: false }) %>')
+

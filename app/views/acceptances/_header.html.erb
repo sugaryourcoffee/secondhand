@@ -18,8 +18,8 @@
   </div>
 <% else %>
   <div class="center well">
-    <%= t('.missing_event', 
-          link: link_to(t('.events'), events_path, id: 'activate_event', class: 'btn')).html_safe %>
+    <%= t('.missing_event_html', 
+          link: link_to(t('.events'), events_path, id: 'activate_event', class: 'btn')) %>
   </div>
 <% end %>
 

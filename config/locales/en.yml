@@ -16,8 +16,20 @@ en:
       acceptance:  "Acceptance"
       accept:      "Accept List"
       cancel:      "Cancel"
+    edit:
+      acceptance:        "Acceptance"
+      accept_list:       "Accept List"
+      revoke_acceptance: "Revoke list acceptance"
+      edit:              "Edit"
+      cancel:            "Back to list overview"
     show_list:
+      list_number_on_container_html: "<strong>Important:</strong><p>Label container with list 
+                                      number and remove old label!</p>"
+      list_number: "List %{list}"
+      container:   "Container"
+      edit:        "Edit"
       update:      "Update"
+      cancel:      "Cancel"
     show_item:
       item_number: "Number"
       description: "Description"
@@ -33,7 +45,7 @@ en:
     header:
       select_list:   "List"
       search:        "Search"
-      missing_event: "<h2>Missing active Event</h2><h5>For list acceptance it is neccessary to have an active event. At %{link} you can activate an event. Then come back to start with list acceptance.</h5>"
+      missing_event_html: "<h2>Missing active Event</h2><h5>For list acceptance it is neccessary to have an active event. At %{link} you can activate an event. Then come back to start with list acceptance.</h5>"
       events:        "Events"
     acceptance_status:
       acceptance_status:         "List Acceptance Status"
@@ -42,6 +54,25 @@ en:
       registered_list_count:     "Registered"
       not_registered_list_count: "Not registered"
       total_list_count:          "Total"
+    list_status:
+      list_status:              "List Status"
+      accepted_status_html:     "<p><strong>List has already been accepted</strong>.</p>
+      <p>To edit the list you have to revoke the list acceptance by pressing the button 
+      %{button}</p>"
+      not_accepted_status_html: "<p><strong>List has not been accepted</strong></p>
+      <p>Before accepting the list do check</p>
+      <ul>
+        <li>the <strong>container color</strong></li>
+        <li>the user's <strong>name</strong> and <strong>address</strong></li>
+        <li><strong>labels</strong> with correct <strong>label color</strong> and correct 
+        <strong>list number</strong></li>
+        <li>that list contains only <strong>allowed items</strong></li>
+      </ul>
+      <p>If list contains <strong>electronic games</strong> take out the game from the box and 
+         label it with list number and item number.</p><p>The buyer will receive the electronic game
+         at the cashier.</p>"
+      revoke_list: "Revoke list acceptance"
+      cancel:      "Back to list overview"
     lists:
       list_number:            "List Number"
       container:              "Container"

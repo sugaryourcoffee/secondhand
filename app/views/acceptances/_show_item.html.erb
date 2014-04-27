@@ -17,7 +17,7 @@
           <td><%= f.text_field :price%></td>
           <td><%= f.submit t('.update'), class: "btn btn-link" %></td>
           <td><%= link_to t('.cancel'), 
-                          acceptances_path(utf8: true, search_list: @list.list_number), 
+                          edit_acceptance_path(@list), 
                           remote: true %>
           </td>
         <% else %>
@@ -25,14 +25,15 @@
           <td><%= item.description %></td>
           <td><%= item.size        %></td>
           <td><%= item.price       %></td>
-          <td><%= link_to_if @list.accepted_on.nil?, t('.edit'), edit_item_acceptance_path(item), remote: true,
-                          id: "edit-item-#{item.item_number}" %></td>
-          <td><%= link_to_if @list.accepted_on.nil?, t('.delete'), 
-                          delete_item_acceptance_path(item),
-                          method: :delete,
-                          remote: true,
-                          data: { confirm: t('.confirm') },
-                          id: "delete-item-#{item.item_number}" %></td>
+          <td><%= link_to_if !@list.accepted?, 
+                             t('.edit'), edit_item_acceptance_path(item), remote: true,
+                             id: "edit-item-#{item.item_number}" %></td>
+          <td><%= link_to_if !@list.accepted?, t('.delete'), 
+                             delete_item_acceptance_path(item),
+                             method: :delete,
+                             remote: true,
+                             data: { confirm: t('.confirm') },
+                             id: "delete-item-#{item.item_number}" %></td>
         <% end %>
       </tr>
     <% end %>

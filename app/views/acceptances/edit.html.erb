@@ -1,0 +1,46 @@
+<% provide(:title, t('.acceptance')) %>
+<h1><%= t('.acceptance', list: @list.list_number) %></h1>
+
+<div class="row">
+  <div class="span7">
+    <article class="well well-small">
+      <section>
+        <div id="list-table">
+          <%= render partial: 'show_list', locals: { edit: false } %>
+        </div>
+      </section>
+    </article>
+    <article id="user" class="well well-small">
+      <header>
+        <aside>
+          <%= gravatar_for(@list.user) %>
+        </aside>
+        <hgroup>
+          <h1><%= @list.user.first_name %> <%= @list.user.last_name %></h1>
+        </hgroup>
+      </header>
+      <section>
+        <table>
+          <tr><td><%= @list.user.street %></td></tr>
+          <tr><td><%= @list.user.zip_code %> <%= @list.user.town %></td></tr>
+          <tr><td><%= @list.user.phone %></td></tr>
+          <tr><td><%= @list.user.email %></td></tr>
+        </table>
+      <section>
+    </article>
+  </div>
+  <div class="span5">
+    <%= render 'list_status' %>
+  </div>
+</div>
+
+<article id="items">
+  <h2>Items</h2>
+  <div id="items-table">
+    <%= render partial: 'show_item', locals: { edit: false } %>
+  </div>
+</article>
+
+<%= edit_acceptances_action(@list) %>
+
+<%= link_to t('.cancel'), acceptances_path %>

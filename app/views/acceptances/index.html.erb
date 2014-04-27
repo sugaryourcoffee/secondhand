@@ -4,49 +4,4 @@
 
 <%= render 'header' %>
 <%= render 'lists' if @lists %>  
-  <% if @list and @list.registered? %>
-    <div class="span7">
-      <article class="well well-small">
-        <header>
-        <h2>List</h2>
-        </header>
-        <section>
-          <div id="list-table">
-            <%= render partial: 'show_list', locals: { edit: false } %>
-          </div>
-        </section>
-      </article>
-      <article id="user" class="well well-small">
-        <h2>Seller</h2>
-        <header>
-          <aside>
-            <%= gravatar_for(@list.user) %>
-          </aside>
-          <hgroup>
-            <h1><%= @list.user.first_name %> <%= @list.user.last_name %></h1>
-          </hgroup>
-        </header>
-        <section>
-          <table>
-            <tr><td><%= @list.user.street %></td></tr>
-            <tr><td><%= @list.user.zip_code %> <%= @list.user.town %></td></tr>
-            <tr><td><%= @list.user.phone %></td></tr>
-            <tr><td><%= @list.user.email %></td></tr>
-          </table>
-        <section>
-      </article>
-    </div>
 
-    <article id="items">
-      <h2>Items</h2>
-      <div id="items-table">
-        <%= render partial: 'show_item', locals: { edit: false } %>
-      </div>
-    </article>
-    <% if @list.accepted_on.nil? %>
-      <%= button_to "Accept List", accept_acceptance_path(@list), class: "btn btn-primary" %> 
-    <% else %>
-      <%= button_to "Release List", accept_acceptance_path(@list), class: "btn btn-warning" %>
-    <% end %>
-    <%= link_to "Cancel" %>
-  <% end %>

@@ -14,14 +14,22 @@ module AcceptancesHelper
     message.html_safe
   end
 
-  def acceptances_action(list)
+  def index_acceptances_action(list)
     if list.accepted?
-      button_to t('.release_list'), accept_acceptance_path(list), 
+      button_to t('.release_list'), accept_acceptance_path(list),
                    class: "btn btn-warning"
     elsif list.registered?
       link_to t('.acceptance_dialog'), edit_acceptance_path(list)
     else
       t('.not_registered')
+    end
+  end
+
+  def edit_acceptances_action(list)
+    if !@list.accepted?
+      button_to t('.accept_list'), accept_acceptance_path(list), class: "btn btn-primary"
+    else
+      button_to t('.revoke_acceptance'), accept_acceptance_path(list), class: "btn btn-warning"
     end
   end
 end

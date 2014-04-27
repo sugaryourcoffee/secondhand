@@ -1,20 +1,22 @@
+<h2><%= t('.list_number', list: @list.list_number) %></h2>
 <table class="table">
-  <tr><th>List Number</th><td><%= @list.list_number %></td><td></td></tr>
   <% if edit %>
     <tr>
-      <th><%= f.label :container %></th>
+      <th><%= f.label :container, t('.container') %></th>
       <td><%= f.text_field :container %></td>
       <td><%= f.submit t('.update'), class: "btn btn-link" %></td>
       <td><%= link_to t('.cancel'), 
-                      acceptances_path(search_list: @list.list_number), 
+                      edit_acceptance_path(@list), 
                       remote: true %>
     </tr>
   <% else %>
     <tr>
-      <th>Container</th>
+      <th><%= t('.container') %></th>
       <td><%= @list.container %></td>
-      <td><%= link_to_if @list.accepted_on.nil?, "Edit", edit_list_acceptance_path(@list), remote: true %></td>
+      <td><%= link_to_if !@list.accepted?, 
+                         t('.edit'), edit_list_acceptance_path(@list), remote: true %></td>
     </tr>
   <% end %>
 </table>
+<div class="alert alert-error"><%= t('.list_number_on_container_html') %></div>
 
