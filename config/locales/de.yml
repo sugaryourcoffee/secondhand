@@ -16,8 +16,6 @@ de:
   acceptances:
     index:
       acceptance:  "Annahme"
-      select_list: "Liste"
-      search:      "Suchen"
       accept:      "Liste Annehmen"
       cancel:      "Beenden"
     show_item:
@@ -32,6 +30,30 @@ de:
       confirm:     "Artikel löschen?"
     edit_item:
       error:       "Artikel Aktualisierung"
+    header:
+      select_list: "Liste"
+      search:      "Suchen"
+      missing_event: "<h2>Fehlende aktive Veranstaltung</h2><h5>Für die Listenannahme ist es erforderlich, dass eine Veranstaltung aktiv ist. Unter %{link} kann eine Veranstaltung aktiviert werden. Danach können Sie hier mit der Listenannahme beginnen.</h5>"
+      events:        "Veranstaltungen"
+    acceptance_status:
+      acceptance_status:         "Listen Annahmestatus"
+      accepted_list_count:       "Angenommen"
+      not_accepted_list_count:   "Nicht angenommen"
+      registered_list_count:     "Registriert"
+      not_registered_list_count: "Nicht registriert"
+      total_list_count:          "Gesamt"
+    lists:
+      list_number:            "Listennummer"
+      container:              "Korb"
+      seller_name:            "Verkäufer"
+      acceptance_dialog:      "Annahmedialog"
+      release_list:           "Annahme zurücknehmen"
+      not_registered:         "Nicht registriert"
+      showing_accepted:       "Angenommene Listen"
+      showing_not_accepted:   "Nicht angenommene Listen"
+      showing_registered:     "Registrierte Listen"
+      showing_not_registered: "Nicht registrierte Listen"
+      showing_all:            "Alle Listen"
 
   static_pages:
     home:

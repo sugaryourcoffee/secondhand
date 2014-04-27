@@ -48,11 +48,20 @@ class List < ActiveRecord::Base
 
   # Returns all registered and not send (closed) lists for the provided event
   def self.registered(event_id)
-    condition = "user_id is not ? and sent_on is ?"
+    condition = "user_id is not ?"
     if event_id
       condition = "event_id = ? and " + condition
     end
-    List.where(condition, event_id, nil, nil)
+    List.where(condition, event_id, nil)
+  end
+
+  # Returns all not registered lists for the provided event
+  def self.not_registered(event_id)
+    condition = "user_id is ?"
+    if event_id
+      condition = "event_id = ? and " + condition
+    end
+    List.where(condition, event_id, nil)
   end
 
   # Returns all closed (send) lists for the provided event
@@ -62,6 +71,15 @@ class List < ActiveRecord::Base
       condition = "event_id = ? and " + condition
     end
     List.where(condition, event_id, nil)
+  end
+
+  # Returns all registered but not closed (send) lists for the provided event
+  def self.not_closed(event_id)
+    condition = "user_id is not ? and sent_on is ?"
+    if event_id
+      condition = "event_id = ? and " + condition
+    end
+    List.where(condition, event_id, nil, nil)
   end
 
   # Returns all unregistered lists for the provided event
@@ -83,12 +101,12 @@ class List < ActiveRecord::Base
   end
 
   # Returns not accepted list count
-  def self.not_yet_accepted(event_id)
-    condition = "accepted_on is ?"
+  def self.not_accepted(event_id)
+    condition = "accepted_on is ? and user_id is not ?"
     if event_id
       condition = "event_id = ? and " + condition
     end
-    List.where(condition, event_id, nil)
+    List.where(condition, event_id, nil, nil)
   end
 
   # Searches for the provided registration code or list number
@@ -122,7 +140,7 @@ class List < ActiveRecord::Base
 
           key = k.sub("search_", "")
 
-          if key == "user_id" or key == "sent_on"
+          if key == "user_id" or key == "sent_on" or key == "accepted_on"
             query_string << "#{key} IS NOT ?" if v == "0"
             query_string << "#{key} IS ?" if v == "1"
             values << nil 
@@ -136,6 +154,28 @@ class List < ActiveRecord::Base
         nil
       end
     end
+  end
+
+  def self.list_status_query_string(filter)
+    query_string = "event_id = ? "
+    query_values = [Event.find_by_active(true).id]
+    case filter.nil? ? :not_accepted : filter.to_sym
+    when :accepted
+      query_string << "AND accepted_on iS NOT ?"
+      query_values << nil
+    when :not_accepted
+      query_string << "AND accepted_on IS ? AND user_id IS NOT ?"
+      query_values << [nil, nil]
+    when :registered
+      query_string << "AND user_id IS NOT ?"
+      query_values << nil
+    when :not_registered
+      query_string << "AND user_id IS ?"
+      query_values << nil
+    when :all
+      query_string
+    end
+    [query_string, query_values].flatten
   end
 
   def as_csv

@@ -43,14 +43,19 @@ class Event < ActiveRecord::Base
     List.registered(id)
   end
 
-  # Returns the open (not send) lists for this event
+  # Returns the open (not registered) lists for this event
   def open_lists
     List.open(id)
   end
 
-  # Returns the closed (send) lists for this event
+  # Returns the closed (sent) lists for this event
   def closed_lists
     List.closed(id)
+  end
+
+  # Returns the registered but not closed (sent) lists for this event
+  def not_closed_lists
+    List.not_closed(id)
   end
 
   def pickup_tickets_pdf

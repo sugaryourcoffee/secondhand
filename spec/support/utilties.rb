@@ -24,6 +24,15 @@ def log_test(message)
   puts message
 end
 
+def user_for(list)
+  user = list.user
+  if user
+    "#{user.last_name}, #{user.first_name}"
+  else
+    ""
+  end
+end
+
 RSpec::Matchers.define :have_error_message do |message|
   match do |page|
     page.should have_selector('div.alert.alert-error', text: message)

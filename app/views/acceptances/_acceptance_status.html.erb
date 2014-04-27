@@ -4,28 +4,40 @@
       <h5><%= t('.acceptance_status') %></h5>
     </header>
     <section>
-      <table class="table">
+      <table>
         <tr>
-          <td><%= t('.accepted_list_count') %></th>
+          <td><%= link_to t('.accepted_list_count'), acceptances_path(filter: :accepted) %></th>
           <td class="list_count"><%= stats.accepted_lists_count %></td>
         </tr>
         <tr>
-          <td><%= t('.not_yet_accepted_list_count') %></th>
-          <td class="list_count"><%= stats.not_yet_accepted_lists_count %></td>
+          <td><%= link_to t('.not_accepted_list_count'), 
+                          acceptances_path(filter: :not_accepted)  %></th>
+          <td class="list_count"><%= stats.not_accepted_lists_count %></td>
+        </tr>
+         <tr class="total_line">
+          <td><%= link_to t('.registered_list_count'), 
+                          acceptances_path(filter: :registered)  %></th>
+          <td class="list_count"><%= stats.registered_lists_count %></td>
+        </tr>
+        <tr><td></td><td></td></tr>
+        <tr>
+          <td><%= link_to t('.not_registered_list_count'), 
+                          acceptances_path(filter: :not_registered)  %></th>
+          <td class="list_count"><%= stats.not_registered_lists_count %></td>
         </tr>
         <tr class="total_line">
-          <td><%= t('.total_list_count') %></th>
-          <td class="list_count"><%= stats.total_list_count %></td>
+          <td><%= link_to t('.total_list_count'), acceptances_path(filter: :all)  %></th>
+          <td class="list_count"><%= stats.total_lists_count %></td>
         </tr>
       </table>
     </section>
   </article>
-  <article>
-    <header>
-      <h5><%= t('.list_status') %></h5>
-    </header>
-    <section>
-      <% if @list %>
+  <% if @list %>
+    <article>
+      <header>
+        <h5><%= t('.list_status') %></h5>
+      </header>
+      <section>
         <% if @list.accepted? %>
           <p>List has already been <strong>accepted</strong>.</p>
           <p>To edit the list you have to release the list by pressing the 
@@ -35,9 +47,7 @@
         <% else %>
           <p>List has not been accepted</p>
         <% end %>
-      <% else %>
-        <p>No list selected</p>
-      <% end %>
-    </section>
-  </article>
+      </section>
+    </article>
+  <% end %>
 <% end %>

@@ -1,4 +1,5 @@
 class AcceptancesController < ApplicationController
+=begin
   def index
     active_event = Event.find_by_active(true)
     list_number  = params[:search_list]
@@ -16,6 +17,21 @@ class AcceptancesController < ApplicationController
       end
       format.html
       format.js
+    end
+  end
+=end
+
+  def index
+    @event = Event.find_by_active(true)
+    
+    if @event
+      @lists = List.order(:list_number)
+                   .paginate(page: params[:page],
+                             conditions: List.list_status_query_string(params[:filter]))
+    end
+
+    respond_to do |format|
+      format.html
     end
   end
 

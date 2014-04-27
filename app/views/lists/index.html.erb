@@ -21,7 +21,7 @@
             <table>
               <tr>
                 <td><%= t('.registered') %></td>
-                <td class="list_count"><%= @event.registered_lists.count %></td>
+                <td class="list_count"><%= @event.not_closed_lists.count %></td>
               </tr>
               <tr>
                 <td><%= t('.closed') %></td>

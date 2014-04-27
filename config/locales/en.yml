@@ -14,8 +14,6 @@ en:
   acceptances:
     index:
       acceptance:  "Acceptance"
-      select_list: "List"
-      search:      "Search"
       accept:      "Accept List"
       cancel:      "Cancel"
     show_list:
@@ -32,7 +30,31 @@ en:
       confirm:     "Delete selected item?"
     edit_item:
       error:       "Item Update"
-
+    header:
+      select_list:   "List"
+      search:        "Search"
+      missing_event: "<h2>Missing active Event</h2><h5>For list acceptance it is neccessary to have an active event. At %{link} you can activate an event. Then come back to start with list acceptance.</h5>"
+      events:        "Events"
+    acceptance_status:
+      acceptance_status:         "List Acceptance Status"
+      accepted_list_count:       "Accepted"
+      not_accepted_list_count:   "Not accepted"
+      registered_list_count:     "Registered"
+      not_registered_list_count: "Not registered"
+      total_list_count:          "Total"
+    lists:
+      list_number:            "List Number"
+      container:              "Container"
+      seller_name:            "Seller"
+      acceptance_dialog:      "Acceptance Dialog"
+      release_list:           "Revoke Acceptance"
+      not_registered:         "Not Registered"
+      showing_accepted:       "Accepted Lists"
+      showing_not_accepted:   "Not Accepted Lists"
+      showing_registered:     "Registered Lists"
+      showing_not_registered: "Not Registered Lists"
+      showing_all:            "All Lists"
+      
   static_pages:
     home:
       welcome_html: "Welcome to <em>Secondhand</em> the list collection program of <a href=\"http://messe-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a> where you can collect your items you want to sell at <strong>%{event}</strong>"

@@ -1,0 +1,25 @@
+<h2><%= t(".showing_#{params[:filter] || 'not_accepted'}") %></h2>
+
+<%= will_paginate @lists %>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+        <th><%= t('.list_number') %></th>
+        <th><%= t('.container') %></th>
+        <th><%= t('.seller_name') %></th><th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @lists.each do |list| %>
+      <tr>
+        <td><%= list.list_number %></td>
+        <td><%= list.container %></td>
+        <td><%= user_for(list) %></td>
+        <td><%= acceptances_action(list) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @lists %>

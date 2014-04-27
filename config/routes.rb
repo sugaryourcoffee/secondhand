@@ -19,7 +19,7 @@ Secondhand::Application.routes.draw do
     get   '/which_list'     => 'lists#which_list_is_registered_or_closed',
                                defaults: { format: 'atom' }
 
-    resources :acceptances, only: :index do
+    resources :acceptances, only: [:index, :edit] do
       member do
         get    :edit_list
         put    :update_list
