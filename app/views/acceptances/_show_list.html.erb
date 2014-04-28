@@ -13,8 +13,10 @@
     <tr>
       <th><%= t('.container') %></th>
       <td><%= @list.container %></td>
-      <td><%= link_to_if !@list.accepted?, 
-                         t('.edit'), edit_list_acceptance_path(@list), remote: true %></td>
+      <td><%= link_to_if !@list.accepted?,
+                         t('.edit'), edit_list_acceptance_path(@list), 
+                         id: "edit_container",
+                         remote: true %></td>
     </tr>
   <% end %>
 </table>

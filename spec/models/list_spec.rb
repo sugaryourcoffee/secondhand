@@ -4,9 +4,6 @@ describe List do
   let(:user)             { FactoryGirl.create(:user) }
   let(:event)            { FactoryGirl.create(:active) }
   let(:list)             { FactoryGirl.create(:list, user: user) }
-  let!(:registered_list) { FactoryGirl.create(:list, event: event, user: user, list_number: 1) }
-  let!(:accepted_list)   { FactoryGirl.create(:accepted, event: event, user: user, list_number: 2) }
-  let!(:not_assigned_list) { FactoryGirl.create(:list, event: event, list_number: 3) }
 
   subject { list }
 
@@ -63,6 +60,10 @@ describe List do
   end
 
   describe "detailed search for list" do
+
+    let!(:registered_list) { FactoryGirl.create(:list, event: event, user: user, list_number: 1) }
+    let!(:accepted_list)   { FactoryGirl.create(:accepted, 
+                                                event: event, user: user, list_number: 2) }
 
     it "should return accepted lists only" do
       event_id = event.id.to_s
