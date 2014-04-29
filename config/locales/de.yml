@@ -88,6 +88,15 @@ de:
       showing_not_registered: "Nicht registrierte Listen"
       showing_all:            "Alle Listen"
 
+  sellings:
+    index:
+      selling: "Verkauf"
+    header:
+      select_selling: "Verkauf"
+      search:         "Suchen"
+      missing_event_html: "<h2>Fehlende aktive Veranstaltung</h2><h5>Für den Verkauf ist es erforderlich, dass eine Veranstaltung aktiv ist. Unter %{link} kann eine Veranstaltung aktiviert werden. Danach können Sie hier mit dem Verkauf beginnen.</h5>"
+      events:         "Veranstaltungen"
+
   static_pages:
     home:
       welcome_html: "Willkommen zu <em>Secondhand</em> dem Listenerfassungsprogramm der <a href=\"http://boerse-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a>. Hier können Sie Ihre Artikel, die Sie bei der <strong>%{event}</strong> verkaufen wollen, erfassen"

@@ -1,0 +1,25 @@
+<% if @event %>
+  <div class="row">
+    <div class="span4">
+      <%= form_tag sellings_path, method: 'get', class: "form-search" do %>
+        <p>
+          <%= label_tag :search_selling_id, t('.select_selling') %>
+          <%= text_field_tag :search_selling_id, params[:search_selling_id], 
+                             class: "input-medium search-query" %>
+          <%= submit_tag t('.search'), name: nil, class: "btn" %>
+        </p>
+      <% end %>
+    </div>
+    <div class="span8">
+      <div class="well well-small">
+        <%= render 'selling_status' %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="center well">
+    <%= t('.missing_event_html', 
+          link: link_to(t('.events'), events_path, id: 'activate_event', class: 'btn')) %>
+  </div>
+<% end %>
+

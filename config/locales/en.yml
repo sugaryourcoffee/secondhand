@@ -86,6 +86,15 @@ en:
       showing_not_registered: "Not Registered Lists"
       showing_all:            "All Lists"
       
+  sellings:
+    index:
+      selling: "Selling"
+    header:
+      select_selling: "Selling"
+      search:         "Search"
+      missing_event_html: "<h2>Missing active Event</h2><h5>For selling it is neccessary to have an active event. At %{link} you can activate an event. Then come back to start with selling.</h5>"
+      events:        "Events"
+
   static_pages:
     home:
       welcome_html: "Welcome to <em>Secondhand</em> the list collection program of <a href=\"http://messe-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a> where you can collect your items you want to sell at <strong>%{event}</strong>"
