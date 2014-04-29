@@ -19,6 +19,7 @@ describe Item do
   it { should respond_to(:size) }
   it { should respond_to(:price) }
   it { should respond_to(:list_id) }
+  it { should respond_to(:selling_id) }
   its(:list) { should == list }
 
   it { should be_valid }
