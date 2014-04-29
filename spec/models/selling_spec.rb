@@ -1,5 +1,10 @@
 require 'spec_helper'
 
 describe Selling do
-  pending "add some examples to (or delete) #{__FILE__}"
+  
+  it "should respond to items" do
+    selling = Selling.new
+    selling.should respond_to :items
+  end
+
 end

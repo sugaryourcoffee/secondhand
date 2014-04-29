@@ -1,3 +1,5 @@
 class Selling < ActiveRecord::Base
-  attr_accessible :cashier
+
+  has_many :items
+
 end

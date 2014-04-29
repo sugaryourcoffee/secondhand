@@ -1,5 +1,6 @@
 class Item < ActiveRecord::Base
   belongs_to :list
+  belongs_to :selling
 
   attr_accessible :description, :item_number, :price, :size
 
