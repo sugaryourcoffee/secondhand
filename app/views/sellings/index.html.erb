@@ -3,4 +3,5 @@
 <h2><%= @event.title if @event %></h2>
 
 <%= render 'header' %>
-
+<%= link_to t('.new_selling'), new_selling_path, class: "btn btn-large btn-primary" %>
+<%= render 'sellings' %>

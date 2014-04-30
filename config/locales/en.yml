@@ -88,12 +88,21 @@ en:
       
   sellings:
     index:
-      selling: "Selling"
+      selling:     "Selling"
+      new_selling: "New Selling"
     header:
       select_selling: "Selling"
       search:         "Search"
       missing_event_html: "<h2>Missing active Event</h2><h5>For selling it is neccessary to have an active event. At %{link} you can activate an event. Then come back to start with selling.</h5>"
       events:        "Events"
+    sellings:
+      selling_number: "Selling Number"
+      created:        "Created"
+      updated:        "Updated"
+      revenue:        "Revenue"
+      edit:           "Edit"
+      delete:         "Delete"
+      print:          "Print"
 
   static_pages:
     home:

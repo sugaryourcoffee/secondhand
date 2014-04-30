@@ -1,0 +1,31 @@
+<% if @sellings %>
+  <table class="table talbe-hover" >
+    <thead>
+      <tr>
+        <th><%= t('.selling_number') %></th>
+        <th><%= t('.created') %></th>
+        <th><%= t('.updated') %></th>
+        <th><%= t('.revenue') %></th><th/><th/><th/>  
+      </tr>
+    </thead>
+    <tbody>
+      <% @sellings.each do |selling| %>
+        <tr>
+          <td><%= selling.id %></td>
+          <td><%= selling.created_at %></td>
+          <td><%= selling.updated_at %></td>
+          <td><%= selling.revenue %></td>
+          <td><%= link_to t('.edit'), edit_selling_path(selling) %></td>
+          <td><%= link_to t('.delete'), 
+                  selling_path(selling), 
+                  method: :delete, 
+                  confirm: t('.confirm_delete') %>
+          </td>
+          <td><%= link_to t('.print') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <%= t('.no_sellings') %>
+<% end %>

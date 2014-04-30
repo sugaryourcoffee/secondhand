@@ -4,6 +4,7 @@ describe "Selling index page" do
 
   let(:admin)             { FactoryGirl.create(:admin) }
   let(:seller)            { FactoryGirl.create(:user) }
+  let!(:selling)          { create_selling_and_items(1, event) }
   let!(:accepted_list)    { FactoryGirl.create(:accepted, user: seller, event: event) }
 
   context "with no active event" do
@@ -39,11 +40,43 @@ describe "Selling index page" do
       visit sellings_path(locale: :en)
     end
  
-    it "should create new selling"
+    it "should have title Selling" do
+      page.should have_title 'Selling'   
+    end
 
-    it "should list available sellings"
+    it "should have selector Selling" do
+      page.should have_text 'Selling'
+    end
 
-    it "should forward to edit selling page when searching for existing selling"
+    it "should have link to create new selling" do
+      page.should have_link 'New Selling'
+    end
+
+    it "should create new selling" do
+      click_link 'New Selling'
+      page.current_path.should eq new_selling_path(locale: :en) 
+    end
+
+    it "should list available sellings" do
+      page.should have_text selling.id
+      page.should have_text selling.created_at
+      page.should have_text selling.revenue
+      page.should have_link 'Edit'
+      page.should have_link 'Delete'
+      page.should have_link 'Print'
+    end
+
+    it "should forward to edit selling page when searching for existing selling" do
+      fill_in "Selling", with: selling.id
+      click_button "Search"
+      page.current_path.should eq edit_selling_path(locale: :en, id: selling)
+    end
+
+    it "should show warning when searching for not existing selling" do
+      fill_in "Selling", with: 0
+      click_button "Search"
+      page.should have_text "Sorry, didn't find a selling with number 0"
+    end
 
     it "should show edit selling page when pressing the edit link on a selling"
 

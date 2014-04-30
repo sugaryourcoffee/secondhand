@@ -1,6 +1,6 @@
 <% if @event %>
   <div class="row">
-    <div class="span4">
+    <div class="span5">
       <%= form_tag sellings_path, method: 'get', class: "form-search" do %>
         <p>
           <%= label_tag :search_selling_id, t('.select_selling') %>
@@ -10,7 +10,7 @@
         </p>
       <% end %>
     </div>
-    <div class="span8">
+    <div class="span7">
       <div class="well well-small">
         <%= render 'selling_status' %>
       </div>

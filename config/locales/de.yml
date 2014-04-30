@@ -90,12 +90,21 @@ de:
 
   sellings:
     index:
-      selling: "Verkauf"
+      selling:     "Verkauf"
+      new_selling: "Neuer Verkauf"
     header:
       select_selling: "Verkauf"
       search:         "Suchen"
       missing_event_html: "<h2>Fehlende aktive Veranstaltung</h2><h5>Für den Verkauf ist es erforderlich, dass eine Veranstaltung aktiv ist. Unter %{link} kann eine Veranstaltung aktiviert werden. Danach können Sie hier mit dem Verkauf beginnen.</h5>"
       events:         "Veranstaltungen"
+    sellings:
+      selling_number: "Verkaufsnummer"
+      created:        "Erstellt"
+      updated:        "Aktualisiert"
+      revenue:        "Umsatz"
+      edit:           "Bearbeiten"
+      delete:         "Löschen"
+      print:          "Drucken"
 
   static_pages:
     home:
