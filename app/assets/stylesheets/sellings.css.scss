@@ -1,3 +1,18 @@
-// Place all the styles related to the sellings controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.sellings {
+  .list_count {
+    text-align: right;
+  }
+
+  .total_line {
+    font-weight: bold;
+    border-top: 2px solid rgb(238, 238, 238);
+  }
+
+  section {
+    border-top: 1px solid rgb(238, 238, 238);
+  }
+
+  table {
+    width: 100%;
+  }
+}

@@ -28,9 +28,10 @@ class SellingsController < ApplicationController
   end
 
   def destroy
-    selling = Selling.find(params[:id])
-    Item.where(selling_id: selling.id).update_all(selling_id: nil)
-    selling.destroy
+    #selling = Selling.find(params[:id])
+    #Item.where(selling_id: selling.id).update_all(selling_id: nil)
+    #selling.destroy
+    Selling.find(params[:id]).destroy
     initialize_event_and_sellings
     respond_to do |format|
       format.js

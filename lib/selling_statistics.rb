@@ -36,7 +36,11 @@ class SellingStatistics
   end
 
   def average_revenue
-    @event.nil? ? 0 : (revenue / selling_count) + 0
+    if @event.nil? 
+      0 
+    else
+      selling_count == 0 ? 0 : (revenue / selling_count) + 0
+    end
   end
 
   private

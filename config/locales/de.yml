@@ -105,6 +105,13 @@ de:
       edit:           "Bearbeiten"
       delete:         "Löschen"
       print:          "Drucken"
+      confirm_delete: "Möchten Sie den Verkauf löschen?"
+    selling_status:
+      selling_status:       "Verkaufsstatistik"
+      sellings:             "Verkäufe"
+      items:                "Verkaufte Artikel"
+      average_revenue_html: "&Oslash; Umsatz pro Verkauf"
+      revenue:              "Umsatz"
 
   static_pages:
     home:

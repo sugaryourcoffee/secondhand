@@ -104,6 +104,12 @@ en:
       delete:         "Delete"
       print:          "Print"
       confirm_delete: "Do you want to delete the selected selling?"
+    selling_status:
+      selling_status:       "Selling Statistics"
+      sellings:             "Sellings"
+      items:                "Sold items"
+      average_revenue_html: "&Oslash; revenue per selling"
+      revenue:              "Revenue"
 
   static_pages:
     home:

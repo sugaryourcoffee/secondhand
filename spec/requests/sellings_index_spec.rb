@@ -92,22 +92,24 @@ describe "Selling index page" do
       modal = page.driver.browser.switch_to.alert
       modal.accept
  
-      items.reload.each do |item|
-        item.selling_id.should be_nil
-      end
-
       page.current_path.should eq sellings_path(locale: :en)
 
       page.should_not have_text selling_id
       page.should_not have_text selling_revenue
+
+      items.reload.each do |item|
+        item.selling_id.should be_nil
+      end
     end
 
     it "should show statistics of the sellings" do
       page.should have_text "Selling Statistics"
       page.should have_text "Sellings"
       page.should have_text 0 
-      page.should have_text "Items"
+      page.should have_text "Sold items"
       page.should have_text 0 
+      page.should have_text "revenue per selling"
+      page.should have_text 0
       page.should have_text "Revenue"
       page.should have_text 0
     end
