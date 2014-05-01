@@ -4,8 +4,8 @@ describe "Selling index page" do
 
   let(:admin)             { FactoryGirl.create(:admin) }
   let(:seller)            { FactoryGirl.create(:user) }
-  let!(:selling)          { create_selling_and_items(1, event) }
   let!(:accepted_list)    { FactoryGirl.create(:accepted, user: seller, event: event) }
+  let!(:selling)          { create_selling_and_items(event, accepted_list) }
 
   context "with no active event" do
     let(:event) { FactoryGirl.create(:event) }
@@ -60,7 +60,7 @@ describe "Selling index page" do
     it "should list available sellings" do
       page.should have_text selling.id
       page.should have_text selling.created_at
-      page.should have_text selling.revenue
+      page.should have_text selling.revenue.to_s
       page.should have_link 'Edit'
       page.should have_link 'Delete'
       page.should have_link 'Print'
@@ -78,13 +78,39 @@ describe "Selling index page" do
       page.should have_text "Sorry, didn't find a selling with number 0"
     end
 
-    it "should show edit selling page when pressing the edit link on a selling"
+    it "should show edit selling page when pressing the edit link on a selling" do
+      click_link "Edit"
+      page.current_path.should eq edit_selling_path(locale: :en, id: selling)
+    end
 
-    it "should delete a selling and mark containing items as not sold"
+    it "should delete a selling and mark containing items as not sold", :js => true do
+      selling_id      = selling.id
+      selling_revenue = selling.revenue
+      items = selling.items
 
-    it "should show statistics of the sellings"
+      click_link "Delete"
+      modal = page.driver.browser.switch_to.alert
+      modal.accept
+ 
+      items.reload.each do |item|
+        item.selling_id.should be_nil
+      end
 
-    it "should have a print button at each selling"
+      page.current_path.should eq sellings_path(locale: :en)
+
+      page.should_not have_text selling_id
+      page.should_not have_text selling_revenue
+    end
+
+    it "should show statistics of the sellings" do
+      page.should have_text "Selling Statistics"
+      page.should have_text "Sellings"
+      page.should have_text 0 
+      page.should have_text "Items"
+      page.should have_text 0 
+      page.should have_text "Revenue"
+      page.should have_text 0
+    end
 
   end
 

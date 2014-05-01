@@ -103,6 +103,7 @@ en:
       edit:           "Edit"
       delete:         "Delete"
       print:          "Print"
+      confirm_delete: "Do you want to delete the selected selling?"
 
   static_pages:
     home:

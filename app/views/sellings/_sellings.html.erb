@@ -1,5 +1,5 @@
 <% if @sellings %>
-  <table class="table talbe-hover" >
+  <table class="table table-hover" >
     <thead>
       <tr>
         <th><%= t('.selling_number') %></th>
@@ -17,9 +17,10 @@
           <td><%= selling.revenue %></td>
           <td><%= link_to t('.edit'), edit_selling_path(selling) %></td>
           <td><%= link_to t('.delete'), 
-                  selling_path(selling), 
+                  selling, 
                   method: :delete, 
-                  confirm: t('.confirm_delete') %>
+                  remote: true,
+                  data: { confirm: t('.confirm_delete') } %>
           </td>
           <td><%= link_to t('.print') %></td>
         </tr>

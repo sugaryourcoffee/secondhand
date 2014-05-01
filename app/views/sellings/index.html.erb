@@ -1,7 +1,12 @@
 <% provide(:title, t('.selling')) %>
+
 <h1><%= t('.selling') %></h1>
 <h2><%= @event.title if @event %></h2>
 
 <%= render 'header' %>
-<%= link_to t('.new_selling'), new_selling_path, class: "btn btn-large btn-primary" %>
-<%= render 'sellings' %>
+
+<p><%= link_to t('.new_selling'), new_selling_path, class: "btn btn-large btn-primary" %></p>
+
+<div id="sellings-table">
+  <%= render 'sellings' %>
+</div>
