@@ -1,0 +1,36 @@
+<article>
+  <header>
+    <h5><%= t('.cart_status') %></h5>
+  </header>
+  <section>
+    <table>
+      <tr>
+        <td><%= t('.items') %></td>
+        <td class="list_count"><%= @cart.items.count %></td>
+      </tr>
+      <tr class="total_line">
+        <td><%= t('.total') %></td>
+        <td class="list_count"><%= @cart.total %></td>
+      </tr>
+    </table>
+  </section>
+</article>
+<article>
+  <header>
+    <h5><%= t('.last_added_item') %></h5>
+  </header>
+  <section>
+    <% if @cart.items.last %>
+      <p><%= @cart.items.last.description %></p>
+      <table>
+        <tr>
+          <td><%= t('.item') %></td><td class="list_count"><%= list_item_number_for(@cart.items.last) %></td>
+        </tr>
+        <tr><td><%= t('.size') %></td><td class="list_count"><%= @cart.items.last.size %></td></tr>
+        <tr><td><%= t('.price') %></td><td class="list_count"><%= @cart.items.last.price %></td></tr>
+      </table>
+    <% else %>
+      <p><%= t('.no_items_yet') %></p>
+    <% end %>
+  </section>
+</article>

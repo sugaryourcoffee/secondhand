@@ -15,10 +15,38 @@ class SellingsController < ApplicationController
     end
   end
 
+  def show
+    @selling = Selling.find(params[:id])
+  end
+
   def new
+    @selling = Selling.new
   end
 
   def create
+    @cart = current_cart
+    if @cart.items.empty?
+      redirect_to item_collection_carts_path, notice: "Your cart is empty"
+      return
+    end
+    @selling = Selling.new(event_id: Event.find_by_active(true).id)
+    @selling.add_items_from_cart(current_cart)
+    respond_to do |format|
+      if @selling.save
+        Cart.destroy(session[:cart_id])
+        session[:cart_id] = nil
+        format.html { redirect_to @selling, notice: "Successfully created selling" }
+      else
+        format.html { redirect_to item_collection_carts_path, error: "Could not create selling" }
+      end
+    end
+  end
+
+  def add_item
+    @item = nil
+    respond_to do |format|
+      format.js
+    end
   end
 
   def edit
@@ -28,9 +56,6 @@ class SellingsController < ApplicationController
   end
 
   def destroy
-    #selling = Selling.find(params[:id])
-    #Item.where(selling_id: selling.id).update_all(selling_id: nil)
-    #selling.destroy
     Selling.find(params[:id]).destroy
     initialize_event_and_sellings
     respond_to do |format|

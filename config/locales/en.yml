@@ -56,6 +56,8 @@ en:
       total_list_count:          "Total"
     list_status:
       list_status:              "List Status"
+      sold_items_status_html:   "<p>List acceptance cannot be revoked because it contains <strong>sold items</strong>.</p>
+      <p>To revoke the list acceptance you first have to remove sold items from the selling.</p>"
       accepted_status_html:     "<p><strong>List has already been accepted</strong>.</p>
       <p>To edit the list you have to revoke the list acceptance by pressing the button 
       %{button}</p>"
@@ -86,15 +88,60 @@ en:
       showing_not_registered: "Not Registered Lists"
       showing_all:            "All Lists"
       
+  carts:
+    item_collection:
+      title:       "Cart"
+      heading:     "Cart %{number}"
+    item_collection_header:
+      select_list_number: "List"
+      select_item_number: "Item"
+      search:             "Add"
+      check_out:          "Check out"
+    cart_status:
+      cart_status:        "Cart status"
+      items:              "Items"
+      total:              "Total"
+      last_added_item:    "Last added item"
+      item:               "Item"
+      size:               "Size"
+      price:              "Price"
+      no_items_yet:       "Cart is empty"
+    items:
+      item_number: "Item"
+      description: "Description"
+      size:        "Size"
+      price:       "Price"
+      delete:      "Delete"
+      confirm:     "Do you want to delete the item from the cart?"
+
   sellings:
     index:
       selling:     "Selling"
       new_selling: "New Selling"
+    new:
+      new_selling:     "New Selling"
+      list:            "List"
+      item:            "Item"
+      add:             "Add"
+      delete:          "Delete"
+      finish:          "Finish selling"
+      finish_and_next: "Finish and start next selling"
+      cancel:          "Cancel selling"
     header:
       select_selling: "Selling"
       search:         "Search"
       missing_event_html: "<h2>Missing active Event</h2><h5>For selling it is neccessary to have an active event. At %{link} you can activate an event. Then come back to start with selling.</h5>"
       events:        "Events"
+    header_new:
+      select_list_number: "List"
+      select_item_number: "Item"
+      search:             "Add"
+    new_selling_status:
+      new_selling_status: "Selling Status"
+      items:              "Items"
+      revenue:            "Total"
+      last_added_item:    "Last added item"
+      no_items_yet:       "Selling contains no items yet"
     sellings:
       selling_number: "Selling Number"
       created:        "Created"

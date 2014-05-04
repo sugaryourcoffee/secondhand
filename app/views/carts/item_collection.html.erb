@@ -1,0 +1,9 @@
+<% provide(:title, t('.title')) %>
+
+<h1><%= t('.heading', number: @cart.id) %></h1>
+<h2><%= @event.title if @event %></h2>
+
+<%= render 'item_collection_header' %>
+<%= render 'items' %>
+
+

@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="span8">
+    <%= form_tag add_item_sellings_path, method: 'get', remote: true, class: "form-search" do %>
+      <p>
+        <%= label_tag :search_list_number, t('.select_list_number') %>
+        <%= text_field_tag :search_list_number, params[:search_list_number], 
+                           class: "input-medium search-query" %>
+        <%= label_tag :search_item_number, t('.select_item_number') %>
+        <%= text_field_tag :search_item_number, params[:search_item_number],
+                           class: "input-medium search-query" %>
+        <%= submit_tag t('.search'), name: nil, class: "btn" %>
+      </p>
+    <% end %>
+  </div>
+  <div class="span4">
+    <div id="new-selling-status" class="well well-small">
+      <%= render 'new_selling_status' %>
+    </div>
+  </div>
+</div>
+

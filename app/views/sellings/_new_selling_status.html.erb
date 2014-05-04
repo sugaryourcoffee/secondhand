@@ -1,0 +1,33 @@
+<article>
+  <header>
+    <h5><%= t('.new_selling_status') %></h5>
+  </header>
+  <section>
+    <table>
+      <tr>
+        <td><%= t('.items') %></td>
+        <td class="list_count"><%= @selling.items.count %></td>
+      </tr>
+      <tr class="total_line">
+        <td><%= t('.revenue') %></td>
+        <td class="list_count"><%= @selling.revenue %></td>
+      </tr>
+    </table>
+  </section>
+</article>
+<article>
+  <header>
+    <h5><%= t('.last_added_item') %></h5>
+  </header>
+  <section>
+    <% if @selling.items.last %>
+      <p><%= @selling.items.last.description %></p>
+      <table class="table table-bordered table-condensed">
+        <tr><th><%= t('.size') %></th><td><%= @selling.items.last.size %></td></tr>
+        <tr><th><%= t('.price') %></th><td><%= @selling.items.last.price %></td></tr>
+      </table>
+    <% else %>
+      <p><%= t('.no_items_yet') %></p>
+    <% end %>
+  </section>
+</article>

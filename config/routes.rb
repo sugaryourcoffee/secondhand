@@ -28,7 +28,20 @@ Secondhand::Application.routes.draw do
       end
     end
 
-    resources :sellings
+    resources :carts do
+      collection do
+        get :item_collection
+      end
+      member do
+        delete :delete_item
+      end
+    end
+
+    resources :sellings do
+      collection do
+        get :add_item
+      end
+    end
 
     resources :lists do
       member do

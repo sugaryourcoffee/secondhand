@@ -41,6 +41,14 @@ class List < ActiveRecord::Base
     not accepted_on.nil?
   end
 
+  # Returns whether the list has sold items
+  def has_sold_items?
+    items.each do |item|
+      return true if item.sold?
+    end
+    false
+  end
+
   # Returns the list count for the provided event_id
   def self.total_count(event_id)
     List.find_all_by_event_id(event_id)

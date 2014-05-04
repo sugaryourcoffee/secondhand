@@ -1,6 +1,7 @@
 class Item < ActiveRecord::Base
   belongs_to :list
   belongs_to :selling
+  belongs_to :cart
 
   attr_accessible :description, :item_number, :price, :size
 
@@ -17,6 +18,14 @@ class Item < ActiveRecord::Base
   before_save :reset_list_sent_on
 
   before_destroy :reset_list_sent_on
+
+  def sold?
+    !selling_id.nil?
+  end
+
+  def in_cart?
+    !cart_id.nil?
+  end
 
   private
 

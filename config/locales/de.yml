@@ -87,16 +87,61 @@ de:
       showing_registered:     "Registrierte Listen"
       showing_not_registered: "Nicht registrierte Listen"
       showing_all:            "Alle Listen"
+      
+  carts:
+    item_collection:
+      title:       "Einkaufswagen"
+      heading:     "Einkaufswagen %{number}"
+    item_collection_header:
+      select_list_number: "Liste"
+      select_item_number: "Artikel"
+      search:             "Hinzufügen"
+      check_out:          "Zur Kasse"
+    cart_status:
+      cart_status:        "Einkaufswagen Status"
+      items:              "Artikel"
+      total:              "Gesamt"
+      last_added_item:    "Zuletzt hinzugefügter Artikel"
+      item:               "Artikel"
+      size:               "Größe"
+      price:              "Preis"
+      no_items_yet:       "Einkaufswagen ist leer"
+    items:
+      item_number: "Artikel"
+      description: "Beschreibung"
+      size:        "Größe"
+      price:       "Preis"
+      delete:      "Löschen"
+      confirm:     "Wollen Sie den Artikel aus dem Einkaufswagen löschen?"
 
   sellings:
     index:
       selling:     "Verkauf"
       new_selling: "Neuer Verkauf"
+    new:
+      new_selling:     "Neuer Verkauf"
+      list:            "Liste"
+      item:            "Artikel"
+      add:             "Hinzufügen"
+      delete:          "Löschen"
+      finish:          "Verkauf abschließen"
+      finish_and_next: "Abschließen und neuen Verkauf starten"
+      cancel:          "Verkauf abbrechen"
     header:
       select_selling: "Verkauf"
       search:         "Suchen"
       missing_event_html: "<h2>Fehlende aktive Veranstaltung</h2><h5>Für den Verkauf ist es erforderlich, dass eine Veranstaltung aktiv ist. Unter %{link} kann eine Veranstaltung aktiviert werden. Danach können Sie hier mit dem Verkauf beginnen.</h5>"
       events:         "Veranstaltungen"
+    header_new:
+      select_list_number: "Liste"
+      select_item_number: "Artikel"
+      search:             "Hinzufügen"
+    new_selling_status:
+      new_selling_status: "Verkaufsstatus"
+      items:              "Artikel"
+      revenue:            "Summe"
+      last_added_item:    "Zuletzt hinzugefügter Artikel"
+      no_items_yet:       "Verkauf enthält noch keine Artikel"
     sellings:
       selling_number: "Verkaufsnummer"
       created:        "Erstellt"

@@ -85,6 +85,7 @@ class AcceptancesController < ApplicationController
   # Toggles the accepted_on field to Nil or to the current time.
   def accept
     list = List.find(params[:id])
+
     list.accepted_on = list.accepted_on.nil? ? Time.now : nil
 
     respond_to do |format|

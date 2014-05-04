@@ -3,7 +3,9 @@
     <h5><%= t('.list_status') %></h5>
   </header>
   <section>
-    <% if @list.accepted? %>
+    <% if @list.has_sold_items? %>
+      <%= t('.sold_items_status_html') %>
+    <% elsif @list.accepted? %>
       <%= t('.accepted_status_html', button: button_to(t('.revoke_list'),
                                                        accept_acceptance_path(@list),
                                                        class: "btn btn-warning")) %>

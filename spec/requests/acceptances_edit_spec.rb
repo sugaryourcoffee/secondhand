@@ -95,6 +95,25 @@ describe "Acceptances" do
         page.should     have_button "Accept List"
         page.should_not have_button "Revoke list acceptance"
       end
+
+      context "with sold items" do
+
+        before do
+          create_selling_and_items(event, accepted_list) 
+          visit edit_acceptance_path(locale: :en, id: accepted_list)
+        end
+
+        it "should not revoke list accpetance" do
+          accepted_list.accepted_on.should_not be_nil
+
+          accepted_list.items.first.selling_id.should_not be_nil
+
+          page.should have_text 'List acceptance cannot be revoked because it contains sold items'
+
+          page.should_not have_button 'Revoke list acceptance'
+        end
+
+      end
     end
 
   end

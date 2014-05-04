@@ -26,10 +26,10 @@ module AcceptancesHelper
   end
 
   def edit_acceptances_action(list)
-    if !@list.accepted?
-      button_to t('.accept_list'), accept_acceptance_path(list), class: "btn btn-primary"
+    if @list.accepted?
+      button_to t('.revoke_acceptance'), accept_acceptance_path(list), class: "btn btn-warning" unless list.has_sold_items?
     else
-      button_to t('.revoke_acceptance'), accept_acceptance_path(list), class: "btn btn-warning"
+      button_to t('.accept_list'), accept_acceptance_path(list), class: "btn btn-primary"
     end
   end
 end
