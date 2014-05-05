@@ -48,28 +48,28 @@ describe "Selling index page" do
       page.should have_text 'Selling'
     end
 
-    it "should have link to create new selling" do
-      page.should have_link 'New Selling'
+    it "should have link to forward to cart" do
+      page.should have_link 'Go to cart'
     end
 
-    it "should create new selling" do
-      click_link 'New Selling'
-      page.current_path.should eq new_selling_path(locale: :en) 
+    it "should forward to cart" do
+      click_link 'Go to cart'
+      page.current_path.should eq item_collection_carts_path(locale: :en) 
     end
 
     it "should list available sellings" do
       page.should have_text selling.id
       page.should have_text selling.created_at
       page.should have_text selling.revenue.to_s
-      page.should have_link 'Edit'
+      page.should have_link 'Show'
       page.should have_link 'Delete'
       page.should have_link 'Print'
     end
 
-    it "should forward to edit selling page when searching for existing selling" do
+    it "should forward to selling show page when searching for existing selling" do
       fill_in "Selling", with: selling.id
       click_button "Search"
-      page.current_path.should eq edit_selling_path(locale: :en, id: selling)
+      page.current_path.should eq selling_path(locale: :en, id: selling)
     end
 
     it "should show warning when searching for not existing selling" do
@@ -78,9 +78,9 @@ describe "Selling index page" do
       page.should have_text "Sorry, didn't find a selling with number 0"
     end
 
-    it "should show edit selling page when pressing the edit link on a selling" do
-      click_link "Edit"
-      page.current_path.should eq edit_selling_path(locale: :en, id: selling)
+    it "should forward to show selling page when pressing the show link on a selling" do
+      click_link "Show"
+      page.current_path.should eq selling_path(locale: :en, id: selling)
     end
 
     it "should delete a selling and mark containing items as not sold", :js => true do

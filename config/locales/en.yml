@@ -117,37 +117,33 @@ en:
   sellings:
     index:
       selling:     "Selling"
-      new_selling: "New Selling"
-    new:
-      new_selling:     "New Selling"
-      list:            "List"
-      item:            "Item"
-      add:             "Add"
-      delete:          "Delete"
-      finish:          "Finish selling"
-      finish_and_next: "Finish and start next selling"
-      cancel:          "Cancel selling"
+      go_to_cart:  "Go to cart"
+    show:
+      title:            "Selling"
+      heading:          "Selling %{number}"
+      selling_overview: "Back to selling overview"
+    show_selling_status:
+      selling_status:  "Selling Statistics"
+      items:           "Items"
+      revenue:         "Revenue"
+    items:
+      number:      "Item"
+      description: "Description"
+      size:        "Size"
+      price:       "Price"
+      delete:      "Delete"
+      confirm:     "Do you want to delete the item?"
     header:
       select_selling: "Selling"
       search:         "Search"
       missing_event_html: "<h2>Missing active Event</h2><h5>For selling it is neccessary to have an active event. At %{link} you can activate an event. Then come back to start with selling.</h5>"
-      events:        "Events"
-    header_new:
-      select_list_number: "List"
-      select_item_number: "Item"
-      search:             "Add"
-    new_selling_status:
-      new_selling_status: "Selling Status"
-      items:              "Items"
-      revenue:            "Total"
-      last_added_item:    "Last added item"
-      no_items_yet:       "Selling contains no items yet"
+      events:         "Events"
     sellings:
       selling_number: "Selling Number"
       created:        "Created"
       updated:        "Updated"
       revenue:        "Revenue"
-      edit:           "Edit"
+      show:           "Show"
       delete:         "Delete"
       print:          "Print"
       confirm_delete: "Do you want to delete the selected selling?"

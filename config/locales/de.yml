@@ -117,37 +117,33 @@ de:
   sellings:
     index:
       selling:     "Verkauf"
-      new_selling: "Neuer Verkauf"
-    new:
-      new_selling:     "Neuer Verkauf"
-      list:            "Liste"
-      item:            "Artikel"
-      add:             "Hinzufügen"
-      delete:          "Löschen"
-      finish:          "Verkauf abschließen"
-      finish_and_next: "Abschließen und neuen Verkauf starten"
-      cancel:          "Verkauf abbrechen"
+      go_to_cart:  "Zum Einkaufswagen"
+    show:
+      title:            "Verkauf"
+      heading:          "Verkauf %{number}"
+      selling_overview: "Zurück zur Verkaufsübersicht"
+    show_selling_status:
+      selling_status:  "Verkaufsstatistik"
+      items:           "Artikel"
+      revenue:         "Umsatz"
+    items:
+      number:      "Artikel"
+      description: "Beschreibung"
+      size:        "Größe"
+      price:       "Preis"
+      delete:      "Löschen"
+      delete_item: "Wollen Sie den Artikel löschen?"
     header:
       select_selling: "Verkauf"
       search:         "Suchen"
       missing_event_html: "<h2>Fehlende aktive Veranstaltung</h2><h5>Für den Verkauf ist es erforderlich, dass eine Veranstaltung aktiv ist. Unter %{link} kann eine Veranstaltung aktiviert werden. Danach können Sie hier mit dem Verkauf beginnen.</h5>"
       events:         "Veranstaltungen"
-    header_new:
-      select_list_number: "Liste"
-      select_item_number: "Artikel"
-      search:             "Hinzufügen"
-    new_selling_status:
-      new_selling_status: "Verkaufsstatus"
-      items:              "Artikel"
-      revenue:            "Summe"
-      last_added_item:    "Zuletzt hinzugefügter Artikel"
-      no_items_yet:       "Verkauf enthält noch keine Artikel"
     sellings:
       selling_number: "Verkaufsnummer"
       created:        "Erstellt"
       updated:        "Aktualisiert"
       revenue:        "Umsatz"
-      edit:           "Bearbeiten"
+      show:           "Anzeigen"
       delete:         "Löschen"
       print:          "Drucken"
       confirm_delete: "Möchten Sie den Verkauf löschen?"

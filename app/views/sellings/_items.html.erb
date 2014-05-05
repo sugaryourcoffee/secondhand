@@ -1,13 +1,26 @@
 <table id="items-table" class="table table-hover">
   <thead>
     <tr>
-      <th><%= t('.item_number') %></th>
-      <th><%= t('.item_description') %></th>
-      <th><%= t('.item_size') %></th>
-      <th><%= t('.item_price') %></th>
+      <th><%= t('.number') %></th>
+      <th><%= t('.description') %></th>
+      <th><%= t('.size') %></th>
+      <th><%= t('.price') %></th>
       <th/>
     </tr>
   </thead>
   <tbody>
+    <% @selling.items.each do |item| %>
+      <tr>
+        <td><%= list_item_number_for(item) %></td>
+        <td><%= item.description %></td>
+        <td><%= item.size %></td>
+        <td><%= item.price %></td>
+        <td><%= link_to t('.delete'), 
+                delete_item_selling_path(item, selling_id: @selling.id), 
+                data: { confirm: t('.delete_item') }, 
+                id: "delete-item-#{item.item_number}" %>
+        <td>
+      </tr>
+    <% end %>
   </tbody>
 </table>

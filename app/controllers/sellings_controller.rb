@@ -6,7 +6,7 @@ class SellingsController < ApplicationController
 
     respond_to do |format|
       if @selling
-        format.html { redirect_to edit_selling_path @selling } 
+        format.html { redirect_to selling_path @selling } 
       else
         flash.now[:warning] = "Sorry, didn't find a selling with number " +
                               "#{params[:search_selling_id]}!" if params[:search_selling_id]
@@ -16,11 +16,8 @@ class SellingsController < ApplicationController
   end
 
   def show
+    @event   = Event.find_by_active(true)
     @selling = Selling.find(params[:id])
-  end
-
-  def new
-    @selling = Selling.new
   end
 
   def create
@@ -42,17 +39,20 @@ class SellingsController < ApplicationController
     end
   end
 
-  def add_item
-    @item = nil
+  def delete_item
+    @selling = Selling.find(params[:selling_id])
+    item = Item.find(params[:id])
+
     respond_to do |format|
-      format.js
+      if @selling.remove(item)
+        flash.now[:success] = "Successfully removed item from selling"
+      else
+        flash.now[:error] = "Could not remove item from selling"
+      end
+
+      format.js   { redirect_to @selling }
+      format.html { redirect_to @selling }
     end
-  end
-
-  def edit
-  end
-
-  def update
   end
 
   def destroy
