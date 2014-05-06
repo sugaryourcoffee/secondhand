@@ -17,7 +17,7 @@
         <td><%= item.price %></td>
         <td><%= link_to t('.delete'), 
                 delete_item_selling_path(item, selling_id: @selling.id), 
-                data: { confirm: t('.delete_item') }, 
+                data: { confirm: t('.confirm') }, 
                 id: "delete-item-#{item.item_number}" %>
         <td>
       </tr>

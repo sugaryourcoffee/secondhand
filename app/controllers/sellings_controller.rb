@@ -32,11 +32,15 @@ class SellingsController < ApplicationController
       if @selling.save
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
-        format.html { redirect_to @selling, notice: "Successfully created selling" }
+        format.html { redirect_to check_out_selling_path(@selling), notice: "Successfully created selling" }
       else
         format.html { redirect_to item_collection_carts_path, error: "Could not create selling" }
       end
     end
+  end
+
+  def check_out
+    @selling = Selling.find(params[:id])
   end
 
   def delete_item

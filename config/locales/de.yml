@@ -125,6 +125,7 @@ de:
     show_selling_status:
       selling_status:  "Verkaufsstatistik"
       items:           "Artikel"
+      updated_at:      "vor %{updated_at}"
       revenue:         "Umsatz"
     items:
       number:      "Artikel"
@@ -132,7 +133,7 @@ de:
       size:        "Größe"
       price:       "Preis"
       delete:      "Löschen"
-      delete_item: "Wollen Sie den Artikel löschen?"
+      confirm:     "Wollen Sie den Artikel löschen?"
     header:
       select_selling: "Verkauf"
       search:         "Suchen"
@@ -153,6 +154,14 @@ de:
       items:                "Verkaufte Artikel"
       average_revenue_html: "&Oslash; Umsatz pro Verkauf"
       revenue:              "Umsatz"
+    check_out:
+      title:          "Verkauf %{number}"
+      heading:        "Verkauf %{number}"
+      voucher:        "Kassenbeleg"
+      selling_number: "Verkaufsnummer"
+      total:          "Betrag"
+      to_cart:        "Neuen Verkauf beginnen"
+      to_sellings:    "Zur Verkaufsübersicht"
 
   static_pages:
     home:

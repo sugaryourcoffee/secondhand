@@ -115,7 +115,7 @@ describe Cart do
 
       expect { click_button 'Check out' }.to change(Selling, :count).by(1)
       
-      page.current_path.should eq selling_path(locale: :en, id: Selling.last)
+      page.current_path.should eq check_out_selling_path(locale: :en, id: Selling.last)
     end
   end
 

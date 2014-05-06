@@ -1,0 +1,21 @@
+<% provide(:title, t('.title', number: @selling.id)) %>
+
+<h1><%= t('.heading', number: @selling.id) %></h1>
+<h2><%= @event.title if @event %></h2>
+
+<div class="row">
+  <div class="span3">
+  </div>
+  <div class="span6">
+    <div class="well">
+      <h3><%= t('.voucher') %></h3>
+      <table>
+        <tr><td class="lead"><%= t('.selling_number') %></td><td class="text-right lead"><%= @selling.id %></td></tr>
+        <tr><td class="lead"><%= t('.total') %></td><td class="text-right lead"><%= @selling.revenue %></td></tr>
+      </table>
+    </div>
+    <p><%= link_to t('.to_cart'), item_collection_carts_path, class: "btn btn-primary" %></p>
+    <p><%= link_to t('.to_sellings'), sellings_path %></p>
+  </div>
+</div>
+

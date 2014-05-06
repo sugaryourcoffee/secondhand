@@ -40,6 +40,7 @@ Secondhand::Application.routes.draw do
     resources :sellings do
       member do
         get :delete_item
+        get :check_out
       end
     end
 

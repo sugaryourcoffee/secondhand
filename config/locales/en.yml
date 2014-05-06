@@ -125,6 +125,7 @@ en:
     show_selling_status:
       selling_status:  "Selling Statistics"
       items:           "Items"
+      updated_at:      "%{updated_at} ago"
       revenue:         "Revenue"
     items:
       number:      "Item"
@@ -153,6 +154,14 @@ en:
       items:                "Sold items"
       average_revenue_html: "&Oslash; revenue per selling"
       revenue:              "Revenue"
+    check_out:
+      title:          "Selling %{number}"
+      heading:        "Selling %{number}"
+      voucher:        "Voucher"
+      selling_number: "Selling number"
+      total:          "Total"
+      to_cart:        "Start new selling"
+      to_sellings:    "Go to selling overview"
 
   static_pages:
     home:
