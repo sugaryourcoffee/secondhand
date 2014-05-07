@@ -156,10 +156,11 @@ describe Cart do
       cart.items.should_not be_empty
       list1.items.first.cart_id.should eq cart.id
 
-      expect { click_link 'Delete' }.to change(Cart, :count).by(1)
+      expect { click_link 'Delete' }.to change(Cart, :count).by(-1)
 
-      page.should_not have_text cart.id
-      page.should_not have_text cart.items.count
+      page.current_path.should eq carts_path(locale: :en)
+
+      page.should have_text "Successfully deleted cart #{cart.id}"
 
       list1.items.first.cart_id.should be_nil
     end
