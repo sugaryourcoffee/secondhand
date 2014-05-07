@@ -23,6 +23,13 @@ class CartsController < ApplicationController
     end
   end
 
+  def destroy
+    cart = Cart.find(params[:id])
+    cart.destroy
+    flash[:success] = "Successfully deleted #{cart.id}"
+    redirect_to carts_path
+  end
+
   def delete_item
     item = Item.find(params[:id])
     @cart = current_cart

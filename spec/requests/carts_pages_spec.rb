@@ -8,7 +8,7 @@ describe Cart do
   let(:list1)  { FactoryGirl.create(:accepted, user: seller, event: event) }
   let(:list2)  { FactoryGirl.create(:accepted, user: seller, event: event) }
 
-  describe "edit page" do
+  describe "item collection page" do
     include ItemsHelper
 
     before do
@@ -128,6 +128,10 @@ describe Cart do
       visit carts_path(locale: :en)
     end
 
+    before do
+      add_items_to_list(list1, 1)
+    end
+
     it "should have title 'Cart'" do
       page.should have_title 'Carts'
     end
@@ -147,10 +151,23 @@ describe Cart do
       page.should have_text cart.items.count
     end
 
-    it "should delete a cart"
+    it "should delete a cart" do
+      cart.add(list1.items.first)
+      cart.items.should_not be_empty
+      list1.items.first.cart_id.should eq cart.id
+
+      expect { click_link 'Delete' }.to change(Cart, :count).by(1)
+
+      page.should_not have_text cart.id
+      page.should_not have_text cart.items.count
+
+      list1.items.first.cart_id.should be_nil
+    end
+
   end
 
   describe "edit page" do
+
     it "should have title edit cart"
 
     it "should have selector edit cart #"
@@ -158,6 +175,7 @@ describe Cart do
     it "should delete an item"
 
     it "should empty the cart"
+
   end
 
   describe "show page" do
