@@ -147,6 +147,25 @@ describe Cart do
       page.should have_text cart.items.count
     end
 
+    it "should delete a cart"
+  end
+
+  describe "edit page" do
+    it "should have title edit cart"
+
+    it "should have selector edit cart #"
+
+    it "should delete an item"
+
+    it "should empty the cart"
+  end
+
+  describe "show page" do
+    it "should have title show cart"
+
+    it "should have selector show cart #"
+
+    it "should have back button"
   end
   
 end

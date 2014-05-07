@@ -27,7 +27,10 @@
                   <li><%= link_to t('.Cart'), item_collection_carts_path %></li>
                   <li><%= link_to t('.Cashier') %></li>
                   <li class="divider"></li>
+                  <li><%= link_to t('.Storno') %></li>
+                  <li class="divider"></li>
                   <li><%= link_to t('.Sellings'), sellings_path %></li>
+                  <li><%= link_to t('.Stornos') %></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -40,6 +43,8 @@
                   <li><%= link_to t('.News'), news_index_path %></li>
                   <li class="divider"></li>
                   <li><%= link_to t('.Users'), users_path %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to t('.Carts'), carts_path %></li>
                 </ul>
               </li>
             <% end %>
