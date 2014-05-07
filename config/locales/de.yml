@@ -89,6 +89,17 @@ de:
       showing_all:            "Alle Listen"
       
   carts:
+    index:
+      title:       "Einkaufswagen"
+      heading:     "Einkaufswagen"
+    cart:
+      cart_number: "Nummer"
+      item_count:  "Artikel"
+      cashier:     "Kassierer"
+      show:        "Anzeigen"
+      edit:        "Bearbeiten"
+      delete:      "Löschen"
+      confirm:     "Möchten Sie den Einkaufswagen leeren und löschen?"
     item_collection:
       title:       "Einkaufswagen"
       heading:     "Einkaufswagen %{number}"

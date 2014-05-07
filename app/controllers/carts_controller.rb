@@ -1,5 +1,9 @@
 class CartsController < ApplicationController
 
+  def index
+    @carts = Cart.all
+  end
+
   def update
     @cart  = current_cart
     @event = Event.find_by_active(true)

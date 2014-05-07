@@ -1,0 +1,22 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th><%= t('.cart_number') %></th>
+      <th><%= t('.item_count') %></th>
+      <th><%= t('.cashier') %></th>
+      <th /><th /><th />
+    </tr>
+  </thead>
+  <tbody>
+    <% @carts.each do |cart| %>
+      <tr>
+        <td><%= cart.id %></td>
+        <td><%= cart.items.count %></td>
+        <td></td>
+        <td><%= link_to t('.show'), cart %></td>
+        <td><%= link_to t('.edit'), edit_cart_path(cart) %></td>
+        <td><%= link_to t('.delete'), cart, method: "delete", data: { confirm: t('.confirm') } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

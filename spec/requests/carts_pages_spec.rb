@@ -8,13 +8,13 @@ describe Cart do
   let(:list1)  { FactoryGirl.create(:accepted, user: seller, event: event) }
   let(:list2)  { FactoryGirl.create(:accepted, user: seller, event: event) }
 
-  before do
-    sign_in admin
-    visit item_collection_carts_path(locale: :en)
-  end
-
   describe "edit page" do
     include ItemsHelper
+
+    before do
+      sign_in admin
+      visit item_collection_carts_path(locale: :en)
+    end
 
     before do
       add_items_to_list(list1, 3)
@@ -121,11 +121,31 @@ describe Cart do
 
   describe "index page" do
 
-    it "should have title 'Cart'"
+    let!(:cart) { Cart.create }
 
-    it "should have 'h1' 'Cart'"
+    before do
+      sign_in admin
+      visit carts_path(locale: :en)
+    end
 
-    it "should show all carts"
+    it "should have title 'Cart'" do
+      page.should have_title 'Carts'
+    end
+
+    it "should have 'h1' 'Cart'" do
+      page.should have_selector 'h1', 'Carts'
+    end
+
+    it "should show all carts" do
+      page.should have_text 'Cart'
+      page.should have_text 'Items'
+      page.should have_text 'Cashier'
+      page.should have_link 'Show'
+      page.should have_link 'Edit'
+      page.should have_link 'Delete'
+      page.should have_text cart.id
+      page.should have_text cart.items.count
+    end
 
   end
   

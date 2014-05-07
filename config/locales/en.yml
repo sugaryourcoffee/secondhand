@@ -89,6 +89,17 @@ en:
       showing_all:            "All Lists"
       
   carts:
+    index:
+      title:   "Carts"
+      heading: "Carts"
+    cart:
+      cart_number: "Number"
+      item_count:  "Items"
+      cashier:     "Cashier"
+      show:        "Show"
+      edit:        "Edit"
+      delete:      "Delete"
+      confirm:     "Do you want to empty and delete the cart?"
     item_collection:
       title:       "Cart"
       heading:     "Cart %{number}"
