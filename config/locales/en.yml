@@ -92,6 +92,13 @@ en:
     index:
       title:   "Carts"
       heading: "Carts"
+    show:
+      title:   "Cart"
+      heading: "Cart %{number}"
+      cart:    "Cart number"
+      items:   "Items"
+      total:   "Total"
+      carts:   "Back to carts overview"
     cart:
       cart_number: "Number"
       item_count:  "Items"

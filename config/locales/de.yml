@@ -90,8 +90,15 @@ de:
       
   carts:
     index:
-      title:       "Einkaufswagen"
-      heading:     "Einkaufswagen"
+      title:   "Einkaufswagen"
+      heading: "Einkaufswagen"
+    show:
+      title:   "Einkaufswagen"
+      heading: "Einkaufswagen %{number}"
+      cart:    "Einkaufswagennummer"
+      items:   "Artikel"
+      total:   "Gesamt"
+      carts:   "Zurück zur Einkaufswagenübersicht"
     cart:
       cart_number: "Nummer"
       item_count:  "Artikel"

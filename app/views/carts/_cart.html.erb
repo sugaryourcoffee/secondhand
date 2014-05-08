@@ -14,7 +14,6 @@
         <td><%= cart.items.count %></td>
         <td></td>
         <td><%= link_to t('.show'), cart %></td>
-        <td><%= link_to t('.edit'), edit_cart_path(cart) %></td>
         <td><%= link_to t('.delete'), cart, method: "delete", data: { confirm: t('.confirm') } %></td>
       </tr>
     <% end %>

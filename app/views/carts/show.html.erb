@@ -1,0 +1,22 @@
+<% provide(:title, t('.title')) %>
+
+<h1><%= t('.heading', number: @cart.id) %></h1>
+<h2><%= @event.title if @event %></h2>
+
+<p>
+  <div class="row">
+    <div class="span3">
+      <table>
+        <tbody>
+          <tr><td><%= t('.cart') %></td><td class="list_count"><%= @cart.id %></td></tr>
+          <tr><td><%= t('.items') %></td><td class="list_count"><%= @cart.items.count %></td></tr>
+          <tr class="total_line"><td><%= t('.total') %></td><td class="list_count"><%= @cart.total %></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</p>
+
+<p><%= link_to t('.carts'), carts_path %></p>
+
+<%= render 'items' %>

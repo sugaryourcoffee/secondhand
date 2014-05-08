@@ -145,7 +145,6 @@ describe Cart do
       page.should have_text 'Items'
       page.should have_text 'Cashier'
       page.should have_link 'Show'
-      page.should have_link 'Edit'
       page.should have_link 'Delete'
       page.should have_text cart.id
       page.should have_text cart.items.count
@@ -167,24 +166,42 @@ describe Cart do
 
   end
 
-  describe "edit page" do
+  describe "show page" do
 
-    it "should have title edit cart"
+    let(:cart) { Cart.create }
 
-    it "should have selector edit cart #"
+    before do
+      add_items_to_cart(cart, list1)
+    end
+
+    before do
+      sign_in admin
+      visit cart_path(locale: :en, id: cart)
+    end
+
+    it "should have title edit cart" do
+      page.should have_title 'Cart'
+    end
+
+    it "should have selector edit cart #" do
+      page.should have_selector 'h1', "Cart #{cart.id}"
+    end
+    
+    it "should have information about the cart" do
+      page.should have_text 'Cart number'
+      page.should have_text 'Items'
+      page.should have_text 'Total'
+    end
+
+    it "should show the items" do
+      page.should have_text 'Item'
+      page.should have_text 'Description'
+      page.should have_text 'Size'
+      page.should have_text 'Price'
+    end
 
     it "should delete an item"
 
-    it "should empty the cart"
-
   end
-
-  describe "show page" do
-    it "should have title show cart"
-
-    it "should have selector show cart #"
-
-    it "should have back button"
-  end
-  
+ 
 end

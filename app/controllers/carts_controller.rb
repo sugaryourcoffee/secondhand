@@ -4,6 +4,11 @@ class CartsController < ApplicationController
     @carts = Cart.all
   end
 
+  def show
+    @cart = Cart.find(params[:id])
+    @event = Event.find_by_active(true)
+  end
+
   def update
     @cart  = current_cart
     @event = Event.find_by_active(true)
