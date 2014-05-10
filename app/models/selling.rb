@@ -1,5 +1,7 @@
 class Selling < ActiveRecord::Base
 
+  include SellingsExporter
+
   has_many   :items, dependent: :nullify
   belongs_to :event
 

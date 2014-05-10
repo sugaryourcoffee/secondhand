@@ -32,7 +32,11 @@ class SellingsController < ApplicationController
       if @selling.save
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
-        format.html { redirect_to check_out_selling_path(@selling), notice: "Successfully created selling" }
+        if system('lpr', @selling.to_pdf.to_path)
+          format.html { redirect_to check_out_selling_path(@selling), notice: "Successfully created selling and printed" }
+        else
+          format.html { redirect_to check_out_selling_path(@selling), warning: "Successfully create selling but could not be printed" }
+        end
       else
         format.html { redirect_to item_collection_carts_path, error: "Could not create selling" }
       end
