@@ -4,7 +4,11 @@ class Selling < ActiveRecord::Base
 
   has_many   :items, dependent: :nullify
   belongs_to :event
-
+  # begin not tested yet
+  has_many :line_items
+  has_many :reversals, through: :line_items
+  # end not tested yet
+  
   attr_accessible :event_id
 
   def revenue

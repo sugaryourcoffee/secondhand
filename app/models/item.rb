@@ -2,7 +2,13 @@ class Item < ActiveRecord::Base
   belongs_to :list
   belongs_to :selling
   belongs_to :cart
-
+  #begin not tested yet
+  has_many :line_items
+  has_many :sellings, through: :line_items
+  has_many :reversals, through: :line_items
+  has_many :carts, through: :line_items
+  #end not tested yet
+  
   attr_accessible :description, :item_number, :price, :size
 
   scope :by_item_number, order(:item_number)

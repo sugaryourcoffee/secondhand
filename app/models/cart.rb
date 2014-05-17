@@ -1,5 +1,8 @@
 class Cart < ActiveRecord::Base
   has_many :items, dependent: :nullify
+  # begin not tested yet
+  has_many :line_items, dependent: :destroy
+  # end not tested yet
 
   before_save :ensure_items_are_from_accepted_lists_of_active_event, :ensure_items_are_unique, :ensure_items_not_sold
 
