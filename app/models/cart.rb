@@ -4,7 +4,8 @@ class Cart < ActiveRecord::Base
   has_many :line_items, dependent: :destroy
   # end not tested yet
 
-  before_save :ensure_items_are_from_accepted_lists_of_active_event, :ensure_items_are_unique, :ensure_items_not_sold
+  before_save :ensure_items_are_from_accepted_lists_of_active_event, 
+              :ensure_items_are_unique, :ensure_items_not_sold
 
   def total
     items.to_a.sum { |item| item.price }
@@ -14,11 +15,11 @@ class Cart < ActiveRecord::Base
     if item.nil?
       errors.add(:items, 'Item does not exist!')
       false
-    elsif can_add_item?(item)
-      items << item
-      save
-    else
-      false
+    else #if can_add_item?(item)
+      #items << item
+      line_item = line_items.build
+      line_item.item = item
+      line_item.save
     end
   end
 

@@ -4,7 +4,8 @@ describe "Selling index page" do
 
   let(:admin)             { FactoryGirl.create(:admin) }
   let(:seller)            { FactoryGirl.create(:user) }
-  let!(:accepted_list)    { FactoryGirl.create(:accepted, user: seller, event: event) }
+  let!(:accepted_list)    { FactoryGirl.create(:accepted, user: seller, 
+                                               event: event) }
   let!(:selling)          { create_selling_and_items(event, accepted_list) }
 
   context "with no active event" do
