@@ -12,9 +12,7 @@ class Selling < ActiveRecord::Base
   attr_accessible :event_id
 
   def revenue
-    sum = 0
-    items.each { |item| sum += item.price }
-    sum
+    line_items.inject(0) { |sum, line_item| sum + line_item.price }
   end
 
   def remove(item)

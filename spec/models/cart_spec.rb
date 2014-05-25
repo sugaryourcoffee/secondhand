@@ -27,119 +27,99 @@ describe Cart do
 
       let(:event)  { FactoryGirl.create(:active) }
 
-=begin
-      it "should add items from accepted lists" do
-        cart = Cart.new
-        cart.line_items << accepted_list.items.first
-        cart.save
-
-        cart.errors[:items].any?.should be_false
-      end
-=end
-
       it "should add items from accepted lists through add" do
         cart = Cart.create
-        cart.add(accepted_list.items.first)
+        line_item = cart.add(accepted_list.items.first)
+        line_item.save
 
-        cart.errors[:items].any?.should be_false
+        line_item.errors[:items].any?.should be_false
       end
 
-      it "should not add nil to items through add" do
+      it "should not add nil to items through" do
         cart = Cart.create
-        cart.add(nil)
+        line_item = cart.add(nil)
+        line_item.save
 
-        cart.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_true
       end
 
-=begin
       it "should not add items from not accepted lists" do
-        cart = Cart.new
-        cart.line_items << list.items.first
-        cart.save
-
-        cart.errors[:items].any?.should be_true
-      end
-=end
-
-      it "should not add items from not accepted lists through add" do
         cart = Cart.create
-        cart.add(list.items.first)
+        line_item = cart.add(list.items.first)
+        line_item.save
 
-        cart.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_true
       end
 
       it "should not add items contained in another cart" do
         cart_other = Cart.create
-        cart_other.add(accepted_list.items.first)
+        line_item = cart_other.add(accepted_list.items.first)
+        line_item.save
 
-        cart_other.errors[:items].any?.should be_false
+        line_item.errors[:items].any?.should be_false
 
         cart = Cart.create
-        cart.add(accepted_list.items.first)
+        line_item = cart.add(accepted_list.items.first)
+        line_item.save
 
-        cart.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_true
       end
 
       it "should not add sold items" do
         create_selling_and_items(event, accepted_list)
 
         cart = Cart.create
-        cart.add(accepted_list.items.first)
+        line_item = cart.add(accepted_list.items.first)
+        line_item.save
 
-        cart.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_true
       end
 
       it "should add an item only once" do
-        cart = Cart.new
-        #cart.line_items << accepted_list.items.first
-        cart.add(accepted_list.items.first)
-        #cart.save
+        cart = Cart.create
+        line_item = cart.add(accepted_list.items.first)
+        line_item.save
 
-        cart.errors[:items].any?.should be_false
+        line_item.errors[:items].any?.should be_false
         
-        #cart.line_items << accepted_list.items.first
-        cart.add(accepted_list.items.first)
-        #cart.save
+        line_item = cart.add(accepted_list.items.first)
+        line_item.save
 
-        cart.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_true
 
         cart.reload.line_items.size.should eq 1
       end
 
       it "should add multiple items only once" do
-        cart = Cart.new
-        #cart.line_items << accepted_list.items.first
-        cart.add(accepted_list.items.first)
-        #cart.save
+        cart = Cart.create
+        line_item = cart.add(accepted_list.items.first)
+        line_item.save
 
-        cart.errors[:items].any?.should be_false
+        line_item.errors[:items].any?.should be_false
         
-        #cart.line_items << accepted_list.items.first
-        #cart.line_items << accepted_list.items.last
-        cart.add(accepted_list.items.last)
-        cart.add(accepted_list.items.first)
-        #cart.save
+        line_item = cart.add(accepted_list.items.last)
+        line_item.save
 
-        cart.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_false
+
+        line_item = cart.add(accepted_list.items.first)
+        line_item.save
+
+        line_item.errors[:items].any?.should be_true
 
         cart.reload.line_items.size.should eq 2
       end
 
       it "should delete item" do
-        cart = Cart.new
-        #cart.line_items << accepted_list.items.first
-        cart.add(accepted_list.items.first)
-        cart.save
+        cart = Cart.create
+        line_item = cart.add(accepted_list.items.first)
+        line_item.save
 
-        accepted_list.items.reload.first.cart_id.should_not be_nil
+        cart.line_items eq [line_item]
 
-        cart.line_items eq [accepted_list.items.first]
-
-        cart.remove(accepted_list.items.first).should be_true
+        line_item.destroy
         
-        cart.line_items.empty?.should be_true
-
-        accepted_list.reload.items.first.cart_id.should be_nil
+        cart.reload.line_items.empty?.should be_true
       end
     end
 
@@ -147,38 +127,20 @@ describe Cart do
 
       let(:event)  { FactoryGirl.create(:event) }
 
-=begin
-      it "should not add items from accepted lists" do
-        cart = Cart.new
-        cart.line_items << accepted_list.items.first
-        cart.save
-
-        cart.errors[:items].any?.should be_true
-      end
-=end
-
       it "should not add items from accepted lists through add" do
         cart = Cart.create
-        cart.add(accepted_list.items.first)
+        line_item = cart.add(accepted_list.items.first)
+        line_item.save
 
-        cart.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_true
       end
-
-=begin
-      it "should not add items from not accepted lists" do
-        cart = Cart.new
-        cart.line_items << list.items.first
-        cart.save
-
-        cart.errors[:items].any?.should be_true
-      end
-=end
 
       it "should not add items from not accepted lists through add" do
         cart = Cart.create
-        cart.add(list.items.first)
+        line_item = cart.add(list.items.first)
+        line_item.save
 
-        cart.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_true
       end
 
     end

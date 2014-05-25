@@ -6,6 +6,8 @@ class LineItem < ActiveRecord::Base
 
   attr_accessible :cart_id, :item_id, :reversal_id, :selling_id
 
+  delegate :price, to: :item
+
   before_save :ensure_item_not_nil,
               :ensure_item_from_accepted_list_of_active_event,
               :ensure_item_not_sold,

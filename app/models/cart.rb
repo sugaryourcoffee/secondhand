@@ -4,25 +4,22 @@ class Cart < ActiveRecord::Base
   has_many :line_items, dependent: :destroy
   # end not tested yet
 
-  before_save :ensure_items_are_from_accepted_lists_of_active_event, 
-              :ensure_items_are_unique, :ensure_items_not_sold
+#  before_save :ensure_items_are_from_accepted_lists_of_active_event, 
+#              :ensure_items_are_unique, :ensure_items_not_sold
 
   def total
     items.to_a.sum { |item| item.price }
   end
 
+  # Associates new line_item to cart and returns line_item. Returned line_item
+  # has to be saved in calling object.
   def add(item)
-    if item.nil?
-      errors.add(:items, 'Item does not exist!')
-      false
-    else #if can_add_item?(item)
-      #items << item
-      line_item = line_items.build
-      line_item.item = item
-      line_item.save
-    end
+    line_item = line_items.build
+    line_item.item = item
+    line_item
   end
 
+=begin
   def remove(item)
     if item.cart_id == id
       items.delete item
@@ -32,9 +29,11 @@ class Cart < ActiveRecord::Base
       false
     end
   end
+=end
 
   private
 
+=begin
     def item_from_active_event_and_accepted_list?(item)
       active_event = Event.find_by_active(true)
       !active_event.nil? && (item.list.event.id == active_event.id) && !item.list.accepted_on.nil?
@@ -94,4 +93,5 @@ class Cart < ActiveRecord::Base
 
       items_valid
     end
+=end
 end

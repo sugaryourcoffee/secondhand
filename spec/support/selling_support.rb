@@ -6,10 +6,8 @@ def create_selling_and_items(event, list, item_count = 1)
   items = list.items
 
   0.upto(item_count-1) do |i|
-    selling.items << items[i] # delete when refactored to line_item
     line_item = selling.line_items.build
     line_item.item = items[i]
-    line_item.save!
   end
 
   selling.save!

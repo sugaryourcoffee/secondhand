@@ -8,20 +8,28 @@ class SellingStatistics
     @event.nil? ? 0 : Selling.where("event_id = ?", @event.id).count
   end
 
+  def sold_line_items
+    LineItem.where("selling_id in (?) and reversal_id is ?", selling_ids, nil)
+  end
+
+  def sold_items
+    Item.where("id in (?)", item_ids)
+  end
+
   def sold_items_count
-    @event.nil? ? 0 : Item.where(selling_id: selling_ids).count
+    @event.nil? ? 0 : sold_line_items.count
   end
 
   def min_selling_items
-    @event.nil? ? 0 : Item.group(:selling_id).where(selling_id: selling_ids).count.values.min 
+    @event.nil? ? 0 : sold_line_items.group(:selling_id).count.values.min 
   end
 
   def max_selling_items
-    @event.nil? ? 0 : Item.group(:selling_id).where(selling_id: selling_ids).count.values.max
+    @event.nil? ? 0 : sold_line_items.group(:selling_id).count.values.max
   end
 
   def revenue
-    @event.nil? ? 0 : Item.where(selling_id: selling_ids).sum(:price)
+    @event.nil? ? 0 : sold_items.sum(:price)
   end
 
   def profit
@@ -49,10 +57,14 @@ class SellingStatistics
       Selling.where("event_id = ?", @event.id).pluck(:id)
     end
 
+    def item_ids
+      sold_line_items.select('item_id').pluck(:id)
+    end
+
     def revenues
       sums = []
       Selling.where("event_id = ?", @event.id).each do |selling|
-        sums << selling.items.sum(:price)
+        sums << selling.revenue
       end
       sums
     end

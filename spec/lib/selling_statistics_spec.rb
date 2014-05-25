@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SellingStatistics do
 
   let(:event)         { FactoryGirl.create(:active) }
-  let(:stats)         { stats = SellingStatistics.new(event) }
+  let(:stats)         { SellingStatistics.new(event) }
   let(:seller)        { FactoryGirl.create(:user) }
   let!(:accepted_list) { FactoryGirl.create(:accepted, user: seller, event: event) }
   let!(:selling)       { create_selling_and_items(event, accepted_list, 2) }
