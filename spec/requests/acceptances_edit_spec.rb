@@ -103,10 +103,11 @@ describe "Acceptances" do
           visit edit_acceptance_path(locale: :en, id: accepted_list)
         end
 
-        it "should not revoke list accpetance" do
+        it "should not revoke list acceptance" do
           accepted_list.accepted_on.should_not be_nil
 
-          accepted_list.items.first.selling_id.should_not be_nil
+          #accepted_list.items.first.selling_id.should_not be_nil
+          accepted_list.items.first.sold?.should be_true
 
           page.should have_text 'List acceptance cannot be revoked because it contains sold items'
 

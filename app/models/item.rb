@@ -26,7 +26,7 @@ class Item < ActiveRecord::Base
   before_destroy :reset_list_sent_on
 
   def sold?
-    !selling_id.nil?
+    line_items.where('selling_id is not ? and reversal_id is ?', nil, nil).size > 0
   end
 
   def in_cart?
