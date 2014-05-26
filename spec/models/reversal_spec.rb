@@ -20,94 +20,73 @@ describe Reversal do
   end
 
   it "should add sold items" do
-    reversal = Reversal.create!
-    reversal.line_items.should be_empty
+    reversal = Reversal.new
 
     list_with_sold_items.items.first.sold?.should be_true
 
-    line_item = reversal.line_items.build
-    line_item.item = list_with_sold_items.items.first
-    line_item.save
+    reversal.line_items << selling.line_items.first 
 
-    line_item.errors.any?.should be_false
+    expect { reversal.save }.to change(Reversal, :count).by(1)
 
     reversal.line_items.should_not be_empty
 
-    list_with_sold_items.items.first.reversals.should_not be_empty
+    list_with_sold_items.reload.items.first.reversals.should_not be_empty
     list_with_sold_items.items.first.sold?.should be_false
   end
 
   it "should not add unsold items" do
-    add_items_to_list(event, list_with_unsold_items)
+    add_items_to_list(list_with_unsold_items)
 
     list_with_unsold_items.items.first.sold?.should be_false
 
-    reversal = Reversal.create!
-    reversal.line_items.should be_empty
+    reversal = Reversal.new
 
     line_item = reversal.line_items.build
     line_item.item = list_with_unsold_items.items.first
-    line_item.save
+    reversal.save
 
-    line_item.errors.any?.should be_true
-
-    reversal.line_items.should be_empty
-
-    list_with_unsold_items.items.first.reversals.should be_empty
-    list_with_unsold_items.items.first.sold?.should be_false
+    reversal.reload.line_items.should be_empty
   end
 
   it "should not remove line items" do
-    reversal = Reversal.create!
-    reversal.line_items.should be_empty
+    reversal = Reversal.new
 
-    line_item = reversal.line_items.build
-    line_item.item = list_with_sold_items.items.first
-    line_item.save
-
-    line_item.errors.any?.should be_false
+    line_item = selling.line_items.first
+    reversal.line_items << line_item
+    reversal.save
 
     reversal.line_items.should_not be_empty
-    list_with_sold_items.items.first.reversals.should_not be_empty
 
     line_item.destroy
     line_item.errors.any?.should be_true
 
     reversal.line_items.should_not be_empty
-    list_with_sold_items.items.first.reversals.should_not be_empty
     list_with_sold_items.items.first.sold?.should_not be_true
   end
 
   it "should not destroy a reversal with line items" do
-    reversal = Reversal.create!
+    reversal = Reversal.new
     
-    line_item = reversal.line_items.build
-    line_item.item = list_with_sold_items.items.first
-    line_item.save
+    reversal.line_items << selling.line_items.first
+    reversal.save
 
-    line_item.errors.any?.should be_false
-
-    reversal.destroy
+    expect { reversal.destroy }.to change(Reversal, :count).by(0)
     reversal.errors.any?.should be_true
 
     reversal.line_items.should_not be_empty
-    list_with_sold_items.items.first.reversals.should_not be_empty
-    list_with_sold_items.items.first.sold.should_not be_true
   end
 
   it "should mark items as unsold and mark them as reversed in selling" do
     reversal = Reversal.new
-    reversal.line_items.should be_empty
 
-    line_item = reversal.line_items.build
-    line_item.item = list_with_sold_items.items.first
-    line_item.save
+    selling.line_items.first.item.sold?.should be_true
 
-    line_item.errors.any?.should be_false
+    reversal.line_items << selling.line_items.first
+    reversal.save
 
     reversal.line_items.should_not be_empty
+
     list_with_sold_items.items.first.sold?.should_not be_true
-    selling.line_items.first.reversed?.should be_true
   end
 
 end

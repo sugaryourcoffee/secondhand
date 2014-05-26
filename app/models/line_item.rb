@@ -8,17 +8,17 @@ class LineItem < ActiveRecord::Base
 
   delegate :price, to: :item
 
-  before_save :ensure_item_not_nil,
-              :ensure_item_from_accepted_list_of_active_event,
-              :ensure_item_not_sold,
-              :ensure_item_not_in_cart 
+  validates :item_id, presence: true
+
+  before_save :ensure_item_from_accepted_list_of_active_event,
+              :ensure_reversal_only_with_selling
+
+  before_create :ensure_item_not_sold,
+                :ensure_item_not_in_cart 
+
+  before_destroy :ensure_not_referenced_by_selling_or_reversal
 
   private
-
-    def ensure_item_not_nil
-      errors.add(:items, "Empty item cannot be added") if item.nil?
-      !item.nil?
-    end
 
     def ensure_item_from_accepted_list_of_active_event
       active_event = Event.find_by_active(true)
@@ -28,6 +28,14 @@ class LineItem < ActiveRecord::Base
 
       errors.add(:items, "Item must be from an accepted list of an active event") unless item_valid
       item_valid
+    end
+
+    def ensure_reversal_only_with_selling
+      if reversal
+        selling.nil? ? false : true
+      else
+        true
+      end  
     end
 
     def ensure_item_not_sold
@@ -54,6 +62,12 @@ class LineItem < ActiveRecord::Base
       end
 
       line_items.empty?
+    end
+
+    def ensure_not_referenced_by_selling_or_reversal
+      errors.add(:items, "Sold item cannot be deleted")     unless selling.nil?
+      errors.add(:items, "Reversed item cannot be deleted") unless reversal.nil?
+      selling.nil? && reversal.nil?
     end
     
 end
