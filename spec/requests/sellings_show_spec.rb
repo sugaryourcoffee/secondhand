@@ -25,7 +25,7 @@ describe "selling show page" do
   it "should have information about the selling" do
     page.should have_text "Selling Statistics"
     page.should have_text "Items"
-    page.should have_text selling.items.count
+    page.should have_text selling.line_items.count
     page.should have_text "Revenue"
     page.should have_text selling.revenue
   end
@@ -39,22 +39,14 @@ describe "selling show page" do
     page.should have_text "Description"
     page.should have_text "Size"
     page.should have_text "Price"
-    page.should have_text list_item_number_for(selling.items.first)
-    page.should have_text selling.items.first.description
-    page.should have_text selling.items.first.size
-    page.should have_text selling.items.first.price
+    page.should have_text list_item_number_for(selling.line_items.first.item)
+    page.should have_text selling.line_items.first.description
+    page.should have_text selling.line_items.first.size
+    page.should have_text selling.line_items.first.price
   end
 
-  it "should have delete buttons at each item" do
-    page.should have_link "Delete"
-  end
+  it "should have reversal buttons at each item" 
 
-  it "should delete item from selling" do
-    click_link "Delete"
-    page.should_not have_text list_item_number_for(selling.items.first)
-    page.should_not have_text selling.items.first.description
-    page.should_not have_text selling.items.first.size
-    page.should_not have_text selling.items.first.price
-  end
+  it "should reverse item from selling"
 
 end

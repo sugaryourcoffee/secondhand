@@ -26,9 +26,9 @@ class Selling < ActiveRecord::Base
   end
 
   def add_items_from_cart(cart)
-    cart.items.each do |item|
-      item.cart_id = nil
-      items << item
+    cart.line_items.each do |line_item|
+      line_item.cart_id = nil
+      line_items << line_item
     end 
   end
 

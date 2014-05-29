@@ -9,17 +9,12 @@
     </tr>
   </thead>
   <tbody>
-    <% @selling.items.each do |item| %>
+    <% @selling.line_items.each do |line_item| %>
       <tr>
-        <td><%= list_item_number_for(item) %></td>
-        <td><%= item.description %></td>
-        <td><%= item.size %></td>
-        <td><%= item.price %></td>
-        <td><%= link_to t('.delete'), 
-                delete_item_selling_path(item, selling_id: @selling.id), 
-                data: { confirm: t('.confirm') }, 
-                id: "delete-item-#{item.item_number}" %>
-        <td>
+        <td><%= list_item_number_for(line_item.item) %></td>
+        <td><%= line_item.description %></td>
+        <td><%= line_item.size %></td>
+        <td><%= line_item.price %></td>
       </tr>
     <% end %>
   </tbody>
