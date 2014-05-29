@@ -67,9 +67,12 @@ class SellingsController < ApplicationController
   end
 
   def destroy
-    Selling.find(params[:id]).destroy
+    selling = Selling.find(params[:id])
     initialize_event_and_sellings
     respond_to do |format|
+      unless selling.destroy
+        flash.now[:error] = "Cannot delete selling when containing items"
+      end
       format.js
     end
   end

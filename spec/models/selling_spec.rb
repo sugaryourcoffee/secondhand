@@ -23,4 +23,12 @@ describe Selling do
 
   end  
 
+  it "should not delete selling" do
+    selling = create_selling_and_items(event, list)
+
+    expect { selling.destroy }.to change(Selling, :count).by(0)
+
+    selling.errors.any?.should be_true
+  end
+
 end

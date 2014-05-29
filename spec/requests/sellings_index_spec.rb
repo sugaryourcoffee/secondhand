@@ -84,10 +84,10 @@ describe "Selling index page" do
       page.current_path.should eq selling_path(locale: :en, id: selling)
     end
 
-    it "should delete a selling and mark containing items as not sold", :js => true do
+    it "should not delete a selling with items", :js => true do
       selling_id      = selling.id
       selling_revenue = selling.revenue
-      items = selling.items
+      items = selling.line_items
 
       click_link "Delete"
       modal = page.driver.browser.switch_to.alert
@@ -95,11 +95,11 @@ describe "Selling index page" do
  
       page.current_path.should eq sellings_path(locale: :en)
 
-      page.should_not have_text selling_id
-      page.should_not have_text selling_revenue
+      page.should have_text selling_id
+      page.should have_text selling_revenue
 
       items.reload.each do |item|
-        item.selling_id.should be_nil
+        item.selling_id.should_not be_nil
       end
     end
 

@@ -151,7 +151,7 @@ describe Cart do
       page.should have_link 'Show'
       page.should have_link 'Delete'
       page.should have_text cart.id
-      page.should have_text cart.items.count
+      page.should have_text cart.line_items.count
     end
 
     it "should delete a cart" do

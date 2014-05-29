@@ -1,13 +1,9 @@
 class Item < ActiveRecord::Base
   belongs_to :list
-  belongs_to :selling
-  belongs_to :cart
-  #begin not tested yet
   has_many :line_items
-  has_many :sellings, through: :line_items
+  has_many :sellings,  through: :line_items
   has_many :reversals, through: :line_items
-  has_many :carts, through: :line_items
-  #end not tested yet
+  has_many :carts,     through: :line_items
   
   attr_accessible :description, :item_number, :price, :size
 
@@ -26,12 +22,13 @@ class Item < ActiveRecord::Base
   before_destroy :reset_list_sent_on
 
   def sold?
-    line_items.where('selling_id is not ? and reversal_id is ?', nil, nil).size > 0
+    line_items.
+      where('selling_id is not ? and reversal_id is ?', nil, nil).size > 0
   end
 
-  def in_cart?
-    !cart_id.nil?
-  end
+#  def in_cart?
+#    !cart_id.nil?
+#  end
 
   private
 

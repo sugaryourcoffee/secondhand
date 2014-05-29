@@ -16,11 +16,12 @@ module SellingsExporter
 
     pdf.move_down 25
 
-    items_list = (items.sort_by { |item| item.item_number }).map do |item|
-      [list_item_number_for(item),
-       cut_to_fit(pdf, 389, item.description), 
-       cut_to_fit(pdf, 71, item.size), 
-       number_to_currency(item.price, locale: :de)]
+    items_list = (line_items.sort_by { 
+      |line_item| list_item_number_for(line_item.item) }).map do |line_item|
+      [list_item_number_for(line_item.item),
+       cut_to_fit(pdf, 389, line_item.description), 
+       cut_to_fit(pdf, 71, line_item.size), 
+       number_to_currency(line_item.price, locale: :de)]
     end
 
     pdf.table([[ "No", "Description", "Size", "Price"], *items_list], 
