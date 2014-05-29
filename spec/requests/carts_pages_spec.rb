@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Cart do
+  include ItemsHelper
 
   let(:admin)  { FactoryGirl.create(:admin) }
   let(:seller) { FactoryGirl.create(:user) }
@@ -9,7 +10,6 @@ describe Cart do
   let(:list2)  { FactoryGirl.create(:accepted, user: seller, event: event) }
 
   describe "item collection page" do
-    include ItemsHelper
 
     before do
       sign_in admin
@@ -59,6 +59,10 @@ describe Cart do
       page.should_not have_link 'Delete'
     end
 
+    it "should not add empty item" do
+      expect { click_button 'Add' }.to change(LineItem, :count).by(0)
+    end
+
     it "should not add item already in the cart" do
       fill_in 'List', with: list1.list_number
       fill_in 'Item', with: list1.items.first.item_number
@@ -74,8 +78,8 @@ describe Cart do
 
     it "should not add item contained in another cart" do
       cart = Cart.create
-      cart.items << list1.items.first
-      cart.save
+      line_item = cart.add(list1.items.first)
+      line_item.save
 
       fill_in 'List', with: list1.list_number
       fill_in 'Item', with: list1.items.first.item_number
@@ -151,17 +155,16 @@ describe Cart do
     end
 
     it "should delete a cart" do
-      cart.add(list1.items.first)
-      cart.items.should_not be_empty
-      list1.items.first.cart_id.should eq cart.id
+      line_item = cart.add(list1.items.first)
+      line_item.save
+
+      cart.line_items.should_not be_empty
 
       expect { click_link 'Delete' }.to change(Cart, :count).by(-1)
 
       page.current_path.should eq carts_path(locale: :en)
 
       page.should have_text "Successfully deleted cart #{cart.id}"
-
-      list1.items.first.cart_id.should be_nil
     end
 
   end
@@ -171,6 +174,7 @@ describe Cart do
     let(:cart) { Cart.create }
 
     before do
+      add_items_to_list(list1, 3)
       add_items_to_cart(cart, list1)
     end
 
@@ -189,8 +193,11 @@ describe Cart do
     
     it "should have information about the cart" do
       page.should have_text 'Cart number'
+      page.should have_text cart.id
       page.should have_text 'Items'
+      page.should have_text cart.line_items.size
       page.should have_text 'Total'
+      page.should have_text cart.total
     end
 
     it "should show the items" do
@@ -198,9 +205,19 @@ describe Cart do
       page.should have_text 'Description'
       page.should have_text 'Size'
       page.should have_text 'Price'
+
+      cart.line_items.each do |line_item|
+        page.should have_text list_item_number_for(line_item.item)
+        page.should have_text line_item.description
+        page.should have_text line_item.size
+        page.should have_text line_item.price
+      end
     end
 
-    it "should delete an item"
+    it "should delete an item" do
+      expect { click_link "delete-item-#{cart.line_items.first.id}" }.
+        to change(LineItem, :count).by(-1)
+    end
 
   end
  

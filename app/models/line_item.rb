@@ -6,7 +6,7 @@ class LineItem < ActiveRecord::Base
 
   attr_accessible :cart_id, :item_id, :reversal_id, :selling_id
 
-  delegate :price, to: :item
+  delegate :item_number, :description, :size, :price, to: :item
 
   validates :item_id, presence: true
 
@@ -39,7 +39,8 @@ class LineItem < ActiveRecord::Base
     end
 
     def ensure_item_not_sold
-      items = LineItem.where("item_id = ? and reversal_id is ?", item.id, nil)
+      query = "item_id = ? and selling_id is not ? and reversal_id is ?"
+      items = LineItem.where(query, item.id, nil, nil)
       unless items.empty?
         raise "Item is sold #{items.size} times" if items.size > 1
         line_item = items.first
@@ -52,13 +53,17 @@ class LineItem < ActiveRecord::Base
     def ensure_item_not_in_cart
       return true if item.nil?
 
-      line_items = LineItem.where("item_id = ? and cart_id is not ?", 
-                                  item.id, nil)
+      query = "item_id = ? and cart_id is not ?"
+      line_items = LineItem.where(query, item.id, nil)
 
       unless line_items.empty?
         raise "Item is in #{line_items.size} carts" if line_items.size > 1
-        errors.add(:items, 
-                   "Item is already in cart #{line_items.first.cart_id}")
+        if line_items.first.cart_id == cart_id
+          errors.add(:items, "Item is already in the cart")
+        else
+          errors.add(:items, 
+                     "Item is already in cart #{line_items.first.cart_id}")
+        end
       end
 
       line_items.empty?

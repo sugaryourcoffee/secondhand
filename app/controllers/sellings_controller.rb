@@ -22,7 +22,7 @@ class SellingsController < ApplicationController
 
   def create
     @cart = current_cart
-    if @cart.items.empty?
+    if @cart.line_items.empty?
       redirect_to item_collection_carts_path, notice: "Your cart is empty"
       return
     end
@@ -33,12 +33,15 @@ class SellingsController < ApplicationController
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
         if system('lpr', @selling.to_pdf.to_path)
-          format.html { redirect_to check_out_selling_path(@selling), notice: "Successfully created selling and printed" }
+          format.html { redirect_to check_out_selling_path(@selling), 
+                        notice: "Successfully created selling and printed" }
         else
-          format.html { redirect_to check_out_selling_path(@selling), warning: "Successfully create selling but could not be printed" }
+          format.html { redirect_to check_out_selling_path(@selling), 
+                        warning: "Successfully create selling but could not be printed" }
         end
       else
-        format.html { redirect_to item_collection_carts_path, error: "Could not create selling" }
+        format.html { redirect_to item_collection_carts_path, 
+                      error: "Could not create selling" }
       end
     end
   end

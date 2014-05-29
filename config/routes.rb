@@ -28,6 +28,8 @@ Secondhand::Application.routes.draw do
       end
     end
 
+    resources :line_items, only: [:create, :destroy]
+
     resources :carts do
       collection do
         get :item_collection

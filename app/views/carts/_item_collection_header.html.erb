@@ -1,4 +1,4 @@
-<%= render partial: 'shared/generic_error_message', locals: { topic: @cart } %>
+<%= render partial: 'shared/generic_error_message', locals: { topic: @line_item } if @line_item %>
 
 <div class="row">
   <div class="span8">
@@ -14,7 +14,9 @@
       </p>
     <% end %>
     <p>
-      <%= button_to t('.check_out'), sellings_path, method: :post, class: "btn btn-large btn-primary" %>
+      <%= button_to t('.check_out'), 
+                    sellings_path, 
+                    method: :post, class: "btn btn-large btn-primary" %>
     </p>
   </div>
   <div class="span4">

@@ -8,9 +8,18 @@
     <div class="span3">
       <table>
         <tbody>
-          <tr><td><%= t('.cart') %></td><td class="list_count"><%= @cart.id %></td></tr>
-          <tr><td><%= t('.items') %></td><td class="list_count"><%= @cart.items.count %></td></tr>
-          <tr class="total_line"><td><%= t('.total') %></td><td class="list_count"><%= @cart.total %></td></tr>
+          <tr>
+            <td><%= t('.cart') %></td>
+            <td class="list_count"><%= @cart.id %></td>
+          </tr>
+          <tr>
+            <td><%= t('.items') %></td>
+            <td class="list_count"><%= @cart.items.count %></td>
+          </tr>
+          <tr class="total_line">
+            <td><%= t('.total') %></td>
+            <td class="list_count"><%= @cart.total %></td>
+          </tr>
         </tbody>
       </table>
     </div>

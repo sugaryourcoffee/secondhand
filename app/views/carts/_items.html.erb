@@ -8,17 +8,17 @@
     </tr>
   </thead>
   <tbody>
-    <% @cart.items.each do |item| %>
+    <% @cart.line_items.each do |line_item| %>
       <tr>
-        <td><%= list_item_number_for(item) %></td>
-        <td><%= item.description %></td>
-        <td><%= item.size        %></td>
-        <td><%= item.price       %></td>
+        <td><%= list_item_number_for(line_item.item) %></td>
+        <td><%= line_item.description %></td>
+        <td><%= line_item.size        %></td>
+        <td><%= line_item.price       %></td>
         <td><%= link_to t('.delete'), 
-                        delete_item_cart_path(item),
+                        line_item,
                         method: :delete,
                         data: { confirm: t('.confirm') },
-                        id: "delete-item-#{item.item_number}" %></td>
+                        id: "delete-item-#{line_item.id}" %></td>
       </tr>
     <% end %>
   </tbody>

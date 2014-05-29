@@ -1,0 +1,37 @@
+class LineItemsController < ApplicationController
+
+  def create
+    @cart  = current_cart
+    @event = Event.find_by_active(true)
+    @list  = List.find_by_event_id_and_list_number(@event, params[:search_list_number])
+    @item  = Item.find_by_list_id_and_item_number(@list, params[:search_item_number])
+    @line_item = @cart.add(@item)
+    
+    respond_to do |format|
+      if @line_item.save
+        flash.now[:success] = "Successfully added item #{@item.item_number}"
+        format.js   { redirect_to item_collection_carts_path }
+        format.html { redirect_to item_collection_carts_path }
+      else
+        flash.now[:error] = "Could not add item"
+        format.js   { render action: "item_collection" }
+        format.html { render action: "item_collection" }
+      end
+    end
+  end
+
+  def destroy
+    @line_item = LineItem.find(params[:id])
+
+    respond_to do |format|
+      if @line_item.destroy
+        format.html { redirect_to item_collection_carts_path }
+        format.js   { redirect_to item_collection_carts_path }
+      else
+        format.html { render action: "item_collection" }
+        format.js   { render action: "item_collection" }
+      end
+    end
+  end
+
+end

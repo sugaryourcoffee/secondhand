@@ -40,7 +40,7 @@ describe Cart do
         line_item = cart.add(nil)
         line_item.save
 
-        line_item.errors[:items].any?.should be_true
+        line_item.errors[:item_id].any?.should be_true
       end
 
       it "should not add items from not accepted lists" do
