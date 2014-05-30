@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="span8">
-    <%= form_tag @cart, method: 'put', class: "form-search" do %>
+    <%= form_tag line_items_path, class: "form-search" do %>
       <p>
         <%= label_tag :search_list_number, t('.select_list_number') %>
         <%= text_field_tag :search_list_number, params[:search_list_number], 
@@ -21,7 +21,7 @@
   </div>
   <div class="span4">
     <div id="cart-status" class="well well-small">
-      <%= render 'cart_status' %>
+      <%= render 'carts/cart_status' %>
     </div>
   </div>
 </div>
