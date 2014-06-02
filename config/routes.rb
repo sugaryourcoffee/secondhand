@@ -33,6 +33,7 @@ Secondhand::Application.routes.draw do
     resources :carts do
       collection do
         get :item_collection
+        get :line_item_collection
       end
       member do
         delete :delete_item
@@ -41,7 +42,12 @@ Secondhand::Application.routes.draw do
 
     resources :sellings do
       member do
-        get :delete_item
+        get :check_out
+      end
+    end
+
+    resources :reversals, only: [:index, :create, :show, :destroy] do
+      member do
         get :check_out
       end
     end

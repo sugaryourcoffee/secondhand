@@ -1,6 +1,12 @@
 class Reversal < ActiveRecord::Base
+  include SellingsExporter
+  include TransactionSupport
+
+  belongs_to :event
   has_many :line_items
   has_many :sellings, through: :line_items
+
+  attr_accessible :event_id
 
   before_destroy :ensure_line_items_empty
 
@@ -14,4 +20,5 @@ class Reversal < ActiveRecord::Base
         false
       end
     end
+
 end

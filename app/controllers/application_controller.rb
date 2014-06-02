@@ -16,6 +16,14 @@ class ApplicationController < ActionController::Base
       cart
     end
 
+    def current_reversal_cart
+      Cart.find(session[:reversal_cart_id])
+    rescue ActiveRecord::RecordNotFound
+      reversal_cart = Cart.create(cart_type: 'REDEMPTION')
+      session[:reversal_cart_id] = reversal_cart.id
+      reversal_cart
+    end
+
   protected
 
   def signed_in_user

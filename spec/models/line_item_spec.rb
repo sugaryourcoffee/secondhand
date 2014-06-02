@@ -9,7 +9,6 @@ describe LineItem do
     line_item.should respond_to :cart
     line_item.should respond_to :selling
     line_item.should respond_to :reversal
-
   end
 
   describe "adding and removing items" do
@@ -32,6 +31,8 @@ describe LineItem do
       it "should add items from accepted lists" do
         line_item = add_item_to_cart(cart, accepted_list.items.first)
         line_item.save
+
+        line_item.in_cart?(cart).should be_true
 
         line_item.errors[:items].any?.should be_false
       end
@@ -57,6 +58,8 @@ describe LineItem do
         other_line_item.save
 
         other_line_item.errors[:items].any?.should be_false
+
+        other_line_item.in_other_cart?(cart).should be_true
 
         line_item = add_item_to_cart(cart, accepted_list.items.first)
         line_item.save

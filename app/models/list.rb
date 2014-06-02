@@ -205,7 +205,7 @@ class List < ActiveRecord::Base
   def self.as_csv_zip
     closed_lists = List.where('sent_on IS NOT ?', nil)
     if closed_lists.empty?
-      errors.add(:base, I18n.('.no_closed_files_to_zip'))
+      errors.add(:base, I18n.t('.no_closed_files_to_zip'))
     else
       csvs = []
       closed_lists.each { |list| csvs << list.as_csv_file }

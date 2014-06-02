@@ -1,6 +1,6 @@
 <% provide(:title, t('.title')) %>
 
-<h1><%= t('.heading', number: @cart.id) %></h1>
+<h1><%= t('.heading', number: @cart.id, type: locale_for_type(@cart)) %></h1>
 <h2><%= @event.title if @event %></h2>
 
 <p>

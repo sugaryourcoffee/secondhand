@@ -18,6 +18,21 @@ class LineItem < ActiveRecord::Base
 
   before_destroy :ensure_not_referenced_by_selling_or_reversal
 
+  # Retrieves the line item for item if item is sold
+  def self.sold(item)
+    return nil if item.nil?
+    LineItem.where("item_id = ? and selling_id is not ? and reversal_id is ?",
+                   item.id, nil, nil).first
+  end
+
+  def in_cart?(cart)
+    !self.cart.nil? && self.cart.id == cart.id 
+  end
+
+  def in_other_cart?(cart)
+    !self.cart.nil? && self.cart.id != cart.id
+  end
+
   private
 
     def ensure_item_from_accepted_list_of_active_event

@@ -15,7 +15,7 @@
         <td><%= line_item.size        %></td>
         <td><%= line_item.price       %></td>
         <td><%= link_to t('.delete'), 
-                        line_item,
+                        delete_link_for(@transaction, line_item),
                         method: :delete,
                         data: { confirm: t('.confirm') },
                         id: "delete-item-#{line_item.id}" %></td>

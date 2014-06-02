@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th><%= t('.cart_number') %></th>
+      <th><%= t('.cart_type') %></th>
       <th><%= t('.item_count') %></th>
       <th><%= t('.cashier') %></th>
       <th /><th /><th />
@@ -11,11 +12,13 @@
     <% @carts.each do |cart| %>
       <tr>
         <td><%= cart.id %></td>
+        <td><%= cart.cart_type %></td>
         <td><%= cart.line_items.count %></td>
         <td></td>
-        <td><%= link_to t('.show'), cart %></td>
+        <td><%= link_to t('.show'), cart, id: "show_cart_#{cart.id}" %></td>
         <td><%= link_to t('.delete'),
-                cart, method: "delete", data: { confirm: t('.confirm') } %></td>
+          cart, id: "delete_cart_#{cart.id}",
+          method: "delete", data: { confirm: t('.confirm') } %></td>
       </tr>
     <% end %>
   </tbody>

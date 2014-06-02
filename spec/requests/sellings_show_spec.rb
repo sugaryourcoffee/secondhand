@@ -49,4 +49,5 @@ describe "selling show page" do
 
   it "should reverse item from selling"
 
+  it "should show redeemed item"
 end

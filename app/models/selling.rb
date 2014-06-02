@@ -1,6 +1,7 @@
 class Selling < ActiveRecord::Base
 
   include SellingsExporter
+  include TransactionSupport
 
   belongs_to :event
   has_many :line_items
@@ -10,6 +11,7 @@ class Selling < ActiveRecord::Base
 
   before_destroy :ensure_line_items_empty
 
+=begin
   def revenue
     line_items.inject(0) { |sum, line_item| sum + line_item.price }
   end
@@ -20,7 +22,7 @@ class Selling < ActiveRecord::Base
       line_items << line_item
     end 
   end
-
+=end
   private
 
     def ensure_line_items_empty

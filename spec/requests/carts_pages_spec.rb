@@ -106,7 +106,7 @@ describe Cart do
       page.should have_text "Item is already sold with selling #{selling.id}"
     end
 
-    it "should check out create selling and empty cart" do
+    it "should check out, create selling and empty cart" do
       fill_in 'List', with: list1.list_number
       fill_in 'Item', with: list1.items.first.item_number
       click_button 'Add'

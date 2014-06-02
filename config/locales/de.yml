@@ -94,13 +94,14 @@ de:
       heading: "Einkaufswagen"
     show:
       title:   "Einkaufswagen"
-      heading: "Einkaufswagen %{number}"
+      heading: "Einkaufswagen %{number} (%{type})"
       cart:    "Einkaufswagennummer"
       items:   "Artikel"
       total:   "Gesamt"
       carts:   "Zurück zur Einkaufswagenübersicht"
     cart:
       cart_number: "Nummer"
+      cart_type:   "Art"
       item_count:  "Artikel"
       cashier:     "Kassierer"
       show:        "Anzeigen"
@@ -110,6 +111,10 @@ de:
     item_collection:
       title:       "Einkaufswagen"
       heading:     "Einkaufswagen %{number}"
+    line_item_collection:
+      title:       "Warenrückgabe"
+      heading:     "Warenrückgabe %{number}"
+      redemption:  "Warenrückgabe"
     item_collection_header:
       select_list_number: "Liste"
       select_item_number: "Artikel"
@@ -723,6 +728,11 @@ de:
   accepted:               "%{model} wurde angenommen"
   released:               "%{model} zum Bearbeiten freigegeben"
 
+  events_button: "Events"
+
+  sales_type:      "Verkauf"
+  redemption_type: "Warenrücknahme"
+
   password_reset_instructions: "Rücksetzanleitung für Ihr Passwort wurde versendet"
   email_address_not_valid:     "Ungültige E-Mail-Adresse"
   password_reset_expired:      "Rücksetzanforderung für Ihr Passwort ist abgelaufen"
@@ -757,3 +767,6 @@ de:
     submit:
       create: "Erstelle %{model} und zurück zur Übersicht"
       update: "Aktualisiere %{model}"
+
+  missing_event_html: "<h2>Fehlende aktive Veranstaltung</h2><h5>Für die %{action} ist es erforderlich, dass eine Veranstaltung aktiv ist. Unter %{link} kann eine Veranstaltung aktiviert werden. Danach können Sie hier mit der %{action} beginnen.</h5>"
+

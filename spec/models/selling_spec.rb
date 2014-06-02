@@ -13,6 +13,14 @@ describe Selling do
     selling.should respond_to :revenue
   end
 
+  it "should return the line item of sold item" do
+    selling = create_selling_and_items(event, list)
+    
+    line_item = LineItem.sold(list.items.first)
+
+    line_item.item.should eq list.items.first
+  end
+
   it "should return the revenue" do
     selling = create_selling_and_items(event, list)
     

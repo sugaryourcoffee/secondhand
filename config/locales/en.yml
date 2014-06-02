@@ -94,13 +94,14 @@ en:
       heading: "Carts"
     show:
       title:   "Cart"
-      heading: "Cart %{number}"
+      heading: "Cart %{number} (%{type})"
       cart:    "Cart number"
       items:   "Items"
       total:   "Total"
       carts:   "Back to carts overview"
     cart:
       cart_number: "Number"
+      cart_type:   "Type"
       item_count:  "Items"
       cashier:     "Cashier"
       show:        "Show"
@@ -110,6 +111,10 @@ en:
     item_collection:
       title:       "Cart"
       heading:     "Cart %{number}"
+    line_item_collection:
+      title:       "Redemption"
+      heading:     "Redemption %{number}"
+      action:      "redemption"
     item_collection_header:
       select_list_number: "List"
       select_item_number: "Item"
@@ -574,6 +579,11 @@ en:
   accepted:               "%{model} has been accepted"
   released:               "%{model} has been released for editing"
 
+  events_button:  "Events"
+
+  sales_type:      "Sales"
+  redemption_type: "Redemption"
+
   password_reset_instructions: "Password reset instruction has been sent"
   email_address_not_valid:     "E-Mail address is not valid"
   password_reset_expired:      "Password reset request has been expired"
@@ -606,4 +616,6 @@ en:
     previous_label:     "Previous"
     page_gap:           "..."
     next_label:         "Next"
-
+    
+  missing_event_html: "<h2>Missing active Event</h2><h5>For %{action} it is neccessary to have an active event. At %{link} you can activate an event. Then come back to start with %{action}.</h5>"
+  

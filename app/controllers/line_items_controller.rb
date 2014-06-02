@@ -31,8 +31,10 @@ class LineItemsController < ApplicationController
         format.html { redirect_to item_collection_carts_path }
         format.js   { redirect_to item_collection_carts_path }
       else
-        format.html { render action: "item_collection" }
-        format.js   { render action: "item_collection" }
+        @cart = current_cart
+        flash.now[:error] = "Could not delete item"
+        format.html { render "carts/item_collection" }
+        format.js   { render "carts/item_collection" }
       end
     end
   end
