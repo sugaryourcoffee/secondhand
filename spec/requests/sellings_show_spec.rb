@@ -27,7 +27,7 @@ describe "selling show page" do
     page.should have_text "Items"
     page.should have_text selling.line_items.count
     page.should have_text "Revenue"
-    page.should have_text selling.revenue
+    page.should have_text selling.total
   end
 
   it "should have a button to forward to sellings index page" do

@@ -43,12 +43,14 @@ Secondhand::Application.routes.draw do
     resources :sellings do
       member do
         get :check_out
+        get :print
       end
     end
 
     resources :reversals, only: [:index, :create, :show, :destroy] do
       member do
         get :check_out
+        get :print
       end
     end
 

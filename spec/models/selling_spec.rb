@@ -10,7 +10,7 @@ describe Selling do
     selling = Selling.new
     selling.should respond_to :line_items
     selling.should respond_to :to_pdf
-    selling.should respond_to :revenue
+    selling.should respond_to :total
   end
 
   it "should return the line item of sold item" do
@@ -27,7 +27,7 @@ describe Selling do
     revenue = 0
     list.items.each { |item| revenue += item.price }
 
-    selling.revenue.should eq revenue
+    selling.total.should eq revenue
 
   end  
 

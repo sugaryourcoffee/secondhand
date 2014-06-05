@@ -82,7 +82,6 @@ describe "Reversal cart pages" do
       it "should not add line items contained in another cart" do
         cart = Cart.create(cart_type: 'REDEMPTION')
         cart.line_items << selling.line_items.first
-        #cart.save
 
         item = selling.line_items.first.item
         list = item.list
@@ -177,7 +176,6 @@ describe "Reversal cart pages" do
       it "should delete a cart but not the line items" do
         line_item = selling.line_items.first
         cart.line_items << line_item
-        #cart.save
 
         cart.line_items.should_not be_empty
 

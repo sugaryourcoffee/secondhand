@@ -186,6 +186,43 @@ de:
       to_cart:        "Neuen Verkauf beginnen"
       to_sellings:    "Zur Verkaufsübersicht"
 
+  reversals:
+    index:
+      reversal:   "Gutschriften"
+      go_to_cart: "Zum Einkaufswagen"
+    show:
+      title:            "Gutschrift"
+      heading:          "Gutschrift %{number}"
+      reversal_overview: "Zurück zur Gutschriftenübersicht"
+    show_reversal_status:
+      reversal_status: "Gutschriftenstatus"
+      items:           "Artikel"
+      updated_at:      "vor %{updated_at}"
+      revenue:         "Gutschriftsbetrag"
+    items:
+      number:      "Artikel"
+      description: "Beschreibung"
+      size:        "Größe"
+      price:       "Preis"
+    header:
+      select_reversal: "Gutschrift"
+      search:          "Suchen"
+    reversal_status:
+      reversal_status:         "Gutschriftenstatus"
+      reversals:               "Gutschriften"
+      items:                   "Artikel"
+      average_redemption_html: "&Oslash; Gutschriftsbetrag"
+      redemption:              "Gesamt"
+    reversals:
+      reversal_number: "Nummer"
+      created:         "Erstellt"
+      updated:         "Aktualisiert"
+      redemption:      "Gutschrift"
+      show:            "Anzeigen"
+      confirm_delete:  "Möchten Sie die ausgwählte Gutschrift löschen?"
+      delete:          "Löschen"
+      print:           "Drucken"
+
   static_pages:
     home:
       welcome_html: "Willkommen zu <em>Secondhand</em> dem Listenerfassungsprogramm der <a href=\"http://boerse-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a>. Hier können Sie Ihre Artikel, die Sie bei der <strong>%{event}</strong> verkaufen wollen, erfassen"

@@ -2,14 +2,15 @@ class ReversalsController < ApplicationController
 
   def index
     initialize_event_and_reversals
-    @redemption = Reversal.find_by_id_and_event_id(params[:search_redemption_id], @event)
+    @reversal = Reversal.find_by_id_and_event_id(params[:search_reversal_id], 
+                                                 @event)
 
     respond_to do |format|
-      if @redemption
-        format.html { redirect_to redemption_path @redemption } 
+      if @reversal
+        format.html { redirect_to @reversal} 
       else
-        flash.now[:warning] = "Sorry, didn't find a selling with number " +
-                              "#{params[:search_selling_id]}!" if params[:search_redemption_id]
+        flash.now[:warning] = "Sorry, didn't find a redemption with number " +
+               "#{params[:search_reversal_id]}!" if params[:search_reversal_id]
         format.html
       end
     end
@@ -17,7 +18,7 @@ class ReversalsController < ApplicationController
 
   def show
     @event   = Event.find_by_active(true)
-    @redemption = Reversal.find(params[:id])
+    @reversal = Reversal.find(params[:id])
   end
 
   def create
@@ -48,6 +49,20 @@ class ReversalsController < ApplicationController
 
   def check_out
     @reversal = Reversal.find(params[:id])
+  end
+
+  def print
+    @reversal = Reversal.find(params[:id])
+    respond_to do |format|
+      if system('lpr', @reversal.to_pdf.to_path)
+        format.html { redirect_to reversals_path,
+                      notice: "Printed redemption #{@reversal.id}" }
+      else
+        format.html { redirect_to reversals_path,
+                      warning: "Could not print redemption #{@reversal.id}" }
+      end
+    end
+
   end
 
   def destroy

@@ -32,4 +32,13 @@ module ApplicationHelper
     end
   end
 
+  def reversal_statistics_for(event = @event)
+    statistics = ReversalStatistics.new(event)
+    if block_given?
+      yield statistics
+    else
+      statistics
+    end
+  end
+
 end

@@ -1,0 +1,24 @@
+<% provide(:title, t('.reversal')) %>
+
+<h1><%= t('.reversal') %></h1>
+
+<% if @event %>
+  <h2><%= @event.title if @event %></h2>
+
+  <%= render 'header' %>
+
+  <p>
+    <%= link_to t('.go_to_cart'), 
+        line_item_collection_carts_path, class: "btn btn-large btn-primary" %>
+  </p>
+
+  <div id="sellings-table">
+    <%= render 'reversals' %>
+  </div>
+<% else %>
+  <div class="center well">
+    <%= t('missing_event_html', action: t('.action'), 
+          link: link_to(t('events_button'), events_path, id: 'activate_event', 
+                        class: 'btn')) %>
+  </div>
+<% end %>

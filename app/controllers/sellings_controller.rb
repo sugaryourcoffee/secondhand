@@ -2,14 +2,15 @@ class SellingsController < ApplicationController
 
   def index
     initialize_event_and_sellings
-    @selling = Selling.find_by_id_and_event_id(params[:search_selling_id], @event)
+    @selling = Selling.find_by_id_and_event_id(params[:search_selling_id], 
+                                               @event)
 
     respond_to do |format|
       if @selling
         format.html { redirect_to selling_path @selling } 
       else
         flash.now[:warning] = "Sorry, didn't find a selling with number " +
-                              "#{params[:search_selling_id]}!" if params[:search_selling_id]
+                "#{params[:search_selling_id]}!" if params[:search_selling_id]
         format.html
       end
     end

@@ -186,6 +186,43 @@ en:
       to_cart:        "Start new selling"
       to_sellings:    "Go to selling overview"
 
+  reversals:
+    index:
+      reversal:   "Redemptions"
+      go_to_cart: "Go to Cart"
+    show:
+      title:            "Redemption"
+      heading:          "Redemption %{number}"
+      reversal_overview: "Back to redemption overview"
+    show_reversal_status:
+      reversal_status: "Redemption Statistics"
+      items:           "Items"
+      updated_at:      "%{updated_at} ago"
+      revenue:         "Redemption amount"
+    items:
+      number:      "Item"
+      description: "Description"
+      size:        "Size"
+      price:       "Price"
+    header:
+      select_reversal: "Redemption"
+      search:          "Search"
+    reversal_status:
+      reversal_status:         "Redemption Status"
+      reversals:               "Redemptions"
+      items:                   "Items"
+      average_redemption_html: "&Oslash; redemption amount"
+      redemption:              "Total"
+    reversals:
+      reversal_number: "Number"
+      created:         "Created"
+      updated:         "Updated"
+      redemption:      "Redemption"
+      show:            "Show"
+      confirm_delete:  "Do you want to delete the selected Redemption?"
+      delete:          "Delete"
+      print:           "Print"
+
   static_pages:
     home:
       welcome_html: "Welcome to <em>Secondhand</em> the list collection program of <a href=\"http://messe-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a> where you can collect your items you want to sell at <strong>%{event}</strong>"

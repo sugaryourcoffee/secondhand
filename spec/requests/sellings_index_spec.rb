@@ -61,7 +61,7 @@ describe "Selling index page" do
     it "should list available sellings" do
       page.should have_text selling.id
       page.should have_text selling.created_at
-      page.should have_text selling.revenue.to_s
+      page.should have_text selling.total.to_s
       page.should have_link 'Show'
       page.should have_link 'Delete'
       page.should have_link 'Print'
@@ -86,7 +86,7 @@ describe "Selling index page" do
 
     it "should not delete a selling with items", :js => true do
       selling_id      = selling.id
-      selling_revenue = selling.revenue
+      selling_revenue = selling.total
       items = selling.line_items
 
       click_link "Delete"

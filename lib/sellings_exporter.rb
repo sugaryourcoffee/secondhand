@@ -37,7 +37,7 @@ module SellingsExporter
       t.row(0).columns(0..3).align = :center
     end
 
-    pdf.table([[ "Total", number_to_currency(revenue, locale: :de) ]],
+    pdf.table([[ "Total", number_to_currency(total, locale: :de) ]],
               cell_style: { size: 10, padding: 2},
               column_widths: [451, 70]) do |t|
       pdf.font pdf.font.name, style: :bold

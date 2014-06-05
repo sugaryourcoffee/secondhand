@@ -1,0 +1,10 @@
+<% provide(:title, t('.title')) %>
+
+<h1><%= t('.heading', number: @reversal.id) %></h1>
+<h2><%= @event.title if @event %></h2>
+
+<%= render 'show_reversal_status' %>
+
+<p><%= link_to t('.reversals_overview'), reversals_path %></p>
+
+<%= render 'items' %>

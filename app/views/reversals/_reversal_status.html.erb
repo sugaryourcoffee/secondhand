@@ -1,0 +1,27 @@
+<% reversal_statistics_for do |stats| %>
+  <article>
+    <header>
+      <h5><%= t('.reversal_status') %></h5>
+    </header>
+    <section>
+      <table>
+        <tr>
+          <td><%= t('.reversals') %></td>
+          <td class="list_count"><%= stats.redemption_count %></td>
+        </tr>
+        <tr>
+          <td><%= t('.items') %></td>
+          <td class="list_count"><%= stats.redeemed_line_items_count %></td>
+        </tr>
+        <tr>
+          <td><%= t('.average_redemption_html') %></td>
+          <td class="list_count"><%= stats.average_redemption %></td>
+        </tr>
+        <tr class="total_line">
+          <td><%= t('.redemption') %></td>
+          <td class="list_count"><%= stats.redemption %></td>
+        </tr>
+      </table>
+    </section>
+  </article>
+ <% end %>

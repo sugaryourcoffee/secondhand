@@ -25,7 +25,7 @@ describe "Selling finish page" do
     page.should have_text 'Selling'
     page.should have_text selling.id
     page.should have_text 'Total'
-    page.should have_text selling.revenue
+    page.should have_text selling.total
   end
 
   it "should have a 'Start new selling' button" do

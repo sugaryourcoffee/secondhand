@@ -1,6 +1,6 @@
 module TransactionSupport
 
-  def revenue
+  def total
     line_items.inject(0) { |sum, line_item| sum + line_item.price }
   end
 

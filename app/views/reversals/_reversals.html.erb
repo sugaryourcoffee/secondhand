@@ -1,0 +1,35 @@
+<% if @reversals %>
+  <table class="table table-hover" >
+    <thead>
+      <tr>
+        <th><%= t('.reversal_number') %></th>
+        <th><%= t('.created') %></th>
+        <th><%= t('.updated') %></th>
+        <th><%= t('.redemption') %></th><th/><th/><th/>  
+      </tr>
+    </thead>
+    <tbody>
+      <% @reversals.each do |reversal| %>
+        <tr>
+          <td><%= reversal.id %></td>
+          <td><%= reversal.created_at %></td>
+          <td><%= reversal.updated_at %></td>
+          <td><%= reversal.total %></td>
+          <td><%= link_to t('.show'), reversal, 
+                  id: "show_reversal_#{reversal.id}" %></td>
+          <td><%= link_to t('.delete'), 
+                  reversal, 
+                  method: :delete, 
+                  remote: true,
+                  id: "delete_reversal_#{reversal.id}",
+                  data: { confirm: t('.confirm_delete') } %>
+          </td>
+          <td><%= link_to t('.print'), print_reversal_path(id: reversal), 
+                  id: "print_reversal_#{reversal.id}" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <%= t('.no_reversal') %>
+<% end %>

@@ -64,7 +64,7 @@ class SellingStatistics
     def revenues
       sums = []
       Selling.where("event_id = ?", @event.id).each do |selling|
-        sums << selling.revenue
+        sums << selling.total
       end
       sums
     end
