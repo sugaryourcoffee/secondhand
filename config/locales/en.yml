@@ -575,6 +575,28 @@ en:
       confirm_message: "Are you sure?"
       New_News:        "New News"
 
+  shared:
+    selling:
+      title:         "Selling"
+      header:        "Selling %{id}"
+      status_header: "Selling Status"
+      overview:      "Back to Sellings"
+    reversal:
+      title:         "Redemption"
+      header:        "Redemption %{id}"
+      status_header: "Redemption Status"
+      overview:      "Back to Redemptions"
+    transaction_status:
+      items:      "Item count"
+      updated_at: "%{updated_at} ago"
+      updated:    "Updated"
+      total:      "Total"
+    items:
+      number:      "Number"
+      description: "Description"
+      size:        "Size"
+      price:       "Price"
+
   activerecord:
     models:
       news:  "News"

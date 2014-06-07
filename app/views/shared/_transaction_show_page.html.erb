@@ -1,0 +1,10 @@
+<% provide(:title, title) %>
+
+<h1><%= heading %></h1>
+<h2><%= subheading %></h2>
+
+<%= status_for(transaction) %>
+
+<p><%= link_to link_name, link.call %></p>
+
+<%= items_for(transaction) %>

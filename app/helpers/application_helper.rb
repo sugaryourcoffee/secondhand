@@ -14,6 +14,10 @@ module ApplicationHelper
     LANGUAGES.detect(unavailable) { |l| l[1] == I18n.locale.to_s }[0]
   end
 
+  def active_event
+    Event.find_by_active(true)
+  end
+
   def list_statistics_for(event = @event)
     statistics = ListStatistics.new(event)
     if block_given?

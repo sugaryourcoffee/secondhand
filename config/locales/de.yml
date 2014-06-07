@@ -574,6 +574,28 @@ de:
       confirm_message: "Sind Sie sicher?"
       New_News:        "Neue Nachricht"
 
+  shared:
+    selling:
+      title:         "Verkauf"
+      header:        "Verkauf %{id}"
+      status_header: "Verkauf Status"
+      overview:      "Zurück zu den Verkäufen"
+    reversal:
+      title:         "Gutschrift"
+      header:        "Gutschrift %{id}"
+      status_header: "Gutschrift Status"
+      overview:      "Zurück zu den Gutschriften"
+    transaction_status:
+      items:      "Artikelanzahl"
+      updated_at: "vor %{updated_at}"
+      updated:    "Aktualisiert"
+      total:      "Gesamt"
+    items:
+      number:      "Nummer"
+      description: "Beschreibung"
+      size:        "Größe"
+      price:       "Preis"
+
   date:
     abbr_day_names:
     - So
