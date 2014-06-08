@@ -31,10 +31,26 @@ module TransactionHelper
 
   end
 
-  def items_for(transaction)
+  def items_for(transaction, opts = {}) 
+    transaction_name = transaction.class.name.downcase
+
+    opponent = "#{transaction_name}_opponent"
+
+    opts[:opponent_title] ||= I18n.t("shared.#{transaction_name}.opponent")
+    opts[:opponent] ||= lambda do |line_item| 
+      o = line_item.send(opponent)
+      if o.nil?
+        '-'
+      else
+        o.id
+      end
+    end
+
     render "shared/items",
       transaction: transaction,
       number:      lambda { |line_item| list_item_number_for(line_item.item) },
+      opponent_title: opts[:opponent_title],
+      opponent:       opts[:opponent],
       description: lambda { |line_item| line_item.description },
       size:        lambda { |line_item| line_item.size },
       price:       lambda { |line_item| line_item.price }

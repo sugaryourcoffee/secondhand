@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th><%= t('.number') %></th>
+      <th><%= opponent_title %></th>
       <th><%= t('.description') %></th>
       <th><%= t('.size') %></th>
       <th><%= t('.price') %></th>
@@ -12,6 +13,7 @@
     <% transaction.line_items.each do |line_item| %>
       <tr>
         <td><%= number.call(line_item) %></td>
+        <td><%= opponent.call(line_item) %></td>
         <td><%= description.call(line_item) %></td>
         <td><%= size.call(line_item) %></td>
         <td><%= price.call(line_item) %></td>

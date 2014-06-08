@@ -580,11 +580,13 @@ de:
       header:        "Verkauf %{id}"
       status_header: "Verkauf Status"
       overview:      "Zurück zu den Verkäufen"
+      opponent:      "Gutschrift"
     reversal:
       title:         "Gutschrift"
       header:        "Gutschrift %{id}"
       status_header: "Gutschrift Status"
       overview:      "Zurück zu den Gutschriften"
+      opponent:      "Verkauf"
     transaction_status:
       items:      "Artikelanzahl"
       updated_at: "vor %{updated_at}"

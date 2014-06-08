@@ -23,23 +23,25 @@ describe "selling show page" do
   end
 
   it "should have information about the selling" do
-    page.should have_text "Selling Statistics"
-    page.should have_text "Items"
+    page.should have_text "Selling Status"
+    page.should have_text "Item count"
     page.should have_text selling.line_items.count
-    page.should have_text "Revenue"
+    page.should have_text "Total"
     page.should have_text selling.total
   end
 
   it "should have a button to forward to sellings index page" do
-    page.should have_link "Back to selling overview"
+    page.should have_link "Back to Sellings"
   end
 
   it "should show the items" do
     page.should have_text "Item"
+    page.should have_text "Redemption"
     page.should have_text "Description"
     page.should have_text "Size"
     page.should have_text "Price"
     page.should have_text list_item_number_for(selling.line_items.first.item)
+    page.should have_text selling.line_items.first.selling_opponent
     page.should have_text selling.line_items.first.description
     page.should have_text selling.line_items.first.size
     page.should have_text selling.line_items.first.price
@@ -49,5 +51,4 @@ describe "selling show page" do
 
   it "should reverse item from selling"
 
-  it "should show redeemed item"
 end

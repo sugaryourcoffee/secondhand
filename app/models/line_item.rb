@@ -18,6 +18,13 @@ class LineItem < ActiveRecord::Base
 
   before_destroy :ensure_not_referenced_by_selling_or_reversal
 
+  def method_missing(name, *args)
+    m = name.to_s.scan(/^.*(?=_opponent$)/).first
+    super if !respond_to? m.to_sym
+    return selling  if m == 'reversal'
+    return reversal if m == 'selling'
+  end
+
   # Retrieves the line item for item if item is sold
   def self.sold(item)
     return nil if item.nil?

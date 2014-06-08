@@ -581,11 +581,13 @@ en:
       header:        "Selling %{id}"
       status_header: "Selling Status"
       overview:      "Back to Sellings"
+      opponent:      "Redemption"
     reversal:
       title:         "Redemption"
       header:        "Redemption %{id}"
       status_header: "Redemption Status"
       overview:      "Back to Redemptions"
+      opponent:      "Selling"
     transaction_status:
       items:      "Item count"
       updated_at: "%{updated_at} ago"
