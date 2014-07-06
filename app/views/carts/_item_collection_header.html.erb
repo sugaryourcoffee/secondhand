@@ -6,6 +6,7 @@
       <p>
         <%= label_tag :search_list_number, t('.select_list_number') %>
         <%= text_field_tag :search_list_number, params[:search_list_number], 
+                           autofocus: true, onfocus: "this.select()",
                            class: "input-medium search-query" %>
         <%= label_tag :search_item_number, t('.select_item_number') %>
         <%= text_field_tag :search_item_number, params[:search_item_number],
