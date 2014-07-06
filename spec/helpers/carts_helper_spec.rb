@@ -11,5 +11,14 @@ require 'spec_helper'
 #   end
 # end
 describe CartsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  
+  describe "split list and item number" do
+    it "splits list and item number" do
+      decoded = "002059"
+      helper.split_list_and_item_number(decoded).should eq ["002","05"]
+      decoded = "00205"
+      helper.split_list_and_item_number(decoded).should eq ["00205"]
+    end
+  end
+
 end

@@ -48,6 +48,8 @@ describe List do
       should have_text "Cannot add additional items"
     end
 
+    it "should not allow editing list when list has accepted status"
+
   end
 
   describe "process items" do

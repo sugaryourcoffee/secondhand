@@ -13,4 +13,12 @@ module CartsHelper
     end
   end
 
+  def split_list_and_item_number(value)
+    if Interleave2of5.valid? value
+      return [value[0..2], value[3..4]]
+    else
+      return [value]
+    end
+  end
+
 end
