@@ -222,6 +222,15 @@ en:
       confirm_delete:  "Do you want to delete the selected Redemption?"
       delete:          "Delete"
       print:           "Print"
+    check_out:
+      title:           "Redemption %{number}"
+      heading:         "Redemption %{number}"
+      voucher:         "Voucher"
+      reversal_number: "Redemption number"
+      total:           "Total"
+      to_cart:         "Start new redemption"
+      to_reversals:    "Go to redemption overview"
+
 
   static_pages:
     home:

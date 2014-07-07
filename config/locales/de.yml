@@ -222,6 +222,14 @@ de:
       confirm_delete:  "Möchten Sie die ausgwählte Gutschrift löschen?"
       delete:          "Löschen"
       print:           "Drucken"
+    check_out:
+      title:          "Gutschrift %{number}"
+      heading:        "Gutschrift %{number}"
+      voucher:        "Kassenbeleg"
+      selling_number: "Gutschriftennummer"
+      total:          "Betrag"
+      to_cart:        "Neue Gutschrift erfassen"
+      to_sellings:    "Zur Gutschriftenübersicht"
 
   static_pages:
     home:
