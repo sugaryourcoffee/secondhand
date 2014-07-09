@@ -2,6 +2,7 @@ class SellingStatistics
 
   def initialize(event)
     @event = event || Event.find_by_active(true)
+    @revenues, @fees, @provisions = revenues
   end
 
   def selling_count
@@ -32,15 +33,21 @@ class SellingStatistics
     @event.nil? ? 0 : sold_items.sum(:price)
   end
 
+  # Calculation of profit
+  # profit = fee + provision
+  # fee    = @event.fee -> fee is only deducted if revenue < @event.deduction
+  # provision = revenue / 100 * @event.provision if revenue >= @event.deduction
+  # payback   = revenue + fee - provision rounded to 1 if >= .75 to .5 if >= 0.25 otherwise 0
   def profit
+     
   end
 
   def min_revenue
-    @event.nil? ? 0 : revenues.min + 0
+    @event.nil? ? 0 : @revenues.min + 0
   end
 
   def max_revenue
-    @event.nil? ? 0 : revenues.max + 0
+    @event.nil? ? 0 : @revenues.max + 0
   end
 
   def average_revenue
@@ -61,12 +68,23 @@ class SellingStatistics
       sold_line_items.select('item_id').pluck(:id)
     end
 
+    # Returns all revenues, revenues that are subject to fee only and revenues
+    # that are subject to provision
+    #     revenues -> [revenues, fee_revenues, provision_revenues]
     def revenues
-      sums = []
+      sums       = []
+      fees       = []
+      provisions = []
       Selling.where("event_id = ?", @event.id).each do |selling|
         sums << selling.total
+        if sums.last < @event.deduction
+          fees << sums.last
+        else
+          provisions << sums.last
+        end
       end
-      sums
+      [sums, fees, provisions]
     end
+
 end
 
