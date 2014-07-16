@@ -39,7 +39,9 @@ class SellingStatistics
   # provision = revenue / 100 * @event.provision if revenue >= @event.deduction
   # payback   = revenue + fee - provision rounded to 1 if >= .75 to .5 if >= 0.25 otherwise 0
   def profit
-     
+    fee = @fees.count * @event.fee
+    provision = @provisions.inject(:+) / 100 * @event.provision
+    round_dot_five(0.0 + fee + provision)
   end
 
   def min_revenue
@@ -84,6 +86,17 @@ class SellingStatistics
         end
       end
       [sums, fees, provisions]
+    end
+
+    # Rounds values in 0.5 steps
+    # 0.24 -> 0.0
+    # 0.25 -> 0.5
+    # 0.74 -> 0.5
+    # 0.75 -> 1.0
+    def round_dot_five(value)
+      remainder = value.remainder(1)
+      floor     = value.floor
+      remainder >= 0.75 ? value.round : remainder >= 0.25 ? floor + 0.5 : floor
     end
 
 end

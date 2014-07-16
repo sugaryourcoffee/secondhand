@@ -35,7 +35,7 @@ describe SellingStatistics do
   end
 
   it "should return event's profit" do
-    stats.profit.should eq 50.0
+    stats.profit.should eq 23.5
   end
 
   it "should return sellings min revenue" do
