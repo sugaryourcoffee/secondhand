@@ -10,6 +10,10 @@ class Reversal < ActiveRecord::Base
 
   before_destroy :ensure_line_items_empty
 
+  def total
+    line_items.inject(0) { |sum, line_item| sum + line_item.price }
+  end
+
   private
 
     def ensure_line_items_empty
