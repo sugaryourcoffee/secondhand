@@ -48,7 +48,20 @@ describe List do
       should have_text "Cannot add additional items"
     end
 
-    it "should not allow editing list when list has accepted status"
+    it "should not create item when list has accepted status" do
+      click_link "Create New Item"
+      fill_in "Description", with: "First Item"
+      fill_in "Size", with: "XXL"
+      fill_in "Price", with: 10
+      expect { click_button("Create Item") }.to change(Item, :count).by(1)
+
+      list.accepted_on = Time.now
+      list.save!
+
+      click_link "Create New Item"
+      current_path.should eq user_path(locale: :en, id: user)
+      should have_text "Cannot create item for accepted list number #{list.list_number}"
+    end
 
   end
 
@@ -91,8 +104,28 @@ describe List do
       should have_text("This is my changed item")
     end
 
+    it "should not edit item of accepted list" do
+      list.accepted_on = Time.now
+      list.save!
+
+      click_link "Edit"
+
+      current_path.should eq user_path(locale: :en, id: user)
+      should have_text "Cannot edit item of accepted list number #{list.list_number}"
+    end
+
     it "should destroy item" do
       expect { click_link("Destroy") }.to change(Item, :count).by(-1)
+    end
+
+    it "should not destroy item of accepted list" do
+      list.accepted_on = Time.now
+      list.save!
+
+      click_link "Destroy"
+
+      current_path.should eq user_path(locale: :en, id: user)
+      should have_text "Cannot delete item of accepted list number #{list.list_number}"
     end
 
   end

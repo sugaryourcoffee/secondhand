@@ -47,8 +47,4 @@ describe "selling show page" do
     page.should have_text selling.line_items.first.price
   end
 
-  it "should have reversal buttons at each item" 
-
-  it "should reverse item from selling"
-
 end

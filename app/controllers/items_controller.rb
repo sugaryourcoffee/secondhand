@@ -15,6 +15,9 @@ class ItemsController < ApplicationController
     if @list.max_items_per_list?
       flash[:warning] = I18n.t('.list_full', list_number: @list.list_number)
       redirect_to root_path
+    elsif @list.accepted_on
+      flash[:warning] = I18n.t('.list_accepted_new', list_number: @list.list_number)
+      redirect_to current_user
     end
     @item = Item.new
     @user = User.find(params[:user_id])
@@ -47,6 +50,10 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @list = List.find(params[:list_id])
     @user = User.find(params[:user_id])
+    if @list.accepted_on
+      flash[:warning] = I18n.t('.list_accepted_edit', list_number: @list.list_number)
+      redirect_to current_user
+    end
   end
 
   def update
@@ -69,11 +76,16 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    Item.find(params[:id]).destroy
-    flash[:success] = I18n.t('.destroyed', model: t('activerecord.models.item'))
     @list = List.find(params[:list_id])
-    @user = User.find(params[:user_id])
-    redirect_to user_list_items_path(@user, @list)
+    if @list.accepted_on
+      flash[:warning] = I18n.t('.list_accepted_destroy', list_number: @list.list_number)
+      redirect_to current_user
+    else
+      Item.find(params[:id]).destroy
+      flash[:success] = I18n.t('.destroyed', model: t('activerecord.models.item'))
+      @user = User.find(params[:user_id])
+      redirect_to user_list_items_path(@user, @list)
+    end
   end
 
   private

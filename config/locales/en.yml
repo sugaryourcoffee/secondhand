@@ -647,6 +647,9 @@ en:
   not_valid:              "Registration code not valid!"
   no_list:                "%{model} doesn't exist"
   accepted:               "%{model} has been accepted"
+  list_accepted_new:      "Cannot create item for accepted list number %{list_number}"
+  list_accepted_edit:     "Cannot edit item of accepted list number %{list_number}"
+  list_accepted_destroy:  "Cannot delete item of accepted list number %{list_number}"
   released:               "%{model} has been released for editing"
 
   events_button:  "Events"
