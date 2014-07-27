@@ -77,11 +77,12 @@ class ItemsController < ApplicationController
 
   def destroy
     @list = List.find(params[:list_id])
+    item = Item.find(params[:id])
     if @list.accepted_on
       flash[:warning] = I18n.t('.list_accepted_destroy', list_number: @list.list_number)
       redirect_to current_user
     else
-      Item.find(params[:id]).destroy
+      item.destroy
       flash[:success] = I18n.t('.destroyed', model: t('activerecord.models.item'))
       @user = User.find(params[:user_id])
       redirect_to user_list_items_path(@user, @list)
