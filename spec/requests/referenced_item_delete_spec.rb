@@ -1,0 +1,137 @@
+require 'spec_helper'
+
+describe "Item referenced" do
+
+  let(:admin) { FactoryGirl.create(:admin) }
+  let(:event) { FactoryGirl.create(:active) }
+  let(:list) { FactoryGirl.create(:list, user: admin, event: event) }
+
+  before do
+    add_items_to_list(list, 2)
+
+    sign_in admin
+
+    page.current_path.should eq user_path(locale: :en, id: admin)
+    
+    click_link "Acceptance"
+
+    page.current_path.should eq acceptances_path(locale: :en)
+
+    click_link "Acceptance Dialog"
+    
+    page.current_path.should eq edit_acceptance_path(locale: :en, id: list.id)
+
+    click_button "Accept List"
+
+    page.current_path.should eq acceptances_path(locale: :en)
+
+    page.should_not have_link "Acceptances Dialog"
+
+    click_link "Cart"
+
+    fill_in "List", with: list.items.first.list.list_number
+    fill_in "Item", with: list.items.first.item_number
+
+    expect { click_button "Add" }.to change(LineItem, :count).by(1)
+  end
+
+  it "by a cart should not be deleted in acceptance dialog" do
+    click_link "Acceptance"
+
+    click_link "Accepted"
+
+    click_button "Revoke Acceptance"
+
+    page.current_path.should eq edit_acceptance_path(locale: :en, id: list.id)
+
+    expect { click_link "delete-item-#{list.items.first.item_number}" }.
+                                                   to change(Item, :count).by(0)
+    
+    page.current_path.should eq delete_item_acceptance_path(locale: :en, 
+                                                           id: list.items.first)
+  end
+
+  it "by selling should not be deleted in acceptance dialog" do
+    expect { click_button "Check out" }.to change(Selling, :count).by(1)
+
+    click_link "Acceptance"
+
+    click_link "Accepted"
+
+    click_button "Revoke Acceptance"
+
+    page.current_path.should eq edit_acceptance_path(locale: :en, id: list.id)
+
+    expect { click_link "delete-item-#{list.items.first.item_number}" }.
+                                                   to change(Item, :count).by(0)
+    
+    page.current_path.should eq delete_item_acceptance_path(locale: :en, 
+                                                           id: list.items.first)
+  end
+
+  it "by a redemption should not be deleted in acceptance dialog" do
+    expect { click_button "Check out" }.to change(Selling, :count).by(1)
+
+    click_link "Reversal"
+
+    fill_in "List", with: list.list_number
+    fill_in "Item", with: list.items.first.item_number
+
+    click_button "Add"
+
+    page.current_path.should eq line_item_collection_carts_path(locale: :en)
+
+    expect { click_button "Check out" }.to change(Reversal, :count).by(1)
+
+    click_link "Acceptance"
+
+    click_link "Accepted"
+
+    click_button "Revoke Acceptance"
+
+    page.current_path.should eq edit_acceptance_path(locale: :en, id: list.id)
+
+    expect { click_link "delete-item-#{list.items.first.item_number}" }.
+                                                   to change(Item, :count).by(0)
+    
+    page.current_path.should eq delete_item_acceptance_path(locale: :en, 
+                                                           id: list.items.first)
+   end
+
+  it "by a cart should not be deleted in user list page" do
+    visit user_list_items_path(locale: :en, user_id: admin, list_id: list)
+
+    expect { click_link "destroy_item_#{list.items.first.item_number}" }.
+                                                   to change(Item, :count).by(0)
+  end
+
+  it "by a selling should not be deleted in user list page" do
+    expect { click_button "Check out" }.to change(Selling, :count).by(1)
+
+    visit user_list_items_path(locale: :en, user_id: admin, list_id: list)
+
+    expect { click_link "destroy_item_#{list.items.first.item_number}" }.
+                                                   to change(Item, :count).by(0)
+  end
+
+  it "by a redemption should not be deleted in user list page" do
+    expect { click_button "Check out" }.to change(Selling, :count).by(1)
+
+    click_link "Reversal"
+
+    fill_in "List", with: list.list_number
+    fill_in "Item", with: list.items.first.item_number
+
+    click_button "Add"
+
+    page.current_path.should eq line_item_collection_carts_path(locale: :en)
+
+    expect { click_button "Check out" }.to change(Reversal, :count).by(1)
+
+    visit user_list_items_path(locale: :en, user_id: admin, list_id: list)
+
+    expect { click_link "destroy_item_#{list.items.first.item_number}" }.
+                                                   to change(Item, :count).by(0)
+  end
+
+end

@@ -103,6 +103,8 @@ describe "Acceptances" do
           visit edit_acceptance_path(locale: :en, id: accepted_list)
         end
 
+        # TODO: This doesn't work now and it is questionable whether this is
+        #       reasonable
         it "should not revoke list acceptance" do
           accepted_list.accepted_on.should_not be_nil
 

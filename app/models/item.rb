@@ -19,7 +19,7 @@ class Item < ActiveRecord::Base
 
   before_save :reset_list_sent_on
 
-  before_destroy :reset_list_sent_on
+  before_destroy :ensure_not_referenced, :reset_list_sent_on
 
   def sold?
     line_items.
@@ -40,6 +40,15 @@ class Item < ActiveRecord::Base
   def add_item_number
     return if list_id.nil?
     self.item_number = List.find(list_id).next_item_number unless item_number
+  end
+
+  def ensure_not_referenced
+    if line_items.empty?
+      true
+    else
+      errors.add(:item, "Cannot delete referenced item")
+      false
+    end
   end
 
   def reset_list_sent_on

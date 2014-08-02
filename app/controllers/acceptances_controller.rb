@@ -74,13 +74,9 @@ class AcceptancesController < ApplicationController
   end
 
   def delete_item
-    item = Item.find(params[:id])
-    @list = item.list
-    if !item.sold?
-      item.destroy
-    else
-      flash[:error] = I18n.t('.destroy_failed', model: t('activerecord.models.item'))
-    end
+    @item = Item.find(params[:id])
+    @list = @item.list
+    @item.destroy
     respond_to do |format|
       format.js 
     end

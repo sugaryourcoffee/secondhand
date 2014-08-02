@@ -23,10 +23,14 @@
         <td><%= truncate(item.size, length: 10) %></td>
         <td><%= number_to_currency item.price %></td>
         <td><%= link_to t('.Show'), 
-                user_list_item_path(@user, @list, item) %></td>
+                user_list_item_path(@user, @list, item),
+                id: "show_item_#{item.item_number}"%></td>
         <td><%= link_to t('.Edit'), 
-                edit_user_list_item_path(@user, @list, item) %></td>
-        <td><%= link_to t('.Destroy'), [@user, @list, item], method: :delete, 
+                edit_user_list_item_path(@user, @list, item),
+                id: "edit_item_#{item.item_number}"%></td>
+        <td><%= link_to t('.Destroy'), [@user, @list, item], 
+                id: "destroy_item_#{item.item_number}", 
+                method: :delete, 
                 data: { confirm: t('.confirm') } %></td>
       </tr>
     <% end %>
