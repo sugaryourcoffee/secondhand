@@ -6,7 +6,7 @@ describe "Acceptances" do
   let(:seller)        { FactoryGirl.create(:user) }
   let(:event)         { FactoryGirl.create(:active) }
   let(:list)          { FactoryGirl.create(:assigned, user: seller, event: event) }
-  let(:accepted_list) { FactoryGirl.create(:accepted, user: seller, event: event) }
+  let(:accepted_list) { FactoryGirl.create(:assigned, user: seller, event: event) }
 
   before do
     list.items.create!(item_attributes)
@@ -69,6 +69,7 @@ describe "Acceptances" do
 
       before do
         accepted_list.items.create!(item_attributes)
+        accept(accepted_list)
         visit edit_acceptance_path(locale: :en, id: accepted_list)
       end
 
@@ -162,7 +163,8 @@ describe "Acceptances" do
     it "should edit an item", js: true do
       item = list.items.first
 
-      page.find("#edit-item-#{item.item_number}").click
+      click_link "edit-item-#{item.item_number}"
+#      page.find("#edit-item-#{item.item_number}").click
 
       fill_in "item_description", with: "The description"
       fill_in "item_size",        with: "The size"

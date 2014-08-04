@@ -17,6 +17,9 @@ class Item < ActiveRecord::Base
   before_validation :delocalize_number
   before_validation :add_item_number
 
+  before_save :ensure_not_in_accepted_list
+  before_save :ensure_not_in_cart
+  before_save :ensure_not_sold
   before_save :reset_list_sent_on
 
   before_destroy :ensure_not_referenced, :reset_list_sent_on
@@ -25,10 +28,6 @@ class Item < ActiveRecord::Base
     line_items.
       where('selling_id is not ? and reversal_id is ?', nil, nil).size > 0
   end
-
-#  def in_cart?
-#    !cart_id.nil?
-#  end
 
   private
 
@@ -48,6 +47,33 @@ class Item < ActiveRecord::Base
     else
       errors.add(:item, "Cannot delete referenced item")
       false
+    end
+  end
+
+  def ensure_not_in_accepted_list
+    if list.accepted_on
+      errors.add(:item, "Cannot change item of accepted list")
+      false
+    else
+      true
+    end
+  end
+  
+  def ensure_not_in_cart
+    if carts.empty?
+      true
+    else
+      errors.add(:item, "Cannot change item when in cart")
+      false
+    end
+  end
+
+  def ensure_not_sold
+    if sold?
+      errors.add(:item, "Cannot change sold item")
+      false
+    else
+      true
     end
   end
 
