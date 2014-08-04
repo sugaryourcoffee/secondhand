@@ -55,6 +55,4 @@ describe "Sell and redeem" do
     page.should have_text list.items.last.price
   end
 
-  it "should show revenue without redeemed item price"
-
 end
