@@ -484,6 +484,7 @@ en:
       Edit:                 "Edit"
       Back:                 "Back"
       print_pickup_tickets: "Print Pickup Tickets"
+      print_lists:          "Print Lists"
 
     form:
       error:              "error"

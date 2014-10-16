@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   include EventsHelper
+
   # GET /events
   # GET /events.json
   def index
@@ -28,6 +29,16 @@ class EventsController < ApplicationController
       format.html
       format.pdf do
         send_data @event.pickup_tickets_pdf, content_type: Mime::PDF
+      end
+    end
+  end
+
+  def print_lists
+    @event = Event.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        send_data @event.lists_to_pdf, content_type: Mime::PDF
       end
     end
   end

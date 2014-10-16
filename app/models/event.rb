@@ -17,6 +17,9 @@
 #
 
 class Event < ActiveRecord::Base
+
+  include EventPrinters
+
   has_many :lists, dependent: :destroy
   has_many :users, through: :lists
   has_many :sellings, dependent: :destroy

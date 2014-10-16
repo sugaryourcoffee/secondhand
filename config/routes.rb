@@ -92,6 +92,7 @@ Secondhand::Application.routes.draw do
       member do
         post :activate
         get :print_pickup_tickets, defaults: { format: 'pdf' }
+        get :print_lists,          defaults: { format: 'pdf' }
       end
     end
   end

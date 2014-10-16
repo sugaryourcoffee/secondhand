@@ -482,6 +482,7 @@ de:
       Edit:                 "Bearbeiten"
       Back:                 "Zurück"
       print_pickup_tickets: "Abholzettel drucken"
+      print_lists:          "Drucke Listen"
       
     form:
         error:              "Fehler"
