@@ -33,11 +33,11 @@ module EventPrinters
 
     items_list = (list.items.sort_by { |item| item.item_number }).map do |item|
       [item.item_number, 
-       item.sold?,
+       item.sold? ? 'X' : ' ',
        ' ',
        cut_to_fit(pdf, 400, item.description), 
        cut_to_fit(pdf, 71, item.size), 
-       number_to_currency(item.price, locale: :de)]
+       helpers.number_to_currency(item.price, locale: :de)]
     end
 
     pdf.text_box(seller_label, options = {
@@ -137,21 +137,28 @@ module EventPrinters
                          size: 10 }
     end
 
-    def cut_to_fit(pdf, width, value)
-      return value if pdf.width_of(value) <= width
-      words = value.split(" ")
-      if words.size > 1
-        words.each_with_index do |word,i|
-          return words[0..i-1].
-            join(" ") + " ..." if pdf.width_of(words[0..i].join(" ")) > width
-        end
-      else
-        (value.size - 1).step(0, -1) do |i|
-          return value[0..i] + " ..." if pdf.width_of(value[0..i]) <= width
-        end
+  end
+
+  def cut_to_fit(pdf, width, value)
+    return value if pdf.width_of(value) <= width
+    words = value.split(" ")
+    if words.size > 1
+      words.each_with_index do |word,i|
+        return words[0..i-1].
+          join(" ") + " ..." if pdf.width_of(words[0..i].join(" ")) > width
+      end
+    else
+      (value.size - 1).step(0, -1) do |i|
+        return value[0..i] + " ..." if pdf.width_of(value[0..i]) <= width
       end
     end
-
   end
+
+  private
+   
+    # Returns the helpers
+    def helpers
+      ActionController::Base.helpers
+    end
 
 end
