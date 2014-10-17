@@ -35,10 +35,12 @@ module EventPrinters
       [item.item_number, 
        item.sold? ? 'X' : ' ',
        ' ',
-       cut_to_fit(pdf, 400, item.description), 
+       cut_to_fit(pdf, 350, item.description), 
        cut_to_fit(pdf, 71, item.size), 
        helpers.number_to_currency(item.price, locale: :de)]
     end
+
+    result = [[1,2,3,4]]
 
     pdf.text_box(seller_label, options = {
         at: [pdf.bounds.left, pdf.bounds.top - 25],
@@ -71,7 +73,7 @@ module EventPrinters
     pdf.move_down 85
 
     pdf.table([[ "No", "Sold", "3. Quality", "Description", "Size", "Price"], *items_list], 
-              cell_style: { size: 10, padding: 2 }, 
+              cell_style: { size: 8, padding: 2 }, 
               column_widths: [29, 30, 30, 290, 71, 71]) do |t|
       t.header = true
       t.columns(0).align = :right
@@ -85,7 +87,19 @@ module EventPrinters
       t.row(0).columns(0..3).align = :center
     end
 
-    pdf.repeat(:all) do
+    pdf.move_down 10
+
+    pdf.table([[ "Total", "Provision #{self.provision}%", "Fee", "Payback"],
+               *result],
+               cell_style: { size: 8, padding: 2 },
+               column_widths: [130, 130, 130, 131]) do |t|
+      t.header = true
+      t.row(0).style(background_color: '44844', text_color: 'ffffff')
+      t.row(0).font_style = :bold
+      t.columns(0..3).align = :center
+    end
+
+    #pdf.repeat(:all) do
       pdf.text_box(header_left, options = {
         at: pdf.bounds.top_left,
         width: pdf.bounds.width,
@@ -109,9 +123,9 @@ module EventPrinters
         single_line: true,
         size: 10
       })
-    end
+    #end
 
-    pdf.repeat(:all, dynamic: true) do
+    #pdf.repeat(:all, dynamic: true) do
       pdf.text_box(footer_left, options = {
         at: [pdf.bounds.left, 12],
         width: pdf.bounds.width,
@@ -135,7 +149,7 @@ module EventPrinters
                          at: [pdf.bounds.right - 50, 10],
                          align: :right,
                          size: 10 }
-    end
+    #end
 
   end
 
