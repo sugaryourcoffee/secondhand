@@ -3,22 +3,71 @@ module EventPrinters
   def lists_to_pdf
     pdf = Prawn::Document.new(page_size: "A4")
 
+    header(pdf)
+
     self.lists.each do |list|
       next unless list.registered?
       list_to(pdf, list)
       pdf.start_new_page
     end
 
+    footer(pdf)
+
     pdf.render
   end
 
-  def list_to(pdf, list)
+  def header(pdf)
     header_left   = self.title
     header_center = "www.boerse-burgthann.de"
+
+    pdf.repeat(:all) do
+      pdf.text_box(header_left, options = {
+        at: pdf.bounds.top_left,
+        width: pdf.bounds.width,
+        align: :left,
+        single_line: true,
+        size: 10
+      })
+
+      pdf.text_box(header_center, options = {
+        at: pdf.bounds.top_left,
+        width: pdf.bounds.width,
+        align: :center,
+        single_line: true,
+        size: 10
+      })
+    end
+  end
+
+  def footer(pdf)
+    footer_left   = Time.now.strftime("%Y-%m-%d / %H:%M")
+    footer_center = I18n.t('next_event_date', date: "05.03.2015")
+
+    pdf.repeat(:all) do
+      pdf.text_box(footer_left, options = {
+        at: [pdf.bounds.left, 12],
+        width: pdf.bounds.width,
+        align: :left,
+        valign: :bottom,
+        single_line: true,
+        size: 10
+      })
+
+      pdf.text_box(footer_center, options = {
+        at: [pdf.bounds.left, 12],
+        width: pdf.bounds.width,
+        align: :center,
+        valign: :bottom,
+        single_line: true,
+        size: 10
+      })
+    end
+  end
+
+  def list_to(pdf, list)
     header_right  = "Liste #{list.list_number}"
 
-    footer_left   = Time.now.strftime("%Y-%m-%d / %H:%M")
-    footer_center = "mail@boerse-burgthann.de"
+    footer_right  = "1/1"
 
     user = list.user
 
@@ -61,7 +110,7 @@ module EventPrinters
         width: 60,
         align: :left,
         size: 10
-      })
+    })
 
     pdf.text_box(container_color, options = {
       at: [pdf.bounds.left + 360, pdf.bounds.top - 25],
@@ -99,57 +148,21 @@ module EventPrinters
       t.columns(0..3).align = :center
     end
 
-    #pdf.repeat(:all) do
-      pdf.text_box(header_left, options = {
-        at: pdf.bounds.top_left,
-        width: pdf.bounds.width,
-        align: :left,
-        single_line: true,
-        size: 10
-      })
+    pdf.text_box(header_right, options = {
+      at: pdf.bounds.top_left,
+      width: pdf.bounds.width,
+      align: :right,
+      single_line: true,
+      size: 10
+    })
 
-      pdf.text_box(header_center, options = {
-        at: pdf.bounds.top_left,
-        width: pdf.bounds.width,
-        align: :center,
-        single_line: true,
-        size: 10
-      })
-      
-      pdf.text_box(header_right, options = {
-        at: pdf.bounds.top_left,
-        width: pdf.bounds.width,
-        align: :right,
-        single_line: true,
-        size: 10
-      })
-    #end
-
-    #pdf.repeat(:all, dynamic: true) do
-      pdf.text_box(footer_left, options = {
-        at: [pdf.bounds.left, 12],
-        width: pdf.bounds.width,
-        align: :left,
-        valign: :bottom,
-        single_line: true,
-        size: 10
-      })
-
-      pdf.text_box(footer_center, options = {
-        at: [pdf.bounds.left, 12],
-        width: pdf.bounds.width,
-        align: :center,
-        valign: :bottom,
-        single_line: true,
-        size: 10
-      })
-
-      pdf.number_pages "<page>/<total>",
-                       { start_count_at: 1,
-                         at: [pdf.bounds.right - 50, 10],
-                         align: :right,
-                         size: 10 }
-    #end
+    pdf.text_box(footer_right, options = {
+      at: [pdf.bounds.right - 50, 10],
+      align: :right,
+      valign: :bottom,
+      single_line: true,
+      size: 10
+    })
 
   end
 

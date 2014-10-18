@@ -851,3 +851,4 @@ de:
 
   missing_event_html: "<h2>Fehlende aktive Veranstaltung</h2><h5>Für die %{action} ist es erforderlich, dass eine Veranstaltung aktiv ist. Unter %{link} kann eine Veranstaltung aktiviert werden. Danach können Sie hier mit der %{action} beginnen.</h5>"
 
+  next_event_date: "Nächste Börse am %{date}"

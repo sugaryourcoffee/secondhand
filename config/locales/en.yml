@@ -701,3 +701,4 @@ en:
     
   missing_event_html: "<h2>Missing active Event</h2><h5>For %{action} it is neccessary to have an active event. At %{link} you can activate an event. Then come back to start with %{action}.</h5>"
   
+  next_event_date:    "Next event on %{date}"
