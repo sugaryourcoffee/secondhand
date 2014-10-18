@@ -65,19 +65,19 @@ module EventPrinters
   end
 
   def list_to(pdf, list)
-    header_right  = "Liste #{list.list_number}"
+    header_right  = I18n.t('list_list', list_number:  list.list_number)
 
     footer_right  = "1/1"
 
     user = list.user
 
-    seller_label = "Seller:"
+    seller_label = I18n.t('list_seller')
     seller_contact = "#{user.first_name} #{user.last_name}\n" +
                      "#{user.street}\n" +
                      "#{user.zip_code} #{user.town}\n" +
                      "#{user.phone}"
 
-    container_label = "Korbfarbe:"
+    container_label = I18n.t('list_container_color')
     container_color = list.container || "-"
 
     items_list = (list.items.sort_by { |item| item.item_number }).map do |item|
@@ -121,9 +121,14 @@ module EventPrinters
 
     pdf.move_down 85
 
-    pdf.table([[ "No", "Sold", "3. Quality", "Description", "Size", "Price"], *items_list], 
+    pdf.table([[ I18n.t('item_number'), 
+                 I18n.t('item_sold'), 
+                 I18n.t('item_quality'), 
+                 I18n.t('item_description'), 
+                 I18n.t('item_size'),
+                 I18n.t('item_price')], *items_list], 
               cell_style: { size: 8, padding: 2 }, 
-              column_widths: [29, 30, 30, 290, 71, 71]) do |t|
+              column_widths: [29, 40, 40, 290, 61, 61]) do |t|
       t.header = true
       t.columns(0).align = :right
       t.columns(1).align = :center
@@ -133,13 +138,15 @@ module EventPrinters
       t.columns(5).align = :right
       t.row(0).style(background_color: '44844', text_color: 'ffffff')
       t.row(0).font_style = :bold
-      t.row(0).columns(0..3).align = :center
+      t.row(0).columns(0..5).align = :center
     end
 
     pdf.move_down 10
 
-    pdf.table([[ "Total", "Provision #{self.provision}%", "Fee", "Payback"],
-               *result],
+    pdf.table([[ I18n.t('list_total'), 
+                 I18n.t('list_provision', provision:  self.provision), 
+                 I18n.t('list_fee'), 
+                 I18n.t('list_payback')], *result],
                cell_style: { size: 8, padding: 2 },
                column_widths: [130, 130, 130, 131]) do |t|
       t.header = true

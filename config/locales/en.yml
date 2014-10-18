@@ -701,4 +701,17 @@ en:
     
   missing_event_html: "<h2>Missing active Event</h2><h5>For %{action} it is neccessary to have an active event. At %{link} you can activate an event. Then come back to start with %{action}.</h5>"
   
-  next_event_date:    "Next event on %{date}"
+  next_event_date:      "Next event on %{date}"
+  list_list:            "List %{list_number}"
+  list_seller:          "Seller"
+  list_container_color: "Color"
+  item_number:          "No."
+  item_sold:            "Sold"
+  item_quality:         "3. Quality"
+  item_description:     "Description"
+  item_size:            "Size"
+  item_price:           "Price"
+  list_total:           "Total"
+  list_provision:       "Provision %{provision}%"
+  list_fee:             "List Fee"
+  list_payback:         "Payback"

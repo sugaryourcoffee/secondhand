@@ -851,4 +851,17 @@ de:
 
   missing_event_html: "<h2>Fehlende aktive Veranstaltung</h2><h5>Für die %{action} ist es erforderlich, dass eine Veranstaltung aktiv ist. Unter %{link} kann eine Veranstaltung aktiviert werden. Danach können Sie hier mit der %{action} beginnen.</h5>"
 
-  next_event_date: "Nächste Börse am %{date}"
+  next_event_date:      "Nächste Börse am %{date}"
+  list_list:            "Liste %{list_number}"
+  list_seller:          "Verkäufer"
+  list_container_color: "Korbfarbe"
+  item_number:          "Nr."
+  item_sold:            "Verkauft"
+  item_quality:         "3. Wahl"
+  item_description:     "Beschreibung"
+  item_size:            "Größe"
+  item_price:           "Preis"
+  list_total:           "Gesamt"
+  list_provision:       "Provision %{provision}%"
+  list_fee:             "Listengebühr"
+  list_payback:         "Auszahlung"
