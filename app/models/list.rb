@@ -13,6 +13,7 @@
 #
 require 'csv'
 require 'open3'
+require 'calculator'
 
 class List < ActiveRecord::Base
 
@@ -48,6 +49,29 @@ class List < ActiveRecord::Base
     end
     false
   end
+ 
+  # Calculates the total amount of sold items and the payback. Determines
+  # the provision and whether the fee is returned
+  #
+  #   cash_up -> [total, provision, fee, payback]
+  #
+  # provision and payback is rounded to 0.5 cent
+  def cash_up
+    total = 0
+    items.each { |item| total += item.price if item.sold? }
+
+    provision = if total > 19 
+                  Calculator.round_base(total * event.provision / 100, 0.5)
+                else
+                  0
+                end
+
+    fee = total > 19 ? event.fee : 0
+
+    payback = total - provision + fee
+
+    [total, provision, fee, payback] 
+  end 
 
   # Returns the list count for the provided event_id
   def self.total_count(event_id)

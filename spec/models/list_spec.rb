@@ -61,9 +61,11 @@ describe List do
 
   describe "detailed search for list" do
 
-    let!(:registered_list) { FactoryGirl.create(:list, event: event, user: user, list_number: 1) }
+    let!(:registered_list) { FactoryGirl.create(:list, event: event, 
+                                                user: user, list_number: 1) }
     let!(:accepted_list)   { FactoryGirl.create(:accepted, 
-                                                event: event, user: user, list_number: 2) }
+                                                event: event, 
+                                                user: user, list_number: 2) }
 
     it "should return accepted lists only" do
       event_id = event.id.to_s
@@ -71,7 +73,8 @@ describe List do
 
       search_conditions = List.search_conditions(params)
 
-      search_conditions.should eq ["event_id LIKE ? and accepted_on IS NOT ?", "%#{event_id}%", nil]
+      search_conditions.should eq ["event_id LIKE ? and accepted_on IS NOT ?", 
+                                   "%#{event_id}%", nil]
 
       lists = List.where(search_conditions)
       lists.should_not be_empty
@@ -114,6 +117,27 @@ describe List do
 
     it "should not have ';' in any field" do
       list.as_csv.split(';').size.should eq 16
+    end
+  end
+
+  describe "cash up" do
+    it "should return 0 for all values when no items sold" do
+      list.cash_up.should eq [0,0,0,0]
+    end
+
+    it "should return total = payback when total < 20 EUR" do
+      create_selling_and_items(event, list, 3, [1,2,3])
+      list.cash_up.should eq [6,0,0,6]
+    end
+
+    it "should return total > payback when total >= 20 EUR" do
+      create_selling_and_items(event, list, 3, [9,10,11])
+      list.cash_up.should eq [30,4.5,3,28.5]
+    end
+
+    it "should return values devisable by 0.5 without reminder" do
+      create_selling_and_items(event, list, 5, [3,5,7,11,17])
+      list.cash_up.should eq [43,6.5,3,39.5]
     end
   end
 end

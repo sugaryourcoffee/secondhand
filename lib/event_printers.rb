@@ -89,7 +89,8 @@ module EventPrinters
        helpers.number_to_currency(item.price, locale: :de)]
     end
 
-    result = [[1,2,3,4]]
+    result = [list.cash_up.collect {|v| helpers.
+                                          number_to_currency(v, locale: :de)}]
 
     pdf.text_box(seller_label, options = {
         at: [pdf.bounds.left, pdf.bounds.top - 25],

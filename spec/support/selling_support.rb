@@ -1,5 +1,7 @@
-def create_selling_and_items(event, list, item_count = 1)
-  add_items_to_list(list, item_count)
+def create_selling_and_items(event, list, item_count = 1, prices = [])
+  prices = [22.5] * item_count if prices.empty?
+
+  add_items_to_list(list, item_count, prices)
 
   accept(list) unless list.accepted?
 
@@ -17,11 +19,13 @@ def create_selling_and_items(event, list, item_count = 1)
   selling
 end
 
-def add_items_to_list(list, item_count = 1)
+def add_items_to_list(list, item_count = 1, prices = [])
+  prices = [22.5] * item_count if prices.empty?
   accepted = list.accepted?
   revoke_acceptance(list) if accepted
-  1.upto(item_count) do |i|
-    list.items.create!(item_attributes(item_number: i))
+  0.upto(item_count-1) do |i|
+    list.items.create!(item_attributes(item_number: i+1, 
+                                       price: prices[i] || 22.5))
   end
   accept(list) if accepted
 end
