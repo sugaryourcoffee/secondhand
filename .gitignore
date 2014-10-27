@@ -28,3 +28,5 @@ bundler_stubs/
 
 /*.csv
 /*.gzip
+/*.tar
+/*.tar.*
