@@ -36,15 +36,37 @@ describe "Counter" do
     end
 
     describe "Carts section" do
+      let!(:cart) { Cart.create }
+      
+      it "should show no cart if all carts are empty"
+
+      it "should show only carts with line items"
+
+      it "should forward to carts show page and return back"
     end
 
     describe "Statistics section" do
+      it "should have information about sellings and reversals"
     end
 
     describe "Sellings section" do
+      it "should show all sellings"
+
+      it "should show the latest selling on top"
+
+      it "should forward to the sellings show page and return back"
+
+      it "should have a link to print a selling"
     end
 
     describe "Reversals section" do
+      it "should show all reversals"
+
+      it "should show the latest reversal on top"
+
+      it "should forward to the reversal show page and return back"
+
+      it "should have a link to print a reversal"
     end
   end
 
