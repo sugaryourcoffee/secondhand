@@ -280,7 +280,7 @@ de:
       Event:    "Veranstaltung"
       Acceptance: "Annahme"
       Cart:       "Einkaufswagen"
-      Cashier:    "Kasse"
+      Counter:    "Kasse"
       Reversal:   "Gutschrift"
       Sellings:   "Verkäufe"
       Reversals:  "Gutschriften"

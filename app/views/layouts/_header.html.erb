@@ -25,9 +25,10 @@
                 <ul class="dropdown-menu">
                   <li><%= link_to t('.Acceptance'), acceptances_path %></li>
                   <li><%= link_to t('.Cart'), item_collection_carts_path %></li>
-                  <li><%= link_to t('.Cashier') %></li>
+                  <li><%= link_to t('.Counter'), counter_index_path %></li>
                   <li class="divider"></li>
-                  <li><%= link_to t('.Reversal'), line_item_collection_carts_path %></li>
+                  <li><%= link_to t('.Reversal'), 
+                          line_item_collection_carts_path %></li>
                   <li class="divider"></li>
                   <li><%= link_to t('.Sellings'), sellings_path %></li>
                   <li><%= link_to t('.Reversals'), reversals_path %></li>

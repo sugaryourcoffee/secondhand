@@ -234,11 +234,16 @@ en:
 
   counter:
     index:
+      title:      "Counter"
       heading:    "Counter"
       carts:      "Carts"
       statistics: "Statistics"
       sellings:   "Sellings"
       reversals:  "Reversals"
+    carts:
+      cart_number: "Number"
+      cart_type:   "Type"
+      item_count:  "Items"
 
   static_pages:
     home:
@@ -289,7 +294,7 @@ en:
       Event:    "Event"
       Acceptance: "Acceptance"
       Cart:       "Cart"
-      Cashier:    "Cashier"
+      Counter:    "Counter"
       Reversal:   "Reversal"
       Sellings:   "Sellings"
       Reversals:  "Reversals"
