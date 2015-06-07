@@ -9,6 +9,8 @@ class Cart < ActiveRecord::Base
 
   before_destroy :remove_line_items
 
+  scope :not_empty, lambda { joins(:line_items).uniq }
+
   def total
     line_items.inject(0) { |sum, line_item| sum + line_item.price }
   end
