@@ -11,3 +11,12 @@ def add_line_items_to_cart(cart, selling, line_item_count = 1)
   end
   cart.save
 end
+
+def create_cart_with_line_items(event, line_item_count = 1)
+  cart   = Cart.create
+  seller = create_user
+  list   = List.create(list_attributes(event, seller))
+  add_items_to_list(list, 2)
+  add_items_to_cart(cart, accept(list), line_item_count)
+  cart
+end
