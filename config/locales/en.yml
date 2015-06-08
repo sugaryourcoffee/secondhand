@@ -236,10 +236,10 @@ en:
     index:
       title:      "Counter"
       heading:    "Counter"
-      carts:      "Carts"
-      statistics: "Statistics"
-      sellings:   "Sellings"
-      reversals:  "Reversals"
+      carts:      "Cart (%{count})"
+      statistics: "Statistic"
+      sellings:   "Selling (%{count)}"
+      reversals:  "Redemption (%{count)}"
     carts:
       cart_number: "Number"
       cart_type:   "Type"

@@ -231,6 +231,19 @@ de:
       to_cart:        "Neue Gutschrift erfassen"
       to_sellings:    "Zur Gutschriftenübersicht"
 
+  counter:
+    index:
+      title:      "Kasse"
+      heading:    "Kasse"
+      carts:      "Einkaufswagen (%{count})"
+      statistics: "Statistik"
+      sellings:   "Verkauf (%{count})"
+      reversals:  "Rücknahme (%{count})"
+    carts:
+      cart_number: "Nummer"
+      cart_type:   "Art"
+      item_count:  "Artikel"
+
   static_pages:
     home:
       welcome_html: "Willkommen zu <em>Secondhand</em> dem Listenerfassungsprogramm der <a href=\"http://boerse-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a>. Hier können Sie Ihre Artikel, die Sie bei der <strong>%{event}</strong> verkaufen wollen, erfassen"
