@@ -69,9 +69,9 @@ describe "Counter" do
       end
 
       it "should forward to carts show page and return back" do
-        click_link "show cart"
-        page.current_path.should eq cart_show_path(locale: :en, id: 2)
-        click_link "back to counter"
+        click_link "Show"
+        page.current_path.should eq cart_path(locale: :en, id: loaded_cart)
+        click_link "Back to carts overview"
         page.current_path.should eq counter_index_path(locale: :en)
       end
     end
