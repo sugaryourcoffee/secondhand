@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe "Counter" do
 
+  let(:event)        { create_active_event }
+
   before { visit counter_index_path(locale: :en) }
 
   describe "as regular user" do
@@ -13,13 +15,7 @@ describe "Counter" do
   describe "as admin user" do
     let(:admin) { FactoryGirl.create(:admin) }
 
-  before { sign_in admin }
-=begin
-    before do
-      sign_in admin
-      visit counter_index_path(locale: :en)
-    end
-=end
+    before { sign_in admin }
 
     it "should visit the counter page" do
       page.current_path.should eq counter_index_path(locale: :en)
@@ -45,10 +41,8 @@ describe "Counter" do
       page.should have_selector('h2', text: 'Redemption')
     end
 
-    describe "Carts section" do
-      let(:event)        { create_active_event }
+    describe "with empty carts" do
       let!(:empty_cart)  { Cart.create }
-      let!(:loaded_cart) { create_cart_with_line_items(event, 1) }
 
       before { visit counter_index_path(locale: :en) }
       
@@ -63,7 +57,13 @@ describe "Counter" do
         page.should_not have_text "REVERSAL"
         page.should_not have_link "Show"
       end
+    end
 
+    describe "with loaded carts" do
+      let!(:loaded_cart) { create_cart_with_line_items(event, 1) }
+      
+      before { visit counter_index_path(locale: :en) }
+      
       it "should show only carts with line items" do
         page.should have_text "Cart (1)" 
       end
