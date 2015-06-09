@@ -244,6 +244,7 @@ en:
       cart_number: "Number"
       cart_type:   "Type"
       item_count:  "Items"
+      show:        "Show"
 
   static_pages:
     home:

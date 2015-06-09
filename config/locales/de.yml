@@ -243,6 +243,7 @@ de:
       cart_number: "Nummer"
       cart_type:   "Art"
       item_count:  "Artikel"
+      show:        "Anzeigen"
 
   static_pages:
     home:
