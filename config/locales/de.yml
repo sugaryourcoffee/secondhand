@@ -244,6 +244,11 @@ de:
       cart_type:   "Art"
       item_count:  "Artikel"
       show:        "Anzeigen"
+    statistics:
+      transaction_count:               "Anzahl"
+      item_count:                      "Artikel"
+      average_transaction_amount_html: "&Oslash; Transaktionswert"
+      transaction_total:               "Gesamt"
 
   static_pages:
     home:

@@ -238,13 +238,18 @@ en:
       heading:    "Counter"
       carts:      "Cart (%{count})"
       statistics: "Statistic"
-      sellings:   "Selling (%{count)}"
-      reversals:  "Redemption (%{count)}"
+      sellings:   "Selling (%{count})"
+      reversals:  "Redemption (%{count})"
     carts:
       cart_number: "Number"
       cart_type:   "Type"
       item_count:  "Items"
       show:        "Show"
+    statistics:
+      transaction_count:               "Count"
+      item_count:                      "Items"
+      average_transaction_amount_html: "&Oslash; Transaction Amount"
+      transaction_total:               "Total"
 
   static_pages:
     home:
