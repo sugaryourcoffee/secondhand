@@ -45,4 +45,13 @@ module ApplicationHelper
     end
   end
 
+  def counter_statistics_for(event = @event)
+    selling_statistics = SellingStatistics.new(event)
+    reversal_statistics = ReversalStatistics.new(event)
+    if block_given?
+      yield selling_statistics, reversal_statistics
+    else
+      [selling_statistics, reversal_statistics]
+    end
+  end
 end
