@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Counter" do
 
-  let(:event)        { create_active_event }
+  let!(:event)        { create_active_event }
 
   before { visit counter_index_path(locale: :en) }
 
@@ -77,17 +77,41 @@ describe "Counter" do
     end
 
     describe "Statistics section" do
-      it "should have information about sellings and reversals"
+      it "should have information about sellings and reversals" do
+        page.should have_text "Sellings"
+        page.should have_text "Reversals"
+        page.should have_text "Count"
+        page.should have_text "Items"
+        page.should have_text "Transaction Amount"
+        page.should have_text "Total"
+      end
     end
 
     describe "Sellings section" do
-      it "should show all sellings"
+      let!(:selling) { create_selling(event) }
 
-      it "should show the latest selling on top"
+      before { visit counter_index_path(locale: :en) }
+      
+      it "should have selling headings" do
+        page.should have_text "Selling"
+        page.should have_text "Time"
+        page.should have_text "Revenue"
+      end
 
-      it "should forward to the sellings show page and return back"
+      it "should show all sellings" do
+        page.should have_text selling.id
+        page.should have_text selling.created_at
+        page.should have_text selling.total
+        page.should have_link 'Show', selling_path(locale: :en, id: selling)
+        page.should have_link 'Print', print_selling_path(locale: :en, id: selling)
+      end
 
-      it "should have a link to print a selling"
+      it "should forward to the sellings show page and return back" do
+        click_link 'Show'
+        page.current_path.should eq selling_path(locale: :en, id: selling)
+        click_link 'Back to Sellings'
+        page.current_path.should eq counter_index_path(locale: :en)
+      end
     end
 
     describe "Reversals section" do
