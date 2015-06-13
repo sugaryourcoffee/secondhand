@@ -11,6 +11,8 @@ class Selling < ActiveRecord::Base
 
   before_destroy :ensure_line_items_empty
 
+  scope :latest_on_top, lambda { order("created_at desc") }
+
   def total
     line_items.inject(0) { |sum, line_item| sum + (line_item.reversal ? 0 : line_item.price) } 
   end
