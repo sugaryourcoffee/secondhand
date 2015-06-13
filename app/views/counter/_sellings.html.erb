@@ -1,0 +1,24 @@
+<% if @sellings %>
+  <table class="table table-hover" >
+    <thead>
+      <tr>
+        <th><%= t('.selling_number') %></th>
+        <th><%= t('.selling_created_at') %></th>
+        <th><%= t('.selling_revenue') %></th><th/><th/><th/>  
+      </tr>
+    </thead>
+    <tbody>
+      <% @sellings.each do |selling| %>
+        <tr>
+          <td><%= selling.id %></td>
+          <td><%= selling.created_at %></td>
+          <td><%= selling.total %></td>
+          <td><%= link_to t('.show_selling'), selling_path(selling) %></td>
+          <td><%= link_to t('.print_selling') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <%= t('.no_sellings') %>
+<% end %>
