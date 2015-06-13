@@ -18,6 +18,10 @@ module ApplicationHelper
     Event.find_by_active(true)
   end
 
+  def back_or_path(default)
+    request.referer.nil? ? default : :back
+  end
+
   def list_statistics_for(event = @event)
     statistics = ListStatistics.new(event)
     if block_given?
