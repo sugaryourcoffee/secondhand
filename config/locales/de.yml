@@ -245,6 +245,8 @@ de:
       item_count:  "Artikel"
       show:        "Anzeigen"
     statistics:
+      sellings:                        "Verkäufe"
+      reversals:                       "Gutschriften"
       transaction_count:               "Anzahl"
       item_count:                      "Artikel"
       average_transaction_amount_html: "&Oslash; Transaktionswert"
@@ -258,7 +260,7 @@ de:
     reversals:
       reversal_number:     "Rücknahme"
       reversal_created_at: "Erstellt"
-      reversal_revenue:    "Betrag"
+      reversal_redemption: "Betrag"
       show_reversal:       "Anzeigen"
       print_reversal:      "Drucken"
 
