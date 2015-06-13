@@ -12,7 +12,7 @@
         <tr>
           <td><%= reversal.id %></td>
           <td><%= reversal.created_at %></td>
-          <td><%= reversal.total %></td>
+          <td id='right'><%= reversal.total %></td>
           <td><%= link_to t('.show_reversal'), reversal, 
                   id: "show_reversal_#{reversal.id}" %></td>
           <td><%= link_to t('.print_reversal'), 
