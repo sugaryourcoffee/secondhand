@@ -26,6 +26,6 @@
   </div>
 </p>
 
-<p><%= link_to t('.carts'), :back %></p>
+<p><%= link_to t('.carts'), back_or_path(carts_path) %></p>
 
 <%= render 'items' %>
