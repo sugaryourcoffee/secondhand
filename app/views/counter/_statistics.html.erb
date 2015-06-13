@@ -15,7 +15,9 @@
         <td id='right'><%= selling_stats.selling_count %></td>
         <td id='right'><%= selling_stats.sold_items_count %></td>
         <td id='right'><%= selling_stats.average_revenue %></td>
-        <td id='right'><%= selling_stats.revenue %></td>
+        <td id='right'>
+          <%= selling_stats.revenue + reversal_stats.redemption%>
+        </td>
       </tr>
       <tr>
         <th><%= t('.reversals') %></th>
