@@ -249,6 +249,12 @@ de:
       item_count:                      "Artikel"
       average_transaction_amount_html: "&Oslash; Transaktionswert"
       transaction_total:               "Gesamt"
+    sellings:
+      selling_number:     "Verkauf"
+      selling_created_at: "Erstellt"
+      selling_revenue:    "Umsatz"
+      show_selling:       "Anzeigen"
+      print_selling:      "Drucken"
 
   static_pages:
     home:
