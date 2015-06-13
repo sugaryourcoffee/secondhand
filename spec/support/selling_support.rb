@@ -29,3 +29,9 @@ def add_items_to_list(list, item_count = 1, prices = [])
   end
   accept(list) if accepted
 end
+
+def create_selling(event)
+  seller = create_user
+  list = List.create(list_attributes(event, seller))
+  create_selling_and_items(event, list)
+end
