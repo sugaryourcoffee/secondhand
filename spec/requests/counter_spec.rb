@@ -93,6 +93,7 @@ describe "Counter" do
       before { visit counter_index_path(locale: :en) }
       
       it "should have selling headings" do
+        page.should have_text "Selling (1)"
         page.should have_text "Selling"
         page.should have_text "Time"
         page.should have_text "Revenue"
@@ -103,7 +104,8 @@ describe "Counter" do
         page.should have_text selling.created_at
         page.should have_text selling.total
         page.should have_link 'Show', selling_path(locale: :en, id: selling)
-        page.should have_link 'Print', print_selling_path(locale: :en, id: selling)
+        page.should have_link 'Print', 
+                              print_selling_path(locale: :en, id: selling)
       end
 
       it "should forward to the sellings show page and return back" do
