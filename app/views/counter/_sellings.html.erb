@@ -12,9 +12,10 @@
         <tr>
           <td><%= selling.id %></td>
           <td><%= selling.created_at %></td>
-          <td><%= selling.total %></td>
+          <td id='right'><%= selling.total %></td>
           <td><%= link_to t('.show_selling'), selling_path(selling) %></td>
-          <td><%= link_to t('.print_selling') %></td>
+          <td><%= link_to t('.print_selling'), 
+                  print_selling_path(selling) %></td>
         </tr>
       <% end %>
     </tbody>

@@ -255,6 +255,12 @@ de:
       selling_revenue:    "Umsatz"
       show_selling:       "Anzeigen"
       print_selling:      "Drucken"
+    reversals:
+      reversal_number:     "Rücknahme"
+      reversal_created_at: "Erstellt"
+      reversal_revenue:    "Betrag"
+      show_reversal:       "Anzeigen"
+      print_reversal:      "Drucken"
 
   static_pages:
     home:

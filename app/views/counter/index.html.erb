@@ -16,6 +16,7 @@
     <%= render 'sellings' %>
   </div>
   <div class="span6">
-    <h2><%= t('.reversals') %></h2><%= render 'reversals' %>
+    <h2><%= t('.reversals', count: @reversals.length) %></h2>
+    <%= render 'reversals' %>
   </div>
 </div>

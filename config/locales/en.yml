@@ -252,10 +252,16 @@ en:
       transaction_total:               "Total"
     sellings:
       selling_number:     "Selling"
-      selling_created_at: "Time"
+      selling_created_at: "Created"
       selling_revenue:    "Revenue"
       show_selling:       "Show"
       print_selling:      "Print"
+    reversals:
+      reversal_number:     "Reversal"
+      reversal_created_at: "Created"
+      reversal_redemption: "Value"
+      show_reversal:       "Show"
+      print_reversal:      "Print"
 
   static_pages:
     home:

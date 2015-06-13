@@ -95,7 +95,7 @@ describe "Counter" do
       it "should have selling headings" do
         page.should have_text "Selling (1)"
         page.should have_text "Selling"
-        page.should have_text "Time"
+        page.should have_text "Created"
         page.should have_text "Revenue"
       end
 
@@ -117,13 +117,32 @@ describe "Counter" do
     end
 
     describe "Reversals section" do
-      it "should show all reversals"
+      let!(:reversal) { create_reversal(event) }
+      
+      before { visit counter_index_path(locale: :en) }
 
-      it "should show the latest reversal on top"
+      it "should show all reversals" do
+        page.should have_text "Redemption (1)"
+        page.should have_text "Reversal"
+        page.should have_text "Created"
+        page.should have_text "Redemption"
+      end
 
-      it "should forward to the reversal show page and return back"
+      it "should forward to the reversal show page and return back" do
+        page.should have_text reversal.id
+        page.should have_text reversal.created_at
+        page.should have_text reversal.total
+        page.should have_link 'Show', reversal_path(locale: :en, id: reversal)
+        page.should have_link 'Print', 
+                              print_reversal_path(locale: :en, id: reversal)
+      end
 
-      it "should have a link to print a reversal"
+      it "should forward to the reversals show page and return back" do
+        click_link "show_reversal_#{reversal.id}"
+        page.current_path.should eq reversal_path(locale: :en, id: reversal)
+        click_link "Back to Redemptions"
+        page.current_path.should eq counter_index_path(locale: :en)
+      end
     end
   end
 
