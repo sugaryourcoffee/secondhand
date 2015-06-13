@@ -1,0 +1,32 @@
+<% counter_statistics_for do |selling_stats, reversal_stats| %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th />
+        <th><%= t('.transaction_count') %></th>
+        <th><%= t('.item_count') %></th>
+        <th><%= t('.average_transaction_amount_html') %></th>
+        <th><%= t('.transaction_total') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th><%= t('.sellings') %></th>
+        <td id='right'><%= selling_stats.selling_count %></td>
+        <td id='right'><%= selling_stats.sold_items_count %></td>
+        <td id='right'><%= selling_stats.average_revenue %></td>
+        <td id='right'><%= selling_stats.revenue %></td>
+      </tr>
+      <tr>
+        <th><%= t('.reversals') %></th>
+        <td id='right'><%= reversal_stats.redemption_count %></td>
+        <td id='right'><%= reversal_stats.redeemed_line_items_count %></td>
+        <td id='right'><%= reversal_stats.average_redemption %></td>
+        <td id='right'><%= reversal_stats.redemption %></td>
+      </tr>
+      <tr>
+        <td class="total-line" colspan="5"><%= selling_stats.revenue %></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
