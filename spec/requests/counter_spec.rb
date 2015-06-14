@@ -108,6 +108,14 @@ describe "Counter" do
                               print_selling_path(locale: :en, id: selling)
       end
 
+      it "should filter on selling id" do
+        second_selling = create_selling(event, 2)
+        fill_in "selling_id", with: second_selling.id
+        click_button "search_selling"
+        page.should     have_text second_selling.total
+        page.should_not have_text selling.total 
+      end
+
       it "should forward to the sellings show page and return back" do
         click_link 'Show'
         page.current_path.should eq selling_path(locale: :en, id: selling)
@@ -135,6 +143,14 @@ describe "Counter" do
         page.should have_link 'Show', reversal_path(locale: :en, id: reversal)
         page.should have_link 'Print', 
                               print_reversal_path(locale: :en, id: reversal)
+      end
+
+      it "should filter on reversal id" do
+        second_reversal = create_reversal(event, nil, 0, 2)
+        fill_in "reversal_id", with: second_reversal.id
+        click_button "search_reversal"
+        page.should     have_text second_reversal.total
+        page.should_not have_text reversal.total 
       end
 
       it "should forward to the reversals show page and return back" do
