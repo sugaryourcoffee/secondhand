@@ -28,6 +28,9 @@
       <% end %>
     </tbody>
   </table>
+
+  <%= will_paginate @reversals %>
+
 <% else %>
   <%= t('.no_reversal') %>
 <% end %>
