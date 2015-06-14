@@ -257,12 +257,14 @@ de:
       selling_revenue:    "Umsatz"
       show_selling:       "Anzeigen"
       print_selling:      "Drucken"
+      search:             "Suchen"
     reversals:
       reversal_number:     "Rücknahme"
       reversal_created_at: "Erstellt"
       reversal_redemption: "Betrag"
       show_reversal:       "Anzeigen"
       print_reversal:      "Drucken"
+      search:              "Suchen"
 
   static_pages:
     home:

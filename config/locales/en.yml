@@ -256,12 +256,14 @@ en:
       selling_revenue:    "Revenue"
       show_selling:       "Show"
       print_selling:      "Print"
+      search:             "Search"
     reversals:
       reversal_number:     "Reversal"
       reversal_created_at: "Created"
       reversal_redemption: "Value"
       show_reversal:       "Show"
       print_reversal:      "Print"
+      search:              "Search"
 
   static_pages:
     home:
