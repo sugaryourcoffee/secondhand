@@ -1,6 +1,7 @@
 class CounterController < ApplicationController
 
   def index
+    @event     = Event.find_by_active(true)
     @carts     = Cart.not_empty
     @sellings  = retrieve_sellings(params).paginate(page: params[:page], 
                                                     per_page: 10)
@@ -12,17 +13,17 @@ class CounterController < ApplicationController
 
     def retrieve_sellings(params)
       if params[:selling_id] and not params[:selling_id].empty?
-        Selling.where(id: params[:selling_id])
+        Selling.where(id: params[:selling_id], event_id: @event)
       else
-        Selling.latest_on_top
+        Selling.where(event_id: @event).latest_on_top
       end
     end
 
     def retrieve_reversals(params)
       if params[:reversal_id] and not params[:reversal_id].empty?
-        Reversal.where(id: params[:reversal_id])
+        Reversal.where(id: params[:reversal_id], event_id: @event)
       else
-        Reversal.latest_on_top
+        Reversal.where(event_id: @event).latest_on_top
       end
     end
 end
