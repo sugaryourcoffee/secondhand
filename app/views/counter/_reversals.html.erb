@@ -10,7 +10,7 @@
       <tr>
         <th><%= t('.reversal_number') %></th>
         <th><%= t('.reversal_created_at') %></th>
-        <th><%= t('.reversal_redemption') %></th><th/><th/><th/>  
+        <th><%= t('.reversal_redemption') %></th><th/><th/>
       </tr>
     </thead>
     <tbody>
@@ -18,7 +18,7 @@
         <tr>
           <td><%= reversal.id %></td>
           <td><%= reversal.created_at %></td>
-          <td id='right'><%= reversal.total %></td>
+          <td id='right'><%= number_to_currency reversal.total %></td>
           <td><%= link_to t('.show_reversal'), reversal, 
                   id: "show_reversal_#{reversal.id}" %></td>
           <td><%= link_to t('.print_reversal'), 

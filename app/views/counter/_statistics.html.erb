@@ -14,20 +14,27 @@
         <th><%= t('.sellings') %></th>
         <td id='right'><%= selling_stats.selling_count %></td>
         <td id='right'><%= selling_stats.sold_items_count %></td>
-        <td id='right'><%= selling_stats.average_revenue %></td>
         <td id='right'>
-          <%= selling_stats.revenue + reversal_stats.redemption%>
+          <%= number_to_currency selling_stats.average_revenue %>
+        </td>
+        <td id='right'>
+          <%= number_to_currency(selling_stats.revenue + 
+                                 reversal_stats.redemption)%>
         </td>
       </tr>
       <tr>
         <th><%= t('.reversals') %></th>
         <td id='right'><%= reversal_stats.redemption_count %></td>
         <td id='right'><%= reversal_stats.redeemed_line_items_count %></td>
-        <td id='right'><%= reversal_stats.average_redemption %></td>
-        <td id='right'><%= reversal_stats.redemption %></td>
+        <td id='right'>
+          <%= number_to_currency reversal_stats.average_redemption %>
+        </td>
+        <td id='right'><%= number_to_currency reversal_stats.redemption %></td>
       </tr>
       <tr>
-        <td class="total-line" colspan="5"><%= selling_stats.revenue %></td>
+        <td class="total-line" colspan="5">
+          <%= number_to_currency selling_stats.revenue %>
+        </td>
       </tr>
     </tbody>
   </table>

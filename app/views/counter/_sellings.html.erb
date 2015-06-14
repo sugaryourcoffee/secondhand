@@ -11,7 +11,7 @@
       <tr>
         <th><%= t('.selling_number') %></th>
         <th><%= t('.selling_created_at') %></th>
-        <th><%= t('.selling_revenue') %></th><th/><th/><th/>  
+        <th><%= t('.selling_revenue') %></th><th/><th/>
       </tr>
     </thead>
     <tbody>
@@ -19,7 +19,7 @@
         <tr>
           <td><%= selling.id %></td>
           <td><%= selling.created_at %></td>
-          <td id='right'><%= selling.total %></td>
+          <td id='right'><%= number_to_currency selling.total %></td>
           <td><%= link_to t('.show_selling'), selling_path(selling) %></td>
           <td><%= link_to t('.print_selling'), 
                   print_selling_path(selling) %></td>
