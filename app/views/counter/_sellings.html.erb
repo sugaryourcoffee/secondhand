@@ -1,4 +1,10 @@
 <% if @sellings %>
+  <%= form_tag counter_index_path, method: 'get', class: 'form-search' do %>
+    <%= text_field_tag :selling_id, params[:selling_id],
+                                class: 'input-medium search-query' %>
+    <%= submit_tag t('.search'), name: nil, class: 'btn', 
+                                id: 'search_selling' %>
+  <% end %>
   <table class="table table-hover" >
     <thead>
       <tr>

@@ -1,4 +1,10 @@
 <% if @reversals %>
+  <%= form_tag counter_index_path, method: 'get', class: 'form-search' do %>
+    <%= text_field_tag :reversal_id, params[:reversal_id],
+                                class: 'input-medium search-query' %>
+    <%= submit_tag t('.search'), name: nil, class: 'btn', 
+                                id: 'search_reversal' %>
+  <% end %>
   <table class="table table-hover" >
     <thead>
       <tr>
