@@ -12,7 +12,7 @@
     <tr>
       <td><%= cart.id %></td>
       <td><%= cart.cart_type %></td>
-      <td><%= cart.line_items.count %></td>
+      <td id='right'><%= cart.line_items.count %></td>
       <td><%= link_to t('.show'), cart, id: "show_cart_#{cart.id}" %></td>
     </tr>
   <% end %>
