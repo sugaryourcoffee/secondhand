@@ -47,6 +47,19 @@ class SellingsController < ApplicationController
     end
   end
 
+  def print
+    @selling = Selling.find(params[:id])
+    respond_to do |format|
+      if system('lpr', @selling.to_pdf.to_path)
+        format.html { redirect_to :back,
+                      notice: "Successfully printed selling #{@selling.id}" }
+      else
+        format.html { redirect_to :back,
+                      warning: "Could not print selling #{@selling.id}" }
+      end
+    end
+  end
+
   def check_out
     @selling = Selling.find(params[:id])
   end
