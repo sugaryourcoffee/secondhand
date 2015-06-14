@@ -55,10 +55,10 @@ class ReversalsController < ApplicationController
     @reversal = Reversal.find(params[:id])
     respond_to do |format|
       if system('lpr', @reversal.to_pdf.to_path)
-        format.html { redirect_to reversals_path,
+        format.html { redirect_to :back,
                       notice: "Printed redemption #{@reversal.id}" }
       else
-        format.html { redirect_to reversals_path,
+        format.html { redirect_to :back,
                       warning: "Could not print redemption #{@reversal.id}" }
       end
     end
