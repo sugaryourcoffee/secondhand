@@ -2,8 +2,10 @@ class CounterController < ApplicationController
 
   def index
     @carts     = Cart.not_empty
-    @sellings  = retrieve_sellings(params)
-    @reversals = retrieve_reversals(params)
+    @sellings  = retrieve_sellings(params).paginate(page: params[:page], 
+                                                    per_page: 10)
+    @reversals = retrieve_reversals(params).paginate(page: params[:page], 
+                                                     per_page: 10)
   end
 
   private
