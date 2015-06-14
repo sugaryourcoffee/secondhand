@@ -22,7 +22,7 @@
                   remote: true,
                   data: { confirm: t('.confirm_delete') } %>
           </td>
-          <td><%= link_to t('.print') %></td>
+          <td><%= link_to t('.print'), print_selling_path(selling) %></td>
         </tr>
       <% end %>
     </tbody>
