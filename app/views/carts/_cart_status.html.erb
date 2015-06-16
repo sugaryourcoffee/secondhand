@@ -35,7 +35,9 @@
         </tr>
         <tr>
           <td><%= t('.price') %></td>
-          <td class="list_count"><%= @cart.line_items.last.price %></td>
+          <td class="list_count">
+            <%= number_to_currency @cart.line_items.last.price %>
+          </td>
         </tr>
       </table>
     <% else %>

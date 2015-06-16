@@ -15,11 +15,13 @@
         </tr>
         <tr>
           <td><%= t('.average_redemption_html') %></td>
-          <td class="list_count"><%= stats.average_redemption %></td>
+          <td class="list_count">
+            <%= number_to_currency stats.average_redemption %>
+          </td>
         </tr>
         <tr class="total_line">
           <td><%= t('.redemption') %></td>
-          <td class="list_count"><%= stats.redemption %></td>
+          <td class="list_count"><%= number_to_currency stats.redemption %></td>
         </tr>
       </table>
     </section>

@@ -16,7 +16,7 @@
         <td><%= opponent.call(line_item) %></td>
         <td><%= description.call(line_item) %></td>
         <td><%= size.call(line_item) %></td>
-        <td><%= price.call(line_item) %></td>
+        <td><%= number_to_currency price.call(line_item) %></td>
       </tr>
     <% end %>
   </tbody>

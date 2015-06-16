@@ -14,7 +14,7 @@
           <td><%= reversal.id %></td>
           <td><%= reversal.created_at %></td>
           <td><%= reversal.updated_at %></td>
-          <td><%= reversal.total %></td>
+          <td><%= number_to_currency reversal.total %></td>
           <td><%= link_to t('.show'), reversal, 
                   id: "show_reversal_#{reversal.id}" %></td>
           <td><%= link_to t('.delete'), 

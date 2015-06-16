@@ -7,8 +7,7 @@
       <%= t('.sold_items_status_html') %>
     <% elsif @list.accepted? %>
       <%= t('.accepted_status_html', button: button_to(t('.revoke_list'),
-                                                       accept_acceptance_path(@list),
-                                                       class: "btn btn-warning")) %>
+            accept_acceptance_path(@list), class: "btn btn-warning")) %>
     <% else %>
       <%= t('.not_accepted_status_html') %>
     <% end %>

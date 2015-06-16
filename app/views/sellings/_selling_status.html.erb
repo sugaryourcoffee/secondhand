@@ -15,11 +15,15 @@
         </tr>
         <tr>
           <td><%= t('.average_revenue_html') %></td>
-          <td class="list_count"><%= stats.average_revenue %></td>
+          <td class="list_count">
+            <%= number_to_currency stats.average_revenue %>
+          </td>
         </tr>
         <tr class="total_line">
           <td><%= t('.revenue') %></td>
-          <td class="list_count"><%= stats.revenue %></td>
+          <td class="list_count">
+            <%= number_to_currency stats.revenue %>
+          </td>
         </tr>
       </table>
     </section>

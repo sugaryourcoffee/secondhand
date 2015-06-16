@@ -16,7 +16,9 @@
         </tr>
         <tr>
           <td class="lead"><%= t('.total') %></td>
-          <td class="text-right lead"><%= @selling.total %></td>
+          <td class="text-right lead"
+            ><%= number_to_currency @selling.total %>
+        </td>
         </tr>
       </table>
     </div>
