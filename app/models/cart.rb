@@ -1,5 +1,6 @@
 class Cart < ActiveRecord::Base
-  has_many :line_items, before_add: :ensure_line_item_unique!
+  has_many :line_items, :order => "created_at DESC",
+           before_add: :ensure_line_item_unique!
 
   CART_TYPES = ['SALES', 'REDEMPTION']
 
