@@ -1,3 +1,5 @@
-$("#selling-status").html('<%= escape_javascript(render partial: 'selling_status') %>')
-$("#sellings-table").html('<%= escape_javascript(render partial: 'sellings') %>')
-
+$("#selling-status")
+  .html('<%= escape_javascript(render partial: 'selling_status') %>')
+$("#sellings-table")
+  .html('<%= escape_javascript(render partial: 'sellings') %>')
+$("#flash").html('<%= escape_javascript(render partial: 'layouts/notice') %>')

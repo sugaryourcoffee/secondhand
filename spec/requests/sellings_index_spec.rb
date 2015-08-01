@@ -98,6 +98,8 @@ describe "Selling index page" do
       page.should have_text selling_id
       page.should have_text selling_revenue
 
+      page.should have_text "Cannot delete selling when containing items"
+
       items.reload.each do |item|
         item.selling_id.should_not be_nil
       end

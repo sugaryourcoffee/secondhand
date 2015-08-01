@@ -1,0 +1,5 @@
+$("#reversal-status")
+  .html('<%= escape_javascript(render partial: 'reversal_status') %>')
+$("#sellings-table")
+  .html('<%= escape_javascript(render partial: 'reversals') %>')
+$("#flash").html('<%= escape_javascript(render partial: 'layouts/notice') %>')

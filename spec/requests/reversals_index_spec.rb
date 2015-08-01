@@ -85,6 +85,18 @@ describe "Reversals index page" do
       page.should have_text "Printed redemption #{reversal2.id}"
     end
 
+    it "should not delete a reversal with items", :js => true do
+      click_link "delete_reversal_#{reversal1.id}"
+      modal = page.driver.browser.switch_to.alert
+      modal.accept
+
+      page.current_path.should eq reversals_path(locale: :en)
+
+      page.should have_text reversal1.id
+      page.should have_text reversal1.total
+
+      page.should have_text "Cannot delete redemption when containing items"
+    end
   end
 
 end

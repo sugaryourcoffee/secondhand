@@ -22,7 +22,7 @@ class Reversal < ActiveRecord::Base
       if line_items.empty?
         true
       else
-        errors.add(:line_item, "Cannot delete reversal with line items") 
+        errors.add(:line_item, "Cannot delete redemption when containing items")
         false
       end
     end
