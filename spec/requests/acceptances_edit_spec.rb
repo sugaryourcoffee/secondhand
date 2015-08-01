@@ -173,7 +173,7 @@ describe "Acceptances" do
 
       page.should have_text "The description"
       page.should have_text "The size"
-      page.should have_text "1234.5"
+      page.should have_text "1,234.50"
       page.should_not have_button "Update"
     end
 

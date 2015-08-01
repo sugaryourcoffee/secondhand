@@ -35,7 +35,7 @@ describe "Sell and redeem" do
 
     page.should have_text Selling.last.total
 
-    click_link "Reversal"
+    click_link "Redemption"
 
     fill_in "List", with: list.list_number
     fill_in "Item", with: list.items.first.item_number

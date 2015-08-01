@@ -72,7 +72,7 @@ describe "Item referenced" do
   it "by a redemption should not be deleted in acceptance dialog" do
     expect { click_button "Check out" }.to change(Selling, :count).by(1)
 
-    click_link "Reversal"
+    click_link "Redemption"
 
     fill_in "List", with: list.list_number
     fill_in "Item", with: list.items.first.item_number
@@ -117,7 +117,7 @@ describe "Item referenced" do
   it "by a redemption should not be deleted in user list page" do
     expect { click_button "Check out" }.to change(Selling, :count).by(1)
 
-    click_link "Reversal"
+    click_link "Redemption"
 
     fill_in "List", with: list.list_number
     fill_in "Item", with: list.items.first.item_number
