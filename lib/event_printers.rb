@@ -41,7 +41,7 @@ module EventPrinters
 
   def footer(pdf)
     footer_left   = Time.now.strftime("%Y-%m-%d / %H:%M")
-    footer_center = I18n.t('next_event_date', date: "05.03.2015")
+    footer_center = information || "mail@boerse-burgthann.de"
 
     pdf.repeat(:all) do
       pdf.text_box(footer_left, options = {
