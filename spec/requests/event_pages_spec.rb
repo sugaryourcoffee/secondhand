@@ -168,6 +168,7 @@ describe "event pages" do
       select '30', from: "event_collection_start_time_5i"
       select '15', from: "event_collection_end_time_4i"
       select '30', from: "event_collection_end_time_5i"
+      fill_in "Information", with: "Next event 19.09.2015 | Newsletter"
       expect { click_button "Create Event" }.to change(Event, :count).by(1)
     end
   end
