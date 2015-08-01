@@ -10,7 +10,7 @@ module SellingsExporter
     header_right  = "Verkauf #{id}"
 
     footer_left   = updated_at.strftime("%Y-%m-%d / %H:%M")
-    footer_center = "Next event on xx.xx.xxxx"
+    footer_center = event.information || "mail@boerse-burgthann.de"
 
     pdf = Prawn::Document.new(page_size: "A4")
 
