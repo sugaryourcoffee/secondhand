@@ -26,6 +26,7 @@ class Event < ActiveRecord::Base
 
   attr_accessible :deduction, :event_date, :fee, :location, 
     :max_items_per_list, :max_lists, :provision, :title, :active, 
+    :information,
     :list_closing_date, 
     :delivery_location, 
     :delivery_date, :delivery_start_time, :delivery_end_time, 

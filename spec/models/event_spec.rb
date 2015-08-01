@@ -23,6 +23,7 @@ describe Event do
     event.should respond_to(:collection_date)
     event.should respond_to(:collection_start_time)
     event.should respond_to(:collection_end_time)
+    event.should respond_to(:information)
   end
 
   it "requires a title" do
