@@ -140,13 +140,14 @@ To install Ruby we invoke
 
     $ rvm install 1.9.3
    
-We activate Ruby 1.9.3 with
+We activate the current Ruby 1.9.3 version with
 
     $ rvm use 1.9.3
 
 And check whether it is installed and active
 
     $ ruby -v
+    ruby 1.9.3p551 (2014-11-13 revision 48407) [x86_64-linux]
 
 ### Install Rails
 Next we create a Gemset to install Rails to
@@ -158,6 +159,7 @@ Next we create a Gemset to install Rails to
 Now we check the rails version installed
 
     $ rails -v
+    Rails 3.2.11
 
 ## Setup Apache 2
 We already have setup Apache 2 and all the Phusion Passenger configuration. On
@@ -177,7 +179,7 @@ To enable Apache 2 to host secondhand we add a virtual host to
    <VirtualHost *:8082>
       ServerName secondhand
       DocumentRoot /var/www/secondhand/current/public    
-      PassengerRuby /home/pierre/.rvm/gems/ruby-1.9.3p547@rails3211/wrappers/ruby
+      PassengerRuby /home/pierre/.rvm/gems/ruby-1.9.3p551@rails3211/wrappers/ruby
       <Directory /var/www/secondhand/current/public>
          # This relaxes Apache security settings.
          AllowOverride all
@@ -194,7 +196,70 @@ In the virtual host we indicate with `PassengerRuby` that we want to use
 Ruby 1.9.3. Other applications might use different Rubies and can indicate with
 that directive which Ruby to use.
 
-Now we restart Apache 2 with the new configuration
+To enable the virtual host we call
 
+    $ sudo a2ensite secondhand.conf
+
+Now we reload the configuration and restart Apache 2 with the new configuration
+
+    $ service apache2 reload
     $ sudo apachectl restart
+    AH00112: Warning: DocumentRoot [/var/www/secondhand/current/public] \
+    does not exist
+
+The error message is a good sign as our configuration is recognized by Apache 2.
+It is only telling us that we don't have the application deployed yet.
+
+Copy the production database to the staging database
+====================================================
+We have a secondhand version on the production server running. To see whether 
+an upgrade to the new version will work we need the database of the previous
+version. That is we have to copy the production database from the production
+server to the staging database of the staging server.
+
+## Create a dump file of the production database
+We first dump the production database. The production database lives on the
+production server `mercury` so we ssh to it
+
+    $ ssh mercury
+
+Then we dump the production database `secondhand_production` with `mysqldump`
+
+    $ mysqldump -uroot -proot --quick --single-transaction --triggers \
+      secondhand_production | gzip > secondhand.sql.gz
+
+## Copy the dump file to the staging server
+The next step is to copy the database dump file to the staging server `uranus`.
+To copy from `mercury` to `uranus` we use `scp`
+
+    $ scp secondhand.sql.gz user@uranus:secondhand.sql.gz
+
+## Restore the production database on the staging server
+In a final step we restore the database. To do that we first have to create the
+database where we want to restore the database dump-file to. Next steps are
+done on the staging server `uranus`. Hence our first step is to ssh to uranus.
+
+    $ ssh uranus
+
+### Create the database
+We create a database where we will restore our dump-file to
+
+    $ mysql -uroot -p
+    mysql> create database secondhand_staging default character set utf8;
+    mysql> grant all privileges on secondhand_staging.*
+        -> to 'pierre'@'localhost' identified by 'secret_password';
+    mysql> exit
+
+### Restore the database
+Even though our production database is named secondhand\_production we can
+restore its dump-file to our newly created staging database with a different
+name secondhand\_staging
+
+    $ gunzip < secondhand.sql.gz | mysql -uroot -proot \
+      secondhand_staging
+
+Now we are ready to deploy our new secondhand version to our staging server.
+
+Deploy to the staging server
+============================
 
