@@ -225,7 +225,7 @@ production server `mercury` so we ssh to it
 
 Then we dump the production database `secondhand_production` with `mysqldump`
 
-    $ mysqldump -uroot -proot --quick --single-transaction --triggers \
+    $ mysqldump -uroot -p --quick --single-transaction --triggers \
       secondhand_production | gzip > secondhand.sql.gz
 
 ## Copy the dump file to the staging server
@@ -255,11 +255,40 @@ Even though our production database is named secondhand\_production we can
 restore its dump-file to our newly created staging database with a different
 name secondhand\_staging
 
-    $ gunzip < secondhand.sql.gz | mysql -uroot -proot \
-      secondhand_staging
+    $ gunzip < secondhand.sql.gz | mysql -uroot -p secondhand_staging
 
 Now we are ready to deploy our new secondhand version to our staging server.
 
 Deploy to the staging server
 ============================
+To deploy our application secondhand to the staging server we issue the 
+following commands
+
+    $ cap staging deploy:setup
+
+This will create the necessary directories on the staging server, that is
+`releases` and `shared`
+
+    $ cap staging deploy:check
+
+This will check if all dependencies are satisfied. If there is a missing 
+dependency fix it and redo.
+
+    $ cap staging deploy:cold
+
+This has to be done only at the first deployment. Subsequent deployments
+can be done with
+
+    $ cap staging deploy
+
+and if the database schema has changed we have to do
+
+    $ cap staging deploy:migrations
+
+A description of the tasks can be found 
+[here](http://capitate.rubyforge.org/recipes/deploy.html)
+
+Checkup the application
+=======================
+Now we should be able to access [secondhand](http://syc.dyndns.org:8082).
 
