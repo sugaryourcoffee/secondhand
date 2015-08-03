@@ -18,7 +18,7 @@ What we want to accomplish is
 * Copy the production database from the production to the staging application
 * Deploy the new version to the staging server
 * Test the new version
-* Deplay to production after testing the new application on the staging server
+* Deploy to production after testing the new application on the staging server
 
 Setup the Client machine
 ========================
@@ -26,6 +26,7 @@ We have to do some configuration on the client machine
 
 * Setup Capistrano
 * Assign a URI to the production and staging server
+* Add a rails staging environment
 * Add a staging group to the database.yml file
 
 ## Install Capistrano
@@ -315,4 +316,21 @@ A description of the tasks can be found
 Checkup the application
 =======================
 Now we should be able to access [secondhand](http://syc.dyndns.org:8082).
+
+Deploy to production server
+===========================
+After we have tested our application, that is migration of the database to the
+new version, functionality and robustness we can deploy to production.
+
+    $ cap production deploy:setup
+    $ cap production deploy:check
+    $ cap production deploy:cold
+
+And as described above deploy subsequent deployments with
+
+    $ cap production deploy
+
+And in cases we have changed database schemas 
+
+    $ cap production deploy:migrations
 
