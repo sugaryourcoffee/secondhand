@@ -8,7 +8,7 @@ This is the description of deploying secondhand with
 
 Secondhand has a production server at 
 [syc.dyndns.org:8080](http://syc.dyndns.org:8080) and a staging server at 
-[syc.dyndns.org:8081](http://syc.dyndns.org:8081). The staging server is 
+[syc.dyndns.org:8081](http://syc.dyndns.org:8082). The staging server is 
 hosting multiple rails applications. We will refer to the production server 
 with `mercury` and to the staging server with `uranus`.
 
@@ -316,6 +316,19 @@ A description of the tasks can be found
 Checkup the application
 =======================
 Now we should be able to access [secondhand](http://syc.dyndns.org:8082).
+
+## Staging console
+To look at the staging application we fire up the console in the staging
+environment
+
+    $ rails c staging
+
+We now can work with our application at the console
+
+## Log files
+To watch the application's log file we can use
+
+    $ tail -f log/staging.log
 
 Deploy to production server
 ===========================
