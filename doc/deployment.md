@@ -2,7 +2,7 @@ Deployment
 ==========
 This is the description of deploying secondhand with
 
-* Ruby 1.9.3p547
+* Ruby 1.9.3p551
 * Rails 3.2.11
 * Capistrano 2.15.5
 
@@ -157,7 +157,7 @@ web directory. We create a directory where we want to host our application
     $ cd secondhand
 
 ## Install Ruby and Rails
-Secondhand is using Ruby 1.9.3p547 and Rails 3.2.11 so we install it with RVM
+Secondhand is using Ruby 1.9.3p551 and Rails 3.2.11 so we install it with RVM
 
 ### Install Ruby
 To install Ruby we invoke
@@ -177,7 +177,7 @@ And check whether it is installed and active
 Next we create a Gemset to install Rails to
 
     $ rvm gemset create rails3211
-    $ rvm ruby-1.9.3-p547@rails3211
+    $ rvm ruby-1.9.3-p551@rails3211
     $ gem install rails --version 3.2.11 --no-ri --no-rdoc
 
 Now we check the rails version installed
@@ -211,8 +211,8 @@ To enable Apache 2 to host secondhand we add a virtual host to
          Options -MultiViews
          # Uncomment this if you're on Apache >= 2.4:
          Require all granted
-         # apptrack is using the Ruby version in the gemset
       </Directory>
+      RackEnv staging
    </VirtualHost>
 ```
 
