@@ -109,6 +109,30 @@ group to `config/database.yml`
       password: password
       host: localhost
 
+## Add a staging environment
+Our staging environment should mimic as much as possible the production
+environment. But as we are on different servers and having different ports, we
+need a separate environment for staging.
+
+Copy the `config/environments/production.rb` to `config/environments.staing.rb`
+
+    $ cp config/environments/production.rb config/environments/staging.rb
+
+Change 
+
+    config.action_mailer.default_url_options = { host: "syc.dyndns.org:8080" }
+
+to
+
+    config.action_mailer.default_url_options = { host: "syc.dyndns.org:8082" }
+    
+## Commit to Github
+When deploying our application with Capistrano our application will be pulled
+from Github. To have all changes on Github we do a push to Github
+
+    $ git commit -am "prepare for staging deployment"
+    $ git push
+
 ## Assign a hostname to the staging server
 In the Capistrano configuration files we refer to the servers with 
 `secondhand.uranus` and `secondhand.mercury`. To make that work we have to
