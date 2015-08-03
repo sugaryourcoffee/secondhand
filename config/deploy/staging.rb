@@ -31,7 +31,15 @@ namespace :deploy do
 end
 
 after 'deploy:create_symlink', 'copy_database_yml'
+
 desc "copy shared/database.yml to current/config/database.yml"
 task :copy_database_yml do
-  run "cp #{shared_path}/database.yml #{current_path}/config/database.yml"
+  config_dir = "#{shared_path}/config"
+
+  unless run("if [ -f '#{config_dir}/database.yml' ]; then echo -n 'true'; fi")
+    run "mkdir -p #{config_dir}" 
+    upload("config/database.yml", "#{config_dir}/database.yml")
+  end
+
+  run "cp #{config_dir}/database.yml #{current_path}/config/database.yml"
 end
