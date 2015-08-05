@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def logo
+    "Secondhand #{Rails.env.production? ? '' : Rails.env.upcase}"
+  end
+
   def full_title(page_title)
     base_title = "Secondhand"
     if page_title.empty?
