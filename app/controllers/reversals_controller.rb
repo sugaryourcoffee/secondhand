@@ -37,8 +37,8 @@ class ReversalsController < ApplicationController
           format.html { redirect_to check_out_reversal_path(@reversal), 
                         notice: "Successfully created redemption and printed" }
         else
-          format.html { redirect_to check_out_selling_path(@reversal), 
-                        warning: "Successfully create redemption but could not be printed" }
+          format.html { redirect_to check_out_reversal_path(@reversal), 
+           warning: "Successfully create redemption but could not be printed" }
         end
       else
         format.html { redirect_to line_item_collection_carts_path, 
