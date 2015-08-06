@@ -38,11 +38,11 @@ class ReversalsController < ApplicationController
                         notice: "Successfully created redemption and printed" }
         else
           format.html { redirect_to check_out_reversal_path(@reversal), 
-           warning: "Successfully create redemption but could not be printed" }
+             alert: "Successfully create redemption but could not be printed" }
         end
       else
         format.html { redirect_to line_item_collection_carts_path, 
-                      error: "Could not create redemption" }
+                      alert: "Could not create redemption" }
       end
     end
   end
@@ -59,7 +59,7 @@ class ReversalsController < ApplicationController
                       notice: "Printed redemption #{@reversal.id}" }
       else
         format.html { redirect_to :back,
-                      warning: "Could not print redemption #{@reversal.id}" }
+                      alert: "Could not print redemption #{@reversal.id}" }
       end
     end
 

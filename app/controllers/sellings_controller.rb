@@ -38,11 +38,11 @@ class SellingsController < ApplicationController
                         notice: "Successfully created selling and printed" }
         else
           format.html { redirect_to check_out_selling_path(@selling), 
-                        warning: "Successfully create selling but could not be printed" }
+             alert: "Successfully create selling but could not be printed" }
         end
       else
         format.html { redirect_to item_collection_carts_path, 
-                      error: "Could not create selling" }
+                      alert: "Could not create selling" }
       end
     end
   end
@@ -55,7 +55,7 @@ class SellingsController < ApplicationController
                       notice: "Successfully printed selling #{@selling.id}" }
       else
         format.html { redirect_to :back,
-                      warning: "Could not print selling #{@selling.id}" }
+                      alert: "Could not print selling #{@selling.id}" }
       end
     end
   end
