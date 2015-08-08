@@ -17,8 +17,7 @@ class ListsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @lists }
-      format.zip  { send_file List.as_csv_zip,
-                              type: 'application/zip' }
+      format.zip  { send_file List.as_csv_zip, type: 'application/zip' }
     end
   end
 

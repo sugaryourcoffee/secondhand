@@ -219,7 +219,7 @@ class List < ActiveRecord::Base
   end
 
   def as_csv_file
-    csv_file = "#{sprintf("%03d", list_number)}.csv"
+    csv_file = "tmp/#{sprintf("%03d", list_number)}.csv"
     CSV.open(csv_file, 'w', encoding: 'u', col_sep: ';') do |csv|
       to_csv(csv)
     end
@@ -227,21 +227,26 @@ class List < ActiveRecord::Base
   end
 
   def self.as_csv_zip
+    download_file = "tmp/csv.tgz"
+    files = []
+
     closed_lists = List.where('sent_on IS NOT ?', nil)
+
     if closed_lists.empty?
-      errors.add(:base, I18n.t('.no_closed_files_to_zip'))
+      File.write("tmp/no_closed_files", I18n.t('.no_closed_files_to_zip'))
+      files << "tmp/no_closed_files"
     else
-      csvs = []
-      closed_lists.each { |list| csvs << list.as_csv_file }
-      compress_file = "csv.tar.gz"
-      tar_command = "tar cfz #{compress_file} #{csvs.join(" ")}"
-      stdout, stderr, status = Open3.capture3(tar_command)
-      unless status.exitstatus == 0
-        errors.add(:base, stderr)
-      else
-        compress_file
-      end
+      closed_lists.each { |list| files << list.as_csv_file }
     end
+
+    tar_command = "tar czf #{download_file} #{files.join(" ")}"
+    stdout, stderr, status = Open3.capture3(tar_command)
+
+    unless status.exitstatus == 0
+      raise stderr
+    end
+
+    download_file
   end
 
   def list_pdf

@@ -748,3 +748,4 @@ en:
   list_provision:       "Provision %{provision}%"
   list_fee:             "List Fee"
   list_payback:         "Payback"
+  no_closed_files_to_zip: "No closed files available for export"

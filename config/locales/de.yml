@@ -900,3 +900,4 @@ de:
   list_provision:       "Provision %{provision}%"
   list_fee:             "Listengebühr"
   list_payback:         "Auszahlung"
+  no_closed_files_to_zip: "Keine abgeschlossenen Listen vorhanden für Export"
