@@ -189,7 +189,7 @@ de:
   reversals:
     index:
       reversal:   "Gutschriften"
-      go_to_cart: "Zum Einkaufswagen"
+      go_to_cart: "Zur Warenrückgabe"
     show:
       title:            "Gutschrift"
       heading:          "Gutschrift %{number}"
@@ -316,7 +316,7 @@ de:
       Acceptance: "Annahme"
       Cart:       "Einkaufswagen"
       Counter:    "Kasse"
-      Reversal:   "Gutschrift"
+      Reversal:   "Warenrückgabe"
       Sellings:   "Verkäufe"
       Reversals:  "Gutschriften"
       Admin:    "Verwaltung"

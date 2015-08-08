@@ -189,7 +189,7 @@ en:
   reversals:
     index:
       reversal:   "Redemptions"
-      go_to_cart: "Go to Cart"
+      go_to_cart: "Go to goods return"
     show:
       title:            "Redemption"
       heading:          "Redemption %{number}"
