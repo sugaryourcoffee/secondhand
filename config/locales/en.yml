@@ -368,7 +368,7 @@ en:
 
     show:
       List_Registration: "List Registration" 
-      Enter_registration_code: "Enter registration code. Note: 0 (number), O (letter)"
+      Enter_registration_code: "Enter registration code:"
       Register_List: "Register List"
       Deregister_list: "Deregister"
       sure_deregister: "If you deregister your list all items will be deleted and the list will be removed.\n\nDo you want to deregister your list now?"

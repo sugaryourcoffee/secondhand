@@ -369,7 +369,7 @@ de:
 
     show:
       List_Registration: "Listen Registrierung" 
-      Enter_registration_code: "Registrierungscode eingeben. Achtung: 0 (Nummer), O (Buchstabe)"
+      Enter_registration_code: "Registrierungscode eingeben:"
       Register_List: "Liste Registrieren"
       Deregister_list: "Freigeben"
       sure_deregister: "Wenn Sie Ihre Liste freigeben werden alle Artikel daraus gelöscht und die Liste entfernt.\n\nMöchten Sie Ihre Liste jetzt freigeben?"
