@@ -1,5 +1,3 @@
-#ruby-gemset=rails3211
-
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
