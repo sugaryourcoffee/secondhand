@@ -69,10 +69,7 @@ de:
         <li><strong>Etiketten</strong> mit richtiger <strong>Farbe</strong> und mit der richtigen 
         <strong>Listennummer</strong></li>
         <li>Liste enthält nur <strong>erlaubte Artikel</strong></li>
-      </ul>
-      <p><strong>Elektronische Spiele</strong> aus der Schachtel entnehmen und mit der Listen- und
-      Artikelnummer beschriften.</p><p>Elektronische Spiele werden dem Käufer an der Kasse 
-      ausgehändigt.</p>"
+      </ul>"
       revoke_list: "Listenannahme rückgängig machen"
       cancel:      "Zurück zur Listenübersicht"
     lists:

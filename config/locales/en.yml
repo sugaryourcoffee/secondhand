@@ -69,10 +69,7 @@ en:
         <li><strong>labels</strong> with correct <strong>label color</strong> and correct 
         <strong>list number</strong></li>
         <li>that list contains only <strong>allowed items</strong></li>
-      </ul>
-      <p>If list contains <strong>electronic games</strong> take out the game from the box and 
-         label it with list number and item number.</p><p>The buyer will receive the electronic game
-         at the cashier.</p>"
+      </ul>"
       revoke_list: "Revoke list acceptance"
       cancel:      "Back to list overview"
     lists:
