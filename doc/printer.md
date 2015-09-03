@@ -76,7 +76,7 @@ We make following additions to `/etc/cups/cupsd.conf` in the
 This will give access from all machines that are within the subnet `192.168.178`
 on the local area network.
 
-To make the the changes take effect we have to restart the CUPS server with
+To make the changes take effect we have to restart the CUPS server with
 
     $ sudo service cups restart
 
@@ -86,7 +86,7 @@ CUPS web interface.
 Install a Printer
 -----------------
 In the CUPS web interface click the *Administration* tab and click the button
-*Add Printer*. You have to provide your username and password which is the same
+*Add Printer*. You have to provide your user name and password which is the same
 as you use to login to your machine where CUPS is installed. Now you are 
 forwarded to the *Add Printer* page. Select the printer you want to add and 
 press the *Continue* button. Now add the name, description and location, select
@@ -94,9 +94,9 @@ whether you want to share this printer, that is other machines can see the
 printer in their printer selection without installing the printer on their 
 machine. To proceed press the *Continue* Button. Now select the model of your
 printer. By selecting a model the corresponding printer driver will be
-installed. If you don't find the printer driver search the web for the prnter
+installed. If you don't find the printer driver search the web for the printer
 driver. The printer driver usually comes in a zipped file. Unpack the zip file
-and and select the *Browse...* button in the CUPS web interface. Navigate to
+and select the *Browse...* button in the CUPS web interface. Navigate to
 the directory where you unpacked the drivers and select the appropriate *PPD* 
 file for your printer. In my case it is a *Canon LPB6650dn*. The driver is not
 available in the *Model* select box. So I have to download the driver from the
@@ -121,7 +121,7 @@ content.
     uranus$ mv eng_uk canon-ufr-II-v300-en
 
 Then change to the directory and find the *deb* package for your machine, that
-is 32 or 64 bit. Now install the debian packages with *dpkg*.
+is 32 or 64 bit. Now install the Debian packages with *dpkg*.
 
     uranus$ sudo dpkg -i cndrvcups-common_3.10-1_amd64.deb
 
@@ -138,7 +138,7 @@ Next you need to install the *urf2* package
 
     uranus$ sudo dpkg -i cndrvcups-ufr2-uk_3.00-1_amd64.deb
 
-And again if you get an error about missig dependencies proceede as with the
+And again if you get an error about missing dependencies proceed as with the
 installation of the *commons* package above.
 
 When installed go back to the CUPS web interface and go back one page and 
@@ -174,7 +174,7 @@ To actually print a file we can do so with
     uranus$ lpr file-to-print
 
 If it prints an error saying `lpr: Error - no default destination available.` it
-means that you have eather specify the printer that you want to print to or to
+means that you have ether specify the printer that you want to print to or to
 set a default printer.
 
 To specify a printer enter
@@ -182,7 +182,7 @@ To specify a printer enter
     uranus$ lpr -P printer file-to-print
 
 To set a default printer go to the CUPS web interface and in the page where you
-can manage the printer click the *Administration* drop down menue and select
+can manage the printer click the *Administration* drop down menu and select
 *Set as Server default*. If you want to print from within an application it is
 best to select a default printer.
 
@@ -227,7 +227,7 @@ Resources
 ---------
 More detailed information can be found in following book and website
 
-* [The Linux Command Line]() from Williar E. Schotts, Jr.
+* [The Linux Command Line]() from William E. Schotts, Jr.
 * [CUPS Website](https://www.cups.org/documentation.php)
 
 and if you have installed CUPS on your laptop you can view the web site at
