@@ -120,26 +120,14 @@ content.
 
     uranus$ mv eng_uk canon-ufr-II-v300-en
 
-Then change to the directory and find the *deb* package for your machine, that
-is 32 or 64 bit. Now install the Debian packages with *dpkg*.
+Then change to the directory and find the `install.sh` file. The file needs to
+have execute rights.
 
-    uranus$ sudo dpkg -i cndrvcups-common_3.10-1_amd64.deb
+    uranus$ chmod 774 install.sh
 
-You might get an error about missing dependencies. Then install the missing
-dependencies with
+Now start the installation with
 
-    uranus$ sudo apt-get install -f
-
-Then finish the installation of the commons package with
-
-    uranus$ sudo dpkg -i cndrvcups-common_3.10-1_amd64.deb
-
-Next you need to install the *urf2* package
-
-    uranus$ sudo dpkg -i cndrvcups-ufr2-uk_3.00-1_amd64.deb
-
-And again if you get an error about missing dependencies proceed as with the
-installation of the *commons* package above.
+    uranus$ sudo ./install.sh
 
 When installed go back to the CUPS web interface and go back one page and 
 press the *continue* button to load the new drivers. Now navigate to the 
@@ -213,7 +201,6 @@ The corresponding route in `config/routes.rb` looks like this.
 
       resources :sellings do
         member do
-          get :check_out
           get :print
         end
       end
