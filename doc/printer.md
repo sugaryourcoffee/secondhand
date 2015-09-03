@@ -220,7 +220,7 @@ The corresponding route in `config/routes.rb` looks like this.
 
 Trouble Shooting
 ----------------
-If you file doesn't get printed you can look at the log files at
+If your file doesn't get printed you can look at the log files at
 `/var/log/cups/`.
 
 Resources
@@ -232,5 +232,5 @@ More detailed information can be found in following book and website
 
 and if you have installed CUPS on your laptop you can view the web site at
 
-* [localhost:631](localhost:631)
+* [localhost:631](http://localhost:631)
 
