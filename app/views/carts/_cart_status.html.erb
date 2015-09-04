@@ -10,7 +10,7 @@
       </tr>
       <tr class="total_line">
         <td><%= t('.total') %></td>
-        <td class="list_count"><%= @cart.total %></td>
+        <td class="list_count"><%= number_to_currency @cart.total %></td>
       </tr>
     </table>
   </section>
@@ -20,23 +20,23 @@
     <h5><%= t('.last_added_item') %></h5>
   </header>
   <section>
-    <% if @cart.line_items.last %>
-      <p><%= @cart.line_items.last.description %></p>
+    <% if @cart.line_items.first %>
+      <p><%= @cart.line_items.first.description %></p>
       <table>
         <tr>
           <td><%= t('.item') %></td>
           <td class="list_count">
-            <%= list_item_number_for(@cart.line_items.last.item) %>
+            <%= list_item_number_for(@cart.line_items.first.item) %>
           </td>
         </tr>
         <tr>
           <td><%= t('.size') %></td>
-          <td class="list_count"><%= @cart.line_items.last.size %></td>
+          <td class="list_count"><%= @cart.line_items.first.size %></td>
         </tr>
         <tr>
           <td><%= t('.price') %></td>
           <td class="list_count">
-            <%= number_to_currency @cart.line_items.last.price %>
+            <%= number_to_currency @cart.line_items.first.price %>
           </td>
         </tr>
       </table>
