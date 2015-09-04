@@ -7,6 +7,7 @@
         <%= label_tag :search_list_number, 
           t('carts.item_collection_header.select_list_number') %>
         <%= text_field_tag :search_list_number, params[:search_list_number], 
+                           autofocus: true, onfocus: "this.select()",
                            class: "input-medium search-query" %>
         <%= label_tag :search_item_number, 
           t('carts.item_collection_header.select_item_number') %>
