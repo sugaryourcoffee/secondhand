@@ -1,7 +1,7 @@
 Setting up CUPS on Ubuntu Server
 ================================
 Secondhand prints receipts on check out to a network printer. In order to 
-accomplish this we have to install CUPS (common Unix Print Server) and the
+accomplish this we have to install CUPS (Common Unix Print System) and the
 appropriate driver for the printer to use. What we will do is
 
 * install CUPS
@@ -9,6 +9,9 @@ appropriate driver for the printer to use. What we will do is
 * test the printer
 * get to know command line programs to manage print jobs
 * call the printer from within the secondhand application
+
+In the following the server where we install CUPS is *uranus* with the IP 
+address *192.168.178.66*.
 
 Install CUPS
 ------------
@@ -87,20 +90,20 @@ Install a Printer
 -----------------
 In the CUPS web interface click the *Administration* tab and click the button
 *Add Printer*. You have to provide your user name and password which is the same
-as you use to login to your machine where CUPS is installed. Now you are 
-forwarded to the *Add Printer* page. Select the printer you want to add and 
-press the *Continue* button. Now add the name, description and location, select
-whether you want to share this printer, that is other machines can see the 
-printer in their printer selection without installing the printer on their 
-machine. To proceed press the *Continue* Button. Now select the model of your
-printer. By selecting a model the corresponding printer driver will be
-installed. If you don't find the printer driver search the web for the printer
-driver. The printer driver usually comes in a zipped file. Unpack the zip file
-and select the *Browse...* button in the CUPS web interface. Navigate to
-the directory where you unpacked the drivers and select the appropriate *PPD* 
-file for your printer. In my case it is a *Canon LPB6650dn*. The driver is not
-available in the *Model* select box. So I have to download the driver from the
-Internet at [Canon Drivers](http://www.canon-europe.com/support/consumer_products/products/printers/laser/i-sensys_lbp6650dn.aspx?type=drivers&driverdetailid=tcm:13-1293638&os=Linux%20%2864-bit%29&language=EN).
+as you use to login to your machine where CUPS is installed. That user also has
+to be in the user group *lpadmin*. Now you are forwarded to the *Add Printer* 
+page. Select the printer you want to add and press the *Continue* button. Now 
+add the name, description and location, select whether you want to share this 
+printer, that is other machines can see the printer in their printer selection 
+without installing the printer on their machine. To proceed press the *Continue*
+Button. Now select the model of your printer. By selecting a model the 
+corresponding printer driver will be installed. If you don't find the printer 
+driver search the web for the printer driver. The printer driver usually comes 
+in a zipped file. Unpack the zip file and select the *Browse...* button in the 
+CUPS web interface. Navigate to the directory where you unpacked the drivers and
+select the appropriate *PPD* file for your printer. In my case it is a *Canon 
+LPB6650dn*. The driver is not available in the *Model* select box. So I have to 
+download the driver from the Internet at [Canon Drivers](http://www.canon-europe.com/support/consumer_products/products/printers/laser/i-sensys_lbp6650dn.aspx?type=drivers&driverdetailid=tcm:13-1293638&os=Linux%20%2864-bit%29&language=EN). 
 When downloaded to my local machine I copy it to the CUPS server machine.
 
     saltspring$ scp o1581en_linux_UFRII_v300.zip \
@@ -136,9 +139,9 @@ button.
 
 You will be forwarded to a page where you can configure the printer settings.
 Finally check whether you can print. Select the tab "Printers" and within the
-*Printers* page select the newly installed printer. Click the drop down menu
-and select *Print test page*. If everything is correctly installed the printer
-should print the test page.
+*Printers* page select the newly installed printer. Click the *maintenance* dro
+down menu and select *Print test page*. If everything is correctly installed the
+printer should print the test page.
 
 Using the Command Line to Manage the Printer
 --------------------------------------------
@@ -162,7 +165,7 @@ To actually print a file we can do so with
     uranus$ lpr file-to-print
 
 If it prints an error saying `lpr: Error - no default destination available.` it
-means that you have ether specify the printer that you want to print to or to
+means that you ether have to specify the printer that you want to print to or to
 set a default printer.
 
 To specify a printer enter
@@ -176,7 +179,7 @@ best to select a default printer.
 
 Print from within Rails Applications
 ------------------------------------
-To print from within an Rails application we can do so with a *system* call in
+To print from within a Rails application we can do so with a *system* call in
 the controller. In this case we are in the 
 `app/controllers/sellings_controller.rb` with a *print* route set in 
 `config/routes.rb`.
@@ -216,6 +219,7 @@ More detailed information can be found in following book and website
 
 * [The Linux Command Line]() from William E. Schotts, Jr.
 * [CUPS Website](https://www.cups.org/documentation.php)
+* [CUPS Wiki on Ubuntu Users](https://wiki.ubuntuusers.de/cups) in German
 
 and if you have installed CUPS on your laptop you can view the web site at
 
