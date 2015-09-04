@@ -23,6 +23,7 @@ class Event < ActiveRecord::Base
   has_many :lists, dependent: :destroy
   has_many :users, through: :lists
   has_many :sellings, dependent: :destroy
+  has_many :reversals
 
   attr_accessible :deduction, :event_date, :fee, :location, 
     :max_items_per_list, :max_lists, :provision, :title, :active, 
@@ -42,6 +43,16 @@ class Event < ActiveRecord::Base
   validates :deduction, :fee, divisable: {divisor: 0.5}
 
   before_destroy :ensure_not_active, :ensure_has_no_registered_lists
+
+  # Retrieve count of sellings for this event
+  def sellings_count
+    sellings.count
+  end
+
+  # Retrieve count of reversals for this event
+  def reversals_count
+    reversals.count
+  end
 
   # Returns the registered lists for the this event
   def registered_lists
