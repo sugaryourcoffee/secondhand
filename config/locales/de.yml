@@ -58,6 +58,8 @@ de:
       total_list_count:          "Gesamt"
     list_status:
       list_status:              "Listenstatus"
+      sold_items_status_html:   "<p>Listenannahme kann nicht zurückgenommen werden, da die Liste <strong>verkaufte Artikel</strong> enthält.</p>
+      <p>Eine Rücknahme ist möglich indem Sie die verkauften Artikel zur <strong>Gutschrift</strong> zurücknehmen oder ein <strong>Administrator</strong> über die Schaltfläche <strong>Liste zurücknehmen</strong> die Liste zum Bearbeiten freigibt.</p>"
       accepted_status_html:     "<p><strong>Liste wurde schon angenommen</strong>.</p>
       <p>Um die Liste zu bearbeiten müssen Sie die Listenannahme über die Schaltfläche rückgängig 
       machen %{button}</p>"
