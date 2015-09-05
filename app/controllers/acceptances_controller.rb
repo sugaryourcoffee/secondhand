@@ -91,14 +91,19 @@ class AcceptancesController < ApplicationController
     respond_to do |format|
       if list.save
         if list.accepted_on.nil?
-          flash[:success] = I18n.t('.released', model: t('activerecord.models.list'))
+          flash[:success] = I18n.t('.released', 
+                                   model: t('activerecord.models.list'), 
+                                   list_number: list.list_number)
           format.html { redirect_to edit_acceptance_path(list) }
         else
-          flash[:success] = I18n.t('.accepted', model: t('activerecord.models.list'))
+          flash[:success] = I18n.t('.accepted', 
+                                   model: t('activerecord.models.list'), 
+                                   list_number: list.list_number)
           format.html { redirect_to acceptances_path }
         end
       else
-        flash[:error] = I18n.t('.save_failed', model: t('activerecord.models.list'))
+        flash[:error] = I18n.t('.save_failed', 
+                               model: t('activerecord.models.list'))
         format.html { redirect_to edit_acceptance_path(list) }
       end
     end

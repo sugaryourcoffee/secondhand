@@ -835,11 +835,11 @@ de:
   not_own_list:           "Nur eigene Listen können freigegeben werden!"
   not_valid:              "Registrierungscode nicht gültig!"
   no_list:                "%{model} existiert nicht"
-  accepted:               "%{model} wurde angenommen"
+  accepted:               "%{model} %{list_number} wurde angenommen"
   list_accepted_new:      "Für angenommene Liste %{list_number} können keine zusätzlichen Artikel eingegeben werden"
   list_accepted_edit:     "Artikel für angenommene Liste %{list_number} kann nicht bearbeitet werden"
   list_accepted_destroy:  "Artikel für angenommene Liste %{list_number} kann nicht gelöscht werden"
-  released:               "%{model} zum Bearbeiten freigegeben"
+  released:               "%{model} %{list_number} zum Bearbeiten freigegeben"
 
   events_button: "Events"
 
