@@ -104,9 +104,7 @@ describe "Acceptances" do
           visit edit_acceptance_path(locale: :en, id: accepted_list)
         end
 
-        # TODO: This doesn't work now and it is questionable whether this is
-        #       reasonable
-        it "should not revoke list acceptance" do
+        it "should not revoke list acceptance with direct access" do
           accepted_list.accepted_on.should_not be_nil
 
           #accepted_list.items.first.selling_id.should_not be_nil
@@ -115,6 +113,14 @@ describe "Acceptances" do
           page.should have_text 'List acceptance cannot be revoked because it contains sold items'
 
           page.should_not have_button 'Revoke list acceptance'
+        end
+
+        context "as admin" do
+          it "should allow revoke list by admin"
+
+          it "should not allow to delete sold items"
+
+          it "should not allow to edit sold items"
         end
 
       end
