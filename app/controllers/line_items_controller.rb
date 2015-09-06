@@ -1,5 +1,8 @@
 class LineItemsController < ApplicationController
 
+  skip_before_filter :authorize,    only: [:create, :destroy]
+  before_filter :admin_or_operator, only: [:create, :destroy]
+
   def create
     @cart  = current_cart
     @event = Event.find_by_active(true)
