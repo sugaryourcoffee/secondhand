@@ -141,4 +141,18 @@ users\_controller            | admin    | all
 users\_controller            | operator | show
 users\_controller            | user     | new, create, edit, update, show, register\_list, deregister\_list, print\_address\_labels
 
+Menu
+----
+On the top of the Secondhand application is the menu bar. The menue items shown
+depend on the users role. In the following table is shown which menue items are
+available for which user role.
+
+Menu                       | User | Operator | Admin
+-------------------------- | ---- | -------- | -----
+Language (English/Deutsch) | yes  | yes      | yes
+Home                       | yes  | yes      | yes
+Help                       | yes  | yes      | yes
+Event                      | no   | yes      | yes
+Admin                      | no   | no       | yes
+Account                    | yes  | yes      | yes
 
