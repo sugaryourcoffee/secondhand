@@ -126,10 +126,10 @@ password\_resets\_controller | admin    | all
 password\_resets\_controller | operator | all
 password\_resets\_controller | user     | all
 reversals\_controller        | admin    | all
-reversals\_controller        | operator | index, create, show, check\_out, print
+reversals\_controller        | operator | create, show, check\_out, print
 reversals\_controller        | user     | none
 sellings\_controller         | admin    | all
-sellings\_controller         | operator | index, create, show, check\_out, print
+sellings\_controller         | operator | create, show, check\_out, print
 sellings\_controller         | user     | none
 sessions\_controller         | admin    | all
 sessions\_controller         | operator | all
@@ -140,6 +140,18 @@ static\_pages\_controller    | user     | all
 users\_controller            | admin    | all
 users\_controller            | operator | show
 users\_controller            | user     | new, create, edit, update, show, register\_list, deregister\_list, print\_address\_labels
+
+From an access rights point of view we generally want to restrict every access
+to root only. Then we white list for each controller that needs less restrictive
+access rights which actions don't need admin access. Then we specify access 
+rigths for registered users, correct users and admins. A correct user is one
+that is associated to a model. E.g. a user has a list. Only the user of the 
+list may change attributes of the list.
+
+The access rigths are checked in each of the controllers.
+
+As the access right is a critical issue we write specs to check the correct
+behaviour for each role.
 
 Menu
 ----
@@ -155,4 +167,6 @@ Help                       | yes  | yes      | yes
 Event                      | no   | yes      | yes
 Admin                      | no   | no       | yes
 Account                    | yes  | yes      | yes
+
+The access rigths are managed in the `app/views/layouts/_header.html.erb` file. 
 
