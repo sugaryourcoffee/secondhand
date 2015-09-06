@@ -18,6 +18,7 @@ subject {@user}
   it {should respond_to(:remember_token) }
   it {should respond_to(:authenticate) }
   it {should respond_to(:admin) }
+  it {should respond_to(:operator) }
   it {should respond_to(:preferred_language) }
 
   it {should be_valid }
