@@ -310,6 +310,13 @@ and if the database schema has changed we have to do
 
     $ cap staging deploy:migrations
 
+If this for some reason doesn't work shh into your server, select the right
+*gemset* and run in the *current* directory of your application
+
+    uranus$ cd /var/www/secondhand/current
+    uranus$ rvm ruby-1.9.3-p551@rails3211
+    uranus$ rake RAILS_ENV=staging db:migrate
+
 A description of the tasks can be found 
 [here](http://capitate.rubyforge.org/recipes/deploy.html)
 
