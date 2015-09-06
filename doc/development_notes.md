@@ -122,7 +122,8 @@ Now our test should pass.
 
     $ rspec spec/models/user_spec.rb
 
-## Populate a Value from an associated Table
+Populate a Value from an associated Table
+-----------------------------------------
 Assume we have to tables User and News. Each `News` has an `author` which is
 an `User` with the `admin` role. We want to add to the `author` field in the
 `News` table an `User` that has the `admin` role. We can do so in a migration.
@@ -158,7 +159,7 @@ We want to have only those carts that have line items
 
 Rake Tasks
 ==========
-To list als Rake tasks run
+To list all Rake tasks run
 
     $ rake -T
 
