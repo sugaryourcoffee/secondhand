@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150801160157) do
+ActiveRecord::Schema.define(:version => 20150906084235) do
 
   create_table "carts", :force => true do |t|
     t.datetime "created_at",                      :null => false
@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(:version => 20150801160157) do
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
     t.string   "preferred_language"
+    t.boolean  "operator",               :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
