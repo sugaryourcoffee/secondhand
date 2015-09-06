@@ -43,6 +43,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def admin_or_operator
+    if current_user.nil?
+      store_location
+      redirect_to signin_path, notice: I18n.t('.sign_in')
+    elsif not (current_user.admin? or current_user.operator?)
+      redirect_to root_path,
+                  notice: I18n.t('.admin_or_operator_privileges')
+    end
+  end
+
   def set_i18n_locale_from_params
     if params[:locale]
       if I18n.available_locales.include?(params[:locale].to_sym)
