@@ -157,6 +157,17 @@ We want to have only those carts that have line items
       joins(:line_items).uniq
     }
 
+### WHERE with LIKE clause
+If we need to find similar records of a table we can use the LIKE clause with
+WHERE. Assume we want to find users with same domain name in their e-mail 
+address.
+
+    sugaryourcoffee = User.where("email like ?", "%@sugaryourcoffee.de")
+
+If we want to make them all admins we could do
+
+    sugaryourcoffee.each { |u| u.toggle!(:admin) }
+
 Rake Tasks
 ==========
 To list all Rake tasks run
