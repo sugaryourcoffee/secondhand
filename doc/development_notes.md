@@ -167,4 +167,37 @@ To list only Rake task for the database you can run
 
     $ rake -T db
 
+Git
+===
+The application is managed with Git.
+
+Initialize a Git repository
+---------------------------
+In the application directory we intialize a Git repository.
+
+    $ git init
+    $ git add .
+    $ git commit -am "intial commit"
+
+Check out a Branch
+------------------
+When we work on a new functionality we want to do that in different branch in
+order to roll back to the master branch if we mess up our application.
+
+To create a new branch we call
+
+    $ git checkout -b new-function-name
+    $ git push --set-upstream origin new_function_name
+
+  Then we work on the application and do our commits and pushs as usual.
+    
+    $ git commit -am "changes we made"
+    $ git push
+
+When done and our specs ran without errors we check out master and merge the
+branch into it
+
+    $ git checkout master
+    $ git merge new_function_name
+    $ git push
 
