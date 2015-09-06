@@ -117,8 +117,8 @@ line\_items\_controller      | admin    | all
 line\_items\_controller      | operator | all
 line\_items\_controller      | user     | none
 lists\_controller            | admin    | all
-lists\_controller            | operator | all
-lists\_controller            | user     | print\_list, print\_labels, send\_list
+lists\_controller            | operator | update
+lists\_controller            | user     | update, print\_list, print\_labels, send\_list
 news\_controller             | admin    | all
 news\_controller             | operator | none
 news\_controller             | user     | none
