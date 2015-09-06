@@ -1,5 +1,8 @@
 class CartsController < ApplicationController
 
+  skip_before_filter :authorize
+  before_filter :admin_or_operator
+
   def index
     @carts = Cart.all
   end

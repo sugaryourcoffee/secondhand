@@ -1,5 +1,8 @@
 class CounterController < ApplicationController
 
+  skip_before_filter :authorize
+  before_filter :admin_or_operator
+
   def index
     @event     = Event.find_by_active(true)
     @carts     = Cart.not_empty

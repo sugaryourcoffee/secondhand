@@ -1,5 +1,8 @@
 class SellingsController < ApplicationController
 
+  skip_before_filter :authorize,    only: [:create, :show, :check_out, :print]
+  before_filter :admin_or_operator, only: [:create, :show, :check_out, :print]
+
   def index
     initialize_event_and_sellings
     @selling = Selling.find_by_id_and_event_id(params[:search_selling_id], 
