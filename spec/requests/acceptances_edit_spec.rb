@@ -5,8 +5,10 @@ describe "Acceptances" do
   let(:admin)         { FactoryGirl.create(:admin) }
   let(:seller)        { FactoryGirl.create(:user) }
   let(:event)         { FactoryGirl.create(:active) }
-  let(:list)          { FactoryGirl.create(:assigned, user: seller, event: event) }
-  let(:accepted_list) { FactoryGirl.create(:assigned, user: seller, event: event) }
+  let(:list)          { FactoryGirl.create(:assigned, user: seller, 
+                                           event: event) }
+  let(:accepted_list) { FactoryGirl.create(:assigned, user: seller, 
+                                           event: event) }
 
   before do
     list.items.create!(item_attributes)
@@ -87,7 +89,8 @@ describe "Acceptances" do
 
         first(:button, 'Revoke list acceptance').click
 
-        page.current_path.should eq edit_acceptance_path(locale: :en, id: accepted_list)
+        page.current_path.should eq edit_acceptance_path(locale: :en, 
+                                                         id: accepted_list)
 
         accepted_list.reload.accepted_on.should be_nil
 
@@ -104,23 +107,29 @@ describe "Acceptances" do
           visit edit_acceptance_path(locale: :en, id: accepted_list)
         end
 
-        it "should not revoke list acceptance with direct access" do
-          accepted_list.accepted_on.should_not be_nil
+        context "as operator" do
+          it "should not revoke list acceptance with direct access" do
+            accepted_list.accepted_on.should_not be_nil
 
-          #accepted_list.items.first.selling_id.should_not be_nil
-          accepted_list.items.first.sold?.should be_true
+            #accepted_list.items.first.selling_id.should_not be_nil
+            accepted_list.items.first.sold?.should be_true
 
-          page.should have_text 'List acceptance cannot be revoked because it contains sold items'
+            page.should have_text 'List acceptance cannot be revoked because it contains sold items'
 
-          page.should_not have_button 'Revoke list acceptance'
+            page.should_not have_button 'Revoke list acceptance'
+          end
         end
 
         context "as admin" do
+
           it "should allow revoke list by admin"
 
           it "should not allow to delete sold items"
 
           it "should not allow to edit sold items"
+
+          it "should not allow revoked list without accepting list"
+
         end
 
       end
