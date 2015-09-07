@@ -181,6 +181,8 @@ en:
       selling_number: "Selling number"
       total:          "Total"
       to_cart:        "Start new selling"
+      to_redemption:  "Start redemption"
+      to_counter:     "Go to counter"
       to_sellings:    "Go to selling overview"
 
   reversals:

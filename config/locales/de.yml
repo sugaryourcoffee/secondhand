@@ -183,6 +183,8 @@ de:
       selling_number: "Verkaufsnummer"
       total:          "Betrag"
       to_cart:        "Neuen Verkauf beginnen"
+      to_redemption:  "Rücknahme beginnen"
+      to_counter:     "Gehe zur Kassenübersicht"
       to_sellings:    "Zur Verkaufsübersicht"
 
   reversals:

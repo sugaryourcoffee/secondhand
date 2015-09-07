@@ -26,7 +26,10 @@
       <%= link_to t('.to_cart'), item_collection_carts_path, 
           class: "btn btn-primary" %>
     </p>
-    <p><%= link_to t('.to_sellings'), sellings_path %></p>
+    <p>
+      <%= link_to t('.to_redemption'), line_item_collection_carts_path %> | 
+      <%= link_to t('.to_counter'), counter_index_path %>
+    </p>
   </div>
 </div>
 
