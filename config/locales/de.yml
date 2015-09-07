@@ -185,7 +185,6 @@ de:
       to_cart:        "Neuen Verkauf beginnen"
       to_redemption:  "Rücknahme beginnen"
       to_counter:     "Gehe zur Kassenübersicht"
-      to_sellings:    "Zur Verkaufsübersicht"
 
   reversals:
     index:
@@ -230,7 +229,8 @@ de:
       selling_number: "Gutschriftennummer"
       total:          "Betrag"
       to_cart:        "Neue Gutschrift erfassen"
-      to_sellings:    "Zur Gutschriftenübersicht"
+      to_selling:     "Verkauf beginnen"
+      to_counter:     "Gehe zur Kassenübersicht"
 
   counter:
     index:

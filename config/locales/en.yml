@@ -183,7 +183,6 @@ en:
       to_cart:        "Start new selling"
       to_redemption:  "Start redemption"
       to_counter:     "Go to counter"
-      to_sellings:    "Go to selling overview"
 
   reversals:
     index:
@@ -228,8 +227,8 @@ en:
       reversal_number: "Redemption number"
       total:           "Total"
       to_cart:         "Start new redemption"
-      to_reversals:    "Go to redemption overview"
-
+      to_selling:      "Start selling"
+      to_counter:      "Go to counter"
 
   counter:
     index:
