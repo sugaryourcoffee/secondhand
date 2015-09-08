@@ -60,9 +60,12 @@ de:
       list_status:              "Listenstatus"
       sold_items_status_html:   "<p>Listenannahme kann nicht zurückgenommen werden, da die Liste <strong>verkaufte Artikel</strong> enthält.</p>
       <p>Eine Rücknahme ist möglich indem Sie die verkauften Artikel zur <strong>Gutschrift</strong> zurücknehmen oder ein <strong>Administrator</strong> über die Schaltfläche <strong>Liste zurücknehmen</strong> die Liste zum Bearbeiten freigibt.</p>"
-      accepted_status_html:     "<p><strong>Liste wurde schon angenommen</strong>.</p>
-      <p>Um die Liste zu bearbeiten müssen Sie die Listenannahme über die Schaltfläche rückgängig 
-      machen %{button}</p>"
+      accepted_status_sold_items_html: "<p><strong>Liste enthält verkaufte Artikel!</strong></p>
+      <p>Um die Liste zu bearbeiten müssen Sie die Listenannahme über die Schaltfläche rückgängig machen %{button}</p>
+      <p>Stellen Sie jedoch sicher, dass Sie die Liste nur über die Schaltfläche <strong>Liste annehmen</strong> verlassen, ansonsten können Sie die Artikel in der Liste nicht weiter verkaufen.</p>"
+      accepted_status_html: "<p><strong>Liste wurde schon angenommen</strong>.</p>
+      <p>Um die Liste zu bearbeiten müssen Sie die Listenannahme über die Schaltfläche rückgängig machen %{button}</p>"
+      not_accepted_status_sold_items_html: "<p><strong>Liste enthält verkaufte Artikel</strong> und wurde zum Bearbeiten freigegeben.</p> <p>Stellen Sie sicher, dass Sie die Seite nur über die Schaltfläche <strong>Liste annehmen</strong> verlassen %{button}</p>"
       not_accepted_status_html: "<p><strong>Liste wurde noch nicht angenommen</strong></p>
       <p>Vor der Listenannahme die folgenden Prüfungen durchführen</p>
       <ul>
@@ -73,6 +76,7 @@ de:
         <li>Liste enthält nur <strong>erlaubte Artikel</strong></li>
       </ul>"
       revoke_list: "Listenannahme rückgängig machen"
+      accept_list: "Liste annehmen"
       cancel:      "Zurück zur Listenübersicht"
     lists:
       list_number:            "Listennummer"

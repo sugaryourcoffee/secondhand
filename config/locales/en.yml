@@ -58,9 +58,13 @@ en:
       list_status:              "List Status"
       sold_items_status_html:   "<p>List acceptance cannot be revoked because it contains <strong>sold items</strong>.</p>
       <p>To revoke the list acceptance you have to return the goods in course of a <strong>redemption</strong> or an <strong>administrator</strong> revokes the acceptance over the <strong>Revoke Acceptance</strong> button.</p>"
+      accepted_status_sold_items_html: "<p><strong>List contains sold items!</strong></p>
+      <p>To edit the list you may revoke the list acceptance by pressing the button %{button}</p>
+      <p>But make sure you leave the page by pressing the <strong>Accept list</strong> otherwise you cannot sell the items in this list.</p>"
       accepted_status_html:     "<p><strong>List has already been accepted</strong>.</p>
       <p>To edit the list you have to revoke the list acceptance by pressing the button 
       %{button}</p>"
+      not_accepted_status_sold_items_html: "<p><strong>List contains sold items</strong> and has been released for editing.</p> <p>Make sure to leave the page only by pressing the <strong>Accept list</strong> button %{button}</p>"
       not_accepted_status_html: "<p><strong>List has not been accepted</strong></p>
       <p>Before accepting the list do check</p>
       <ul>
@@ -71,6 +75,7 @@ en:
         <li>that list contains only <strong>allowed items</strong></li>
       </ul>"
       revoke_list: "Revoke list acceptance"
+      accept_list: "Accept list"
       cancel:      "Back to list overview"
     lists:
       list_number:            "List Number"

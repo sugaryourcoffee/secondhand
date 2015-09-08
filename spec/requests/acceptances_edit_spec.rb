@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "Acceptances" do
 
   let(:admin)         { FactoryGirl.create(:admin) }
+  let(:operator)      { FactoryGirl.create(:operator) }
   let(:seller)        { FactoryGirl.create(:user) }
   let(:event)         { FactoryGirl.create(:active) }
   let(:list)          { FactoryGirl.create(:assigned, user: seller, 
@@ -12,12 +13,14 @@ describe "Acceptances" do
 
   before do
     list.items.create!(item_attributes)
-
-    sign_in(admin)
-    visit edit_acceptance_path(locale: :en, id: list)
   end
 
   context "without JavaScript" do
+    before do
+      sign_in(admin)
+      visit edit_acceptance_path(locale: :en, id: list)
+    end
+
     it "should have title Acceptance" do
       page.should have_title "Acceptance"
     end
@@ -104,14 +107,17 @@ describe "Acceptances" do
 
         before do
           create_selling_and_items(event, accepted_list) 
-          visit edit_acceptance_path(locale: :en, id: accepted_list)
         end
 
         context "as operator" do
-          it "should not revoke list acceptance with direct access" do
+          before do
+            sign_in(operator)
+            visit edit_acceptance_path(locale: :en, id: accepted_list)
+          end
+
+          it "should not have 'Revoke list acceptance' button" do
             accepted_list.accepted_on.should_not be_nil
 
-            #accepted_list.items.first.selling_id.should_not be_nil
             accepted_list.items.first.sold?.should be_true
 
             page.should have_text 'List acceptance cannot be revoked because it contains sold items'
@@ -122,13 +128,35 @@ describe "Acceptances" do
 
         context "as admin" do
 
-          it "should allow revoke list by admin"
+          before do
+            sign_in(admin)
+            visit edit_acceptance_path(locale: :en, id: accepted_list)
+          end
 
-          it "should not allow to delete sold items"
+          it "should have 'Revoke list acceptance' button" do
+            accepted_list.accepted_on.should_not be_nil
 
-          it "should not allow to edit sold items"
+            accepted_list.items.first.sold?.should be_true
 
-          it "should not allow revoked list without accepting list"
+            page.should have_text 'List contains sold items! To edit the list you may revoke the list acceptance by pressing the button' 
+
+            page.should have_button 'Revoke list acceptance'
+
+          end
+
+          it "should allow revoke list by admin" do
+            first(:button, 'Revoke list acceptance').click
+
+            page.current_path.should eq edit_acceptance_path(locale: :en, 
+                                                             id: accepted_list)
+
+            accepted_list.reload.accepted_on.should be_nil
+
+            page.should     have_link   "Edit"
+            page.should     have_link   "Delete"
+            page.should     have_button "Accept List"
+            page.should_not have_button "Revoke list acceptance"
+           end
 
         end
 
@@ -138,6 +166,11 @@ describe "Acceptances" do
   end
 
   context "JavaScript" do
+
+    before do
+      sign_in(admin)
+      visit edit_acceptance_path(locale: :en, id: list)
+    end
 
     it "should change the container color", js: true do
       click_link "edit_container"
@@ -179,7 +212,6 @@ describe "Acceptances" do
       item = list.items.first
 
       click_link "edit-item-#{item.item_number}"
-#      page.find("#edit-item-#{item.item_number}").click
 
       fill_in "item_description", with: "The description"
       fill_in "item_size",        with: "The size"

@@ -25,8 +25,9 @@
           <td><%= item.description %></td>
           <td><%= item.size        %></td>
           <td><%= number_to_currency item.price       %></td>
-          <td><%= link_to_if !@list.accepted?, 
-                             t('.edit'), edit_item_acceptance_path(item), remote: true,
+          <td><%= link_to_if !@list.accepted?, t('.edit'), 
+                             edit_item_acceptance_path(item), 
+                             remote: true,
                              id: "edit-item-#{item.item_number}" %></td>
           <td><%= link_to_if !@list.accepted?, t('.delete'), 
                              delete_item_acceptance_path(item),

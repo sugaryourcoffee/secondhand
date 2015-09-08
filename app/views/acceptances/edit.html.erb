@@ -43,4 +43,7 @@
 
 <%= edit_acceptances_action(@list) %>
 
-<%= link_to t('.cancel'), acceptances_path %>
+<% unless not @list.accepted? and @list.has_sold_items? %>
+  <%= link_to t('.cancel'), acceptances_path %>
+<% end %>
+
