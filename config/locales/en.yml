@@ -83,6 +83,7 @@ en:
       seller_name:            "Seller"
       acceptance_dialog:      "Acceptance Dialog"
       release_list:           "Revoke Acceptance"
+      list_has_sold_items:    "List with sold items"
       not_registered:         "Not Registered"
       showing_accepted:       "Accepted Lists"
       showing_not_accepted:   "Not Accepted Lists"

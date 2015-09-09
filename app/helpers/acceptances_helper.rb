@@ -16,8 +16,17 @@ module AcceptancesHelper
 
   def index_acceptances_action(list)
     if list.accepted?
-      button_to t('.release_list'), accept_acceptance_path(list),
-                   class: "btn btn-warning"
+      if list.has_sold_items?
+        if current_user.admin?
+          button_to t('.release_list'), accept_acceptance_path(list),
+                       class: "btn btn-warning"
+        else 
+          t('.list_has_sold_items')
+        end
+      else
+          button_to t('.release_list'), accept_acceptance_path(list),
+                       class: "btn btn-warning"
+      end
     elsif list.registered?
       link_to t('.acceptance_dialog'), edit_acceptance_path(list)
     else

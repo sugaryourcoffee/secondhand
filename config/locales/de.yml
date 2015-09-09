@@ -84,6 +84,7 @@ de:
       seller_name:            "Verkäufer"
       acceptance_dialog:      "Annahmedialog"
       release_list:           "Annahme zurücknehmen"
+      list_has_sold_items:    "Liste mit verkauften Artikeln"
       not_registered:         "Nicht registriert"
       showing_accepted:       "Angenommene Listen"
       showing_not_accepted:   "Nicht angenommene Listen"
