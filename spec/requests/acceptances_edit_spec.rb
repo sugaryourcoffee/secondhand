@@ -169,59 +169,116 @@ describe "Acceptances" do
 
     before do
       sign_in(admin)
-      visit edit_acceptance_path(locale: :en, id: list)
     end
 
-    it "should change the container color", js: true do
-      click_link "edit_container"
-      fill_in "Container", with: "Blinking Red"
-      click_button "Update"
-      page.should_not have_button "Update"
-      page.should have_text "Blinking Red"
+    context "with unsold items" do
+
+      before do
+        visit edit_acceptance_path(locale: :en, id: list)
+      end
+
+      it "should change the container color", js: true do
+        click_link "edit_container"
+        fill_in "Container", with: "Blinking Red"
+        click_button "Update"
+        page.should_not have_button "Update"
+        page.should have_text "Blinking Red"
+      end
+
+      it "should delete an item", js: true do
+        item = list.items.first
+
+        click_link "Delete"
+        modal = page.driver.browser.switch_to.alert
+        modal.accept
+        
+        page.should_not have_text item.description
+        page.should_not have_text item.size
+        page.should_not have_link "Delete"
+        
+        list.items.size.should eq 0
+      end
+
+      it "should not delete an item", js: true do
+        item = list.items.first
+
+        click_link "Delete"
+        modal = page.driver.browser.switch_to.alert
+        modal.dismiss
+        
+        page.should have_text item.description
+        page.should have_text item.size
+        page.should have_link "Delete"
+        
+        list.items.size.should eq 1
+      end
+
+      it "should edit an item", js: true do
+        item = list.items.first
+
+        click_link "edit-item-#{item.item_number}"
+
+        fill_in "item_description", with: "The description"
+        fill_in "item_size",        with: "The size"
+        fill_in "item_price",       with: 1234.5
+        click_button "Update"
+
+        page.should have_text "The description"
+        page.should have_text "The size"
+        page.should have_text "1,234.50"
+        page.should_not have_button "Update"
+      end
+
     end
 
-    it "should delete an item", js: true do
-      item = list.items.first
+    context "with sold items" do
 
-      click_link "Delete"
-      modal = page.driver.browser.switch_to.alert
-      modal.accept
-      
-      page.should_not have_text item.description
-      page.should_not have_text item.size
-      page.should_not have_link "Delete"
-      
-      list.items.size.should eq 0
-    end
+      before do
+        create_selling_and_items(event, accepted_list) 
+        visit edit_acceptance_path(locale: :en, id: accepted_list)
+        first(:button, 'Revoke list acceptance').click
+      end
 
-    it "should not delete an item", js: true do
-      item = list.items.first
+      it "should change the container color", js: true do
+        click_link "edit_container"
+        fill_in "Container", with: "Blinking Red"
+        click_button "Update"
+        page.should_not have_button "Update"
+        page.should have_text "Blinking Red"
+      end
 
-      click_link "Delete"
-      modal = page.driver.browser.switch_to.alert
-      modal.dismiss
-      
-      page.should have_text item.description
-      page.should have_text item.size
-      page.should have_link "Delete"
-      
-      list.items.size.should eq 1
-    end
+      it "should not delete an item", js: true do
+        item = accepted_list.items.first
 
-    it "should edit an item", js: true do
-      item = list.items.first
+        item.sold?.should be_true
 
-      click_link "edit-item-#{item.item_number}"
+        click_link "Delete"
+        modal = page.driver.browser.switch_to.alert
+        modal.accept
+        
+        page.should have_text item.description
+        page.should have_text item.size
+        page.should have_link "Delete"
+        
+        list.items.size.should eq 1
+      end
 
-      fill_in "item_description", with: "The description"
-      fill_in "item_size",        with: "The size"
-      fill_in "item_price",       with: 1234.5
-      click_button "Update"
+      it "should not change item through edit", js: true do
+        item = accepted_list.items.first
 
-      page.should have_text "The description"
-      page.should have_text "The size"
-      page.should have_text "1,234.50"
-      page.should_not have_button "Update"
+        click_link "edit-item-#{item.item_number}"
+
+        fill_in "item_description", with: "The description"
+        fill_in "item_size",        with: "The size"
+        fill_in "item_price",       with: 1234.5
+        click_button "Update"
+
+        page.should have_text "Item of the list"
+        page.should have_text "XXL"
+        page.should have_text "25.50"
+        page.should_not have_button "Update"
+      end
+
     end
 
   end
