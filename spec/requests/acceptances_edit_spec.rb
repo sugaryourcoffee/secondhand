@@ -273,9 +273,11 @@ describe "Acceptances" do
         fill_in "item_price",       with: 1234.5
         click_button "Update"
 
+        click_link "Cancel"
+
         page.should have_text "Item of the list"
         page.should have_text "XXL"
-        page.should have_text "25.50"
+        page.should have_text "22.50"
         page.should_not have_button "Update"
       end
 
