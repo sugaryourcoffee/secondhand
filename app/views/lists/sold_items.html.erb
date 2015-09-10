@@ -1,0 +1,50 @@
+<%= provide(:title, t('.list_with_sold_items')) %>
+
+<h1><%= t('.list_with_sold_items') %></h1>
+
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        <%= gravatar_for @user %>
+        <%= @user.first_name %> <%= @user.last_name %>
+      </h1>
+    </section>
+    <section>
+      <tr><th><%= t('.list')      %><td><%= @list.list_number %></td></tr>
+      <tr><th><%= t('.items')     %><td><%= @list.items.count %></td></tr>
+      <tr><th><%= t('.value')     %><td><%= @list.value       %></td></tr>
+      <tr><th><%= t('.revenue')   %><td><%= @list.total       %></td></tr>
+      <tr><th><%= t('.provision') %><td><%= @list.provision   %></td></tr>
+      <tr><th><%= t('.payback')   %><td><%= @list.payback     %></td></tr>
+    </section>
+  </aside>
+  <div class="span8">
+     <table class="table table-hover">
+      <thead>
+        <tr>
+          <th><%= t('.Item_number') %></th>
+          <th><%= t('.Description') %></th>
+          <th><%= t('.Size') %></th>
+          <th><%= t('.Price') %></th>
+          <th><%= t('.sold') %></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @list.items.each do |item| %>
+          <tr>
+            <td><%= item.item_number %></td>
+            <td><%= truncate(item.description, length: 40) %></td>
+            <td><%= truncate(item.size, length: 10) %></td>
+            <td><%= number_to_currency item.price %></td>
+            <td><%= number_to_currency item.price if item.sold? %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<p><%= link_to t('.Back'), lists_path %></p>
+
