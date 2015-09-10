@@ -1,7 +1,9 @@
 class ListsController < ApplicationController
 
   skip_before_filter :authorize, only: [:update, :print_list, :print_labels,
-                                        :send_list]
+                                        :send_list, :sold_items]
+
+  before_filter :admin_or_operator, only: [:sold_items]
 
   before_filter :correct_user, only: [:print_list, :print_labels, :send_list]
 
@@ -60,6 +62,11 @@ class ListsController < ApplicationController
     respond_to do |format|
       format.atom
     end
+  end
+
+  # GET /lists/1/sold_items
+  def sold_items
+    @list = List.find(params[:id])
   end
 
   # GET /lists/1
