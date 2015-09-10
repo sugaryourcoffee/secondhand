@@ -59,6 +59,7 @@ Secondhand::Application.routes.draw do
     resources :lists do
       member do
         get :items
+        get :sold_items
       end
       resources :items
     end
