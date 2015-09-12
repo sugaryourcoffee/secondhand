@@ -4,6 +4,10 @@ module ApplicationHelper
     "Secondhand #{Rails.env.production? ? '' : Rails.env.upcase}"
   end
 
+  def local_date_and_time(date_and_time)
+    date_and_time.localtime.strftime("%Y-%m-%d - %H:%M:%S")
+  end
+
   def full_title(page_title)
     base_title = "Secondhand"
     if page_title.empty?
