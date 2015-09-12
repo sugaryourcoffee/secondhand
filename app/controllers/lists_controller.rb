@@ -10,11 +10,13 @@ class ListsController < ApplicationController
   # GET /lists
   # GET /lists.json
   def index
+    @event = Event.find_by_active(true)
+
+    params[:search_event_id] ||= @event.id.to_s
+
     @lists = List.order(:event_id).order(:list_number)
                  .paginate(page: params[:page], 
                            conditions: List.search_conditions(params))
-
-    @event = Event.find_by_active(true)
 
     respond_to do |format|
       format.html # index.html.erb

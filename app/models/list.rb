@@ -155,8 +155,8 @@ class List < ActiveRecord::Base
   # Searches for lists that meet the provided list values
   def self.search_conditions(params)
     if params[:search]
-      ['list_number = ? or registration_code LIKE ?', 
-       params[:search], "%#{params[:search]}%"]
+      ['(list_number = ? or registration_code LIKE ?) and event_id = ?', 
+       params[:search], "%#{params[:search]}%", params[:search_event_id]]
     else
       search_params = params.select { |k,v| not v.empty? and k =~ /^search_/ }
       unless search_params.empty?
