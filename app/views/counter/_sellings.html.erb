@@ -18,7 +18,7 @@
       <% @sellings.each do |selling| %>
         <tr>
           <td><%= selling.id %></td>
-          <td><%= selling.created_at %></td>
+          <td><%= local_date_and_time selling.created_at %></td>
           <td id='right'><%= number_to_currency selling.total %></td>
           <td><%= link_to t('.show_selling'), selling_path(selling) %></td>
           <td><%= link_to t('.print_selling'), 

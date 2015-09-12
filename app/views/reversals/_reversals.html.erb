@@ -12,8 +12,8 @@
       <% @reversals.each do |reversal| %>
         <tr>
           <td><%= reversal.id %></td>
-          <td><%= reversal.created_at %></td>
-          <td><%= reversal.updated_at %></td>
+          <td><%= local_date_and_time reversal.created_at %></td>
+          <td><%= local_date_and_time reversal.updated_at %></td>
           <td><%= number_to_currency reversal.total %></td>
           <td><%= link_to t('.show'), reversal, 
                   id: "show_reversal_#{reversal.id}" %></td>
