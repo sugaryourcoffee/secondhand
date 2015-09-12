@@ -17,7 +17,7 @@ describe List do
 
     it { should have_text("Collect Items") }
     it { should have_link("Create New Item", 
-                          href: new_user_list_item_path(user, list, locale: :en)) }
+                       href: new_user_list_item_path(user, list, locale: :en)) }
 
     it "should create item" do
       click_link "Create New Item"
