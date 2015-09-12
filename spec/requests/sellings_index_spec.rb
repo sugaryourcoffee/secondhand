@@ -60,7 +60,7 @@ describe "Selling index page" do
 
     it "should list available sellings" do
       page.should have_text selling.id
-      page.should have_text selling.created_at
+      page.should have_text local_date_and_time selling.created_at
       page.should have_text selling.total.to_s
       page.should have_link 'Show'
       page.should have_link 'Delete'

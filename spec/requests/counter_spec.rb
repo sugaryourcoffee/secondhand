@@ -101,7 +101,7 @@ describe "Counter" do
 
       it "should show all sellings" do
         page.should have_text selling.id
-        page.should have_text selling.created_at
+        page.should have_text local_date_and_time selling.created_at
         page.should have_text selling.total
         page.should have_link 'Show', selling_path(locale: :en, id: selling)
         page.should have_link 'Print', 
@@ -138,7 +138,7 @@ describe "Counter" do
 
       it "should forward to the reversal show page and return back" do
         page.should have_text reversal.id
-        page.should have_text reversal.created_at
+        page.should have_text local_date_and_time reversal.created_at
         page.should have_text reversal.total
         page.should have_link 'Show', reversal_path(locale: :en, id: reversal)
         page.should have_link 'Print', 
