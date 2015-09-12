@@ -67,6 +67,8 @@ class ListsController < ApplicationController
   # GET /lists/1/sold_items
   def sold_items
     @list = List.find(params[:id])
+    @user = @list.user
+    @total, @provision, @fee, @payback = @list.cash_up
   end
 
   # GET /lists/1

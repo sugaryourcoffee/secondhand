@@ -153,14 +153,14 @@
         <td><%= list.container %></td>
         <td><%= event_title_for(list) %></td>
         <td><%= user_for(list) %></td>
+        <td><%= link_to t('.Show'), sold_items_list_path(list) %></td>
+        <td><%= link_to t('.Edit'), edit_list_path(list) %></td>
         <% if list.user %>
           <td><%= link_to t('.Export'), list_path(list, format: "csv") %>
         <% else %>
-          <td><%= link_to t('.Show'), list %></td>
+          <td><%= link_to t('.Destroy'), list, method: :delete, 
+                  data: { confirm: t('.confirm_message') } %></td>
         <% end %>
-        <td><%= link_to t('.Edit'), edit_list_path(list) %></td>
-        <td><%= link_to t('.Destroy'), list, method: :delete, 
-                data: { confirm: t('.confirm_message') } %></td>
       </tr>
     <% end %>
   </tbody>

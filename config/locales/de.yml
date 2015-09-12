@@ -583,6 +583,23 @@ de:
       User:              "Benutzer:" 
       Edit:              "Bearbeiten"
       Back:              "Zurück"
+        
+    sold_items:
+      list_with_sold_items: "Liste %{list_number} Verkaufsstatus"
+      not_registered:       "Nicht registriert"
+      list:                 "Listennummer"
+      items:                "Artikelanzahl"
+      value:                "Listenwert"
+      revenue:              "Umsatz"
+      provision:            "Provision"
+      fee:                  "Listengebühr"
+      payback:              "Auszahlung"
+      item_number:          "Artikel"
+      description:          "Beschreibung"
+      size:                 "Größe"
+      price:                "Preis"
+      sold:                 "Verkauft"
+      back:                 "Zurück"
 
   news:
     new:

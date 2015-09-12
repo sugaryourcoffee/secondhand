@@ -582,6 +582,23 @@ en:
       Edit:              "Edit"
       Back:              "Back"
 
+    sold_items:
+      list_with_sold_items: "List %{list_number} Selling Status"
+      not_registered:       "Not registered"
+      list:                 "List number"
+      items:                "Item count"
+      value:                "List value"
+      revenue:              "Revenue"
+      provision:            "Provision"
+      fee:                  "Fee"
+      payback:              "Payback"
+      item_number:          "Item"
+      description:          "Description"
+      size:                 "Size"
+      price:                "Price"
+      sold:                 "Sold"
+      back:                 "Back"
+
   news:
     new:
       New_News:        "New news"
