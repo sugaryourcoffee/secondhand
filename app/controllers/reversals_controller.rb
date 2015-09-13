@@ -57,7 +57,7 @@ class ReversalsController < ApplicationController
   def print
     @reversal = Reversal.find(params[:id])
     respond_to do |format|
-      if system('lpr', @reversal.to_pdf.to_path)
+      if system('lpr', @reversal.to_pdf("Gutschrift").to_path)
         format.html { redirect_to :back,
                       notice: "Printed redemption #{@reversal.id}" }
       else
