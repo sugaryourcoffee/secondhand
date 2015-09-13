@@ -36,7 +36,7 @@ class ReversalsController < ApplicationController
       if @reversal.save
         Cart.destroy(session[:reversal_cart_id])
         session[:reversal_cart_id] = nil
-        if system('lpr', @reversal.to_pdf.to_path)
+        if system('lpr', @reversal.to_pdf("Gutschrift").to_path)
           format.html { redirect_to check_out_reversal_path(@reversal), 
                         notice: "Successfully created redemption and printed" }
         else
