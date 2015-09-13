@@ -3,11 +3,11 @@ module SellingsExporter
   include ActionView::Helpers::NumberHelper
   include ItemsHelper
 
-  def to_pdf
+  def to_pdf(transaction = "Verkauf")
 
     header_left   = event.title
     header_center = "www.boerse-burgthann.de"
-    header_right  = "Verkauf #{id}"
+    header_right  = "#{transaction} #{id}"
 
     footer_left   = updated_at.strftime("%Y-%m-%d / %H:%M")
     footer_center = event.information || "mail@boerse-burgthann.de"
@@ -21,10 +21,15 @@ module SellingsExporter
       [list_item_number_for(line_item.item),
        cut_to_fit(pdf, 389, line_item.description), 
        cut_to_fit(pdf, 71, line_item.size), 
-       number_to_currency(line_item.price, locale: :de)]
+       transaction_number_format(transaction, line_item.price)]
+#       if (transaction == "Verkauf")
+#         number_to_currency(line_item.price, locale: :de)
+#       else
+#         number_to_currency("-#{line_item.price}", locale: :de)
+#       end]
     end
 
-    pdf.table([[ "No", "Description", "Size", "Price"], *items_list], 
+    pdf.table([[ "Nr", "Beschreibung", "Groesse", "Preis"], *items_list], 
               cell_style: { size: 10, padding: 2 }, 
               column_widths: [40, 340, 71, 70]) do |t|
       t.header = true
@@ -37,7 +42,7 @@ module SellingsExporter
       t.row(0).columns(0..3).align = :center
     end
 
-    pdf.table([[ "Total", number_to_currency(total, locale: :de) ]],
+    pdf.table([[ "Total", transaction_number_format(transaction, total) ]], #number_to_currency(total, locale: :de) ]],
               cell_style: { size: 10, padding: 2},
               column_widths: [451, 70]) do |t|
       pdf.font pdf.font.name, style: :bold
@@ -115,6 +120,14 @@ module SellingsExporter
         (value.size - 1).step(0, -1) do |i|
           return value[0..i] + " ..." if pdf.width_of(value[0..i]) <= width
         end
+      end
+    end
+
+    def transaction_number_format(transaction, value)
+      if (transaction == "Verkauf")
+        number_to_currency(value, locale: :de)
+      else
+        number_to_currency("-#{value}", locale: :de)
       end
     end
 
