@@ -14,6 +14,7 @@ role :web, domain                   # Your HTTP server, Apache/etc
 role :app, domain                   # This may be the same as your `Web` server
 role :db,  domain, :primary => true # This is where Rails migrations will run
 
+set :ssh_options, :forward_agent => true
 set :deploy_via, :remote_cache
 set :scm, 'git'
 set :branch, 'master'
