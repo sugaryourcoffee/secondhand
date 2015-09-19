@@ -29,6 +29,8 @@ module SellingsExporter
 #       end]
     end
 
+    STDERR.puts *items_list
+
     pdf.table([[ "Nr", "Beschreibung", "Groesse", "Preis"], *items_list], 
               cell_style: { size: 10, padding: 2 }, 
               column_widths: [40, 340, 71, 70]) do |t|
