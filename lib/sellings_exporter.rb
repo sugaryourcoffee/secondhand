@@ -29,7 +29,7 @@ module SellingsExporter
 #       end]
     end
 
-    STDERR.puts *items_list
+    logger.debug "print selling - table data: #{*items_list}"
 
     pdf.table([[ "Nr", "Beschreibung", "Groesse", "Preis"], *items_list], 
               cell_style: { size: 10, padding: 2 }, 
