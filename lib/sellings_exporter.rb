@@ -24,10 +24,18 @@ module SellingsExporter
        transaction_number_format(transaction, line_item.price)]
     end
 
+    # DEBUGGING START
     File.open("tmp/print_log", "a") do |log| 
+      testdata = [[ "Nr", "Beschreibung", "Groesse", "Preis"], *items_list]
       log.puts "#{transaction} #{id}"
-      log.puts "----------------> #{items_list}"
+      testdata.each do |a|
+        log.puts a.inspect
+        log.puts Array === a
+      end
+      log.print "assert_propper_table_data: "
+      log.puts testdata.all? { |a| Array === a }
     end
+    # DEBUGGING END
 
     pdf.table([[ "Nr", "Beschreibung", "Groesse", "Preis"], *items_list], 
               cell_style: { size: 10, padding: 2 }, 
