@@ -24,19 +24,6 @@ module SellingsExporter
        transaction_number_format(transaction, line_item.price)]
     end
 
-    # DEBUGGING START
-    File.open("tmp/print_log", "a") do |log| 
-      testdata = [[ "Nr", "Beschreibung", "Groesse", "Preis"], *items_list]
-      log.puts "#{transaction} #{id}"
-      testdata.each do |a|
-        log.puts a.inspect
-        log.puts Array === a
-      end
-      log.print "assert_propper_table_data: "
-      log.puts testdata.all? { |a| Array === a }
-    end
-    # DEBUGGING END
-
     pdf.table([[ "Nr", "Beschreibung", "Groesse", "Preis"], *items_list], 
               cell_style: { size: 10, padding: 2 }, 
               column_widths: [40, 340, 71, 70]) do |t|
@@ -122,8 +109,9 @@ module SellingsExporter
       if words.size > 1
         words.each_with_index do |word,i|
           return words[0..i-1].
-            join(" ") + " ..." if pdf.width_of(words[0..i].join(" ")) > width
+            join(" ") + " ..." if pdf.width_of(words[0..i].join(" ")) >= width
         end
+        return words[0..words.size-1].join(" ") + " ..."
       else
         (value.size - 1).step(0, -1) do |i|
           return value[0..i] + " ..." if pdf.width_of(value[0..i]) <= width
