@@ -22,14 +22,12 @@ module SellingsExporter
        cut_to_fit(pdf, 389, line_item.description), 
        cut_to_fit(pdf, 71, line_item.size), 
        transaction_number_format(transaction, line_item.price)]
-#       if (transaction == "Verkauf")
-#         number_to_currency(line_item.price, locale: :de)
-#       else
-#         number_to_currency("-#{line_item.price}", locale: :de)
-#       end]
     end
 
-#    logger.debug "print selling - table data: #{*items_list}"
+    File.open("tmp/print_log", "a") do |log| 
+      log.puts "#{transaction} #{id}"
+      log.puts "----------------> #{items_list}"
+    end
 
     pdf.table([[ "Nr", "Beschreibung", "Groesse", "Preis"], *items_list], 
               cell_style: { size: 10, padding: 2 }, 
@@ -44,7 +42,7 @@ module SellingsExporter
       t.row(0).columns(0..3).align = :center
     end
 
-    pdf.table([[ "Total", transaction_number_format(transaction, total) ]], #number_to_currency(total, locale: :de) ]],
+    pdf.table([[ "Total", transaction_number_format(transaction, total) ]],
               cell_style: { size: 10, padding: 2},
               column_widths: [451, 70]) do |t|
       pdf.font pdf.font.name, style: :bold
