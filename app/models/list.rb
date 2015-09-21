@@ -488,8 +488,9 @@ class List < ActiveRecord::Base
     if words.size > 1
       words.each_with_index do |word,i|
         return words[0..i-1].
-          join(" ") + " ..." if pdf.width_of(words[0..i].join(" ")) > width
+          join(" ") + " ..." if pdf.width_of(words[0..i].join(" ")) >= width
       end
+      return words[0..words.size-1].join(" ") + " ..."
     else
       (value.size - 1).step(0, -1) do |i|
         return value[0..i] + " ..." if pdf.width_of(value[0..i]) <= width
