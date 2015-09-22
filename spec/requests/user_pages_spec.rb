@@ -223,9 +223,10 @@ describe "User pages" do
                          registration_code: "2fghij") 
     end
 
+    let(:admin)      { FactoryGirl.create(:admin) }
     let(:other_user) { FactoryGirl.create(:user) }
+    let(:user)       { FactoryGirl.create(:user) }
 
-    let(:user) { FactoryGirl.create(:user) }
     before do
       sign_in user
       visit user_path(user, locale: :en) 
@@ -246,8 +247,12 @@ describe "User pages" do
       it { list2.items.size.should eq 2 }
       it { list2.reload.user_id.should eq user.id }
 
-      describe "deregister list" do
+      it { should_not have_link "Deregister" }
+
+      describe "deregister list as admin" do
         before do
+          sign_in admin
+          visit user_path(user, locale: :en)
           click_link "Deregister"
         end
         
@@ -256,17 +261,16 @@ describe "User pages" do
         it { list2.reload.items.size.should eq 0 }
         it { list2.user_id.should eq nil }
 
-        describe "and register deregistered list" do
+        describe "and register deregistered list as admin" do
           before do
+            visit user_path(admin, locale: :en)
             register_list("2fghij")
           end
 
           it { should have_content('List registered') }
           it { should have_button "List 2" }
         end
-
       end
-
     end
 
     describe "with list of another user" do
@@ -311,7 +315,7 @@ describe "User pages" do
     end
 
   end
-
+# ----
   describe "list administration" do
 
     let(:user) { FactoryGirl.create(:user) }

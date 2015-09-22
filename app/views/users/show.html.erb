@@ -52,14 +52,16 @@
                                 print_list_user_list_path(@user, list) %></li>
                   <li><%= link_to t('.Labels'), 
                                 print_labels_user_list_path(@user, list) %></li>
-                  <li class="divider"/>
-                  <li class="nav-header"><%= t('.List') %></li>
-                  <li><%= link_to t('.Deregister_list'),
-                                  deregister_list_user_path(@user, 
-                                                            list_id: list.id),
-                                  method: :post,
-                                  data: { confirm: t('.sure_deregister') } %>
-                  </li>
+                  <% if current_user.admin? %>
+                    <li class="divider"/>
+                    <li class="nav-header"><%= t('.List') %></li>
+                    <li><%= link_to t('.Deregister_list'),
+                                    deregister_list_user_path(@user, 
+                                                              list_id: list.id),
+                                    method: :post,
+                                    data: { confirm: t('.sure_deregister') } %>
+                    </li>
+                  <% end %>
                 </ul>
               </div>
               <ul>
