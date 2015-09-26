@@ -67,7 +67,7 @@ class SellingStatistics
     end
 
     def item_ids
-      sold_line_items.select('item_id').pluck(:id)
+      sold_line_items.pluck(:item_id) 
     end
 
     # Returns all revenues, revenues that are subject to fee only and revenues

@@ -56,7 +56,7 @@ class ReversalStatistics
     end
 
     def item_ids
-      redeemed_line_items.select('item_id').pluck(:id)
+      redeemed_line_items.pluck(:item_id) 
     end
 
     def redemptions
