@@ -56,7 +56,11 @@ class ReversalStatistics
     end
 
     def item_ids
-      redeemed_line_items.pluck(:item_id)
+<<<<<<< HEAD
+      redeemed_line_items.pluck(:item_id) 
+=======
+      redeemed_line_items.pluck(:item_id) 
+>>>>>>> rails4-0
     end
 
     def redemptions
