@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.22'
+gem 'rails', '4.0.13'
 gem 'bootstrap-sass', '~> 2.3.1.0'
-gem 'faker', '1.0.1'
-gem 'will_paginate', '3.0.3'
-gem 'bootstrap-will_paginate', '0.0.6'
-gem 'prawn', '~> 0.12.0'
+gem 'faker', '~> 1.5.0'
+gem 'will_paginate', '~> 3.0.7'
+gem 'bootstrap-will_paginate', '~> 0.0.10'
+gem 'prawn', '~> 1.3.0'
 gem 'syc-barcode', '~> 0.0.3'
 gem 'net-ssh', '~> 2.9.2'
 
@@ -33,20 +33,16 @@ group :test do
   gem 'selenium-webdriver'
 end
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
-end
+gem 'sass-rails',   '~> 4.0.2'
+gem 'coffee-rails', '~> 4.0.0'
+gem 'uglifier', '>= 1.3.0'
 
 gem 'jquery-rails'
 gem 'best_in_place'
 gem 'gritter', '~> 1.1.0'
 
 # To use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.0.1'
+gem 'bcrypt', '~> 3.1.7'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
