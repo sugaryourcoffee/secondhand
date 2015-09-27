@@ -125,4 +125,66 @@ errors than try `$ rake db:test:prepare` and *rspec* again.
 
 Only move on if all your tests pass without errors.
 
+## Merge the updated app to the master branch
+Now that we have updated our Secondhand app to the most current Ruby and Rails 
+versions we want to merge the changes back to the master branch. We first 
+checkout the master branch and then push them to github.
+
+    $ git checkout master
+    $ git merge rails4-0
+    $ git push
+
+Now we are ready to actually upgrade to Rails 4.0.
+
+## Prepare the Gemfile
+The first step is to change the Ruby version in the Gemfile. But we also want
+to set the version numbers for the other gems listed in the Gemfile so they
+meet the pre-conditions working with Rails 4.0. To see what gem versions we need
+in combination with Ruby 4.0 we create a Rails project with the most recent
+Rails 4.0 version, which is at this writing *4.0.13*.
+
+    $ mkdir ~/Work/rails-version-test
+    $ cd ~/Work/rails-version-test
+    $ gem install rails --version 4.0.13
+    $ rails _4.0.13_ new test-4.0.13
+ 
+In the Gemfile we can see the gem version that work together with Rails 4.0.13.
+The table below lists the gems (from the Secondhand Gemfile) with the versions
+of the *test-4.0.13* app.
+
+Gem                      | Rails 3.2.22 | Rails 4.0.13    | Group
+------------------------ | ------------ | --------------- | -----
+rails                    | 3.2.22       | 4.0.13          | top
+bootstrap-sass           | 2.3.1.0      | -               | top
+faker                    | 1.0.1        | ~> 1.5.0        | top
+will\_paginate           | 3.0.3        | 3.0.7           | top
+bootstrap-will\_paginate | 0.0.6        | 0.0.10          | top
+prawn                    | 0.12.0       | 1.3.0           | top
+syc-barcode              | 0.0.3        | 0.0.3           | top
+net-ssh                  | 2.9.2        | -               | top
+sqlite3                  |              |                 | development
+rspec-rails              | 2.99.0       | 2.99.0          | development, test
+guard-rspec              | 4.6          | 4.6             | development
+annotate                 | 2.5.0        | 2.6.10          | development
+guard-spork              | 2.1          | 2.1             | test
+spork                    | 0.9          | 0.9             | test
+capybara                 | 2.1.0        | 2.1.0           | test
+rb-inotify               | 0.9.0        | 0.9.0           | test
+libnotify                | 0.5.9        | 0.5.9           | test
+factory\_girl\_rails     | 1.4.0        | 1.4.0           | test
+cucumber-rails           | 1.2.1        | 1.2.1           | test
+database\_cleaner        | 0.7.0        | 0.7.0           | test
+selenium-webdriver       |              |                 | test
+sass-rails               | 3.2.3        | ~> 4.0.2        | assets -> top
+coffee-rails             | 3.2.1        | ~> 4.0.0        | assets -> top
+uglifier                 | 1.0.3        | >= 1.3.0        | assets -> top
+jquery-rails             |              |                 | top
+best\_in\_place          |              |                 | top
+gritter                  | 1.1.0        | 1.1.0           | top
+bcrypt-ruby              | 3.0.1        | ~> bcrypt 3.1.7 | top
+rvm-capistrano           | 1.5.6        | 1.5.6           | top
+mysql2                   |              |                 | production
+turbolinks               | -            |                 | top
+jbuilder                 | -            | ~> 1.2          | top
+sdoc                     | -            |                 | doc
 
