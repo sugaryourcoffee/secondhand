@@ -32,31 +32,32 @@ If you encounter errors first fix them before you move on.
 
 ## Tag the current application version
 Before we move on we want to make sure that we can come back to the currently
-working and released version. To do that we tag this version with a version
-number.
+working and released version. To do that we create a branch and tag this 
+branch with a version number.
 
-To list the tags we can issue
+We first want to create a branch with the released version in order to be able
+to make changes especially bug fixes to this version. This is necessary if 
+users won't immediately upgrade to the the new version.
+
+    $ git checkout --branch v1.1-stable
+    $ git push --set-upstream origin v1.1-stable
+
+Next we want to tag this branch with a version number. To list the tags we can 
+issue
 
     $ git tag
     v1.0
     v1.0.1
     v1.0.2
 
-To tag our master branch we checkout master and then issue the tag command
+To tag our branch we checkout *v1.1-stable* and then issue the tag command
 
-    $ git checkout master
+    $ git checkout v1.1-stable
     $ git tag -a v1.1.0 -m "Secondhand V1.1.0 - Release 2015-09-18"
 
 Finally push the tagged commit to Github with
 
-    $ git push origin v1.1.0
-
-We also want to create a branch with the released version in order we want to
-make changes especially bug fixes to this version. This is necessary if users
-won't immediately upgrade to the the new version.
-
-    $ git checkout --branch v1.1-stable
-    $ git push set-upstream origin v1.1-stable
+    $ git push --tags
 
 ## Check out a new branch
 Before you do any changes to your project check out a new branch. In case you
