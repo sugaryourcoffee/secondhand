@@ -150,12 +150,12 @@ Rails 4.0 version, which is at this writing *4.0.13*.
  
 In the Gemfile we can see the gem version that work together with Rails 4.0.13.
 The table below lists the gems (from the Secondhand Gemfile) with the versions
-of the *test-4.0.13* app.
+of the *test-4.0.13* app indicated by `~>` and `>=`.
 
 Gem                      | Rails 3.2.22 | Rails 4.0.13    | Group
 ------------------------ | ------------ | --------------- | -----
 rails                    | 3.2.22       | 4.0.13          | top
-bootstrap-sass           | 2.3.1.0      | -               | top
+bootstrap-sass           | 2.3.1.0      | 2.3.1.0         | top
 faker                    | 1.0.1        | ~> 1.5.0        | top
 will\_paginate           | 3.0.3        | 3.0.7           | top
 bootstrap-will\_paginate | 0.0.6        | 0.0.10          | top
@@ -187,4 +187,142 @@ mysql2                   |              |                 | production
 turbolinks               | -            |                 | top
 jbuilder                 | -            | ~> 1.2          | top
 sdoc                     | -            |                 | doc
+
+We start by changing the rails version in our Gemfile to 
+
+    gem 'rails', '4.0.13'
+
+and then run bundle install. After the installation we get following post
+install messages.
+
+    Post-install message from capybara:
+    IMPORTANT! Some of the defaults have changed in Capybara 2.1. If you're 
+    experiencing failures,                                                                  
+    please revert to the old behaviour by setting:
+
+        Capybara.configure do |config|
+          config.match = :one
+          config.exact_options = true
+          config.ignore_hidden_elements = true
+          config.visible_text_only = true
+        end
+          
+    If you're migrating from Capybara 1.x, try:
+
+        Capybara.configure do |config|
+          config.match = :prefer_exact
+          config.ignore_hidden_elements = false
+        end
+
+    Details here: http://www.elabs.se/blog/60-introducing-capybara-2-1
+
+    Post-install message from prawn:
+
+      ********************************************
+
+
+      A lot has changed recently in Prawn.
+
+      Please read the changelog for details:
+
+      https://github.com/prawnpdf/prawn/wiki/CHANGELOG
+
+
+      ******************************************** 
+
+We come back to them if we encounter problems. 
+
+## Update Secondhand configuration files
+Now we use a rake task that helps to interactively update configuration files.
+
+    $ rake rails:update
+
+This will ask whether to overwrite the old files with new files. With `d` we
+can diff the old and the new file. Here is how we process Secondhand.
+
+File                                    | Overwrite | After update action
+--------------------------------------- | --------- | -------------------
+config/boot.rb                          | yes       | no
+config/routes.rb                        | no        | yes
+config/application.rb                   | yes       | yes
+config/environment.rb                   | no        | no
+conifg/environments/development.rb      | yes       | yes
+config/environsments/production.rb      | yes       | yes
+config/environments/test.rb             | yes       | yes
+config/initializers/inflections.rb      | yes       | yes
+config/initializers/secret\_token.rb    | yes       | no
+config/initializers/sessions\_store.rb  | yes       | no
+config/initializers/wrap\_parameters.rb | yes       | no
+config/locales/en.yml                   | no        | no
+bin/rails                               | yes       | no
+bin/rake                                | yes       | no
+
+### config/routes.rb
+If we run `rspec` we will get error messages which can be considered hints in
+regard of changes in the REST actions.
+
+    $ rspec
+    /home/pierre/.rvm/gems/ruby-1.9.3-p551@rails4013/gems/actionpack-4.0.13/
+    lib/action_dispatch/routing/mapper.rb:191:in `normalize_conditions!': You 
+    should not use the `match` method in your router without specifying an 
+    HTTP method. (RuntimeError)
+    If you want to expose your action to both GET and POST, add 
+      `via: [:get, :post]` option.
+    If you want to expose your action to GET, use `get` in the router:
+      Instead of: match "controller#action"
+      Do: get "controller#action"
+
+We replace the `match` method with a `get` or `delete` method in 
+`config/routes.rb` as shown in the table.
+
+Ruby 4.0                                    | Ruby 3.2
+------------------------------------------- | --------------------------------
+root                'static\_pages#home'    | root to: 'static\_pages#home'
+get    'signup'  => 'users#new'             | match '/signup', to: 'users#new'
+get    'signin'  => 'session#new'           | match '/signin', to: 'sessions#new'
+delete 'signout' => 'session#destroy'       | match '/signout', to: 'sessions#destroy', via: :delete
+get    'about'   => 'static\_pages#about'   | match '/about', to: 'static\_pages#about'
+get    'help'    => 'static\_pages#help'    | match '/help', to: 'static\_pages#help'
+get    'contact' => 'static\_pages#contact' | match '/contact', to: 'static\_pages#contact'
+get    'message' => 'static\_pages#message' | match '/message', to: 'static\_pages#message'
+ 
+### config/application.rb
+
+Action                   | Description
+------------------------ | ------------------------
+require 'interleave2of5' | require 'interleave2of5'
+include files from lib/  |
+
+### config/environments/development.rb
+
+Action                 | Description
+---------------------- | -----------------------------------------------
+default URL            | config.action\_mailer.default\_url\_options = \
+                       |   { host: "localhost:3000" } 
+mailer delivery method | config.action\_mailer.delivery\_method = :test 
+
+### config/environments/staging.rb
+
+### config/environments/production.rb
+
+Action      | Description
+----------- | --------------------------------------------
+default URL | config.action\_mailer.default\_url\_options = \
+            |   { host: "syc.dyndns.org:8080" }
+
+### config/environments/test.rb
+
+Action      | Description
+----------- | --------------------------------------------  
+default URL | config.action\_mailer.default\_url\_options = \
+            |   { host: "localhost:3000" }
+
+### config/initializers/inflections.rb
+
+Action            | Description
+----------------- | -------------------------------------------------
+Pluralize 'Liste' | ActiveSupport::Inflector.inflections do |inflect|
+                  |   inflect.plural 'Liste', 'Listen' 
+                  | end
+
 
