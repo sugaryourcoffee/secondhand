@@ -286,12 +286,17 @@ get    'help'    => 'static\_pages#help'    | match '/help', to: 'static\_pages#
 get    'contact' => 'static\_pages#contact' | match '/contact', to: 'static\_pages#contact'
 get    'message' => 'static\_pages#message' | match '/message', to: 'static\_pages#message'
  
+When done we can run `rspec` again and check whether routing errors occur. But
+we also can check the `rake routes` command whether it draws error messages.
+
+    $ rake routes
+
 ### config/application.rb
 
 Action                   | Description
------------------------- | ------------------------
+------------------------ | ------------------------------------------------
 require 'interleave2of5' | require 'interleave2of5'
-include files from lib/  |
+autoload files from lib/ | config.autoload\_paths << Rails.root.join('lib')
 
 ### config/environments/development.rb
 
