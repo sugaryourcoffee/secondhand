@@ -330,4 +330,30 @@ Pluralize 'Liste' | ActiveSupport::Inflector.inflections do |inflect|
                   |   inflect.plural 'Liste', 'Listen' 
                   | end
 
+## Deprecated has\_many relations
+
+```
+DEPRECATION WARNING: The following options in your Cart.has_many :line_items 
+declaration are deprecated: :order. Please use a scope block instead. For 
+example, the following: 
+
+    has_many :spam_comments, conditions: { spam: true }, class_name: 'Comment'  
+                                                                                
+should be rewritten as the following:
+                                                                                
+    has_many :spam_comments, -> { where spam: true }, class_name: 'Comment'
+
+. (called from <class:Cart> at 
+   /home/pierre/Work/Secondhand/app/models/cart.rb:2)
+```
+
+## Strong parameters in favor of attr\_accessible
+
+```
+/home/pierre/.rvm/gems/ruby-1.9.3-p551@rails4013/gems/activemodel-4.0.13/lib/act
+ive_model/deprecated_mass_assignment_security.rb:17:in `attr_accessible': `attr_
+accessible` is extracted out of Rails into a gem. Please use new recommended pro
+tection model for params(strong_parameters) or add `protected_attributes` to you
+r Gemfile to use old one. (RuntimeError) 
+```
 
