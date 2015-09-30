@@ -4,10 +4,10 @@ class AcceptancesController < ApplicationController
   before_filter      :admin_or_operator
 
   def index
-    @event = Event.find_by_active(true)
+    @event = Event.find_by(active: true) # find_by_active(true)
     
     if @event
-      @list = List.find_by_list_number_and_event_id(params[:search_list_number], @event)
+      @list = List.find_by(list_number: params[:search_list_number], event_id: @event) # find_by_list_number_and_event_id(params[:search_list_number], @event)
       unless @list and @list.registered?
         @lists = List.order(:list_number)
                      .paginate(page: params[:page],

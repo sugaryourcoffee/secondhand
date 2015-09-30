@@ -7,7 +7,7 @@ class StaticPagesController < ApplicationController
     else
       @news = News.
         where("released = ? and promote_to_frontpage = ?", true, true).last
-      @event = Event.find_by_active(true)
+      @event = Event.find_by(active: true) # find_by_active(true)
     end
   end
 

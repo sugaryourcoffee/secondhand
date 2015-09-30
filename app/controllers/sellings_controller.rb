@@ -5,8 +5,11 @@ class SellingsController < ApplicationController
 
   def index
     initialize_event_and_sellings
-    @selling = Selling.find_by_id_and_event_id(params[:search_selling_id], 
-                                               @event)
+    @selling = Selling.find_by(id:       params[:search_selling_id], 
+                               event_id: @event)
+
+#    @selling = Selling.find_by_id_and_event_id(params[:search_selling_id], 
+#                                               @event)
 
     respond_to do |format|
       if @selling
@@ -20,7 +23,7 @@ class SellingsController < ApplicationController
   end
 
   def show
-    @event   = Event.find_by_active(true)
+    @event   = Event.find_by(active: true) #find_by_active(true)
     @selling = Selling.find(params[:id])
   end
 
@@ -30,7 +33,7 @@ class SellingsController < ApplicationController
       redirect_to item_collection_carts_path, notice: "Your cart is empty"
       return
     end
-    @selling = Selling.new(event_id: Event.find_by_active(true).id)
+    @selling = Selling.new(event_id: Event.find_by(active: true).id) #find_by_active(true).id)
     @selling.add_items_from_cart(current_cart)
     respond_to do |format|
       if @selling.save
@@ -97,7 +100,7 @@ class SellingsController < ApplicationController
   private
 
     def initialize_event_and_sellings
-      @event = Event.find_by_active(true)
-      @sellings = Selling.find_all_by_event_id(@event)
+      @event = Event.find_by(active: true) # find_by_active(true)
+      @sellings = Selling.where(event_id: @event) #find_all_by_event_id(@event)
     end
 end

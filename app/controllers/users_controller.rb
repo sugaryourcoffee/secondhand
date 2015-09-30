@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @event = Event.find_by_active(true)
+    @event = Event.find_by(active: true) # find_by_active(true)
   end
 
   def new
@@ -63,10 +63,9 @@ class UsersController < ApplicationController
 
   def register_list
     user = User.find(params[:id])
-    event = Event.find_by_active(true)
+    event = Event.find_by(active: true) # find_by_active(true)
     registration_code = params[:registration_code]
-    list = List.find_by_registration_code_and_event_id(registration_code, 
-                                                       event)
+    list = List.find_by(registration_code: registration_code, event_id: event) # find_by_registration_code_and_event_id(registration_code, event)
     if list
       if list.user_id
         flash[:error] = I18n.t('.taken', model: t('activerecord.models.list'))
@@ -86,7 +85,7 @@ class UsersController < ApplicationController
 
   def deregister_list
     user = User.find(params[:id])
-    list = List.find_by_id_and_user_id(params[:list_id], user.id)
+    list = List.find_by(id: params[:list_id], user_id: user.id) # find_by_id_and_user_id(params[:list_id], user.id)
     unless list
       flash[:error] = I18n.t('.not_own_list')
     else

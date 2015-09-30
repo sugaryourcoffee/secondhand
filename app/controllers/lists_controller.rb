@@ -10,7 +10,7 @@ class ListsController < ApplicationController
   # GET /lists
   # GET /lists.json
   def index
-    @event = Event.find_by_active(true)
+    @event = Event.find_by(active: true) # find_by_active(true)
 
     params[:search_event_id] ||= @event.id.to_s
 

@@ -5,8 +5,11 @@ class ReversalsController < ApplicationController
 
   def index
     initialize_event_and_reversals
-    @reversal = Reversal.find_by_id_and_event_id(params[:search_reversal_id], 
-                                                 @event)
+    @reversal = Reversal.find_by(id:       params[:search_reversal_id], 
+                                 event_id: @event)
+
+#    @reversal = Reversal.find_by_id_and_event_id(params[:search_reversal_id], 
+#                                                 @event)
 
     respond_to do |format|
       if @reversal
@@ -20,7 +23,7 @@ class ReversalsController < ApplicationController
   end
 
   def show
-    @event   = Event.find_by_active(true)
+    @event   = Event.find_by(active: true) # find_by_active(true)
     @reversal = Reversal.find(params[:id])
   end
 
@@ -30,7 +33,7 @@ class ReversalsController < ApplicationController
       redirect_to line_item_collection_carts_path, notice: "Your cart is empty"
       return
     end
-    @reversal = Reversal.new(event_id: Event.find_by_active(true).id)
+    @reversal = Reversal.new(event_id: Event.find_by(active: true).id) #find_by_active(true).id)
     @reversal.add_items_from_cart(@cart)
     respond_to do |format|
       if @reversal.save
@@ -82,8 +85,8 @@ class ReversalsController < ApplicationController
   private
 
     def initialize_event_and_reversals
-      @event = Event.find_by_active(true)
-      @reversals = Reversal.find_all_by_event_id(@event)
+      @event = Event.find_by(active: true) # find_by_active(true)
+      @reversals = Reversal.where(event_id: @event) # find_all_by_event_id(@event)
     end
 
 end

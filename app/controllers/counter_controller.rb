@@ -4,7 +4,7 @@ class CounterController < ApplicationController
   before_filter :admin_or_operator
 
   def index
-    @event     = Event.find_by_active(true)
+    @event     = Event.find_by(active: true) # find_by_active(true)
     @carts     = Cart.not_empty
     @sellings  = retrieve_sellings(params).paginate(page: params[:page], 
                                                     per_page: 10)
