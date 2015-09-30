@@ -279,13 +279,15 @@ Ruby 4.0                                    | Ruby 3.2
 ------------------------------------------- | --------------------------------
 root                'static\_pages#home'    | root to: 'static\_pages#home'
 get    'signup'  => 'users#new'             | match '/signup', to: 'users#new'
-get    'signin'  => 'session#new'           | match '/signin', to: 'sessions#new'
-delete 'signout' => 'session#destroy'       | match '/signout', to: 'sessions#destroy', via: :delete
+get    'signin'  => 'sessions#new'          | match '/signin', to: 'sessions#new'
+delete 'signout' => 'sessions#destroy'      | match '/signout', to: 'sessions#destroy', via: :delete
 get    'about'   => 'static\_pages#about'   | match '/about', to: 'static\_pages#about'
 get    'help'    => 'static\_pages#help'    | match '/help', to: 'static\_pages#help'
 get    'contact' => 'static\_pages#contact' | match '/contact', to: 'static\_pages#contact'
 get    'message' => 'static\_pages#message' | match '/message', to: 'static\_pages#message'
- 
+put :update\_list                           | patch :update\_list
+put :update\_item                           | patch :update\_item
+
 When done we can run `rspec` again and check whether routing errors occur. But
 we also can check the `rake routes` command whether it draws error messages.
 
@@ -308,10 +310,17 @@ mailer delivery method | config.action\_mailer.delivery\_method = :test
 
 ### config/environments/staging.rb
 
+Action      | Description
+----------- | ------------------------------------------------
+deliveries  | config.action\_mailer.perform\_deliveries = true
+default URL | config.action\_mailer.default\_url\_options = \
+            |   { host: "syc.dyndns.org:8082" }
+
 ### config/environments/production.rb
 
 Action      | Description
------------ | --------------------------------------------
+----------- | ------------------------------------------------
+deliveries  | config.action\_mailer.perform\_deliveries = true
 default URL | config.action\_mailer.default\_url\_options = \
             |   { host: "syc.dyndns.org:8080" }
 
@@ -330,7 +339,11 @@ Pluralize 'Liste' | ActiveSupport::Inflector.inflections do |inflect|
                   |   inflect.plural 'Liste', 'Listen' 
                   | end
 
-## Deprecated has\_many relations
+## Error Messages
+In this section error message are discussed that have arisen after upgrading to
+Rals 4.
+
+## Deprecated has\_many options
 
 ```
 DEPRECATION WARNING: The following options in your Cart.has_many :line_items 
@@ -347,7 +360,18 @@ should be rewritten as the following:
    /home/pierre/Work/Secondhand/app/models/cart.rb:2)
 ```
 
+In `app/models/cart.rb` we change
+
+    has_many :line_items, :order => "created_at DESC"
+
+to
+
+    has_many :line_items, -> { order(created_at: :desc) }
+
 ## Strong parameters in favor of attr\_accessible
+In Rails 4 `attr_accessible` is not used anymore in the model. Accessible 
+attributes are now defined in the controller. The error below shows up when
+using `attr_accessible` in the model.
 
 ```
 /home/pierre/.rvm/gems/ruby-1.9.3-p551@rails4013/gems/activemodel-4.0.13/lib/act
@@ -357,3 +381,79 @@ tection model for params(strong_parameters) or add `protected_attributes` to you
 r Gemfile to use old one. (RuntimeError) 
 ```
 
+To change that we define accessible attributes in the controller and remove
+`attr_accessible` from the model.
+
+In the `app/models/cart.rb` model we remove `attr_accessible :cart_type` and 
+add following to `app/controllers/cart_controller.rb`.
+
+    private
+
+    def cart_params
+      params.require(:cart).permit(:cart_type)
+    end
+
+Then in the `new` and `update` action use the `cart_params` method.
+
+In order to speed up migration we will use the `protected_attributes` gem and
+then gradually migrate to *strong prameters*. Add following line to the
+*Gemfile*.
+
+    gem 'protected_attributes'
+
+and run
+
+    $ bundle install
+
+## scope without passing a callable object
+`scope` without calling a callable object is deprecated.
+
+## database\_cleaner
+Version 0.7.0 has to be upgraded to >= 1.1.0. Replace the version `0.7.0` with
+`1.5.0` (the latest at this time of writing) and run
+
+    $ bundle update --source database_cleaner
+
+## ActionController::RoutingError: uninitialized constant SessionController
+This occured as I was using `'signin' => 'session#new'` instead of 
+`'singin` => 'sessions#new'`. In this case the `ActionController` is using a
+controller `SessionController` instead of the `SessionsController`
+
+## Missing host to link to
+
+```
+Missing host to link to! Please provide the :host parameter, 
+set default_url_options[:host], or set :only_path to true
+```
+
+In this case add to 
+
+`config/environments/test.rb`  and `config/environment/development.rb`
+
+    config.action_mailer.default_url_options = { host: "localhost:3000" }
+
+`config/environments/staging.rb` 
+
+    config.action_mailer.default_url_options = { host: "syc.dyndns.org:8082" }
+
+`config/environments/production.rb` 
+
+    config.action_mailer.default_url_options = { host: "syc.dyndns.org:8080" }
+
+## Deprecation Warnings
+This section discusses deprecation warnings and how to fix them.
+
+### Dynamic methods
+
+```
+DEPRECATION WARNING: This dynamic method is deprecated. Please use e.g. 
+Post.where(...).all instead. (called from total_count at 
+/home/pierre/Work/Secondhand/app/models/list.rb:78)
+```
+
+Old                                 | New
+----------------------------------- | --------------------------------------
+List.find_all_by_event_id(event_id) | List.where(event_id: event_id)
+List.find_all_by_event_id(@event)   | List.where(event_id: @event)
+List.find_by_list_number!(number)   | List.find_by!(list_number: number)
+List.find_by_list_number_and_date(number, date) | List.where(list_number: number, date: date)
