@@ -9,6 +9,10 @@ gem 'prawn', '~> 1.3.0'
 gem 'syc-barcode', '~> 0.0.3'
 gem 'net-ssh', '~> 2.9.2'
 
+# TODO Temporarily use protected_attribute gem and then migrate to strong
+# prameters
+gem 'protected_attributes'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -29,7 +33,7 @@ group :test do
   gem 'libnotify', '~> 0.5.9'
   gem 'factory_girl_rails', '1.4.0'
   gem 'cucumber-rails', '1.2.1', require: false
-  gem 'database_cleaner', '0.7.0'
+  gem 'database_cleaner', '1.5.0'
   gem 'selenium-webdriver'
 end
 
