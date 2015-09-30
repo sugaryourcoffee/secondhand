@@ -23,7 +23,7 @@ module ApplicationHelper
   end
 
   def active_event
-    Event.find_by_active(true)
+    Event.find_by(active: true) # find_by_active(true)
   end
 
   def back_or_path(default)
