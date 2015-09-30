@@ -20,6 +20,9 @@ Secondhand::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
+  # SYC extension
+  config.action_controller.default_url_options = { host: "localhost:3000" }
+
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
 
@@ -31,6 +34,9 @@ Secondhand::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
+  # SYC extension
+  config.action_mailer.default_url_options = { host: "localhost:3000" }
+  
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
