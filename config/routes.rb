@@ -5,9 +5,9 @@ Secondhand::Application.routes.draw do
 
     get    'signup'  => 'users#new'         # match '/signup',  
                                             # to: 'users#new'
-    get    'signin'  => 'session#new'       # match '/signin',  
+    get    'signin'  => 'sessions#new'      # match '/signin',  
                                             # to: 'sessions#new'
-    delete 'signout' => 'session#destroy'   # match '/signout', 
+    delete 'signout' => 'sessions#destroy'  # match '/signout', 
                                             # to: 'sessions#destroy', 
                                             # via: :delete
 
@@ -30,9 +30,9 @@ Secondhand::Application.routes.draw do
     resources :acceptances, only: [:index, :edit] do
       member do
         get    :edit_list
-        put    :update_list
+        patch  :update_list
         get    :edit_item
-        put    :update_item
+        patch  :update_item
         delete :delete_item
         post   :accept
       end
