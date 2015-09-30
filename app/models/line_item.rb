@@ -43,7 +43,7 @@ class LineItem < ActiveRecord::Base
   private
 
     def ensure_item_from_accepted_list_of_active_event
-      active_event = Event.find_by_active(true)
+      active_event = Event.find_by(active: true) # find_by_active(true)
       item_valid = !active_event.nil? && 
                    item.list.event_id = active_event.id &&
                    !item.list.accepted_on.nil?

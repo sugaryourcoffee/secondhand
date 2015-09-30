@@ -75,7 +75,7 @@ class List < ActiveRecord::Base
 
   # Returns the list count for the provided event_id
   def self.total_count(event_id)
-    List.find_all_by_event_id(event_id)
+    List.where(event_id: event_id)
   end
 
   # Returns all registered and not send (closed) lists for the provided event
@@ -144,9 +144,11 @@ class List < ActiveRecord::Base
   # Searches for the provided registration code or list number
   def self.search(search)
     if search
-      find(:all,
-           conditions: ['list_number = ? or registration_code LIKE ?', 
-                        search, "%#{search}%"])
+#      find(:all,
+#           conditions: ['list_number = ? or registration_code LIKE ?', 
+#                        search, "%#{search}%"])
+       where('list_number = ? or registration_code LIKE ?', 
+             search, "%#{search}%")
     else
       find(:all)
     end
@@ -190,7 +192,7 @@ class List < ActiveRecord::Base
 
   def self.list_status_query_string(filter)
     query_string = "event_id = ? "
-    query_values = [Event.find_by_active(true).id]
+    query_values = [Event.find_by(active: true).id] #find_by_active(true).id]
     case filter.nil? ? :not_accepted : filter.to_sym
     when :accepted
       query_string << "AND accepted_on iS NOT ?"

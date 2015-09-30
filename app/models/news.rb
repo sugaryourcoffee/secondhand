@@ -20,7 +20,7 @@ class News < ActiveRecord::Base
   end
 
   def news_translation(locale = I18n.locale)
-    news_translations.find_by_language(locale)
+    news_translations.find_by(language: locale) # find_by_language(locale)
   end
 
   def with_translations

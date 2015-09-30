@@ -62,14 +62,16 @@ class User < ActiveRecord::Base
   end
 
   def lists_for_active_event
-    event = Event.find_by_active(true)
+    event = Event.find_by(active: true) # find_by_active(true)
     List.where(user_id: id, event_id: event).order(:list_number)
   end
 
   def self.search(search)
     if search
-      find(:all, conditions: ['first_name LIKE ? or last_name LIKE ?', 
-           "%#{search}%", "%#{search}%"])
+#      find(:all, conditions: ['first_name LIKE ? or last_name LIKE ?', 
+#           "%#{search}%", "%#{search}%"])
+      where('first_name LIKE ? or last_name LIKE ?', 
+           "%#{search}%", "%#{search}%")
     else
       find(:all)
     end 
