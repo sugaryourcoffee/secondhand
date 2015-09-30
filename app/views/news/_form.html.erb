@@ -13,7 +13,7 @@
 <% end %>
 
 <%= f.label :user_id, t('.author') %>
-<%= f.select :user_id, User.find_all_by_admin(true).collect { |u| ["#{u.first_name} #{u.last_name}", u.id] }, { selected: "#{current_user.first_name} #{current_user.last_name}" } %>
+<%= f.select :user_id, User.where(admin: true).collect { |u| ["#{u.first_name} #{u.last_name}", u.id] }, { selected: "#{current_user.first_name} #{current_user.last_name}" } %>
 
 <%= f.label :issue, t('.issue') %>
 <%= f.text_field :issue %>
