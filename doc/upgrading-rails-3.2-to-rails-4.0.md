@@ -457,3 +457,12 @@ List.find_all_by_event_id(event_id) | List.where(event_id: event_id)
 List.find_all_by_event_id(@event)   | List.where(event_id: @event)
 List.find_by_list_number!(number)   | List.find_by!(list_number: number)
 List.find_by_list_number_and_date(number, date) | List.where(list_number: number, date: date)
+
+Note: When changing to Rails 4 finders not the behaviour in regard to 
+exceptions as shown in following table.
+
+Finder               | Exception
+-------------------- | --------------------------------------------
+User.find(id)        | if `id` doesn't exist exception is thrown
+User.find_by(id: id) | if `id` doesn't exist no exception is thrown
+
