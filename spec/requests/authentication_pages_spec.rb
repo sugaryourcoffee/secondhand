@@ -109,7 +109,7 @@ describe "Authentication" do
 
         describe "submitting a DELETE request to the Users#destroy action" do
           before { delete user_path(user, locale: :en) }
-          specify { response.should redirect_to(root_path) }
+          specify { response.should redirect_to(root_path(locale: :en)) }
         end
       end
     end

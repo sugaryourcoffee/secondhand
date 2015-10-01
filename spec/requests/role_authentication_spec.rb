@@ -12,17 +12,17 @@ describe 'Role authentication' do
       
       describe 'visiting the acceptances page' do
         before { get acceptances_path(locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
       describe 'accept list' do
         before { post accept_acceptance_path(list, locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
       describe 'edit list' do
         before { get edit_list_acceptance_path(list, locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
     end
@@ -31,17 +31,17 @@ describe 'Role authentication' do
 
       describe 'visiting the carts page' do
         before { get carts_path(locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
       describe 'collect items for sales' do
         before { get item_collection_carts_path(locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
       describe 'collect line items for redemption' do
         before { get line_item_collection_carts_path(locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
     end
@@ -50,7 +50,7 @@ describe 'Role authentication' do
 
       describe 'visiting the counter index page' do
         before { get counter_index_path(locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
     end
@@ -64,17 +64,17 @@ describe 'Role authentication' do
 
       describe 'visiting the sellings index page' do
         before { get sellings_path(locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
       describe 'show selling' do
         before { get selling_path(selling, locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
       describe 'check out selling' do
         before { get check_out_selling_path(selling, locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
     end
@@ -90,17 +90,17 @@ describe 'Role authentication' do
 
       describe 'visiting the reversals index page' do
         before { get reversals_path(locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
       describe 'show reversal' do
         before { get reversal_path(reversal, locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
       describe 'check_out_reversal' do
         before { get check_out_reversal_path(reversal, locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
     end
@@ -177,7 +177,7 @@ describe 'Role authentication' do
 
       describe 'visiting the sellings index page' do
         before { get sellings_path(locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
       describe 'show selling' do
@@ -204,7 +204,7 @@ describe 'Role authentication' do
 
       describe 'visiting the reversals index page' do
         before { get reversals_path(locale: :en) }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
       end
 
       describe 'show reversal' do

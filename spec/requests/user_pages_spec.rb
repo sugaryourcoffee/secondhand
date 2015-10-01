@@ -308,7 +308,7 @@ describe "User pages" do
 
         it { list1.items.size.should eq 2 }
         it { list1.reload.user_id.should eq user.id }
-        specify { response.should redirect_to(root_path) }
+        specify { response.should redirect_to(root_path(locale: :en)) }
 
       end
 
