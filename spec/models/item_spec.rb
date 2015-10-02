@@ -63,13 +63,13 @@ describe Item do
     it { should_not be_valid }
   end
 
-  describe "accessible attributes" do
-    it "should not allow access to list_id" do
-      expect do
-        Item.new(list_id: list.id)
-      end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
-    end
-  end
+#  describe "accessible attributes" do
+#    it "should not allow access to list_id" do
+#      expect do
+#      Item.new(list_id: list.id)
+#      end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
+#    end
+#  end
 
   describe "delete item" do
     it "should destroy item" do
