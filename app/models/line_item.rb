@@ -19,8 +19,9 @@ class LineItem < ActiveRecord::Base
   before_destroy :ensure_not_referenced_by_selling_or_reversal
 
   def method_missing(name, *args)
+    STDERR.puts "------------>#{name}"
     m = name.to_s.scan(/^.*(?=_opponent$)/).first
-    super if !respond_to? m.to_sym
+    super if m.nil? or !respond_to? m.to_sym
     return selling  if m == 'reversal'
     return reversal if m == 'selling'
   end

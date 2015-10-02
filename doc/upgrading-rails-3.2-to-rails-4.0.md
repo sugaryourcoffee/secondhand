@@ -343,6 +343,46 @@ Pluralize 'Liste' | ActiveSupport::Inflector.inflections do |inflect|
 In this section error message are discussed that have arisen after upgrading to
 Rals 4.
 
+## Error in method\_missing
+In Rails 4 IDs of associated models are determined with `method_missing`. If 
+you overwrite `method_missing` and are operating on the valued that is send to
+method missing you have to send all values to super if the value is not operated
+on.
+
+    class LineItem < ActiveRecord::Base
+      belongs_to :selling # foreign key is selling_id
+
+      def method_missing(name, *args)
+        m = name.to_s.scan(/^.*(?=_opponent$)/).first
+        super if !respond_to? m.to_sym
+        return selling  if m == 'reversal'
+        return reversal if m == 'selling'
+      end
+    end
+
+Now consider accessing `selling_id`
+
+    > line_item = LineItem.new
+    > line_item.selling_id
+    NoMethodError:
+      undefined method 'to_sym' for nil:NilClass
+
+In the example `selling_id` is not known in the `LineItem` model and therefor 
+`selling_id` is send to `method_missing`. But `selling_id` is not recognized
+by the regex and `m` will be `nil` and hence the exception is thrown. To fix
+this we have to check for `m.nil?`
+
+    class LineItem < ActiveRecord::Base
+      belongs_to :selling # foreign key is selling_id
+
+      def method_missing(name, *args)
+        m = name.to_s.scan(/^.*(?=_opponent$)/).first
+        super if m.nil? or !respond_to? m.to_sym
+        return selling  if m == 'reversal'
+        return reversal if m == 'selling'
+      end
+    end
+    
 ## Deprecated has\_many options
 
 ```
