@@ -9,9 +9,12 @@ class AcceptancesController < ApplicationController
     if @event
       @list = List.find_by(list_number: params[:search_list_number], event_id: @event) # find_by_list_number_and_event_id(params[:search_list_number], @event)
       unless @list and @list.registered?
-        @lists = List.order(:list_number)
-                     .paginate(page: params[:page],
-                               conditions: List.list_status_query_string(params[:filter]))
+        @lists = List.where(List.list_status_query_string(params[:filter]))
+                     .order(:list_number)
+                     .paginate(page: params[:page])
+#        @lists = List.order(:list_number)
+#                     .paginate(page: params[:page],
+#                               conditions: List.list_status_query_string(params[:filter]))
       end
     end
 
@@ -40,9 +43,10 @@ class AcceptancesController < ApplicationController
 
   def edit_list
     @list = List.find(params[:id])
-    respond_to do |format|
-      format.js
-    end
+    render template: 'acceptances/edit_list.js.erb' 
+#    respond_to do |format|
+#      format.js
+#    end
   end
 
   def update_list
@@ -80,9 +84,10 @@ class AcceptancesController < ApplicationController
     @item = Item.find(params[:id])
     @list = @item.list
     @item.destroy
-    respond_to do |format|
-      format.js 
-    end
+    render template: 'acceptances/delete_item.js.erb' 
+#    respond_to do |format|
+#      format.js { render 'acceptances/delete_item.js.erb' }
+#    end
   end
 
   # Toggles the accepted_on field to Nil or to the current time.

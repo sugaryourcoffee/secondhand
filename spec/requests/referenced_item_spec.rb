@@ -4,7 +4,7 @@ describe "Item referenced" do
 
   let(:admin) { FactoryGirl.create(:admin) }
   let(:event) { FactoryGirl.create(:active) }
-  let(:list) { FactoryGirl.create(:list, user: admin, event: event) }
+  let(:list)  { FactoryGirl.create(:list, user: admin, event: event) }
 
   before do
     add_items_to_list(list, 2)
