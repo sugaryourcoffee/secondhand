@@ -539,7 +539,7 @@ In this case add to
 ## Deprecation Warnings
 This section discusses deprecation warnings and how to fix them.
 
-### Dynamic methods
+### This dynamic metho is deprecated
 
 ```
 DEPRECATION WARNING: This dynamic method is deprecated. Please use e.g. 
@@ -579,7 +579,7 @@ and then just remove all the occurrences of `.all`.
 
 ```
 DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. (called from block in _app_views_lists_index_html_erb__2537020648015865330_60608460 at /home/pierre/Work/Secondhand/app/views/lists/index.html.erb:85)
-´´´
+```
 
 This can be cleared with searching for all `find(:all)` occurences and replace
 them with `all`.
