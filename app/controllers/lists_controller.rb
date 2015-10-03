@@ -14,9 +14,14 @@ class ListsController < ApplicationController
 
     params[:search_event_id] ||= @event.id.to_s
 
-    @lists = List.order(:event_id).order(:list_number)
-                 .paginate(page: params[:page], 
-                           conditions: List.search_conditions(params))
+    @lists = List.where(List.search_conditions(params))
+                 .order(:event_id)
+                 .order(:list_number)
+                 .paginate(page: params[:page])
+
+#    @lists = List.order(:event_id).order(:list_number)
+#                 .paginate(page: params[:page], 
+#                           conditions: List.search_conditions(params))
 
     respond_to do |format|
       format.html # index.html.erb

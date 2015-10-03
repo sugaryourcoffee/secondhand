@@ -8,9 +8,13 @@ class UsersController < ApplicationController
                                       :deregister_list, :show, :edit, :update]
 
   def index
-    @users = User.paginate(page: params[:page], 
-                           conditions: User.search_conditions(params))
+    @users = User.where(User.search_conditions(params))
                  .order(:last_name)
+                 .paginate(page: params[:page])
+
+#    @users = User.paginate(page: params[:page], 
+#                           conditions: User.search_conditions(params))
+#                 .order(:last_name)
   end
 
   def show
