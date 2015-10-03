@@ -628,3 +628,75 @@ to
     <%= link_to t('.delete'), user, method: :delete, 
         data: { confirm: t('.confirm') }, class: "btn btn-warning" %>
 
+## RSpec deprecation warnings
+RSpec 2.99.0 is a pre-version to RSpec 3 and already pointing to deprecatoins 
+that will be removed from Rails 3. This section explains the necessary changes
+to make to be ready for Rails 3.
+
+When you run RSpec you will get a general deprecation warning saying
+
+```
+Deprecation Warnings:
+
+--------------------------------------------------------------------------------
+RSpec::Core::ExampleGroup#example is deprecated and will be removed
+in RSpec 3. There are a few options for what you can use instead:
+
+  - rspec-core's DSL methods (`it`, `before`, `after`, `let`, `subject`, etc)
+    now yield the example as a block argument, and that is the recommended
+    way to access the current example from those contexts.
+  - The current example is now exposed via `RSpec.current_example`,
+    which is accessible from any context.
+  - If you can't update the code at this call site (e.g. because it is in
+    an extension gem), you can use this snippet to continue making this
+    method available in RSpec 2.99 and RSpec 3:
+
+      RSpec.configure do |c|
+        c.expose_current_running_example_as :example
+      end
+
+(Called from /home/pierre/.rvm/gems/ruby-1.9.3-p551@rails4013/gems/capybara-2.1.0/lib/capybara/rspec.rb:20:in `block (2 levels) in <top (required)>')
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+RSpec::Core::ExampleGroup#example is deprecated and will be removed
+in RSpec 3. There are a few options for what you can use instead:
+
+  - rspec-core's DSL methods (`it`, `before`, `after`, `let`, `subject`, etc)
+    now yield the example as a block argument, and that is the recommended
+    way to access the current example from those contexts.
+  - The current example is now exposed via `RSpec.current_example`,
+    which is accessible from any context.
+  - If you can't update the code at this call site (e.g. because it is in
+    an extension gem), you can use this snippet to continue making this
+    method available in RSpec 2.99 and RSpec 3:
+
+      RSpec.configure do |c|
+        c.expose_current_running_example_as :example
+      end
+
+(Called from /home/pierre/.rvm/gems/ruby-1.9.3-p551@rails4013/gems/capybara-2.1.0/lib/capybara/rspec.rb:21:in `block (2 levels) in <top (required)>')
+--------------------------------------------------------------------------------
+```
+
+We will come back to these later.
+
+### Use of rspec-core's 'its' method is deprecated.
+
+### 'be\_false' is deprecated
+
+```
+`be_false` is deprecated. Use `be_falsey` (for Ruby's conditional semantics) or `be false` (for exact `== false` equality) instead. Called from /home/pierre/Work/Secondhand/spec/models/cart_spec.rb:35:in `block (4 levels) in <top (required)>'.
+```
+
+### 'be\_true' is deprecated
+
+```
+`be_true` is deprecated. Use `be_truthy` (for Ruby's conditional semantics) or `be true` (for exact `== true` equality) instead. Called from /home/pierre/Work/Secondhand/spec/models/cart_spec.rb:43:in `block (4 levels) in <top (required)>'.
+```
+
+### expect { }.not\_to raise\_error(SpecificErrorClass) is deprecated
+
+```
+`expect { }.not_to raise_error(SpecificErrorClass)` is deprecated. Use `expect { }.not_to raise_error` (with no args) instead. Called from /home/pierre/Work/Secondhand/spec/requests/event_pages_spec.rb:111:in `block (5 levels) in <top (required)>'.
+```
+
