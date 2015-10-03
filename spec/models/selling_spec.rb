@@ -36,7 +36,7 @@ describe Selling do
 
     expect { selling.destroy }.to change(Selling, :count).by(0)
 
-    selling.errors.any?.should be_true
+    selling.errors.any?.should be_truthy # be_true
   end
 
 end

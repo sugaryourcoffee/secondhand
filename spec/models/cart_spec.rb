@@ -32,7 +32,7 @@ describe Cart do
         line_item = cart.add(accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_false
+        line_item.errors[:items].any?.should be_falsey # be_false
       end
 
       it "should not add nil to items through" do
@@ -40,7 +40,7 @@ describe Cart do
         line_item = cart.add(nil)
         line_item.save
 
-        line_item.errors[:item_id].any?.should be_true
+        line_item.errors[:item_id].any?.should be_truthy # be_true
       end
 
       it "should not add items from not accepted lists" do
@@ -48,7 +48,7 @@ describe Cart do
         line_item = cart.add(list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_truthy # be_true
       end
 
       it "should not add items contained in another cart" do
@@ -56,13 +56,13 @@ describe Cart do
         line_item = cart_other.add(accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_false
+        line_item.errors[:items].any?.should be_falsey # be_false
 
         cart = Cart.create
         line_item = cart.add(accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_truthy # be_true
       end
 
       it "should not add sold items" do
@@ -72,7 +72,7 @@ describe Cart do
         line_item = cart.add(accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_truthy # be_true
       end
 
       it "should add an item only once" do
@@ -80,12 +80,12 @@ describe Cart do
         line_item = cart.add(accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_false
+        line_item.errors[:items].any?.should be_falsey # be_false
         
         line_item = cart.add(accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_truthy # be_true
 
         cart.reload.line_items.size.should eq 1
       end
@@ -95,17 +95,17 @@ describe Cart do
         line_item = cart.add(accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_false
+        line_item.errors[:items].any?.should be_falsey # be_false
         
         line_item = cart.add(accepted_list.items.last)
         line_item.save
 
-        line_item.errors[:items].any?.should be_false
+        line_item.errors[:items].any?.should be_falsey # be_false
 
         line_item = cart.add(accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_truthy # be_true
 
         cart.reload.line_items.size.should eq 2
       end
@@ -119,7 +119,7 @@ describe Cart do
 
         line_item.destroy
         
-        cart.reload.line_items.empty?.should be_true
+        cart.reload.line_items.empty?.should be_truthy # be_true
       end
     end
 
@@ -132,7 +132,7 @@ describe Cart do
         line_item = cart.add(accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_truthy # be_true
       end
 
       it "should not add items from not accepted lists through add" do
@@ -140,7 +140,7 @@ describe Cart do
         line_item = cart.add(list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_true
+        line_item.errors[:items].any?.should be_truthy # be_true
       end
 
     end

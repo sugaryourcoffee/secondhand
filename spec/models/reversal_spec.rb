@@ -22,7 +22,7 @@ describe Reversal do
   it "should add sold items" do
     reversal = Reversal.new
 
-    list_with_sold_items.items.first.sold?.should be_true
+    list_with_sold_items.items.first.sold?.should be_truthy # be_true
 
     reversal.line_items << selling.line_items.first 
 
@@ -31,13 +31,13 @@ describe Reversal do
     reversal.line_items.should_not be_empty
 
     list_with_sold_items.reload.items.first.reversals.should_not be_empty
-    list_with_sold_items.items.first.sold?.should be_false
+    list_with_sold_items.items.first.sold?.should be_falsey # be_false
   end
 
   it "should not add unsold items" do
     add_items_to_list(list_with_unsold_items)
 
-    list_with_unsold_items.items.first.sold?.should be_false
+    list_with_unsold_items.items.first.sold?.should be_falsey # be_false
 
     reversal = Reversal.new
 
@@ -58,10 +58,10 @@ describe Reversal do
     reversal.line_items.should_not be_empty
 
     line_item.destroy
-    line_item.errors.any?.should be_true
+    line_item.errors.any?.should be_truthy # be_true
 
     reversal.line_items.should_not be_empty
-    list_with_sold_items.items.first.sold?.should_not be_true
+    list_with_sold_items.items.first.sold?.should_not be_truthy # be_true
   end
 
   it "should not destroy a reversal with line items" do
@@ -71,7 +71,7 @@ describe Reversal do
     reversal.save
 
     expect { reversal.destroy }.to change(Reversal, :count).by(0)
-    reversal.errors.any?.should be_true
+    reversal.errors.any?.should be_truthy # be_true
 
     reversal.line_items.should_not be_empty
   end
@@ -79,14 +79,14 @@ describe Reversal do
   it "should mark items as unsold and mark them as reversed in selling" do
     reversal = Reversal.new
 
-    selling.line_items.first.item.sold?.should be_true
+    selling.line_items.first.item.sold?.should be_truthy # be_true
 
     reversal.line_items << selling.line_items.first
     reversal.save
 
     reversal.line_items.should_not be_empty
 
-    list_with_sold_items.items.first.sold?.should_not be_true
+    list_with_sold_items.items.first.sold?.should_not be_truthy # be_true
   end
 
 end

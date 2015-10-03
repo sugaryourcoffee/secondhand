@@ -13,11 +13,11 @@ describe 'Edit item' do
     end
 
     it "should not be updated when in accepted list" do
-      list.accepted?.should be_true
+      list.accepted?.should be_truthy # be_true
       item = list.items.first
       item.price = 123.5
       item.save
-      item.errors.any?.should be_true
+      item.errors.any?.should be_truthy # be_true
     end
 
     it "should not be updated when in cart" do
@@ -28,7 +28,7 @@ describe 'Edit item' do
       expect { line_item.save }.to change(LineItem, :count).by(1)
       item.price = 432.50
       item.save
-      item.errors.any?.should be_true
+      item.errors.any?.should be_truthy # be_true
     end
   end
 
@@ -39,7 +39,7 @@ describe 'Edit item' do
       item = selling.line_items.first.item
       item.price = 333.5
       item.save
-      item.errors.any?.should be_true 
+      item.errors.any?.should be_truthy # be_true 
     end
   end
 
@@ -53,7 +53,7 @@ describe 'Edit item' do
       revoke_acceptance(item.list) 
       item.price = 444.5
       item.save
-      item.errors.any?.should be_false
+      item.errors.any?.should be_falsey # be_false
     end
   end
 

@@ -118,7 +118,7 @@ describe "Acceptances" do
           it "should not have 'Revoke list acceptance' button" do
             accepted_list.accepted_on.should_not be_nil
 
-            accepted_list.items.first.sold?.should be_true
+            accepted_list.items.first.sold?.should be_truthy # be_true
 
             page.should have_text 'List acceptance cannot be revoked because it contains sold items'
 
@@ -136,7 +136,7 @@ describe "Acceptances" do
           it "should have 'Revoke list acceptance' button" do
             accepted_list.accepted_on.should_not be_nil
 
-            accepted_list.items.first.sold?.should be_true
+            accepted_list.items.first.sold?.should be_truthy # be_true
 
             page.should have_text 'List contains sold items! To edit the list you may revoke the list acceptance by pressing the button' 
 
@@ -250,7 +250,7 @@ describe "Acceptances" do
       it "should not delete an item", js: true do
         item = accepted_list.items.first
 
-        item.sold?.should be_true
+        item.sold?.should be_truthy # be_true
 
         click_link "Delete"
         modal = page.driver.browser.switch_to.alert
