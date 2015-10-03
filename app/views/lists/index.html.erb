@@ -82,7 +82,7 @@
                         t('.Event'), class: "control-label" %>
           <div class="controls">
             <%= select_tag :search_event_id, 
-                           options_from_collection_for_select(Event.find(:all),
+                           options_from_collection_for_select(Event.all,
                                                      "id", 
                                                      "title",
                                                      params[:search_event_id]),

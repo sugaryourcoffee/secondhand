@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
       where('first_name LIKE ? or last_name LIKE ?', 
            "%#{search}%", "%#{search}%")
     else
-      find(:all)
+      all # find(:all)
     end 
   end
 

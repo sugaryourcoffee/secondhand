@@ -150,7 +150,7 @@ class List < ActiveRecord::Base
        where('list_number = ? or registration_code LIKE ?', 
              search, "%#{search}%")
     else
-      find(:all)
+      all # find(:all)
     end
   end
 
