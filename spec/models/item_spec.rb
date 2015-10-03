@@ -13,13 +13,14 @@ describe Item do
 
   subject { @item }
 
-  it { list.items.should have(1).items }
+  it { list.items.size.should eq(1) }
   it { should respond_to(:item_number) }
   it { should respond_to(:description) }
   it { should respond_to(:size) }
   it { should respond_to(:price) }
   it { should respond_to(:list_id) }
-  its(:list) { should == list }
+  it { @item.list.should eq(list) }
+#  its(:list) { should == list }
 
   it { should be_valid }
 
@@ -73,9 +74,9 @@ describe Item do
 
   describe "delete item" do
     it "should destroy item" do
-      list.items.should have(1).items
+      list.items.size.should eq(1)
       list.items.destroy(@item)
-      list.items.should have(0).items
+      list.items.should be_empty
     end
   end
 

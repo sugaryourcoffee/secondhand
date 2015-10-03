@@ -32,7 +32,8 @@ subject {@user}
 
   describe "remember token" do
     before { @user.save }
-    its(:remember_token) { should_not be_blank }
+    it { @user.remember_token.should_not be_blank }
+#    its(:remember_token) { should_not be_blank }
   end
 
   describe "when first_name is not present" do

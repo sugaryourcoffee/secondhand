@@ -682,6 +682,18 @@ We will come back to these later.
 
 ### Use of rspec-core's 'its' method is deprecated.
 
+```
+Use of rspec-core's `its` method is deprecated. Use the rspec-its gem instead. Called from /home/pierre/Work/Secondhand/spec/models/item_spec.rb:22:in `block in <top (required)>'.
+```
+
+We can replace `its` as follows
+
+RSpec 2                                | RSpec 2.99.0 or 3
+-------------------------------------- | -------------------------------
+its(:list) { should == list }          | it { @item.list.should eq(list)
+
+We could also keep using `its` when intalling *rspec-its* gem instead.
+
 ### 'be\_false' is deprecated
 
 ```
@@ -699,4 +711,21 @@ We will come back to these later.
 ```
 `expect { }.not_to raise_error(SpecificErrorClass)` is deprecated. Use `expect { }.not_to raise_error` (with no args) instead. Called from /home/pierre/Work/Secondhand/spec/requests/event_pages_spec.rb:111:in `block (5 levels) in <top (required)>'.
 ```
+
+### expect(collection).to have(1).items is deprecated
+
+```
+`expect(collection).to have(1).items` is deprecated. Use the rspec-collection_matchers gem or replace your expectation with something like `expect(collection.size).to eq(1)` instead. Called from /home/pierre/Work/Secondhand/spec/models/item_spec.rb:16:in `block (2 levels) in <top (required)>'.
+```
+
+To search for all occurences we can use *grep* with Perl syntax like so
+
+    $ grep -rnP "have\(\d+\)" spec/
+
+We can replace as follows
+
+RSpec 2                                | RSpec 2.99.0 or 3
+-------------------------------------- | ---------------------------------
+it { list.items.should have(1).items } | it { list.items.size.should eq(1)
+it { list.items.should have(0).items } | it { list.items.should be\_empty
 
