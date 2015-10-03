@@ -343,6 +343,30 @@ Pluralize 'Liste' | ActiveSupport::Inflector.inflections do |inflect|
 In this section error message are discussed that have arisen after upgrading to
 Rals 4.
 
+## ActionController::UnknownFormat
+This error is caused by *Capybara* when clicking a link that is configured with
+`remote: true` and should render a *JavaScript* template. The `js` format is not
+forwarded to the controller and hence the error occurs. When clicking the link
+in the application it working without errors. To overcome this issue in the 
+tests we have to explicitly specify the template to render.
+
+The custom action uses `respond_to` in 
+`app/controllers/acceptances_controller.rb`
+
+    def edit_list
+      @list = List.find(params[:id])
+      respond_to do |format|
+        format.js
+      end
+    end
+
+We change this as follows
+
+    def edit_list
+      @list = List.find(params[:id])
+      render template: 'acceptances/edit_list.js.erb'
+    end
+
 ## Error in method\_missing
 In Rails 4 IDs of associated models are determined with `method_missing`. If 
 you overwrite `method_missing` and are operating on the valued that is send to
@@ -498,7 +522,7 @@ List.find_all_by_event_id(@event)   | List.where(event_id: @event)
 List.find_by_list_number!(number)   | List.find_by!(list_number: number)
 List.find_by_list_number_and_date(number, date) | List.where(list_number: number, date: date)
 
-Note: When changing to Rails 4 finders not the behaviour in regard to 
+Note: When changing to Rails 4 finders note the changed behaviour in regard to 
 exceptions as shown in following table.
 
 Finder               | Exception
