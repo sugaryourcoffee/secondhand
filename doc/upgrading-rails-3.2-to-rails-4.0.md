@@ -343,6 +343,19 @@ Pluralize 'Liste' | ActiveSupport::Inflector.inflections do |inflect|
 In this section error message are discussed that have arisen after upgrading to
 Rals 4.
 
+## undefined method 'table' for Prawn
+The *Prawn* version 1.3.0 has extracted `table`. So whe running *Secondhand* we
+get an error message saying
+
+    NoMethodError:
+      undefined method `table` for #<Prawn::Document:0x000000006b397a8>
+
+In order to get rid of the error we have to add *prawn-table* to our *Gemfile*.
+
+    gem 'prawn-table', '~> 0.2.2'
+
+And then run `$ bundle install`
+
 ## ActionController::UnknownFormat
 This error is caused by *Capybara* when clicking a link that is configured with
 `remote: true` and should render a *JavaScript* template. The `js` format is not

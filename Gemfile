@@ -6,6 +6,7 @@ gem 'faker', '~> 1.5.0'
 gem 'will_paginate', '~> 3.0.7'
 gem 'bootstrap-will_paginate', '~> 0.0.10'
 gem 'prawn', '~> 1.3.0'
+gem 'prawn-table', '~> 0.2.2'
 gem 'syc-barcode', '~> 0.0.3'
 gem 'net-ssh', '~> 2.9.2'
 
