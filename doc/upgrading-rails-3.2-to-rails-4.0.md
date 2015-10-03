@@ -678,7 +678,8 @@ in RSpec 3. There are a few options for what you can use instead:
 --------------------------------------------------------------------------------
 ```
 
-We will come back to these later.
+These error messages are caused by *Capybara* version 2.1.0. To remove these we
+can add the code snippets mentioned in the deprecation warnings.
 
 ### Use of rspec-core's 'its' method is deprecated.
 
