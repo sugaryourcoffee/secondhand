@@ -39,7 +39,7 @@ class ReversalsController < ApplicationController
       if @reversal.save
         Cart.destroy(session[:reversal_cart_id])
         session[:reversal_cart_id] = nil
-        if system('lpr', @reversal.to_pdf("Gutschrift").to_path)
+        if system('lpr', @reversal.to_pdf("Gutschrift")) #.to_path)
           format.html { redirect_to check_out_reversal_path(@reversal), 
                         notice: "Successfully created redemption and printed" }
         else
@@ -60,7 +60,7 @@ class ReversalsController < ApplicationController
   def print
     @reversal = Reversal.find(params[:id])
     respond_to do |format|
-      if system('lpr', @reversal.to_pdf("Gutschrift").to_path)
+      if system('lpr', @reversal.to_pdf("Gutschrift")) #.to_path)
         format.html { redirect_to :back,
                       notice: "Printed redemption #{@reversal.id}" }
       else

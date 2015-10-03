@@ -356,6 +356,25 @@ In order to get rid of the error we have to add *prawn-table* to our *Gemfile*.
 
 And then run `$ bundle install`
 
+We render the generated pdf to a file. In the previous version 0.12.0 the 
+generated filename was returned. No `pdf.generate_file` returns `nil`. To get
+the filename we have to return the filename explicitly.
+
+    pdf.render_file("tmp/selling_#{id}.pdf")
+    File.absolute_path("tmp/selling_#{id}.pdf")
+
+In the calling method we expect the old behaviour to get a file handle where we
+retrieve the path with `to_path`. In the new version we have to remove method 
+call as we already receive the filename.
+
+In `app/controllers/sellings_controller.rb` we change 
+
+    if system('lpr', @selling.to_pdf.to_path)
+
+to
+
+    if system('lpr', @selling.to_pdf)
+
 ## ActionController::UnknownFormat
 This error is caused by *Capybara* when clicking a link that is configured with
 `remote: true` and should render a *JavaScript* template. The `js` format is not

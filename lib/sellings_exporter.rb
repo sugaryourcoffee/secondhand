@@ -5,6 +5,7 @@ module SellingsExporter
 
   def to_pdf(transaction = "Verkauf")
 
+    pdf_file      = "tmp/#{transaction}-#{id}.pdf"
     header_left   = event.title
     header_center = "www.boerse-burgthann.de"
     header_right  = "#{transaction} #{id}"
@@ -97,8 +98,10 @@ module SellingsExporter
                          size: 10 }
     end
 
-    pdf.render_file("tmp/selling_#{id}.pdf")
+    #pdf.render_file("tmp/selling_#{id}.pdf")
+    pdf.render_file(pdf_file)
 
+    File.absolute_path(pdf_file)
   end
 
   private

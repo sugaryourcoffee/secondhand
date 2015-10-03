@@ -39,7 +39,7 @@ class SellingsController < ApplicationController
       if @selling.save
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
-        if system('lpr', @selling.to_pdf.to_path)
+        if system('lpr', @selling.to_pdf) #.to_path)
           format.html { redirect_to check_out_selling_path(@selling), 
                         notice: "Successfully created selling and printed" }
         else
@@ -56,7 +56,7 @@ class SellingsController < ApplicationController
   def print
     @selling = Selling.find(params[:id])
     respond_to do |format|
-      if system('lpr', @selling.to_pdf.to_path)
+      if system('lpr', @selling.to_pdf) #.to_path)
         format.html { redirect_to :back,
                       notice: "Successfully printed selling #{@selling.id}" }
       else
