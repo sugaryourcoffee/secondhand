@@ -629,11 +629,11 @@ to
         data: { confirm: t('.confirm') }, class: "btn btn-warning" %>
 
 ## RSpec deprecation warnings
-RSpec 2.99.0 is a pre-version to RSpec 3 and already pointing to deprecatoins 
+RSpec 2.99.0 is a pre-version to RSpec 3 and already pointing to deprecations 
 that will be removed from Rails 3. This section explains the necessary changes
 to make to be ready for Rails 3.
 
-When you run RSpec you will get a general deprecation warning saying
+When you run RSpec you will get a general deprecation warnings saying
 
 ```
 Deprecation Warnings:
@@ -679,7 +679,13 @@ in RSpec 3. There are a few options for what you can use instead:
 ```
 
 These error messages are caused by *Capybara* version 2.1.0. To remove these we
-can add the code snippets mentioned in the deprecation warnings.
+can add the code snippets mentioned in the deprecation warnings to 
+`spec/spec_helper.rb`.
+
+    RSpec.configure do |config|
+      config.expose_current_running_example_as :example
+      config.infer_spec_type_from_file_location!
+    end
 
 ### Use of rspec-core's 'its' method is deprecated.
 

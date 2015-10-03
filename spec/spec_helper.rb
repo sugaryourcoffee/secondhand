@@ -69,6 +69,13 @@ Spork.prefork do
     config.infer_base_class_for_anonymous_controllers = false
 
     config.include Capybara::DSL
+
+    # SYC extension to suppress Capybara deprecation warnings
+    config.expose_current_running_example_as :example
+
+    # SYC extension to suppress Capybara deprecation warnings
+    config.infer_spec_type_from_file_location!
+
   end
 end
 
