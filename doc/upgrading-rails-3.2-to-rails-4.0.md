@@ -562,3 +562,69 @@ Finder               | Exception
 User.find(id)        | if `id` doesn't exist exception is thrown
 User.find_by(id: id) | if `id` doesn't exist no exception is thrown
 
+### Relation#all is deprecated
+
+```
+DEPRECATION WARNING: Relation#all is deprecated. If you want to eager-load a relation, you can call #load (e.g. `Post.where(published: true).load`). If you want to get an array of records from a relation, you can call #to_a (e.g. `Post.where(published: true).to_a`). (called from block in _app_views_lists_index_html_erb__2537020648015865330_60608460 at /home/pierre/Work/Secondhand/app/views/lists/index.html.erb:85)
+```
+
+To remove the deprecation warning we have to remove `.all` from the `where`
+clauses. To find all of the occurences we can use *grep* like so
+
+    $ grep -rn "\.all" app/
+
+and then just remove all the occurrences of `.all`.
+
+### Calling #find(:all) is deprecated
+
+```
+DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. (called from block in _app_views_lists_index_html_erb__2537020648015865330_60608460 at /home/pierre/Work/Secondhand/app/views/lists/index.html.erb:85)
+´´´
+
+This can be cleared with searching for all `find(:all)` occurences and replace
+them with `all`.
+
+### #apply\_finder\_options is dreprecated
+
+```
+DEPRECATION WARNING: #apply_finder_options is deprecated. (called from index at /home/pierre/Work/Secondhand/app/controllers/lists_controller.rb:17)
+```
+
+To solve this deprecation warning we change for instance this snippet in
+`app/controllers/lists_controller.rb`
+
+    @lists = List.order(:event_id).order(:list_number)
+                 .paginate(page: params[:page], 
+                           conditions: List.search_conditions(params))
+
+to
+
+    @lists = List.where(List.search_conditions(params))
+                 .order(:event_id)
+                 .order(:list_number)
+                 .paginate(page: params[:page])
+
+To find all occurrences we issue
+
+    $ grep -rn "conditions:" app/
+
+and replace the occurrenes accordingly.
+
+### :confirm option is deprecated
+
+```
+DEPRECATION WARNING: :confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: 'Text' }' instead. (called from _app_views_users__user_html_erb___3974444937014490660_64610680 at /home/pierre/Work/Secondhand/app/views/users/_user.html.erb:15)
+```
+
+This is typically used in a user dialog to confirm a deletion. We replace all
+the snippets in the view files as shown in the example in
+`app/views/users/_user_html.rb`
+
+    <%= link_to t('.delete'), user, method: :delete, confirm: t('.confirm'),
+        class: "btn btn-warning" %>
+
+to
+
+    <%= link_to t('.delete'), user, method: :delete, 
+        data: { confirm: t('.confirm') }, class: "btn btn-warning" %>
+
