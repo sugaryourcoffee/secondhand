@@ -100,7 +100,7 @@ class EventsController < ApplicationController
   end
 
   def create_lists(event, max_lists=event.max_lists)
-    lists = List.where(event_id: event.id).all || [] # find_all_by_event_id(event.id) || []
+    lists = List.where(event_id: event.id) || [] # find_all_by_event_id(event.id) || []
     list_count_to_create = max_lists - lists.count
 
     return max_lists if list_count_to_create == 0
