@@ -339,6 +339,11 @@ Pluralize 'Liste' | ActiveSupport::Inflector.inflections do |inflect|
                   |   inflect.plural 'Liste', 'Listen' 
                   | end
 
+## Upgrade bin/ directory
+When you run `rails server` or 'rails console` you will get a message saying
+
+```
+
 ## Error Messages
 In this section error message are discussed that have arisen after upgrading to
 Rals 4.
@@ -512,7 +517,7 @@ Version 0.7.0 has to be upgraded to >= 1.1.0. Replace the version `0.7.0` with
 
 ## ActionController::RoutingError: uninitialized constant SessionController
 This occured as I was using `'signin' => 'session#new'` instead of 
-`'singin` => 'sessions#new'`. In this case the `ActionController` is using a
+`'singin' => 'sessions#new'`. In this case the `ActionController` is using a
 controller `SessionController` instead of the `SessionsController`
 
 ## Missing host to link to
@@ -539,7 +544,7 @@ In this case add to
 ## Deprecation Warnings
 This section discusses deprecation warnings and how to fix them.
 
-### This dynamic metho is deprecated
+### This dynamic method is deprecated
 
 ```
 DEPRECATION WARNING: This dynamic method is deprecated. Please use e.g. 
@@ -549,10 +554,10 @@ Post.where(...).all instead. (called from total_count at
 
 Old                                 | New
 ----------------------------------- | --------------------------------------
-List.find_all_by_event_id(event_id) | List.where(event_id: event_id)
-List.find_all_by_event_id(@event)   | List.where(event_id: @event)
-List.find_by_list_number!(number)   | List.find_by!(list_number: number)
-List.find_by_list_number_and_date(number, date) | List.where(list_number: number, date: date)
+List.find\_all\_by\_event\_id(event\_id) | List.where(event\_id: event\_id)
+List.find\_all\_by\_event\_id(@event)   | List.where(event\_id: @event)
+List.find\_by\_list\_number!(number)   | List.find\_by!(list\_number: number)
+List.find\_by\_list\_number\_and\_date(number, date) | List.where(list\_number: number, date: date)
 
 Note: When changing to Rails 4 finders note the changed behaviour in regard to 
 exceptions as shown in following table.
@@ -560,7 +565,7 @@ exceptions as shown in following table.
 Finder               | Exception
 -------------------- | --------------------------------------------
 User.find(id)        | if `id` doesn't exist exception is thrown
-User.find_by(id: id) | if `id` doesn't exist no exception is thrown
+User.find\_by(id: id) | if `id` doesn't exist no exception is thrown
 
 ### Relation#all is deprecated
 
@@ -696,8 +701,8 @@ Use of rspec-core's `its` method is deprecated. Use the rspec-its gem instead. C
 We can replace `its` as follows
 
 RSpec 2                                | RSpec 2.99.0 or 3
--------------------------------------- | -------------------------------
-its(:list) { should == list }          | it { @item.list.should eq(list)
+-------------------------------------- | ---------------------------------
+its(:list) { should == list }          | it { @item.list.should eq(list) }
 
 We could also keep using `its` when intalling *rspec-its* gem instead.
 
@@ -732,7 +737,7 @@ To search for all occurences we can use *grep* with Perl syntax like so
 We can replace as follows
 
 RSpec 2                                | RSpec 2.99.0 or 3
--------------------------------------- | ---------------------------------
-it { list.items.should have(1).items } | it { list.items.size.should eq(1)
-it { list.items.should have(0).items } | it { list.items.should be\_empty
+-------------------------------------- | -----------------------------------
+it { list.items.should have(1).items } | it { list.items.size.should eq(1) }
+it { list.items.should have(0).items } | it { list.items.should be\_empty }
 
