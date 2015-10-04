@@ -17,7 +17,7 @@ Secondhand::Application.routes.draw do
                                              # to: 'static_pages#help'
     get    'contact' => 'static_pages#contact' # match '/contact', 
                                                # to: 'static_pages#contact'
-    get    'message' => 'static_pages#message' # match '/message', 
+    post   'message' => 'static_pages#message' # match '/message', 
                                                # to: 'static_pages#message'
 
     get   '/who_registered' => 'users#who_registered', 
