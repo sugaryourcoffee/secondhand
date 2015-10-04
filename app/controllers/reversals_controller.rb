@@ -8,9 +8,6 @@ class ReversalsController < ApplicationController
     @reversal = Reversal.find_by(id:       params[:search_reversal_id], 
                                  event_id: @event)
 
-#    @reversal = Reversal.find_by_id_and_event_id(params[:search_reversal_id], 
-#                                                 @event)
-
     respond_to do |format|
       if @reversal
         format.html { redirect_to @reversal} 
@@ -23,7 +20,7 @@ class ReversalsController < ApplicationController
   end
 
   def show
-    @event   = Event.find_by(active: true) # find_by_active(true)
+    @event   = Event.find_by(active: true)
     @reversal = Reversal.find(params[:id])
   end
 
@@ -33,13 +30,13 @@ class ReversalsController < ApplicationController
       redirect_to line_item_collection_carts_path, notice: "Your cart is empty"
       return
     end
-    @reversal = Reversal.new(event_id: Event.find_by(active: true).id) #find_by_active(true).id)
+    @reversal = Reversal.new(event_id: Event.find_by(active: true).id)
     @reversal.add_items_from_cart(@cart)
     respond_to do |format|
       if @reversal.save
         Cart.destroy(session[:reversal_cart_id])
         session[:reversal_cart_id] = nil
-        if system('lpr', @reversal.to_pdf("Gutschrift")) #.to_path)
+        if system('lpr', @reversal.to_pdf("Gutschrift"))
           format.html { redirect_to check_out_reversal_path(@reversal), 
                         notice: "Successfully created redemption and printed" }
         else
@@ -60,7 +57,7 @@ class ReversalsController < ApplicationController
   def print
     @reversal = Reversal.find(params[:id])
     respond_to do |format|
-      if system('lpr', @reversal.to_pdf("Gutschrift")) #.to_path)
+      if system('lpr', @reversal.to_pdf("Gutschrift"))
         format.html { redirect_to :back,
                       notice: "Printed redemption #{@reversal.id}" }
       else
@@ -85,8 +82,8 @@ class ReversalsController < ApplicationController
   private
 
     def initialize_event_and_reversals
-      @event = Event.find_by(active: true) # find_by_active(true)
-      @reversals = Reversal.where(event_id: @event) # find_all_by_event_id(@event)
+      @event = Event.find_by(active: true)
+      @reversals = Reversal.where(event_id: @event)
     end
 
 end

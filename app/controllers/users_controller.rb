@@ -12,9 +12,6 @@ class UsersController < ApplicationController
                  .order(:last_name)
                  .paginate(page: params[:page])
 
-#    @users = User.paginate(page: params[:page], 
-#                           conditions: User.search_conditions(params))
-#                 .order(:last_name)
   end
 
   def show
@@ -27,7 +24,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params) # params[:user])
     if @user.save
       sign_in @user
       UserMailer.registered(@user).deliver
@@ -42,7 +39,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(user_params) # params[:user])
       flash[:success] = I18n.t('.updated',
                                model: t('activerecord.models.user'))
       sign_in @user
@@ -69,7 +66,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     event = Event.find_by(active: true) # find_by_active(true)
     registration_code = params[:registration_code]
-    list = List.find_by(registration_code: registration_code, event_id: event) # find_by_registration_code_and_event_id(registration_code, event)
+    list = List.find_by(registration_code: registration_code, event_id: event) 
     if list
       if list.user_id
         flash[:error] = I18n.t('.taken', model: t('activerecord.models.list'))
@@ -89,7 +86,7 @@ class UsersController < ApplicationController
 
   def deregister_list
     user = User.find(params[:id])
-    list = List.find_by(id: params[:list_id], user_id: user.id) # find_by_id_and_user_id(params[:list_id], user.id)
+    list = List.find_by(id: params[:list_id], user_id: user.id) 
     unless list
       flash[:error] = I18n.t('.not_own_list')
     else
@@ -121,17 +118,18 @@ class UsersController < ApplicationController
   end
 
   private
-=begin
-  def signed_in_user
-    unless signed_in?
-      store_location
-      redirect_to signin_path, notice: "Please sign in." unless signed_in?
-    end
-  end
-=end
 
-  def correct_user
-    @user = User.find(params[:id])
-    redirect_to(root_path) unless current_user?(@user) or current_user.admin?
-  end
+    def user_params
+      params.require(:user)
+            .permit(:first_name, :last_name, 
+                    :street, :zip_code, :town, :country, 
+                    :email, :phone,
+                    :news, :preferred_language,
+                    :password_digest, :password, :password_confirmation)
+    end
+
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_path) unless current_user?(@user) or current_user.admin?
+    end
 end

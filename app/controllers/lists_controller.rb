@@ -110,7 +110,7 @@ class ListsController < ApplicationController
   # POST /lists
   # POST /lists.json
   def create
-    @list = List.new(params[:list])
+    @list = List.new(list_params) # params[:list])
 
     respond_to do |format|
       if @list.save
@@ -133,7 +133,7 @@ class ListsController < ApplicationController
     return_url = request.referer.include?("/lists/") ? @list : request.referer
 
     respond_to do |format|
-      if @list.update_attributes(params[:list])
+      if @list.update_attributes(list_params) # params[:list])
         format.html { redirect_to return_url, 
                       notice: I18n.t('.updated',
                                      model: t('activerecord.models.list')) }
@@ -154,7 +154,8 @@ class ListsController < ApplicationController
     if @list.errors.any?
       flash[:error] = @list.errors.full_messages.first
     else
-      flash[:notice] = I18n.t('.destroyed', model: t('activerecord.models.list'))
+      flash[:notice] = I18n.t('.destroyed', 
+                              model: t('activerecord.models.list'))
     end
 
     respond_to do |format|
@@ -165,9 +166,14 @@ class ListsController < ApplicationController
 
   private
 
-  def correct_user
-    @user = User.find(params[:user_id])
-    redirect_to(root_path) unless current_user?(@user) or current_user.admin?
-  end
+    def list_params
+      params.require(:list).permit(:container, :event_id, :list_number, 
+                                   :registration_code, :user_id, :sent_on)
+    end
+
+    def correct_user
+      @user = User.find(params[:user_id])
+      redirect_to(root_path) unless current_user?(@user) or current_user.admin?
+    end
 
 end

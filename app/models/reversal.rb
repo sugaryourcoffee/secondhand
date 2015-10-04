@@ -6,7 +6,7 @@ class Reversal < ActiveRecord::Base
   has_many :line_items
   has_many :sellings, through: :line_items
 
-  attr_accessible :event_id
+#  attr_accessible :event_id
 
   before_destroy :ensure_line_items_empty
 

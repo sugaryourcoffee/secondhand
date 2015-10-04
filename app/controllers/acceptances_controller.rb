@@ -4,17 +4,15 @@ class AcceptancesController < ApplicationController
   before_filter      :admin_or_operator
 
   def index
-    @event = Event.find_by(active: true) # find_by_active(true)
+    @event = Event.find_by(active: true)
     
     if @event
-      @list = List.find_by(list_number: params[:search_list_number], event_id: @event) # find_by_list_number_and_event_id(params[:search_list_number], @event)
+      @list = List.find_by(list_number: params[:search_list_number], 
+                           event_id:    @event) 
       unless @list and @list.registered?
         @lists = List.where(List.list_status_query_string(params[:filter]))
                      .order(:list_number)
                      .paginate(page: params[:page])
-#        @lists = List.order(:list_number)
-#                     .paginate(page: params[:page],
-#                               conditions: List.list_status_query_string(params[:filter]))
       end
     end
 
@@ -23,7 +21,8 @@ class AcceptancesController < ApplicationController
         format.html { redirect_to edit_acceptance_path @list }
       else
         if @list and !@list.registered?
-          flash[:warning] = "List #{params[:search_list_number]} is not registered. "+
+          flash[:warning] = "List #{params[:search_list_number]} "+
+                            "is not registered. "+
                             "Acceptance is only possible for registered lists!"
         elsif @list.nil? and params[:search_list_number]
           flash[:warning] = "List #{params[:search_list_number]} doesn't exist!"
@@ -52,7 +51,7 @@ class AcceptancesController < ApplicationController
   def update_list
     @list = List.find(params[:id])
     respond_to do |format|
-      if @list.update_attributes(params[:list])
+      if @list.update_attributes(list_attributes) # params[:list])
         format.js
       else
         format.js { render 'edit_list' }
@@ -72,7 +71,7 @@ class AcceptancesController < ApplicationController
     @item = Item.find(params[:id])
     @list = @item.list
     respond_to do |format|
-      if @item.update_attributes(params[:item])
+      if @item.update_attributes(item_attributes) #params[:item])
         format.js
       else
         format.js { render 'edit_item' } 
@@ -117,4 +116,13 @@ class AcceptancesController < ApplicationController
     end
   end
 
+  private
+
+    def list_attributes
+      params.require(:list).permit(:container)
+    end
+
+    def item_attributes
+      params.require(:item).permit(:description, :item_number, :price, :size)
+    end
 end

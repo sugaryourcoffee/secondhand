@@ -19,7 +19,7 @@ class NewsController < ApplicationController
   def update
     @news = News.find(params[:id])
     
-    if @news.update_attributes(params[:news])
+    if @news.update_attributes(news_params) # params[:news])
       flash[:success] = I18n.t('.updated', model: t('activerecord.models.news'))
       redirect_to @news
     else
@@ -28,7 +28,7 @@ class NewsController < ApplicationController
   end
 
   def create
-    @news = News.new(params[:news])
+    @news = News.new(news_params) # params[:news])
     if @news.save
       flash[:success] = I18n.t('.created', model: t('activerecord.models.news'))
       redirect_to @news
@@ -55,6 +55,18 @@ class NewsController < ApplicationController
   end
 
   private
+
+    def news_params
+      params.require(:news).permit(:issue, 
+                                   :promote_to_frontpage, 
+                                   :released, 
+                                   :user_id, 
+                                   news_translations_attributes: [:id,
+                                                                  :title, 
+                                                                  :description, 
+                                                                  :language, 
+                                                                  :news_id])
+    end
 
     def next_issue
       start_time = Time.new(Time.now.year-1, 12, 31)

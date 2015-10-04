@@ -8,9 +8,6 @@ class SellingsController < ApplicationController
     @selling = Selling.find_by(id:       params[:search_selling_id], 
                                event_id: @event)
 
-#    @selling = Selling.find_by_id_and_event_id(params[:search_selling_id], 
-#                                               @event)
-
     respond_to do |format|
       if @selling
         format.html { redirect_to selling_path @selling } 
@@ -33,13 +30,13 @@ class SellingsController < ApplicationController
       redirect_to item_collection_carts_path, notice: "Your cart is empty"
       return
     end
-    @selling = Selling.new(event_id: Event.find_by(active: true).id) #find_by_active(true).id)
+    @selling = Selling.new(event_id: Event.find_by(active: true).id)
     @selling.add_items_from_cart(current_cart)
     respond_to do |format|
       if @selling.save
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
-        if system('lpr', @selling.to_pdf) #.to_path)
+        if system('lpr', @selling.to_pdf)
           format.html { redirect_to check_out_selling_path(@selling), 
                         notice: "Successfully created selling and printed" }
         else
@@ -56,7 +53,7 @@ class SellingsController < ApplicationController
   def print
     @selling = Selling.find(params[:id])
     respond_to do |format|
-      if system('lpr', @selling.to_pdf) #.to_path)
+      if system('lpr', @selling.to_pdf)
         format.html { redirect_to :back,
                       notice: "Successfully printed selling #{@selling.id}" }
       else

@@ -7,7 +7,7 @@ class StaticPagesController < ApplicationController
     else
       @news = News.
         where("released = ? and promote_to_frontpage = ?", true, true).last
-      @event = Event.find_by(active: true) # find_by_active(true)
+      @event = Event.find_by(active: true)
     end
   end
 
@@ -18,11 +18,11 @@ class StaticPagesController < ApplicationController
   end
 
   def contact
-    @message = Message.new(params[:message])
+    @message = Message.new(message_params) # params[:message])
   end
 
   def message
-    @message = Message.new(params[:message])
+    @message = Message.new(message_params) # params[:message])
     unless @message.valid?
       render 'contact'
     else
@@ -30,4 +30,12 @@ class StaticPagesController < ApplicationController
       redirect_to root_path, notice: I18n.t('.contact_success') 
     end
   end
+
+  private
+
+    def message_params
+      return nil unless params[:message]
+      params.require(:message).permit(:subject, :category, :message, 
+                                      :email, :copy_me)
+    end
 end

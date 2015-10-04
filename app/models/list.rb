@@ -23,8 +23,8 @@ class List < ActiveRecord::Base
   belongs_to :event
   has_many :items
 
-  attr_accessible :container, :event_id, :list_number, :registration_code, 
-                  :user_id, :sent_on
+#  attr_accessible :container, :event_id, :list_number, :registration_code, 
+#                  :user_id, :sent_on
 
   validates :event_id, :list_number, :registration_code, presence: true
 

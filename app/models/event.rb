@@ -25,14 +25,14 @@ class Event < ActiveRecord::Base
   has_many :sellings, dependent: :destroy
   has_many :reversals
 
-  attr_accessible :deduction, :event_date, :fee, :location, 
-    :max_items_per_list, :max_lists, :provision, :title, :active, 
-    :information,
-    :list_closing_date, 
-    :delivery_location, 
-    :delivery_date, :delivery_start_time, :delivery_end_time, 
-    :collection_location, 
-    :collection_date, :collection_start_time, :collection_end_time
+#  attr_accessible :deduction, :event_date, :fee, :location, 
+#    :max_items_per_list, :max_lists, :provision, :title, :active, 
+#    :information,
+#    :list_closing_date, 
+#    :delivery_location, 
+#    :delivery_date, :delivery_start_time, :delivery_end_time, 
+#    :collection_location, 
+#    :collection_date, :collection_start_time, :collection_end_time
 
   validates :deduction, :event_date, :fee, :location, :max_items_per_list,
     :max_lists, :provision, :title, presence: true

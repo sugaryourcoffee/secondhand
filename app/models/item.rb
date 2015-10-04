@@ -5,7 +5,7 @@ class Item < ActiveRecord::Base
   has_many :reversals, through: :line_items
   has_many :carts,     through: :line_items
   
-  attr_accessible :description, :item_number, :price, :size
+#  attr_accessible :description, :item_number, :price, :size
 
   scope :by_item_number, -> { order(:item_number) }
 

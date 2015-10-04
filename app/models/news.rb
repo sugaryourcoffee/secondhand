@@ -1,5 +1,5 @@
 class News < ActiveRecord::Base
-  attr_accessible :issue, :promote_to_frontpage, :released, :user_id, :news_translations_attributes
+#  attr_accessible :issue, :promote_to_frontpage, :released, :user_id, :news_translations_attributes
 
   belongs_to :user
 

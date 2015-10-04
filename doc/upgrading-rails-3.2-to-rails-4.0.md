@@ -305,7 +305,7 @@ delete 'signout' => 'sessions#destroy'      | match '/signout', to: 'sessions#de
 get    'about'   => 'static\_pages#about'   | match '/about', to: 'static\_pages#about'
 get    'help'    => 'static\_pages#help'    | match '/help', to: 'static\_pages#help'
 get    'contact' => 'static\_pages#contact' | match '/contact', to: 'static\_pages#contact'
-get    'message' => 'static\_pages#message' | match '/message', to: 'static\_pages#message'
+post   'message' => 'static\_pages#message' | match '/message', to: 'static\_pages#message'
 put :update\_list                           | patch :update\_list
 put :update\_item                           | patch :update\_item
 
@@ -543,7 +543,7 @@ add following to `app/controllers/cart_controller.rb`.
       params.require(:cart).permit(:cart_type)
     end
 
-Then in the `new` and `update` action use the `cart_params` method.
+Then in the `create` and `update` action use the `cart_params` method.
 
 In order to speed up migration we will use the `protected_attributes` gem and
 then gradually migrate to *strong prameters*. Add following line to the
@@ -796,4 +796,212 @@ branch back to the master branch.
 
     $ git checkout master
     $ git merge upgrade-to-rails-4
+
+## Apply strong attributes
+In the previous step we skipped migration to *strong attributes* in order to get
+our specs to green as fast as possible. Now that everything works we can start
+to implement *strong attributes*.
+
+Strong attributes are used in controllers in the `create`, `build` and `update`
+actions. We determine the attributes we want to allow to be updated by looking 
+in the respective models and use the attributes that are whitelisted with 
+`attr_accessible`.
+
+In each controller add a `model_params` method and whitelist the attributes 
+that are allowed to be updated. Then in each `create`, `build` and `update` 
+action send this method to the `new` and `update` respectively 
+`update_attributes` method.
+
+Here is an example for the `AcceptancesController`.
+
+The `update_list` action uses `@list.update_attributes(params[:list])` which
+has to be replaced with `@list.update_attributes(list_params)`
+
+```
+  def update_list
+    @list = List.find(params[:id])
+    respond_to do |format|
+      # if @list.update_attributes(params[:list])
+      if @list.update_attributes(list_params)
+        format.js
+      else
+        format.js { render 'edit_list' }
+      end 
+    end
+  end
+```
+
+The `list_params` method looks like this.
+
+```
+  def list_params
+    params.require(:list).permit(:container)
+  end
+```
+
+In the `AcceptancesController` we only allow the `container` attribute being
+updated in a list, as it is the only change you can make in that corresponding
+view.
+
+The following table shows the controllers where we need to implement the
+`method_params` method.
+
+Controller       | Action       | Model                   | Note
+---------------- | ------------ | ----------------------- | ----
+acceptances      | update\_list |                         |
+                 | update\_item |                         |
+application      |              |                         |
+carts            |              | cart                    |
+counter          |              |                         |
+events           | create       | event                   |
+                 | update       |                         |
+items            | create       | item                    |
+                 | update       |                         |
+line\_items      |              | line\_item              |
+lists            | create       | list                    |
+                 | udpate       |                         |
+news             | create       | news, news\_translation | 1)
+                 | udpate       |                         |
+password\_resets | update       |                         |
+reversals        |              | reversal                |
+sellings         |              | selling                 |
+sessions         |              |                         |
+static\_pages    | contact      | message                 | 2)
+                 | message      |                         |
+users            | create       | user                    |
+                 | update       |                         |
+
+** 1) A note on nested models in regard to strong parameters **
+Nested models need a slightly different approach with strong parameters. The
+parent class needs to declare `accepts_nested_attributes_for`. In the controller
+the child attributes are whitelisted with a hash 
+`models_parameters: [:id, :other_parameter]`. The `:id` is necessary because if
+not provided an `model.update(model_parameters)` will create new nested records
+instead of updating them. Below is an example.
+
+The parent class
+
+```
+class News < ActiveRecord::Base
+
+  belongs_to :user
+
+  has_many :news_translations, dependent: :destroy
+
+  accepts_nested_attributes_for :news_translations
+```
+
+The child class
+
+```
+class NewsTranslation < ActiveRecord::Base
+  belongs_to :news
+
+  validates :title, :description, :language, presence: true
+end
+```
+
+The controller
+
+```
+class NewsController < ApplicationController
+
+  def update
+    @news = News.find(params[:id])
+    
+    if @news.update_attributes(news_params)
+      redirect_to @news
+    else
+      render 'edit'
+    end
+  end
+
+  def create
+    @news = News.new(news_params)
+    if @news.save
+      redirect_to @news
+    else
+      render 'new'
+    end
+  end
+
+  private
+
+    def news_params
+      params.require(:news).permit(:issue, 
+                                   :promote_to_frontpage, 
+                                   :released, 
+                                   :user_id, 
+                                   news_translations_attributes: [:id,
+                                                                  :title, 
+                                                                  :description, 
+                                                                  :language, 
+                                                                  :news_id])
+    end
+```
+
+** 2) A note on empty method_params **
+In the `StaticPagesController` we have a custom action that is used to fill in
+a contact form and to send it via e-mail. The usual case is that the contact 
+form will be empty when displayed and the user fills in the fields. Another case
+is that from the user page the contact form can be invoked with prefilled 
+content. In that case the params hash contains values in the first case it is 
+nil. So we have to cope with both scenarios. That is we have to also return nil
+from the `method_params` method.
+
+The contact action.
+
+```
+  def contact
+    @message = Message.new(message_params) # params[:message])
+  end
+```
+
+The message action.
+
+```
+  def message
+    @message = Message.new(message_params) # params[:message])
+    unless @message.valid?
+      render 'contact'
+    else
+      UserMailer.user_request(@message).deliver
+      redirect_to root_path, notice: I18n.t('.contact_success') 
+    end
+  end
+```
+
+The message_params method with the params test on nil and returning nil.
+
+```
+  private
+
+    def message_params
+      return nil unless params[:message]
+      params.require(:message).permit(:subject, :category, :message, 
+                                      :email, :copy_me)
+    end
+```
+
+## Upgrade Ruby 1.9.3 to Ruby 2.0
+The last step is to upgrade to the preferred Ruby version for Rails 4.0 which is
+Ruby 2.0.
+
+We first check out the *upgrade-rails-4* branch.
+
+    $ git checkout upgrade-to-rails-4
+
+To install Ruby 2.0 we just issue
+
+    $ rvm install 2.0.0
+
+Then we copy our used gemset `ruby-1.9.3-p551@rails4013` to the new Ruby version
+
+    $ rvm copy ruby-1.9.3-p551@rails4013 ruby-2.0.0-p643@rails4013
+
+Next we verify that everything works with
+
+    $ rspec
+
+If we encounter any problems we fix them.
 

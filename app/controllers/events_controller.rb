@@ -62,7 +62,7 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(params[:event])
+    @event = Event.new(event_params) #params[:event])
 
     respond_to do |format|
       if @event.save
@@ -87,20 +87,21 @@ class EventsController < ApplicationController
     params[:max_lists] = create_lists(@event, params[:event][:max_lists].to_i)
 
     respond_to do |format|
-      if @event.update_attributes(params[:event])
+      if @event.update_attributes(event_params) #params[:event])
         format.html { redirect_to @event, 
                       notice: I18n.t('.updated',
                                      model: t('activerecord.models.event')) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+        format.json { render json: @event.errors, 
+                      status: :unprocessable_entity }
       end
     end
   end
 
   def create_lists(event, max_lists=event.max_lists)
-    lists = List.where(event_id: event.id) || [] # find_all_by_event_id(event.id) || []
+    lists = List.where(event_id: event.id) || [] 
     list_count_to_create = max_lists - lists.count
 
     return max_lists if list_count_to_create == 0
@@ -188,4 +189,29 @@ class EventsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+    def event_params
+      params.require(:event)
+            .permit(:title,
+                    :location, 
+                    :event_date, 
+                    :active,
+                    :information,
+                    :max_lists, 
+                    :max_items_per_list, 
+                    :list_closing_date, 
+                    :deduction, 
+                    :fee, 
+                    :provision, 
+                    :delivery_location, 
+                    :delivery_date, 
+                    :delivery_start_time, 
+                    :delivery_end_time, 
+                    :collection_location, 
+                    :collection_date, 
+                    :collection_start_time, 
+                    :collection_end_time)
+    end
 end
