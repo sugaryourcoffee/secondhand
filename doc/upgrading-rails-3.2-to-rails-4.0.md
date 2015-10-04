@@ -11,7 +11,7 @@ We are using following RVM gemset for the application
 
 * ruby-1.9.3-p547@rails3211
 
-We run the migration in two phases. First we do a preparation phase where we
+We run the migration in two stages. First we do a preparation phase where we
 update the application to the most recent versions within the major version.
 When this is done we do the actual migration. 
 
@@ -22,6 +22,21 @@ The preparation steps to follow are
 * Check out a new branch for the migration process
 * Update to the lates Ruby 1.9.3 patch level
 * Update to the lates Rails 3.2 version
+
+The actual migratio is as follows
+
+* Check out a new branch for the upgrade process
+* Prepare the Gemfile
+* Run `bundle install`
+* Update the configuration files
+* Upgrade the bin/ directory
+* Update `config/routes`
+* Remove errors disclosed by rspec runs
+* Remove deprecation warnings disclosed by rspec runs
+* Merge back to the master branch
+
+# Stage 1 - Prepare for Upgrade
+This is stage 1 where we prepare for upgrading our Rails 3.2 app to Rails 4.0.
 
 ## Run the tests first
 First make sure all your tests pass by running *rspec*.
@@ -135,6 +150,12 @@ checkout the master branch and then push them to github.
     $ git push
 
 Now we are ready to actually upgrade to Rails 4.0.
+
+# Stage 2 - Upgrade to Rails 4
+Now we are prepared to actually upgrade to Rails 4. We checkout a new branch
+
+    $ git checkout -b upgrade-to-rails-4
+    $ git push --set-upstream origin upgrade-to-rails-4
 
 ## Prepare the Gemfile
 The first step is to change the Ruby version in the Gemfile. But we also want
@@ -768,4 +789,11 @@ RSpec 2                                | RSpec 2.99.0 or 3
 -------------------------------------- | -----------------------------------
 it { list.items.should have(1).items } | it { list.items.size.should eq(1) }
 it { list.items.should have(0).items } | it { list.items.should be\_empty }
+
+## Merge to Master
+Now that all our specs run without error we merge our *upgrade-to-rails-4* 
+branch back to the master branch.
+
+    $ git checkout master
+    $ git merge upgrade-to-rails-4
 
