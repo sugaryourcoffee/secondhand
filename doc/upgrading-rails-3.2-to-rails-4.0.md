@@ -972,7 +972,7 @@ The message action.
   end
 ```
 
-The message_params method with the params test on nil and returning nil.
+The message\_params method with the params test on nil and returning nil.
 
 ```
   private
@@ -983,6 +983,12 @@ The message_params method with the params test on nil and returning nil.
                                       :email, :copy_me)
     end
 ```
+
+When our specs run with strong parameters we can remove the 
+`protected_attributes` gem by removing it (or commenting it out) and then run
+`bundle install`. After we verify with `bundle show | grep 
+`protected_attributes` that it is not available anymore then we run our specs 
+with `rspec`
 
 ## Upgrade Ruby 1.9.3 to Ruby 2.0
 The last step is to upgrade to the preferred Ruby version for Rails 4.0 which is

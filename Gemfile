@@ -13,7 +13,7 @@ gem 'turbolinks'
 
 # TODO Temporarily use protected_attribute gem and then migrate to strong
 # prameters
-gem 'protected_attributes'
+# gem 'protected_attributes'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
