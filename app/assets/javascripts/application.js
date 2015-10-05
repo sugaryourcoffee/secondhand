@@ -18,4 +18,5 @@
 //= require bootstrap-modal
 //= require bootstrap-dropdown
 //= require gritter
+//= require turbolinks
 //= require_tree .

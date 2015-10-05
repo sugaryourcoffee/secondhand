@@ -183,6 +183,7 @@ bootstrap-will\_paginate | 0.0.6        | 0.0.10          | top
 prawn                    | 0.12.0       | 1.3.0           | top
 syc-barcode              | 0.0.3        | 0.0.3           | top
 net-ssh                  | 2.9.2        | -               | top
+turbolinks               | -            | 2.5.3           | top
 sqlite3                  |              |                 | development
 rspec-rails              | 2.99.0       | 2.99.0          | development, test
 guard-rspec              | 4.6          | 4.6             | development
@@ -213,7 +214,7 @@ We start by changing the rails version in our Gemfile to
 
     gem 'rails', '4.0.13'
 
-and then run bundle install. After the installation we get following post
+and then run `bundle install`. After the installation we get following post
 install messages.
 
     Post-install message from capybara:
@@ -1004,4 +1005,10 @@ Next we verify that everything works with
     $ rspec
 
 If we encounter any problems we fix them.
+
+# Stage 3 - Deploying the application
+The final step is to deploy the application. We already have a running 
+application on the staging and production machine. The steps in this section
+describe how to upgrade the deployment server.
+
 
