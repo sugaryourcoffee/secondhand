@@ -48,6 +48,38 @@ The coffee script code looks like this.
             $(this).val(value.slice(0,3))
             $('#search_item_number').val(value.slice(3,5))
 
+Add an application version number
+---------------------------------
+An application number is especially usefull in cases of user requests or issues.
+If we tag our releases in Git we can read the tag number and use it as the
+version number.
+
+    $ git describe --tags --abbrev=0
+
+In `config/application.rb` we add a method that writes that reads the version
+from git and writes it to `config/version`.
+
+    if Rails.env.development?
+      File.open('config/version', 'w') do |file|
+        file.write `git describe --tags --abbrev=0`
+      end
+    end
+
+    module Secondhand
+      class Application < Rails::Application
+        config.version = File.read('config/version')
+      end
+    end
+
+`config/application.rb` runs only once when we start the server.
+
+We can access the version with `Rails.configuration.version`. We use this in
+the `app/views/layouts/_footer.html.erb`.
+
+    <a href="https://github.com/sugaryourcoffee/secondhand",
+      target="_blank">Secondhand <%= Rails.configuration.version %></a>
+      by Sugar Your Coffee
+
 Database
 ========
 Here we find information on how to work with databases in Rails.

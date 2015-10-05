@@ -14,6 +14,11 @@ describe "Static pages" do
       visit root_path(locale: :en)
       page.should have_title("#{base_title} | Home")
     end
+
+    it "should have version number" do
+      visit root_path(locale: :en)
+      expect(page).to have_content(/Secondhand v\d{1,}\.\d{1,}\.\d{1,}/)
+    end
   end
 
   describe "Help page" do

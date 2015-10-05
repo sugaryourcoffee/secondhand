@@ -5,6 +5,14 @@ require 'rails/all'
 # SYC extension
 require 'interleave2of5'
 
+# SYC extension
+# Create a version file from git
+if Rails.env.development?
+  File.open('config/version', 'w') do |file|
+    file.write `git describe --tags --abbrev=0`
+  end
+end
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -26,5 +34,9 @@ module Secondhand
     # SYC extension
     # require autoloading of classes in lib/ directory
     config.autoload_paths << Rails.root.join('lib')
+
+    # SYC extension
+    # read the app's version
+    config.version = File.read('config/version')
   end
 end
