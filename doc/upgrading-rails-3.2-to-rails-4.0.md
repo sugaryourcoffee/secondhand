@@ -1027,7 +1027,65 @@ proceede with deployment.
 
 # Stage 3 - Deploying the application
 The final step is to deploy the application. We already have a running 
-application on the staging and production machine. The steps in this section
-describe how to upgrade the deployment server.
+application on the staging and production machine. The initial deployment step
+are described in [deployment](https://github.com/sugaryourcoffee/secondhand/blob/master/doc/deployment.md). 
+The steps in this section describe how to upgrade the deployment server.
 
+In the following we assume that our development machine is *saltspring* and our
+staging server is *uranus*. To upgrade our staging server we have to conduct
+following steps:
+
+* ssh to the staging server *uranus*
+* install Ruby 2.0.0
+* create a gemspec rail4013
+* install Rails 4.0.13
+* adjust the Ruby version in the Apache's virtual host
+* return to the development machine *saltspring*
+* deploy the application
+
+First we ssh to the staging server
+
+    $ ssh uranus
+
+Then we install and activate Ruby 2.0.0
+
+    $ rvm install 2.0.0 && rvm use 2.0.0
+
+Then we create a gemset
+
+    $ rvm gemset create rails4013
+
+and switch to the gemset
+
+    $ rvm ruby-2.0.0-p643@rails4013
+
+Then we install Rails 4.0.13
+
+    $ gem install rails --version 4.0.13 --no-ri --no-rdoc
+
+Now we change the Ruby version in the Apache's virtual host
+
+    $ vi /etc/apache2/sites-available/secondhand.conf
+
+We change following part
+
+   PassengerRuby /home/pierre/.rvm/gems/ruby-1.9.3-p551@rail3211/wrappers/ruby 
+
+to 
+
+   PassengerRuby /home/pierre/.rvm/gems/ruby-2.0.0-p643@rail4013/wrappers/ruby 
+  
+Now run 
+
+   $ sudo a2disite secondhand.conf && sudo a2ensite secondhand.conf
+
+and reload the configuration and restart Apache 2
+
+   $ service apache2 reload && sudo apachectl restart
+
+Back on the development machine go to `~/Work/Secondhand` and run
+
+   $ cap staging deploy
+
+Check up you application at [secondhand:8082](http://syc.dyndns.org:8082).
 
