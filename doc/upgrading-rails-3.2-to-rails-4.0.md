@@ -991,8 +991,8 @@ When our specs run with strong parameters we can remove the
 with `rspec`
 
 ## Upgrade Ruby 1.9.3 to Ruby 2.0
-The last step is to upgrade to the preferred Ruby version for Rails 4.0 which is
-Ruby 2.0.
+The final upgrade step is to upgrade to the preferred Ruby version for 
+Rails 4.0 which is Ruby 2.0.
 
 We first check out the *upgrade-rails-4* branch.
 
@@ -1002,15 +1002,28 @@ To install Ruby 2.0 we just issue
 
     $ rvm install 2.0.0
 
-Then we copy our used gemset `ruby-1.9.3-p551@rails4013` to the new Ruby version
+Then we change to the gemset `ruby-2.0.0-p643@rails4013`
 
-    $ rvm copy ruby-1.9.3-p551@rails4013 ruby-2.0.0-p643@rails4013
+    $ rvm ruby-2.0.0-p643@rails4013
 
+We now check whether our gems for *Secondhand* are installed under the gemset 
+with 
+
+    $ rails -v
+    
+If gems are missing this will be shown in a error message. In this case we run
+  
+    $ bundle
+    
 Next we verify that everything works with
 
     $ rspec
 
-If we encounter any problems we fix them.
+It should run without errors. In my case I got one error. I ran the spec in
+isolation then it passed. Then I ran all specs again and it passed.
+
+As we didn't have to change anything we can checkout the master tree and 
+proceede with deployment.
 
 # Stage 3 - Deploying the application
 The final step is to deploy the application. We already have a running 
