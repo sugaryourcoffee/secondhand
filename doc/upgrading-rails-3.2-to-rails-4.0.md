@@ -1029,63 +1029,111 @@ proceede with deployment.
 The final step is to deploy the application. We already have a running 
 application on the staging and production machine. The initial deployment step
 are described in [deployment](https://github.com/sugaryourcoffee/secondhand/blob/master/doc/deployment.md). 
-The steps in this section describe how to upgrade the deployment server.
+The steps in this section describe how to setup an addtional beta server to 
+test our upgraded application. If everything works we deploy to the staging 
+sever and finaly to the production server. 
 
 In the following we assume that our development machine is *saltspring* and our
-staging server is *uranus*. To upgrade our staging server we have to conduct
-following steps:
+beta server is *uranus*. To setup the beta server we have to conduct following 
+steps:
 
 * ssh to the staging server *uranus*
 * install Ruby 2.0.0
 * create a gemspec rail4013
 * install Rails 4.0.13
-* adjust the Ruby version in the Apache's virtual host
+* copy the staging virtual host to a beta virtual host and adjust the Ruby 
+  version
 * return to the development machine *saltspring*
+* create a beta environment
 * deploy the application
 
+### Install Ruby 2.0.0 and Rails 4.0.13 on the beta server
 First we ssh to the staging server
 
-    $ ssh uranus
+    saltspring$ ssh uranus
 
 Then we install and activate Ruby 2.0.0
 
-    $ rvm install 2.0.0 && rvm use 2.0.0
+    uranus$ rvm install 2.0.0 && rvm use 2.0.0
 
 Then we create a gemset
 
-    $ rvm gemset create rails4013
+    uranus$ rvm gemset create rails4013
 
 and switch to the gemset
 
-    $ rvm ruby-2.0.0-p643@rails4013
+    uranus$ rvm ruby-2.0.0-p643@rails4013
 
 Then we install Rails 4.0.13
 
-    $ gem install rails --version 4.0.13 --no-ri --no-rdoc
+    uranus$ gem install rails --version 4.0.13 --no-ri --no-rdoc
 
-Now we change the Ruby version in the Apache's virtual host
+### Create a virtual host for the beta server
+Now we copy the secondhand.conf to secondhand-beta.conf and change the Ruby 
+version in the Apache's secondhand-beta.conf virtual host
 
-    $ vi /etc/apache2/sites-available/secondhand.conf
+    uranus$ cp /etc/apache2/sites-available/scondhand.conf \
+    > /etc/apache2/sites-available/secondhand-beta.conf
+    uranus$ vi /etc/apache2/sites-available/secondhand-beta.conf
 
 We change following part
 
-   PassengerRuby /home/pierre/.rvm/gems/ruby-1.9.3-p551@rail3211/wrappers/ruby 
+    PassengerRuby /home/pierre/.rvm/gems/ruby-1.9.3-p551@rail3211/wrappers/ruby 
 
 to 
 
-   PassengerRuby /home/pierre/.rvm/gems/ruby-2.0.0-p643@rail4013/wrappers/ruby 
+    PassengerRuby /home/pierre/.rvm/gems/ruby-2.0.0-p643@rail4013/wrappers/ruby 
   
 Now run 
 
-   $ sudo a2disite secondhand.conf && sudo a2ensite secondhand.conf
+    uranus$ sudo a2ensite secondhand-beta.conf
 
 and reload the configuration and restart Apache 2
 
-   $ service apache2 reload && sudo apachectl restart
+    uranus$ service apache2 reload && sudo apachectl restart
 
-Back on the development machine go to `~/Work/Secondhand` and run
+### Add a beta environment
+Back on the development machine go to `~/Work/Secondhand` and create a beta
+environment by copying the staging environment
 
-   $ cap staging deploy
+    saltspring$ cd ~/Work/Secondhand
+    saltspring$ cp confg/environments/staging.rb config/environments/beta.rb
+
+and change following line so it reads
+
+    config.action_mailer
+          .default_url_options = { host: "syc.dyndns.org:8082/beta" }
+
+In `config/deploy.rb` add `beta` to the stages
+
+    set :stages, %w(production, staging, beta) 
+
+Copy `config/deploy/staging.rb` to `config/deploy/beta.rb`
+
+    saltspring$ cp config/deploy/staging.rb config/deploy/beta.rb
+
+In `config/deploy/beta.rb` set the `domain` and the `rails_env`
+
+    set :domain, 'secondhand.uranus/beta'
+    set :rails_env, :beta
+
+We add a beta group to database.yml
+
+    beta:
+      adapter: mysql2
+      encoding: utf8
+      reconnect: false
+      database: secondhand_staging
+      pool: 5
+      timeout: 5000
+      username: user
+      password: password
+      host: localhost
+
+### Deploy to the beta server
+Finally run
+
+    saltspring$ cap staging deploy
 
 Check up you application at [secondhand:8082](http://syc.dyndns.org:8082).
 
