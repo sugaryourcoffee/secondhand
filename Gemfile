@@ -64,6 +64,6 @@ gem 'rvm-capistrano', '~> 1.5.6'
 
 group :production do
 #  gem 'pg', '0.12.2'
-  gem 'mysql2'
+  gem 'mysql2', '~> 0.3'
 end
 
