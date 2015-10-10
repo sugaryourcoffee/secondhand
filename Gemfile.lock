@@ -126,7 +126,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.11.2)
     multi_test (0.1.2)
-    mysql2 (0.4.1)
+    mysql2 (~> 0.3)
     nenv (0.2.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
