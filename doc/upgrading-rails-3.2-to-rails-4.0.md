@@ -1041,8 +1041,8 @@ steps:
 * install Ruby 2.0.0
 * create a gemspec rail4013
 * install Rails 4.0.13
-* copy the staging virtual host to a beta virtual host and adjust the Ruby 
-  version
+* create the application directory
+* copy the staging virtual host to a beta virtual host and adjust it
 * return to the development machine *saltspring*
 * create a beta environment
 * deploy the application
@@ -1068,6 +1068,11 @@ Then we install Rails 4.0.13
 
     uranus$ gem install rails --version 4.0.13 --no-ri --no-rdoc
 
+### Create the application directory
+We create a deployment directory to host our beta version of Secondhand.
+
+    uranus$ sudo mkdir /var/www/secondhand-beta/
+    
 ### Create a virtual host for the beta server
 Now we copy the secondhand.conf to secondhand-beta.conf and change the Ruby 
 version in the Apache's secondhand-beta.conf virtual host
@@ -1078,12 +1083,23 @@ version in the Apache's secondhand-beta.conf virtual host
 
 We change following part
 
-    PassengerRuby /home/pierre/.rvm/gems/ruby-1.9.3-p551@rail3211/wrappers/ruby 
+```
+<VirtualHost *:8083>
+  DocumentRoot /var/www/secondhand-beta/current/public
+  Servername beta.secondhand.uranus
+  PassengerRuby /home/pierre/.rvm/gems/ruby-2.0.0-p643@rail4013/wrappers/ruby 
+  <Directory /var/www/secondhand-beta/public>
+    AllowOverride all
+    Options -MultiViews
+    Require all granted
+  </Directory>
+  RackEnv beta
+</VirtualHost>
+```
 
-to 
+In order to access the port `8083` we have to add `Listen 8083` to 
+`/etc/apache2/ports.conf`
 
-    PassengerRuby /home/pierre/.rvm/gems/ruby-2.0.0-p643@rail4013/wrappers/ruby 
-  
 Now run 
 
     uranus$ sudo a2ensite secondhand-beta.conf
@@ -1102,7 +1118,7 @@ environment by copying the staging environment
 and change following line so it reads
 
     config.action_mailer
-          .default_url_options = { host: "syc.dyndns.org:8082/beta" }
+          .default_url_options = { host: "syc.dyndns.org:8083" }
 
 In `config/deploy.rb` add `beta` to the stages
 
@@ -1112,9 +1128,12 @@ Copy `config/deploy/staging.rb` to `config/deploy/beta.rb`
 
     saltspring$ cp config/deploy/staging.rb config/deploy/beta.rb
 
-In `config/deploy/beta.rb` set the `domain` and the `rails_env`
+In `config/deploy/beta.rb` set the `domain`, `application`, `rvm_ruby_string`
+and the `rails_env`
 
-    set :domain, 'secondhand.uranus/beta'
+    set :domain, 'beta.secondhand.uranus'
+    set :application, 'secondhand-beta'
+    set :rvm_ruby_string, '2.0.0'
     set :rails_env, :beta
 
 We add a beta group to database.yml
@@ -1130,10 +1149,21 @@ We add a beta group to database.yml
       password: password
       host: localhost
 
+Add a hostname to `/etc/hosts`
+
+      19.168.178.66 secondhand.uranus beta.secondhand.uranus
+
 ### Deploy to the beta server
 Finally run
 
-    saltspring$ cap staging deploy
+    saltspring$ cap beta deploy:setup
+    saltspring$ cap beta deploy:check
+    saltspring$ cap beta deploy:cold
 
-Check up you application at [secondhand:8082](http://syc.dyndns.org:8082).
+This is only neccessary for the initial deployment. For subsequent deploys we
+issue
+
+    saltspring$ cap beta deploy
+
+Check up you application at [secondhand:8083](http://syc.dyndns.org:8083).
 
