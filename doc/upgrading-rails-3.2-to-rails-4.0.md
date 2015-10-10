@@ -1132,7 +1132,9 @@ In `config/deploy/beta.rb` set the `domain`, `application`, `rvm_ruby_string`
 and the `rails_env`
 
     set :domain, 'beta.secondhand.uranus'
+    set :git_application, 'secondhand'
     set :application, 'secondhand-beta'
+    set :repository,  "git@github.com:#{git_user}/#{git_application}.git"
     set :rvm_ruby_string, '2.0.0'
     set :rails_env, :beta
 

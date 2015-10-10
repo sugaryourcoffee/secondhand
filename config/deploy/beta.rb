@@ -2,8 +2,9 @@ require 'bundler/capistrano'
 set :git_user, 'sugaryourcoffee'
 set :user, 'pierre'
 set :domain, 'beta.secondhand.uranus'
-set :application, "secondhand-beta"
-set :repository,  "git@github.com:#{git_user}/#{application}.git"
+set :git_application, "secondhand-beta"
+set :application, "scondhand"
+set :repository,  "git@github.com:#{git_user}/#{git_application}.git"
 set :deploy_to, "/var/www/#{application}"
 
 require 'rvm/capistrano'
