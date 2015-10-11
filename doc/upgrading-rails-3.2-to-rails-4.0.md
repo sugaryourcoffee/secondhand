@@ -1052,7 +1052,7 @@ First we ssh to the staging server
 
     saltspring$ ssh uranus
 
-Then we install and activate Ruby 2.0.0
+We install and activate Ruby 2.0.0
 
     uranus$ rvm install 2.0.0 && rvm use 2.0.0
 
@@ -1064,7 +1064,7 @@ and switch to the gemset
 
     uranus$ rvm ruby-2.0.0-p643@rails4013
 
-Then we install Rails 4.0.13
+Finally we install Rails 4.0.13
 
     uranus$ gem install rails --version 4.0.13 --no-ri --no-rdoc
 
@@ -1074,8 +1074,8 @@ We create a deployment directory to host our beta version of Secondhand.
     uranus$ sudo mkdir /var/www/secondhand-beta/
     
 ### Create a virtual host for the beta server
-Now we copy the secondhand.conf to secondhand-beta.conf and change the Ruby 
-version in the Apache's secondhand-beta.conf virtual host
+Copy the secondhand.conf to secondhand-beta.conf and change the Ruby version in 
+the Apache's secondhand-beta.conf virtual host
 
     uranus$ cp /etc/apache2/sites-available/scondhand.conf \
     > /etc/apache2/sites-available/secondhand-beta.conf
@@ -1113,7 +1113,7 @@ Back on the development machine go to `~/Work/Secondhand` and create a beta
 environment by copying the staging environment
 
     saltspring$ cd ~/Work/Secondhand
-    saltspring$ cp confg/environments/staging.rb config/environments/beta.rb
+    saltspring$ cp config/environments/staging.rb config/environments/beta.rb
 
 and change following line so it reads
 
@@ -1129,7 +1129,8 @@ Copy `config/deploy/staging.rb` to `config/deploy/beta.rb`
     saltspring$ cp config/deploy/staging.rb config/deploy/beta.rb
 
 In `config/deploy/beta.rb` set the `domain`, `application`, `rvm_ruby_string`
-and the `rails_env`
+and the `rails_env` and also add `git_application` and exchange `application` in
+the repository URL with `git_application`
 
     set :domain, 'beta.secondhand.uranus'
     set :git_application, 'secondhand'
@@ -1151,7 +1152,7 @@ We add a beta group to database.yml
       password: password
       host: localhost
 
-Add a hostname to `/etc/hosts`
+and add a hostname to `/etc/hosts`
 
       19.168.178.66 secondhand.uranus beta.secondhand.uranus
 
@@ -1168,4 +1169,74 @@ issue
     saltspring$ cap beta deploy
 
 Check up you application at [secondhand:8083](http://syc.dyndns.org:8083).
+
+### Errors during deployment
+There are probably some errors during the first deployments. This section 
+describes errors after upgrading Secondhand to Rails 4.0.13.
+
+#### Could not load database configuration
+During the assets precompile task following error shows up
+
+```
+saltspring$ cap beta deploy
+...
+  * executing "cd -- /var/www/secondhand-beta/releases/20151010153506 && RAILS_E
+NV=beta RAILS_GROUPS=assets bundle exec rake assets:precompile"
+    servers: ["beta.secondhand.uranus"]
+    [beta.secondhand.uranus] executing command
+*** [err :: beta.secondhand.uranus] rake aborted!
+*** [err :: beta.secondhand.uranus] Could not load database configuration. No su
+ch file - /var/www/secondhand-beta/releases/20151010153506/config/database.yml
+*** [err :: beta.secondhand.uranus] /var/www/secondhand-beta/shared/bundle/ruby/
+2.0.0/gems/railties-4.0.13/lib/rails/application/configuration.rb:110:in `databa
+se_configuration'
+```
+
+If we look into `config/deploy/beta.rb` we copy the `database.yml` file to the 
+`current/config/database.yml` file. As the error indicates 
+`rake assets:precompile` requests the `database.yml` file in the current release
+directory. So we have to tweak our rake task in `config/deploy/beta.rb` in that
+we have to copy our `database.yml` file to the current release directory 
+`release_path` and not to the current directory `current_path`.
+
+```
+before 'deploy:assets:precompile', 'copy_database_yml_to_release_path'
+# after 'deploy:create_symlink', 'copy_database_yml'
+
+desc "copy shared/database.yml to RELEASE_PATH/config/database.yml"
+task :copy_database_yml_to_release_path do
+  config_dir = "#{shared_path}/config"
+
+  unless run("if [ -f '#{config_dir}/database.yml' ]; then echo -n 'true'; fi")
+    run "mkdir -p #{config_dir}" 
+    upload("config/database.yml", "#{config_dir}/database.yml")
+  end
+
+  run "cp #{config_dir}/database.yml #{release_path}/config/database.yml"
+end
+
+# desc "copy shared/database.yml to current/config/database.yml"
+# task :copy_database_yml do
+#  config_dir = "#{shared_path}/config"
+
+#  unless run("if [ -f '#{config_dir}/database.yml' ]; then echo -n 'true'; fi")
+#    run "mkdir -p #{config_dir}" 
+#    upload("config/database.yml", "#{config_dir}/database.yml")
+#  end
+
+#  run "cp #{config_dir}/database.yml #{current_path}/config/database.yml"
+# end
+```
+
+### Cannot find `mysql2` gem
+Even though the `mysql2` gem is available it is not recognized. Rails 4 doesn't 
+work well with the `mysql2` v0.4.x gem. In the `Gemfile` change the version to 
+
+    gem 'mysql2', '~> 0.3.20'
+
+and run
+
+    saltspring$ bundle upgrade mysql2
+
+Then push the changes to github an run `cap beta deploy` again.
 

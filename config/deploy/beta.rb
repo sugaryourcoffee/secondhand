@@ -31,8 +31,20 @@ namespace :deploy do
   end
 end
 
-before 'deploy:assets:precompile'
+before 'deploy:assets:precompile', 'copy_database_yml_to_release_path'
 after 'deploy:create_symlink', 'copy_database_yml'
+
+desc "copy shared/database.yml to RELEASE_PATH/config/database.yml"
+task :copy_database_yml_to_release_path do
+  config_dir = "#{shared_path}/config"
+
+  unless run("if [ -f '#{config_dir}/database.yml' ]; then echo -n 'true'; fi")
+    run "mkdir -p #{config_dir}" 
+    upload("config/database.yml", "#{config_dir}/database.yml")
+  end
+
+  run "cp #{config_dir}/database.yml #{release_path}/config/database.yml"
+end
 
 desc "copy shared/database.yml to current/config/database.yml"
 task :copy_database_yml do
