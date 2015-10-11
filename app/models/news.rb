@@ -1,7 +1,8 @@
 class News < ActiveRecord::Base
-#  attr_accessible :issue, :promote_to_frontpage, :released, :user_id, :news_translations_attributes
 
   belongs_to :user
+
+  default_scope { order('updated_at desc') }
 
   has_many :news_translations, dependent: :destroy
 

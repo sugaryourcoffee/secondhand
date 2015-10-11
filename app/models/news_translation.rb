@@ -1,7 +1,13 @@
 class NewsTranslation < ActiveRecord::Base
   belongs_to :news
 
-#  attr_accessible :title, :description, :language, :news_id
-
   validates :title, :description, :language, presence: true
+
+  after_save :update_news
+
+  private
+
+    def update_news
+      news.update_attribute(:updated_at, Time.now)
+    end
 end
