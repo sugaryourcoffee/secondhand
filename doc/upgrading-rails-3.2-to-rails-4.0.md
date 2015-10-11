@@ -20,10 +20,10 @@ The preparation steps to follow are
 * Run the tests and ensure they pass
 * Tag the current version to Git
 * Check out a new branch for the migration process
-* Update to the lates Ruby 1.9.3 patch level
-* Update to the lates Rails 3.2 version
+* Update to the latest Ruby 1.9.3 patch level
+* Update to the latest Rails 3.2 version
 
-The actual migratio is as follows
+The actual migration is as follows
 
 * Check out a new branch for the upgrade process
 * Prepare the Gemfile
@@ -52,7 +52,7 @@ branch with a version number.
 
 We first want to create a branch with the released version in order to be able
 to make changes especially bug fixes to this version. This is necessary if 
-users won't immediately upgrade to the the new version.
+users won't immediately upgrade to the new version.
 
     $ git checkout --branch v1.1-stable
     $ git push --set-upstream origin v1.1-stable
@@ -77,12 +77,12 @@ Finally push the tagged commit to Github with
 ## Check out a new branch
 Before you do any changes to your project check out a new branch. In case you
 mess up your project you always can safely rewind to your master branch and
-start from a blank slade again.
+start from a blank slate again.
 
     $ git checkout -b rails4-0
 
 ## Update Ruby to the latest patch level
-That is not neccessary but to be on the safe side I want to have the latest 
+That is not necessary but to be on the safe side I want to have the latest 
 patch level of Ruby 1.9.3. We can check the versions with
 
     $ rvm list known | grep 1.9.3
@@ -114,7 +114,7 @@ If anything breaks make sure to first fix the error before moving on.
 
 ## Update to the latest Rails 3.2 version
 We could start to upgrade our app from the current version to version 4.0, but 
-it is adviced to upgrade from the most current version. To find the most recent
+it is advised to upgrade from the most current version. To find the most recent
 version we can issue
 
     $ gem list ^rails$ --remote --all | grep -oP "3.2.\d{1,}"
@@ -566,7 +566,7 @@ Version 0.7.0 has to be upgraded to >= 1.1.0. Replace the version `0.7.0` with
     $ bundle update --source database_cleaner
 
 ## ActionController::RoutingError: uninitialized constant SessionController
-This occured as I was using `'signin' => 'session#new'` instead of 
+This occurred as I was using `'signin' => 'session#new'` instead of 
 `'singin' => 'sessions#new'`. In this case the `ActionController` is using a
 controller `SessionController` instead of the `SessionsController`
 
@@ -624,7 +624,7 @@ DEPRECATION WARNING: Relation#all is deprecated. If you want to eager-load a rel
 ```
 
 To remove the deprecation warning we have to remove `.all` from the `where`
-clauses. To find all of the occurences we can use *grep* like so
+clauses. To find all of the occurrences we can use *grep* like so
 
     $ grep -rn "\.all" app/
 
@@ -636,10 +636,10 @@ and then just remove all the occurrences of `.all`.
 DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. (called from block in _app_views_lists_index_html_erb__2537020648015865330_60608460 at /home/pierre/Work/Secondhand/app/views/lists/index.html.erb:85)
 ```
 
-This can be cleared with searching for all `find(:all)` occurences and replace
+This can be cleared with searching for all `find(:all)` occurrences and replace
 them with `all`.
 
-### #apply\_finder\_options is dreprecated
+### #apply\_finder\_options is deprecated
 
 ```
 DEPRECATION WARNING: #apply_finder_options is deprecated. (called from index at /home/pierre/Work/Secondhand/app/controllers/lists_controller.rb:17)
@@ -663,7 +663,7 @@ To find all occurrences we issue
 
     $ grep -rn "conditions:" app/
 
-and replace the occurrenes accordingly.
+and replace the occurrences accordingly.
 
 ### :confirm option is deprecated
 
@@ -780,7 +780,7 @@ We could also keep using `its` when intalling *rspec-its* gem instead.
 `expect(collection).to have(1).items` is deprecated. Use the rspec-collection_matchers gem or replace your expectation with something like `expect(collection.size).to eq(1)` instead. Called from /home/pierre/Work/Secondhand/spec/models/item_spec.rb:16:in `block (2 levels) in <top (required)>'.
 ```
 
-To search for all occurences we can use *grep* with Perl syntax like so
+To search for all occurrences we can use *grep* with Perl syntax like so
 
     $ grep -rnP "have\(\d+\)" spec/
 
@@ -805,10 +805,10 @@ to implement *strong attributes*.
 
 Strong attributes are used in controllers in the `create`, `build` and `update`
 actions. We determine the attributes we want to allow to be updated by looking 
-in the respective models and use the attributes that are whitelisted with 
+in the respective models and use the attributes that are white listed with 
 `attr_accessible`.
 
-In each controller add a `model_params` method and whitelist the attributes 
+In each controller add a `model_params` method and white list the attributes 
 that are allowed to be updated. Then in each `create`, `build` and `update` 
 action send this method to the `new` and `update` respectively 
 `update_attributes` method.
@@ -875,7 +875,7 @@ users            | create       | user                    |
 ** 1) A note on nested models in regard to strong parameters **
 Nested models need a slightly different approach with strong parameters. The
 parent class needs to declare `accepts_nested_attributes_for`. In the controller
-the child attributes are whitelisted with a hash 
+the child attributes are white listed with a hash 
 `models_parameters: [:id, :other_parameter]`. The `:id` is necessary because if
 not provided an `model.update(model_parameters)` will create new nested records
 instead of updating them. Below is an example.
@@ -1023,15 +1023,15 @@ It should run without errors. In my case I got one error. I ran the spec in
 isolation then it passed. Then I ran all specs again and it passed.
 
 As we didn't have to change anything we can checkout the master tree and 
-proceede with deployment.
+proceed with deployment.
 
 # Stage 3 - Deploying the application
 The final step is to deploy the application. We already have a running 
 application on the staging and production machine. The initial deployment step
 are described in [deployment](https://github.com/sugaryourcoffee/secondhand/blob/master/doc/deployment.md). 
-The steps in this section describe how to setup an addtional beta server to 
+The steps in this section describe how to setup an additional beta server to 
 test our upgraded application. If everything works we deploy to the staging 
-sever and finaly to the production server. 
+sever and finally to the production server. 
 
 In the following we assume that our development machine is *saltspring* and our
 beta server is *uranus*. To setup the beta server we have to conduct following 
@@ -1039,7 +1039,7 @@ steps:
 
 * ssh to the staging server *uranus*
 * install Ruby 2.0.0
-* create a gemspec rail4013
+* create a gemspec rails4013
 * install Rails 4.0.13
 * create the application directory
 * copy the staging virtual host to a beta virtual host and adjust it
@@ -1163,7 +1163,7 @@ Finally run
     saltspring$ cap beta deploy:check
     saltspring$ cap beta deploy:cold
 
-This is only neccessary for the initial deployment. For subsequent deploys we
+This is only necessary for the initial deployment. For subsequent deploys we
 issue
 
     saltspring$ cap beta deploy
@@ -1175,7 +1175,7 @@ There are probably some errors during the first deployments. This section
 describes errors after upgrading Secondhand to Rails 4.0.13.
 
 #### Could not load database configuration
-During the assets precompile task following error shows up
+During the assets pre compile task following error shows up
 
 ```
 saltspring$ cap beta deploy
@@ -1228,7 +1228,13 @@ end
 # end
 ```
 
-### Cannot find `mysql2` gem
+### Gem mysql2 is not loaded
+When starting the deployed application the following error comes up
+
+´´´
+Specified 'mysql2' for database adapter, but the gem is not loaded. Add gem 'mysql2' to your Gemfile.
+´´´
+
 Even though the `mysql2` gem is available it is not recognized. Rails 4 doesn't 
 work well with the `mysql2` v0.4.x gem. In the `Gemfile` change the version to 
 
