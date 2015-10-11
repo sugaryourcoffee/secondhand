@@ -31,6 +31,7 @@ namespace :deploy do
   end
 end
 
+before 'deploy:assets:precompile'
 after 'deploy:create_symlink', 'copy_database_yml'
 
 desc "copy shared/database.yml to current/config/database.yml"
