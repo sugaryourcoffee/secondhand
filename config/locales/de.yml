@@ -312,7 +312,7 @@ de:
 
   list_notifier:
     received:
-      subject: "Liste für Kinderkleider und Spielzeugbörse Burgthann"
+      subject: "Liste %{list_number} für Kinderkleider und Spielzeugbörse Burgthann"
 
   layouts:
     header:
