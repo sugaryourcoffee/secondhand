@@ -24,9 +24,9 @@ The usual workflow is listed below
 
 == Versions
 
-* Rails 3.2.11
-* Ruby 1.9.3p574
-* Capistrano 2.15.5
+* Rails 4.0.13
+* Ruby 2.0.0p643
+* Capistrano 2.15.6
 * Bootstrap 2.3.2
 
 == License
