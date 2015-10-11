@@ -1231,9 +1231,9 @@ end
 ### Gem mysql2 is not loaded
 When starting the deployed application the following error comes up
 
-´´´
+```
 Specified 'mysql2' for database adapter, but the gem is not loaded. Add gem 'mysql2' to your Gemfile.
-´´´
+```
 
 Even though the `mysql2` gem is available it is not recognized. Rails 4 doesn't 
 work well with the `mysql2` v0.4.x gem. In the `Gemfile` change the version to 
