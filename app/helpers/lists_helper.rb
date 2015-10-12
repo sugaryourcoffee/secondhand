@@ -1,7 +1,7 @@
 module ListsHelper
 
   def event_title_for(list)
-    event = Event.find_by(list.event_id) #find_by_id(list.event_id)
+    event = Event.find_by(id: list.event_id) #find_by_id(list.event_id)
     if event
       event.title
     else
