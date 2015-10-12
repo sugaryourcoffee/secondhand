@@ -1,7 +1,7 @@
 class ReversalStatistics
 
   def initialize(event)
-    @event = event || Event.find_by_active(true)
+    @event = event || Event.find_by(active: true)
   end
 
   def redemption_count
