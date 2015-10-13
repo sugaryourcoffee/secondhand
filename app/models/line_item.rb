@@ -4,8 +4,6 @@ class LineItem < ActiveRecord::Base
   belongs_to :reversal
   belongs_to :cart
 
-#  attr_accessible :cart_id, :item_id, :reversal_id, :selling_id
-
   delegate :item_number, :description, :size, :price, to: :item
 
   validates :item_id, presence: true

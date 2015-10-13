@@ -1,10 +1,8 @@
 class Cart < ActiveRecord::Base
-  has_many :line_items, -> { order(created_at: :desc) },
+  has_many :line_items, -> { order(updated_at: :desc) },
            before_add: :ensure_line_item_unique!
 
   CART_TYPES = ['SALES', 'REDEMPTION']
-
-  #attr_accessible :cart_type
 
   validates_inclusion_of :cart_type, in: CART_TYPES
 

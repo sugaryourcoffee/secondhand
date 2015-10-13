@@ -9,15 +9,17 @@ class CartsController < ApplicationController
 
   def show
     @cart = Cart.find(params[:id])
-    @event = Event.find_by(active: true) # find_by_active(true)
+    @event = Event.find_by(active: true)
     @transaction = @cart.cart_type
   end
 
   def update
     @cart  = current_reversal_cart
-    @event = Event.find_by(active: true) # find_by_active(true)
-    @list  = List.find_by(event_id: @event, list_number: params[:search_list_number]) # find_by_event_id_and_list_number(@event, params[:search_list_number])
-    @item  = Item.find_by(list_id: @list, item_number: params[:search_item_number]) # find_by_list_id_and_item_number(@list, params[:search_item_number])
+    @event = Event.find_by(active: true)
+    @list  = List.find_by(event_id: @event, 
+                          list_number: params[:search_list_number])
+    @item  = Item.find_by(list_id: @list, 
+                          item_number: params[:search_item_number])
     @line_item = LineItem.sold(@item)
     
     respond_to do |format|
@@ -67,13 +69,13 @@ class CartsController < ApplicationController
   end
 
   def item_collection
-    @event = Event.find_by(active: true) # find_by_active(true)
+    @event = Event.find_by(active: true)
     @cart = current_cart
     @transaction = 'SALES'
   end
 
   def line_item_collection
-    @event = Event.find_by(active: true) # find_by_active(true)
+    @event = Event.find_by(active: true)
     @cart = current_reversal_cart
     @transaction = 'REDEMPTION'
   end
