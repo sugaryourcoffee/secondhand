@@ -10,6 +10,8 @@ class ListNotifier < ActionMailer::Base
     @list = list
     csv = list.as_csv_file
     attachments[csv] = File.read(csv)
+    pdf = list.labels_pdf(true)
+    attachments[pdf] = File.read(pdf)
     mail to: list.user.email, 
          bcc: "mail@boerse-burgthann.de",
          subject: default_i18n_subject(

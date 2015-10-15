@@ -376,12 +376,15 @@ class List < ActiveRecord::Base
     pdf.render
   end
 
-  def labels_pdf
+  # Creates the labels for the list's items. If as_file is true the labels will
+  # be saved to a pdf-file and the file is returned. Otherwise the pdf-file will
+  # be offered to the user to be opened or to be saved.
+  def labels_pdf(as_file=false)
     items_list = (items.sort_by { |item| item.item_number }).map do |item|
       [item.item_number, item.description, item.size, item.price]
     end
 
-    create_pdf_labels items_list
+    create_pdf_labels(items_list, as_file)
   end
 
   def next_item_number
@@ -410,7 +413,7 @@ class List < ActiveRecord::Base
 
   private
 
-  def create_pdf_labels(items_list)
+  def create_pdf_labels(items_list, as_file=false)
     item_index = 0
     pdf_options = { height: 30, width: 1, factor: 2, y: 10 }
     pdf = Prawn::Document.new(page_size: "A4")
@@ -481,7 +484,15 @@ class List < ActiveRecord::Base
       end
       pdf.start_new_page if page < pages 
     end
-    pdf.render
+
+    if as_file
+      label_file = "tmp/list-#{list_number}-labels.pdf"
+      pdf.render_file(label_file)
+      File.absolute_path(label_file)
+    else
+      pdf.render
+    end
+
   end
 
   def cut_to_fit(pdf, width, value)
