@@ -321,6 +321,14 @@ class List < ActiveRecord::Base
       t.row(0).columns(0..3).align = :center
     end
 
+    pdf.table([[ "Total", number_to_currency(total_value, locale: :de) ]],
+              cell_style: { size: 10, padding: 2},
+              column_widths: [450, 71]) do |t|
+      pdf.font pdf.font.name, style: :bold
+      t.columns(0).align = :left
+      t.columns(1).align = :right
+    end
+
     pdf.repeat(:all) do
       pdf.text_box(header_left, options = {
         at: pdf.bounds.top_left,
