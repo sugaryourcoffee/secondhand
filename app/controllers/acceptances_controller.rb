@@ -3,6 +3,8 @@ class AcceptancesController < ApplicationController
   skip_before_filter :authorize
   before_filter      :admin_or_operator
 
+  helper_method :sort_column, :sort_direction
+
   def index
     @event = Event.find_by(active: true)
     
@@ -33,7 +35,7 @@ class AcceptancesController < ApplicationController
   end
 
   def edit
-    @list = List.find(params[:id])
+    load_list_and_items
     respond_to do |format|
       format.html
       format.js
@@ -41,7 +43,7 @@ class AcceptancesController < ApplicationController
   end
 
   def edit_list
-    @list = List.find(params[:id])
+    load_list # load_list_and_items
     render template: 'acceptances/edit_list.js.erb' 
 #    respond_to do |format|
 #      format.js
@@ -49,9 +51,9 @@ class AcceptancesController < ApplicationController
   end
 
   def update_list
-    @list = List.find(params[:id])
+    load_list # @list = List.find(params[:id])
     respond_to do |format|
-      if @list.update_attributes(list_attributes) # params[:list])
+      if @list.update_attributes(list_attributes)
         format.js
       else
         format.js { render 'edit_list' }
@@ -60,16 +62,18 @@ class AcceptancesController < ApplicationController
   end
 
   def edit_item
-    @item = Item.find(params[:id])
-    @list = @item.list
+    load_item_and_list # @item = Item.find(params[:id])
+#    @list = @item.list
+    load_items(@list)
     respond_to do |format|
       format.js
     end
   end
 
   def update_item
-    @item = Item.find(params[:id])
-    @list = @item.list
+    load_item_and_list # @item = Item.find(params[:id])
+#    @list = @item.list
+    load_items(@list)
     respond_to do |format|
       if @item.update_attributes(item_attributes) #params[:item])
         format.js
@@ -80,8 +84,9 @@ class AcceptancesController < ApplicationController
   end
 
   def delete_item
-    @item = Item.find(params[:id])
-    @list = @item.list
+    load_item_and_list # @item = Item.find(params[:id])
+#    @list = @item.list
+    load_items(@list)
     @item.destroy
     render template: 'acceptances/delete_item.js.erb' 
 #    respond_to do |format|
@@ -125,4 +130,31 @@ class AcceptancesController < ApplicationController
     def item_attributes
       params.require(:item).permit(:description, :item_number, :price, :size)
     end
+
+    def sort_column
+      Item.column_names.include?(params[:sort]) ? params[:sort] : "item_number"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
+    def load_list_and_items
+      @list  = List.find(params[:id])
+      @items = @list.items.order(sort_column + ' ' + sort_direction)
+    end
+
+    def load_list
+      @list = List.find(params[:id])
+    end
+
+    def load_items(list)
+      @items = list.items.order(sort_column + ' ' + sort_direction)
+    end
+
+    def load_item_and_list
+      @item = Item.find(params[:id])
+      @list = @item.list
+    end
+
 end

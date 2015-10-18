@@ -21,6 +21,13 @@ describe "Acceptances" do
       visit edit_acceptance_path(locale: :en, id: list)
     end
 
+    it "should have sortable item columns" do
+      page.should have_link "Number"
+      page.should have_link "Description"
+      page.should have_link "Size"
+      page.should have_link "Price"
+    end
+
     it "should have title Acceptance" do
       page.should have_title "Acceptance"
     end

@@ -1,3 +1,6 @@
-<%= form_for @item, url: update_item_acceptance_path, remote: true do |f| %>
+<%= form_for @item, 
+             url: update_item_acceptance_path(sort: params[:sort],
+                                              direction: params[:direction]), 
+             remote: true do |f| %>
   <%= render partial: 'show_item', locals: { edit: true, f: f } %>
 <% end %>

@@ -17,6 +17,10 @@ module ApplicationHelper
     end
   end
 
+  def sort_direction_for(column)
+    (column == sort_column && sort_direction == "asc") ? "desc" : "asc"
+  end
+
   def selected_language
     unavailable = lambda { "Language" }
     LANGUAGES.detect(unavailable) { |l| l[1] == I18n.locale.to_s }[0]

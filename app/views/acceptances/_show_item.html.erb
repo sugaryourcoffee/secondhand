@@ -1,14 +1,30 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th><%= t('.item_number') %></th>
-      <th><%= t('.description') %></th>
-      <th><%= t('.size')        %></th>
-      <th><%= t('.price')       %></th><th></th><th></th>
+      <th><%= link_to_if !edit, t('.item_number'), 
+        edit_acceptance_path(@list, 
+                             sort: "item_number", 
+                             direction: sort_direction_for("item_number")) %>
+      </th>
+      <th><%= link_to_if !edit, t('.description'), 
+        edit_acceptance_path(@list, 
+                             sort: "description", 
+                             direction: sort_direction_for("description")) %>
+      </th>
+      <th><%= link_to_if !edit, t('.size'), 
+        edit_acceptance_path(@list, 
+                             sort: "size", 
+                             direction: sort_direction_for("size")) %>
+      </th>
+      <th><%= link_to_if !edit, t('.price'), 
+        edit_acceptance_path(@list, 
+                             sort: "price", 
+                             direction: sort_direction_for("price")) %>
+      </th><th></th><th></th>
     </tr>
   </thead>
   <tbody>
-    <% @list.items.each do |item| %>
+    <% @items.each do |item| %>
       <tr>
         <% if edit and @item == item %>
           <td><%= item.item_number %></td>
@@ -17,8 +33,9 @@
           <td><%= f.text_field :price%></td>
           <td><%= f.submit t('.update'), class: "btn btn-link" %></td>
           <td><%= link_to t('.cancel'), 
-                          edit_acceptance_path(@list), 
-                          remote: true %>
+                    edit_acceptance_path(@list, sort: params[:sort],
+                                                direction: params[:direction]), 
+                    remote: true %>
           </td>
         <% else %>
           <td><%= item.item_number %></td>
@@ -26,15 +43,19 @@
           <td><%= item.size        %></td>
           <td><%= number_to_currency item.price       %></td>
           <td><%= link_to_if !@list.accepted?, t('.edit'), 
-                             edit_item_acceptance_path(item), 
-                             remote: true,
-                             id: "edit-item-#{item.item_number}" %></td>
+                    edit_item_acceptance_path(item, 
+                                              sort: params[:sort],
+                                              direction: params[:direction]), 
+                    remote: true,
+                    id: "edit-item-#{item.item_number}" %></td>
           <td><%= link_to_if !@list.accepted?, t('.delete'), 
-                             delete_item_acceptance_path(item),
-                             method: :delete,
-                             remote: true,
-                             data: { confirm: t('.confirm') },
-                             id: "delete-item-#{item.item_number}" %></td>
+                    delete_item_acceptance_path(item,
+                                                sort: params[:sort],
+                                                direction: params[:direction]),
+                    method: :delete,
+                    remote: true,
+                    data: { confirm: t('.confirm') },
+                    id: "delete-item-#{item.item_number}" %></td>
         <% end %>
       </tr>
     <% end %>
