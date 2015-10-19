@@ -1,0 +1,15 @@
+<div id="edit-container" class="modal hide fade" tabindex="-1" role="dialog" area-labelledby="edit-container-label" aria-hidden="true">
+  <%= form_for @list, url: update_list_acceptance_path do |f| %>
+    <div class="modal-header">
+      <h3 id="edit-container-label">Edit Container Color</h3>
+    </div>
+    <div class="modal-body">
+      <%= f.label :container %>
+      <%= f.text_field :container %>
+    </div>
+    <div class="modal-footer">
+      <%= f.submit class: "btn btn-success" %>
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div>
+  <% end %>
+</div>

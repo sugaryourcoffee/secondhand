@@ -43,15 +43,12 @@ class AcceptancesController < ApplicationController
   end
 
   def edit_list
-    load_list # load_list_and_items
+    load_list
     render template: 'acceptances/edit_list.js.erb' 
-#    respond_to do |format|
-#      format.js
-#    end
   end
 
   def update_list
-    load_list # @list = List.find(params[:id])
+    load_list
     respond_to do |format|
       if @list.update_attributes(list_attributes)
         format.js
@@ -62,8 +59,7 @@ class AcceptancesController < ApplicationController
   end
 
   def edit_item
-    load_item_and_list # @item = Item.find(params[:id])
-#    @list = @item.list
+    load_item_and_list
     load_items(@list)
     respond_to do |format|
       format.js
@@ -71,11 +67,10 @@ class AcceptancesController < ApplicationController
   end
 
   def update_item
-    load_item_and_list # @item = Item.find(params[:id])
-#    @list = @item.list
+    load_item_and_list
     load_items(@list)
     respond_to do |format|
-      if @item.update_attributes(item_attributes) #params[:item])
+      if @item.update_attributes(item_attributes)
         format.js
       else
         format.js { render 'edit_item' } 
@@ -84,44 +79,49 @@ class AcceptancesController < ApplicationController
   end
 
   def delete_item
-    load_item_and_list # @item = Item.find(params[:id])
-#    @list = @item.list
+    load_item_and_list
     load_items(@list)
     @item.destroy
     render template: 'acceptances/delete_item.js.erb' 
-#    respond_to do |format|
-#      format.js { render 'acceptances/delete_item.js.erb' }
-#    end
   end
 
   # Toggles the accepted_on field to Nil or to the current time.
   def accept
-    list = List.find(params[:id])
+    load_list
 
-    list.accepted_on = list.accepted_on.nil? ? Time.now : nil
-
-    respond_to do |format|
-      if list.save
-        if list.accepted_on.nil?
-          flash[:success] = I18n.t('.released', 
-                                   model: t('activerecord.models.list'), 
-                                   list_number: list.list_number)
-          format.html { redirect_to edit_acceptance_path(list) }
-        else
-          flash[:success] = I18n.t('.accepted', 
-                                   model: t('activerecord.models.list'), 
-                                   list_number: list.list_number)
-          format.html { redirect_to acceptances_path }
-        end
-      else
-        flash[:error] = I18n.t('.save_failed', 
-                               model: t('activerecord.models.list'))
-        format.html { redirect_to edit_acceptance_path(list) }
-      end
+    if @list.acceptable?
+      accept_list
+    else
+      flash[:error] = I18n.t('.missing_container_color')
+      redirect_to edit_acceptance_path(@list)
     end
   end
 
   private
+
+    def accept_list
+      @list.accepted_on = @list.accepted_on.nil? ? Time.now : nil
+
+      respond_to do |format|
+        if @list.save
+          if @list.accepted_on.nil?
+            flash[:success] = I18n.t('.released', 
+                                     model: t('activerecord.models.list'), 
+                                     list_number: @list.list_number)
+            format.html { redirect_to edit_acceptance_path(@list) }
+          else
+            flash[:success] = I18n.t('.accepted', 
+                                     model: t('activerecord.models.list'), 
+                                     list_number: @list.list_number)
+            format.html { redirect_to acceptances_path }
+          end
+        else
+          flash[:error] = I18n.t('.save_failed', 
+                                 model: t('activerecord.models.list'))
+          format.html { redirect_to edit_acceptance_path(@list) }
+        end
+      end
+    end
 
     def list_attributes
       params.require(:list).permit(:container)

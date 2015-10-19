@@ -37,6 +37,12 @@ class List < ActiveRecord::Base
     not user.nil?
   end
 
+  # Returns true if the list is acceptable, that is that the container color
+  # is available
+  def acceptable?
+    not (container.nil? || container.empty?)
+  end
+
   # Returns true if the list has been accepted
   def accepted?
     not accepted_on.nil?

@@ -1,4 +1,7 @@
 <h2><%= t('.list_number', list: @list.list_number) %></h2>
+<% unless @list.acceptable? %>
+  <div class="alert alert-error"><%= t('.acceptable_html') %></div>
+<% end %>
 <table class="table">
   <% if edit %>
     <tr>
@@ -20,5 +23,5 @@
     </tr>
   <% end %>
 </table>
-<div class="alert alert-error"><%= t('.list_number_on_container_html') %></div>
+<div class="alert alert-block"><%= t('.list_number_on_container_html') %></div>
 

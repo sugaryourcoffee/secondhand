@@ -23,6 +23,7 @@ en:
       edit:              "Edit"
       cancel:            "Back to list overview"
     show_list:
+      acceptable_html: "<strong>Attention:</strong><p>Container color missing! In order to accept the list add the container color"
       list_number_on_container_html: "<strong>Important:</strong><p>Label container with list 
                                       number and remove old label!</p>"
       list_number: "List %{list}"
@@ -755,6 +756,7 @@ en:
     
   missing_event_html: "<h2>Missing active Event</h2><h5>For %{action} it is neccessary to have an active event. At %{link} you can activate an event. Then come back to start with %{action}.</h5>"
   
+  missing_container_color: "Missing container color! In order to accept list please add container color"
   next_event_date:      "Next event on %{date}"
   list_list:            "List %{list_number}"
   list_seller:          "Seller"

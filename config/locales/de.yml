@@ -25,6 +25,7 @@ de:
       edit:              "Bearbeiten"
       cancel:            "Zurück zur Listenübersicht"
     show_list:
+      acceptable_html: "<strong>Achtung:</strong><p>Korbfarbe fehlt! Um die Liste annehmen zu können, bitte Korbfarbe ergänzen"
       list_number_on_container_html: "<strong>Wichtig:</strong><p>Korb mit Listenummer etikettieren 
                                       und alte Aufkleber entfernen!</p>"
       list_number: "Liste %{list}"
@@ -909,6 +910,7 @@ de:
 
   missing_event_html: "<h2>Fehlende aktive Veranstaltung</h2><h5>Für die %{action} ist es erforderlich, dass eine Veranstaltung aktiv ist. Unter %{link} kann eine Veranstaltung aktiviert werden. Danach können Sie hier mit der %{action} beginnen.</h5>"
 
+  missing_container_color: "Korbfarbe fehlt! Um die Liste annehmen zu können, bite Korbfarbe ergänzen"
   next_event_date:      "Nächste Börse am %{date}"
   list_list:            "Liste %{list_number}"
   list_seller:          "Verkäufer"
