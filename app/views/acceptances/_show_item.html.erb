@@ -4,22 +4,26 @@
       <th><%= link_to_if !edit, t('.item_number'), 
         edit_acceptance_path(@list, 
                              sort: "item_number", 
-                             direction: sort_direction_for("item_number")) %>
+                             direction: sort_direction_for("item_number")), 
+        remote: true %>
       </th>
       <th><%= link_to_if !edit, t('.description'), 
         edit_acceptance_path(@list, 
                              sort: "description", 
-                             direction: sort_direction_for("description")) %>
+                             direction: sort_direction_for("description")),
+        remote: true %>
       </th>
       <th><%= link_to_if !edit, t('.size'), 
         edit_acceptance_path(@list, 
                              sort: "size", 
-                             direction: sort_direction_for("size")) %>
+                             direction: sort_direction_for("size")),
+        remote: true %>
       </th>
       <th><%= link_to_if !edit, t('.price'), 
         edit_acceptance_path(@list, 
                              sort: "price", 
-                             direction: sort_direction_for("price")) %>
+                             direction: sort_direction_for("price")),
+        remote: true %>
       </th><th></th><th></th>
     </tr>
   </thead>
