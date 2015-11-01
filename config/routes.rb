@@ -70,7 +70,11 @@ Secondhand::Application.routes.draw do
         get :sold_items
       end
       resources :items
-    end
+      get  'select_file'  => 'importer#file'
+      get  'select_list'  => 'importer#list'
+      post 'select_items' => 'importer#select'
+      post 'import_items' => 'importer#items'
+     end
 
     resources :users do
       member do

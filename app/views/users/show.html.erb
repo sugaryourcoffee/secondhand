@@ -47,6 +47,12 @@
                   <li><%= link_to t('.Item_collection'), 
                           user_list_items_path(@user, list) %></li>
                   <li class="divider"/>
+                  <li class="nav-header"><%= t('.import') %></li>
+                  <li><%= link_to t('.csv_import'),
+                                  list_select_file_path(list) %></li>
+                  <li><%= link_to t('.list_import'),
+                                  list_select_file_path(list) %></li>
+                  <li class="divider"/>
                   <li class="nav-header"><%= t('.Print') %></li>
                   <li><%= link_to t('.List'), 
                                 print_list_user_list_path(@user, list) %></li>

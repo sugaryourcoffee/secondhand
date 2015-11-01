@@ -1,0 +1,30 @@
+<%= provide(:title, t('.select_items')) %>
+
+<h1><%= t('.select_items') %></h1>
+
+<p>Select items from <strong><%= @filename %></strong> you want to import to
+list <%= @list.list_number %>.</p>
+
+<p><%= capacity_information(@capacity) %></p>
+
+<table>
+  <% @importer.header.each do |h| %>
+    <th><%= t(".#{h}") %></th>
+  <% end %>
+  <%= form_tag list_import_items_path(@list, filename: @filename) do |f| %>
+    <% @importer.rows.each do |row| %>
+      <tr>
+        <td><%= row.item %></td>
+        <td><%= row.description %></td>
+        <td><%= row.size %></td>
+        <td><%= row.price %></td>
+        <td><%= check_box_tag "selection[#{row.item}]", 
+                              { description: row.description, 
+                                size: row.size, 
+                                price: row.price }, row.selected %>
+        </td>
+      </tr>
+    <% end %>
+    <%= submit_tag("Import") %>
+  <% end %>
+</table>

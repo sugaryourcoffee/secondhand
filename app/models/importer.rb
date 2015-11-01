@@ -32,6 +32,10 @@ class Importer
     @rows.size
   end
 
+  def select_rows(selected)
+    @rows.each { |row| row.selected = true if selected[row.item] }
+  end
+
   private
 
     def set_column_count(count)

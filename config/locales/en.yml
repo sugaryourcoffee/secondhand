@@ -382,6 +382,8 @@ en:
       List: "List"
       Process: "Process"
       Item_collection: "Item collection"
+      csv_import: "File (CSV)"
+      list_import: "Lists"
       Print: "Print"
       print_list: "Print list"
       print_address_labels: "Print address labels"
@@ -648,6 +650,18 @@ en:
       confirm_message: "Are you sure?"
       New_News:        "New News"
 
+  importer:
+    file:
+      select_import_file: "Select Import File"
+      browse:             "Browse..."
+      upload:             "Upload"
+    select:
+      select_items:       "Select Items"
+      item:               "Item"
+      description:        "Description"
+      size:               "Size"
+      price:              "Price"
+
   shared:
     selling:
       title:         "Selling"
@@ -701,6 +715,7 @@ en:
   list_not_assigned:   "List number not assigned!"
   sign_in:             "Please sign in"
   admin_privileges:    "You need admin privileges to view this page!"
+  operation_not_allowed:  "The requested operation is not available!"
   invalid_email_password: "Invalid email/password combination"
   welcome:                "Welcome to Sugar Your Coffee!"
   taken:                  "Registration code already taken!"
@@ -772,3 +787,5 @@ en:
   list_fee:             "List Fee"
   list_payback:         "Payback"
   no_closed_files_to_zip: "No closed files available for export"
+  cannot_add_items:       "Cannot add items to accepted list %{list}"
+  list_full:              "List %{list} full - cannot add additional items"

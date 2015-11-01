@@ -1,0 +1,9 @@
+<%= provide(:title, t('.select_import_file')) %>
+
+<h1><%= t('.select_import_file') %></h1>
+
+<%= form_tag(list_select_items_path(@list), multipart: true) do %>
+  <%= file_field_tag 'file' %>
+  <%= submit_tag t('.upload'), class: "btn btn-success" %>
+<% end %>
+

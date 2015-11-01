@@ -385,6 +385,8 @@ de:
       List: "Liste"
       Process: "Bearbeitung"
       Item_collection: "Artikel erfassen"
+      csv_import: "Datei (CSV)"
+      list_import: "Listen"
       Print: "Drucken"
       print_list: "Liste drucken"
       Labels: "Etiketten"
@@ -650,6 +652,12 @@ de:
       confirm_message: "Sind Sie sicher?"
       New_News:        "Neue Nachricht"
 
+  importer:
+    file:
+      select_import_file: "Import Datei Auswählen"
+      browse:             "Browse..."
+      upload:             "Hochladen"
+
   shared:
     selling:
       title:         "Verkauf"
@@ -853,6 +861,7 @@ de:
   list_not_assigned: "Listennummer ist nicht zugeordnet!"
   sign_in:           "Bitte melden Sie sich an"
   admin_privileges:  "Administrationsrechte erforderlich!"
+  operation_not_allowed:  "Die angeforderte Aktion ist nicht verfügbar!"
   invalid_email_password: "Invalid email/password combination"
   welcome:                "Willkommen zu Sugar Your Coffee!"
   taken:                  "%{model} ist schon vergeben!"
@@ -926,3 +935,5 @@ de:
   list_fee:             "Listengebühr"
   list_payback:         "Auszahlung"
   no_closed_files_to_zip: "Keine abgeschlossenen Listen vorhanden für Export"
+  cannot_add_items:       "Zu angenommener Liste %{list} können keine Artikel hinzugefügt werden"
+  list_full:              "Liste %{list} voll - es können keine weiteren Artikel hinzugefügt werden"
