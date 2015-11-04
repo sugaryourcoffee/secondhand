@@ -11,9 +11,14 @@ class ImporterController < ApplicationController
   def file
   end
 
-  # Select items from the uploaded CSV file
+  # Select one or more lists from previous events to import items from
+  def lists
+    load_user_lists
+  end
+
+  # Select items from the uploaded CSV file or from the imorted list
   def select
-    upload_file
+    upload_file or import_list
     load_importer
   end
 
@@ -41,6 +46,7 @@ class ImporterController < ApplicationController
     end
 
     def upload_file
+      return false unless params[:file]
       file = params[:file]
       @filename = File.join("tmp", "#{@user.id}-#{file.original_filename}")
       File.open(@filename, 'w') do |f|
@@ -50,6 +56,32 @@ class ImporterController < ApplicationController
 
     def load_file
       @filename = params[:filename]
+    end
+
+    def import_list
+      list = List.find_by(id: params[:list])
+      @filename = File.join("tmp", 
+                            "#{@user.id}-list-import-#{list.list_number}")
+      File.open(@filename, 'w') do |f|
+        list.items.each do |item|
+          f.puts([item.item_number, item.description, item.size, item.price]
+                  .join(';'))
+        end
+      end
+    end
+
+    def load_user_lists
+      @selectors = []
+      lists = List.where("user_id = ? and event_id != ?", 
+                         @user.id, @list.event_id)
+      lists.each do |list|
+        next if list.items.empty?
+        event = Event.find_by(id: list.event_id)
+        next if event.nil?
+        title = event.title
+        date  = "#{event.event_date.month}/#{event.event_date.year}"
+        @selectors << ["#{title} (#{date}) - List #{list.list_number}", list.id]
+      end
     end
 
     def load_importer

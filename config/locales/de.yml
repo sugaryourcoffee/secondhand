@@ -657,7 +657,16 @@ de:
       select_import_file: "Import Datei Auswählen"
       browse:             "Browse..."
       upload:             "Hochladen"
-
+    lists:
+      select_import_lists: "Import Liste Auswählen"
+      select:              "Auswählen"
+    select:
+      select_items:       "Artikel Auswählen"
+      item:               "Artikel"
+      description:        "Beschreibung"
+      size:               "Größe"
+      price:              "Preis"
+ 
   shared:
     selling:
       title:         "Verkauf"

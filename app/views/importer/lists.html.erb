@@ -1,0 +1,17 @@
+<%= provide(:title, t('.select_import_lists')) %>
+
+<h1><%= t('.select_import_lists') %></h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <p> <%= t('.list_import_description') %> </p>
+
+    <%= form_tag list_select_items_path(@list) do %>
+      <%= label_tag :list, t('.select_list') %>
+      <%= select_tag :list, 
+                   options_for_select(@selectors),
+                   class: "span6" %>
+      <%= submit_tag t('.select'), class: "btn btn-success" %>
+    <% end %>
+  </div>
+</div>

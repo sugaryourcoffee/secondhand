@@ -655,6 +655,9 @@ en:
       select_import_file: "Select Import File"
       browse:             "Browse..."
       upload:             "Upload"
+    lists:
+      select_import_lists: "Select Import Lists"
+      select:              "Select"
     select:
       select_items:       "Select Items"
       item:               "Item"

@@ -71,7 +71,7 @@ Secondhand::Application.routes.draw do
       end
       resources :items
       get  'select_file'  => 'importer#file'
-      get  'select_list'  => 'importer#list'
+      get  'select_lists' => 'importer#lists'
       post 'select_items' => 'importer#select'
       post 'import_items' => 'importer#items'
      end

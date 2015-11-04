@@ -120,17 +120,4 @@ describe "Import items from" do
     end
   end
 
-  describe "old lists" do
-    
-    it "should have title 'Import items from lists'"
-
-    it "should have drop down list with all user's old lists"
-
-    it "should not have lists from active event in drop down list"
-
-    it "should import items from old list"
-
-    it "should import items from multiple old lists"
-  end
-
 end
