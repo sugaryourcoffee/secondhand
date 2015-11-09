@@ -665,6 +665,19 @@ en:
       size:               "Size"
       price:              "Price"
 
+  query:
+    index:
+      query_title: "Search"
+      query_description: "Please enter your keyword to search items for"
+      keywords:    "Item"
+      find:        "Search"
+      item_number: "Item"
+      description: "Description"
+      size:        "Size"
+      price:       "Price"
+      list:        "List"
+
+
   shared:
     selling:
       title:         "Selling"

@@ -5,15 +5,11 @@ class LineItemsController < ApplicationController
 
   def create
     @cart  = current_cart
-    @event = Event.find_by(active: true) # find_by_active(true)
+    @event = Event.find_by(active: true)
     @list  = List.find_by(event_id:    @event, 
                           list_number: params[:search_list_number])
     @item  = Item.find_by(list_id:     @list, 
                           item_number: params[:search_item_number])
-#    @list  = List.find_by_event_id_and_list_number(@event, 
-#                                                   params[:search_list_number])
-#    @item  = Item.find_by_list_id_and_item_number(@list, 
-#                                                  params[:search_item_number])
     @line_item = @cart.add(@item)
     
     respond_to do |format|

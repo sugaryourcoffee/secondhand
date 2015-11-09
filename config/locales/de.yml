@@ -667,6 +667,18 @@ de:
       size:               "Größe"
       price:              "Preis"
  
+  query:
+    index:
+      query_title: "Suchen"
+      query_description: "Bitte geben Sie Ihren Suchbegriff für die Artikelsuche ein"
+      keywords:    "Artikel"
+      find:        "Suchen"
+      item_number: "Artikel"
+      description: "Beschreibung"
+      size:        "Größe"
+      price:       "Preis"
+      list:        "Liste"
+
   shared:
     selling:
       title:         "Verkauf"
