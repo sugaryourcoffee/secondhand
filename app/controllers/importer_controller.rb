@@ -49,7 +49,7 @@ class ImporterController < ApplicationController
       return false unless params[:file]
       file = params[:file]
       @filename = File.join("tmp", "#{@user.id}-#{file.original_filename}")
-      File.open(@filename, 'w') do |f|
+      File.open(@filename, 'w:ASCII-8BIT:UTF-8') do |f|
         f.write(file.read)
       end
     end
