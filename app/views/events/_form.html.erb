@@ -83,6 +83,14 @@
     <%= f.time_select :collection_end_time %>
   </div>
   <div class="field">
+    <%= f.label :alert_terms, t('.alert_terms') %><br />
+    <%= f.text_field :alert_terms %>
+  </div>
+  <div class="field">
+    <%= f.label :alert_value, t('.alert_value') %><br />
+    <%= f.text_field :alert_value, type: "number" %>
+  </div>
+  <div class="field">
     <%= f.label :information, t('.information') %><br />
     <%= f.text_field :information %>
   </div>
