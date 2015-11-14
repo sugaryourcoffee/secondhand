@@ -45,7 +45,7 @@
           <td><%= item.item_number                   %></td>
           <td><%= mark_alert_terms(item.description) %></td>
           <td><%= item.size                          %></td>
-          <td><%= number_to_currency item.price      %></td>
+          <td><%= mark_alert_value(item.price)       %></td>
           <td><%= link_to_if !@list.accepted?, t('.edit'), 
                     edit_item_acceptance_path(item, 
                                               sort: params[:sort],
