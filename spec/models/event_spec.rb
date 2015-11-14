@@ -83,4 +83,10 @@ describe Event do
     event.should_not be_valid
     event.errors[:max_items_per_list].any?.should be_truthy # be_true
   end
+
+  it "returns regex of alert terms" do
+    event = Event.new(alert_terms: "house mouse yellow red")
+
+    event.alert_terms_regex.should eq /house|mouse|yellow|red/i
+  end
 end

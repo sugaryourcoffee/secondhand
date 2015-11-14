@@ -25,15 +25,6 @@ class Event < ActiveRecord::Base
   has_many :sellings, dependent: :destroy
   has_many :reversals
 
-#  attr_accessible :deduction, :event_date, :fee, :location, 
-#    :max_items_per_list, :max_lists, :provision, :title, :active, 
-#    :information,
-#    :list_closing_date, 
-#    :delivery_location, 
-#    :delivery_date, :delivery_start_time, :delivery_end_time, 
-#    :collection_location, 
-#    :collection_date, :collection_start_time, :collection_end_time
-
   validates :deduction, :event_date, :fee, :location, :max_items_per_list,
     :max_lists, :provision, :title, presence: true
 
@@ -72,6 +63,13 @@ class Event < ActiveRecord::Base
   # Returns the registered but not closed (sent) lists for this event
   def not_closed_lists
     List.not_closed(id)
+  end
+
+  # Returns a regex created from the alert_terms
+  def alert_terms_regex
+    unless alert_terms.nil? or alert_terms.empty?
+      @alert_terms_regex ||= Regexp.new(alert_terms.gsub(/\s+/, '|'), true)
+    end
   end
 
   def pickup_tickets_pdf

@@ -212,6 +212,8 @@ class EventsController < ApplicationController
                     :collection_location, 
                     :collection_date, 
                     :collection_start_time, 
-                    :collection_end_time)
+                    :collection_end_time,
+                    :alert_terms,
+                    :alert_value)
     end
 end
