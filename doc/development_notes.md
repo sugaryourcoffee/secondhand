@@ -139,6 +139,8 @@ After our migration is complete we can run it with
 
     $ rake db:migrate
 
+This command will add the attribute to `db/schema.rb`.
+
 If we have made any errors in our migration we can rollback the migration with 
 `$ rake db:rollback`.
 
@@ -156,7 +158,7 @@ Now our test should pass.
 
 Populate a Value from an associated Table
 -----------------------------------------
-Assume we have to tables User and News. Each `News` has an `author` which is
+Assume we have two tables User and News. Each `News` has an `author` which is
 an `User` with the `admin` role. We want to add to the `author` field in the
 `News` table an `User` that has the `admin` role. We can do so in a migration.
 
