@@ -36,12 +36,17 @@ module ListsHelper
   def list_info(list)
     if list.accepted?
       I18n.t('lists.status_list_accepted') 
-#      "List has been accepted. Items cannot be added to accepted list"
     else
       I18n.t('lists.status_list_general', count: list.items.count,
              capacity: pluralize(list.free_item_capacity, I18n.t('lists.item')))
-#      "List contains #{list.items.count} items. "\
-#      "#{pluralize(list.free_item_capacity, 'item')} can be added."
+    end
+  end
+
+  def item_process_text(list)
+    if list.accepted? || list.free_item_capacity == 0
+      I18n.t('users.show.Item_viewing')
+    else
+      I18n.t('users.show.Item_collection')
     end
   end
 

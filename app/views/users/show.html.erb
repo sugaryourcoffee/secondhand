@@ -34,9 +34,8 @@
         <% @user.lists_for_active_event.each do |list| %>
           <div class="row">
             <div class="span2">
-              <i class="tooltip-element icon-info-sign" 
-                data-toggle="tooltip" title="<%= list_info(list) %>"></i>
-              <div class="btn-group">
+              <div class="btn-group tooltip-element" 
+                data-toggle="tooltip" title="<%= list_info(list) %>">
                 <%= link_to "<button class=\"btn\">
                                #{t('.List')} #{list.list_number}
                              </button>".html_safe, 
@@ -46,15 +45,17 @@
                 </button>
                 <ul class="dropdown-menu">
                   <li class="nav-header"><%= t('.Process') %></li>
-                  <li><%= link_to t('.Item_collection'), 
+                  <li><%= link_to item_process_text(list), 
                           user_list_items_path(@user, list) %></li>
-                  <li class="divider"/>
-                  <li class="nav-header"><%= t('.import') %></li>
-                  <li><%= link_to t('.csv_import'),
-                                  list_select_file_path(list) %></li>
-                  <li><%= link_to t('.list_import'),
-                                  list_select_lists_path(list) %></li>
-                  <li class="divider"/>
+                  <% unless list.free_item_capacity == 0 || list.accepted? %>
+                    <li class="divider"/>
+                    <li class="nav-header"><%= t('.import') %></li>
+                    <li><%= link_to t('.csv_import'),
+                                    list_select_file_path(list) %></li>
+                    <li><%= link_to t('.list_import'),
+                                    list_select_lists_path(list) %></li>
+                    <li class="divider"/>
+                  <% end %>
                   <li class="nav-header"><%= t('.Print') %></li>
                   <li><%= link_to t('.List'), 
                                 print_list_user_list_path(@user, list) %></li>
@@ -73,7 +74,7 @@
                 </ul>
               </div>
               <ul>
-                <li><%= link_to t('.Item_collection'),
+                <li><%= link_to item_process_text(list),
                                 user_list_items_path(@user, list) %>
                 </li>
                 <% if list.sent_on %>

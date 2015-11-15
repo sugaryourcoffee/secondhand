@@ -383,6 +383,7 @@ en:
       List: "List"
       Process: "Process"
       Item_collection: "Item collection"
+      Item_viewing:    "Show items"
       csv_import: "File (CSV)"
       list_import: "Lists"
       Print: "Print"

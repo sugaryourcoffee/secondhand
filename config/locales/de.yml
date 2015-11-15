@@ -386,6 +386,7 @@ de:
       List: "Liste"
       Process: "Bearbeitung"
       Item_collection: "Artikel erfassen"
+      Item_viewing:    "Artikel anzeigen"
       csv_import: "Datei (CSV)"
       list_import: "Listen"
       Print: "Drucken"
