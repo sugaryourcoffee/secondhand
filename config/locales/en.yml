@@ -542,7 +542,8 @@ en:
   lists:
     index:
       All_lists:            "All lists"
-      List_number:          "List number"
+      List_number:          "List"
+      Item_count:           "Items"
       Registration_code:    "Code"
       Container:            "Container"
       Event:                "Event"

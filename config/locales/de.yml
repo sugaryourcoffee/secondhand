@@ -544,7 +544,8 @@ de:
   lists:
     index:
       All_lists:            "Listen"
-      List_number:          "Listennummer"
+      List_number:          "Liste"
+      Item_count:           "Artikel"
       Registration_code:    "Code"
       Container:            "Korbfarbe"
       Event:                "Veranstaltung"

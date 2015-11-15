@@ -129,6 +129,7 @@
   <thead>
     <tr>
       <th><%= t('.List_number') %></th>
+      <th><%= t('.Item_count') %></th>
       <th><%= t('.Registration_code') %></th>
       <th><%= t('.Container') %></th>
       <th><%= t('.Event') %></th>
@@ -143,12 +144,10 @@
 
   <tbody>
     <% @lists.each do |list| %>
-      <% if list.sent_on %>
-        <tr class="success">
-      <% else %>
-        <tr>
-      <% end %>
+      
+      <tr class=<%= list_state(list) %>>
         <td><%= list.list_number %></td>
+        <td><%= list.items.count %></td>
         <td><%= list.registration_code %></td>
         <td><%= list.container %></td>
         <td><%= event_title_for(list) %></td>
