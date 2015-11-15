@@ -67,8 +67,9 @@ describe List do
 
   describe "process items" do
 
+    let(:event) { FactoryGirl.create(:active) }
     let(:user) { FactoryGirl.create(:user) }
-    let(:list) { FactoryGirl.create(:assigned, user: user) }
+    let(:list) { FactoryGirl.create(:assigned, user: user, event: event) }
 
     before do
       sign_in user

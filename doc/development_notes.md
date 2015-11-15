@@ -80,6 +80,20 @@ the `app/views/layouts/_footer.html.erb`.
       target="_blank">Secondhand <%= Rails.configuration.version %></a>
       by Sugar Your Coffee
 
+Render views
+------------
+There are some conventions when rendering templates that are described here.
+
+### Render implicit templates
+We can render templates implicit by just invoking the `render` method with a
+collection like so
+
+    <%= render(@list.items) %>
+
+This will assume a template called `_item.html.erb`. In that case it is assumed
+that the `_item.html.erb` is in the same directory as the template calling the
+`render` method.
+
 Database
 ========
 Here we find information on how to work with databases in Rails.

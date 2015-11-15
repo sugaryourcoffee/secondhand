@@ -19,7 +19,7 @@
     <% @items.each do |item| %>
       <tr>
         <td><%= item.item_number %></td>
-        <td><%= truncate(item.description, length: 40) %></td>
+        <td><%= mark_alert_terms(truncate(item.description, length: 40)) %></td>
         <td><%= truncate(item.size, length: 10) %></td>
         <td><%= number_to_currency item.price %></td>
         <td><%= link_to t('.Show'), 
