@@ -603,6 +603,11 @@ en:
       price:                "Price"
       sold:                 "Sold"
       back:                 "Back"
+        
+    status_list_accepted: "List has been accepted. Items cannot be added to accepted list"
+    status_list_general:  "List contains %{count} items. You can add %{capacity} to the list"
+    item: "item"
+
 
   news:
     new:

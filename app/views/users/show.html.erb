@@ -34,6 +34,8 @@
         <% @user.lists_for_active_event.each do |list| %>
           <div class="row">
             <div class="span2">
+              <i class="tooltip-element icon-info-sign" 
+                data-toggle="tooltip" title="<%= list_info(list) %>"></i>
               <div class="btn-group">
                 <%= link_to "<button class=\"btn\">
                                #{t('.List')} #{list.list_number}

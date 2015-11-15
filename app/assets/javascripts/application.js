@@ -17,6 +17,7 @@
 //= require bootstrap-scrollspy
 //= require bootstrap-modal
 //= require bootstrap-dropdown
+//= require bootstrap-tooltip
 //= require gritter
 //= require turbolinks
 //= require_tree .

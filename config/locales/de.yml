@@ -606,6 +606,10 @@ de:
       sold:                 "Verkauft"
       back:                 "Zurück"
 
+    status_list_accepted: "Liste wurde angenommen. Es können keine Artikel zu einer angenommenen Liste hinzugefügt werden"
+    status_list_general:  "Liste enthält %{count} Artikel. Sie können noch %{capacity} zur Liste hinzufügen"
+    item: "Artikel"
+
   news:
     new:
       New_News:        "Neue Nachricht"
