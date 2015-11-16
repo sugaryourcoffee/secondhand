@@ -259,33 +259,36 @@ describe "Acceptances" do
 
         item.sold?.should be_truthy # be_true
 
-        click_link "Delete"
-        modal = page.driver.browser.switch_to.alert
-        modal.accept
+        page.should_not have_link "Delete"
+
+#        click_link "Delete"
+#        modal = page.driver.browser.switch_to.alert
+#        modal.accept
         
-        page.should have_text item.description
-        page.should have_text item.size
-        page.should have_link "Delete"
+#        page.should have_text item.description
+#        page.should have_text item.size
+#        page.should have_link "Delete"
         
-        list.items.size.should eq 1
+#        list.items.size.should eq 1
       end
 
       it "should not change item through edit", js: true do
         item = accepted_list.items.first
 
-        click_link "edit-item-#{item.item_number}"
+        page.should_not have_link "edit-item-#{item.item_number}"
+#        click_link "edit-item-#{item.item_number}"
 
-        fill_in "item_description", with: "The description"
-        fill_in "item_size",        with: "The size"
-        fill_in "item_price",       with: 1234.5
-        click_button "Update"
+#        fill_in "item_description", with: "The description"
+#        fill_in "item_size",        with: "The size"
+#        fill_in "item_price",       with: 1234.5
+#        click_button "Update"
 
-        click_link "Cancel"
+#        click_link "Cancel"
 
-        page.should have_text "Item of the list"
-        page.should have_text "XXL"
-        page.should have_text "22.50"
-        page.should_not have_button "Update"
+#        page.should have_text "Item of the list"
+#        page.should have_text "XXL"
+#        page.should have_text "22.50"
+#        page.should_not have_button "Update"
       end
 
     end

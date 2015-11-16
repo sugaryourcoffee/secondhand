@@ -19,4 +19,11 @@ module ItemsHelper
     highlight(formatted_price, highlighted_price)
   end
 
+  def editable?(item)
+    !(item.sold? || item.list.accepted?)
+  end
+
+  def row_status(item)
+    "success" if item.sold?
+  end
 end

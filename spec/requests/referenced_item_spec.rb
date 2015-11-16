@@ -62,11 +62,14 @@ describe "Item referenced" do
 
     page.current_path.should eq edit_acceptance_path(locale: :en, id: list.id)
 
-    expect { click_link "delete-item-#{list.items.first.item_number}" }.
-                                                   to change(Item, :count).by(0)
+    #replacement for below commented out
+    page.should_not have_button "delete-item-#{list.items.first.item_number}"
+
+#    expect { click_link "delete-item-#{list.items.first.item_number}" }.
+#                                                   to change(Item, :count).by(0)
     
-    page.current_path.should eq delete_item_acceptance_path(locale: :en, 
-                                                           id: list.items.first)
+#    page.current_path.should eq delete_item_acceptance_path(locale: :en, 
+#                                                           id: list.items.first)
   end
 
   it "by a redemption should not be deleted in acceptance dialog" do
