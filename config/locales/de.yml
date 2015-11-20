@@ -446,6 +446,7 @@ de:
       Create_New_Item:    "Neuen Artikel Erstellen"
       Back:               "Zurück"
       max_items_per_list: "Es können keine weiteren Artikel hinzugefügt werden"
+      list_accepted:      "Liste angenommen. Es können keine Artikel zu einer angenommenen Liste hinzugefügt werden."
 
     new:
       New_Item:           "Neuer Artikel für Liste %{list_number}"

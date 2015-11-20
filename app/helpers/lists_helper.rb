@@ -50,4 +50,16 @@ module ListsHelper
     end
   end
 
+  def new_item_link(list, user)
+    if list.accepted?
+      content_tag(:div, I18n.t('items.index.list_accepted'), class: "alert")
+    elsif list.max_items_per_list?
+      content_tag(:div, I18n.t('items.index.max_items_per_list'), 
+                  class: "alert")
+    else
+      link_to t('.Create_New_Item'), 
+                new_user_list_item_path(user, list), 
+                class: "btn btn-primary"
+    end
+  end
 end

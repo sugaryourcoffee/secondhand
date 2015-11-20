@@ -443,6 +443,7 @@ en:
       Create_New_Item:    "Create New Item"
       Back:               "Back"
       max_items_per_list: "Cannot add additional items"
+      list_accepted:      "List accepted. Cannot add items to accepted list"
 
     new:
       New_Item:           "New Item for List %{list_number}"
