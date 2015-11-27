@@ -458,8 +458,11 @@ describe "User pages" do
       it { should have_link('change', href: 'http://gravatar.com/emails') }
     end
 
-    describe "with invalid information" do
-      before { click_button "Save changes" }
+    describe "with missing password confirmation" do
+      before do
+        fill_in "Password *", with: user.password
+        click_button "Save changes"
+      end
 
       it { should have_content('error') }
     end

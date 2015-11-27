@@ -1,0 +1,31 @@
+<% provide(:title, t('.terms_of_use')) %>
+
+<% if @page.nil? %>
+  <h1><%= t('.terms_of_use') %></h1>
+
+  <p><%= t('.terms_of_use_missing') %></p>
+<% else %>
+  <h1><%= t('.terms_of_use', number: @page.number, count: @count) %></h1>
+
+  <h3><%= @page.title %></h3>
+
+  <p><%= @page.content %></p>
+
+  <% if @buttons.include? :back %>
+    <%= link_to t('.back'),   terms_of_use_path(page: @page, direction: -1),
+                              class: "btn pull-right" %>
+  <% end %>
+  <% if @buttons.include? :next %>
+    <%= link_to t('.next'),   terms_of_use_path(page: @page, direction:  1),
+                              class: "btn pull-right" %>
+  <% end %>
+  <% if @buttons.include? :accept %>
+    <%= link_to t('.accept'), accept_terms_of_use_path, 
+                              class: "btn btn-success pull-right" %>
+  <% end %>
+  <% if @buttons.include? :close %>
+    <%= link_to t('.close'),  user_path(current_user), 
+                              class: "btn pull-right" %>
+  <% end %>
+<% end %>
+

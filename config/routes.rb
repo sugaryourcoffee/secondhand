@@ -25,6 +25,9 @@ Secondhand::Application.routes.draw do
     get   '/which_list'     => 'lists#which_list_is_registered_or_closed',
                                defaults: { format: 'atom' }
 
+    get   'terms_of_use'        => 'terms_of_use#display'
+    get   'accept_terms_of_use' => 'terms_of_use#accept'
+
     resources :query, only: [:index]
 
     resources :counter, only: [:index]

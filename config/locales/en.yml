@@ -11,6 +11,15 @@ en:
         delimiter: ","
         format:    "%u%n"
 
+  terms_of_use:
+    display:
+      terms_of_use:         "Terms of Use"
+      terms_of_use_missing: "To obtain the Terms of Use please turn to your Secondhand organizer"
+      back:                 "Back"
+      next:                 "Next"
+      accept:               "Accept"
+      close:                "Close"
+
   acceptances:
     index:
       acceptance:  "Acceptance"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151114100857) do
+ActiveRecord::Schema.define(version: 20151125215228) do
 
   create_table "carts", force: true do |t|
     t.datetime "created_at",                   null: false
@@ -95,6 +95,17 @@ ActiveRecord::Schema.define(version: 20151114100857) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "pages", force: true do |t|
+    t.integer  "number"
+    t.string   "title"
+    t.text     "content"
+    t.integer  "terms_of_use_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pages", ["terms_of_use_id"], name: "index_pages_on_terms_of_use_id"
+
   create_table "reversals", force: true do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -105,6 +116,12 @@ ActiveRecord::Schema.define(version: 20151114100857) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "event_id"
+  end
+
+  create_table "terms_of_uses", force: true do |t|
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
@@ -127,6 +144,7 @@ ActiveRecord::Schema.define(version: 20151114100857) do
     t.datetime "password_reset_sent_at"
     t.string   "preferred_language"
     t.boolean  "operator",               default: false
+    t.datetime "terms_of_use"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

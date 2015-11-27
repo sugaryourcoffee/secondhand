@@ -13,6 +13,15 @@ de:
       delimiter: "."
       precision: 2
 
+  terms_of_use:
+    display:
+      terms_of_use:         "Nutzungsbedingungen"
+      terms_of_use_missing: "Bitte wenden Sie sich an den Organisator der Secondhand Veranstaltung um die Nutzungsbedingungen zu erhalten"
+      back:                 "Zurück"
+      next:                 "Weiter"
+      accept:               "Annehmen"
+      close:                "Schließen"
+
   acceptances:
     index:
       acceptance:  "Annahme"

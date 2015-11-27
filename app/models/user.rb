@@ -20,25 +20,21 @@
 class User < ActiveRecord::Base
   has_many :lists
 
-#  attr_accessible :country, :email, :first_name, :last_name, :news, 
-#                  :password_digest, :password, :password_confirmation, :phone, 
-#                  :street, :town, :zip_code, :preferred_language
-
   has_secure_password
 
   before_save {|user| user.email = email.downcase}
   before_save :create_remember_token
 
-#  before_create { generate_token(:auth_token) }
-
-  validates :first_name, :last_name, :street, :zip_code, :town, :country, :phone, presence: true
+  validates :first_name, :last_name, :street, :zip_code, :town, :country, 
+            :phone, presence: true
   
   EMAIL_PATTERN = /\A[\w!#\$%&'*+\/=?`{|}~^-]+(?:\.[\w!#\$%&'*+\/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}\Z/
 
-  validates :email, presence: true, format: {with: EMAIL_PATTERN}, uniqueness: {case_sensitive: false}
+  validates :email, presence: true, format: {with: EMAIL_PATTERN}, 
+            uniqueness: {case_sensitive: false}
 
-  validates :password, length: {minimum: 6}
-  validates :password_confirmation, presence: true
+  validates :password, presence: true, length: {minimum: 6}, allow_blank: true
+#  validates :password_confirmation, presence: true, allow_nil: true
 
   def self.subscribers(language = LANGUAGES.map { |language, code| code })
     select(:email).
@@ -62,18 +58,16 @@ class User < ActiveRecord::Base
   end
 
   def lists_for_active_event
-    event = Event.find_by(active: true) # find_by_active(true)
+    event = Event.find_by(active: true)
     List.where(user_id: id, event_id: event).order(:list_number)
   end
 
   def self.search(search)
     if search
-#      find(:all, conditions: ['first_name LIKE ? or last_name LIKE ?', 
-#           "%#{search}%", "%#{search}%"])
       where('first_name LIKE ? or last_name LIKE ?', 
            "%#{search}%", "%#{search}%")
     else
-      all # find(:all)
+      all
     end 
   end
 

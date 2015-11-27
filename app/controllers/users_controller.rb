@@ -16,7 +16,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @event = Event.find_by(active: true) # find_by_active(true)
+    @event = Event.find_by(active: true)
   end
 
   def new
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params) # params[:user])
+    @user = User.new(user_params)
     if @user.save
       sign_in @user
       UserMailer.registered(@user).deliver
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(user_params) # params[:user])
+    if @user.update_attributes(user_params)
       flash[:success] = I18n.t('.updated',
                                model: t('activerecord.models.user'))
       sign_in @user
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
 
   def register_list
     user = User.find(params[:id])
-    event = Event.find_by(active: true) # find_by_active(true)
+    event = Event.find_by(active: true)
     registration_code = params[:registration_code]
     list = List.find_by(registration_code: registration_code, event_id: event) 
     if list
