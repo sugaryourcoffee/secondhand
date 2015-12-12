@@ -5,7 +5,7 @@ describe "Submit terms of use" do
   let(:user)  { FactoryGirl.create(:user) }
   let(:event) { FactoryGirl.create(:active) }
 
-  describe "logged in user" do
+  describe "to logged in user" do
     
     before { sign_in user }
 
@@ -92,6 +92,55 @@ describe "Submit terms of use" do
       end
 
     end
+  end
+
+  describe "to not logged in user" do
+
+    describe "with 1 page" do
+
+      let(:condition) { Conditions.create!(active: true) }
+
+      before do
+        create_pages_for(condition, 1)
+      end
+
+      it "should show page" do
+        visit display_terms_of_use_path(locale: :en)
+        pages = condition.terms_of_uses.first.pages
+        page.should have_content pages.first.title
+        page.should have_content pages.first.content
+        page.should_not have_button "Accept"
+        click_link "Close"
+        page.current_path.should eq root_path(locale: :en)
+      end
+
+    end
+
+    describe "with 4 pages" do
+
+      let(:condition) { Conditions.create!(active: true) }
+
+      before do
+        create_pages_for(condition, 4)
+      end
+
+      it "should show all pages" do
+        visit display_terms_of_use_path(locale: :en)
+        terms_of_use = condition.terms_of_uses.first
+        page.should have_content terms_of_use.pages.first.title 
+        page.should have_content terms_of_use.pages.first.content 
+        click_link "Next"
+        page.should have_content terms_of_use.pages.find_by(number: 2).title
+        page.should have_content terms_of_use.pages.find_by(number: 2).content
+        click_link "Next"
+        click_link "Next"
+        page.should_not have_button "Accept"
+        click_link "Close"
+        page.current_path.should eq root_path(locale: :en)
+      end
+
+    end
+
   end
 
 end

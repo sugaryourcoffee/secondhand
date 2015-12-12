@@ -42,7 +42,11 @@ class SubmitTermsOfUseController < ApplicationController
       buttons << :next if @page.number < last_page
       buttons << :back if @page.number > 1  
       if @page.number == last_page
-        buttons << (current_user.terms_of_use.nil? ? :accept : :close)
+        if current_user
+          buttons << (current_user.terms_of_use.nil? ? :accept : :close)
+        else
+          buttons << :close
+        end
       end
       buttons
     end
