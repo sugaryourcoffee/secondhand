@@ -71,6 +71,9 @@ de:
     edit:
       edit_terms_of_use: "Nutzungsbedingungen bearbeiten"
       cancel_and_back:   "Abbrechen und zurück zu Nutzungsbedingungen Version"
+    new:
+      new_terms_of_use:  "Neue Nutzungsbedingungen erstellen"
+      cancel_and_back:   "Abbrechen und zurück zu Nutzungsbedingungen Version"
 
   pages:
     new:
@@ -891,13 +894,23 @@ de:
              
   activerecord:
     models:
-      news:    "Nachricht"
-      event:   "Veranstaltung"
-      list:    "Liste"
-      user:    "Benutzer"
-      item:    "Artikel"
-      message: "Nachricht"
+      news:         "Nachricht"
+      event:        "Veranstaltung"
+      list:         "Liste"
+      user:         "Benutzer"
+      item:         "Artikel"
+      message:      "Nachricht"
+      page:         "Seite"
+      termsofuse:   "Nutzungsbedingungen"
+      terms_of_use: "Nutzungsbedingungen"
+      conditions:   "Bedingungen"
     attributes:
+      page:
+        number:  "Nummer"
+        title:   "Titel"
+        content: "Inhalt"
+      terms_of_use:
+        locale:  "Sprache"
       news:
         description: "Beschreibung"
         title:       "Titel"
