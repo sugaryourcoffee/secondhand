@@ -1,0 +1,11 @@
+<%= form_for [@terms_of_use, @page] do |f| %>
+  <%= f.label :number %>
+  <%= f.text_field :number%>
+  <%= f.label :title %>
+  <%= f.text_field :title%>
+  <%= f.label :content %>
+  <%= f.text_area :content%>
+  <%= f.submit class: "btn" %> 
+<% end %>
+
+<p><%= link_to t('.cancel_and_back'), terms_of_use_path(@terms_of_use) %></p>

@@ -1,0 +1,16 @@
+<tr>
+  <td><%= link_to t('.page_up'), 
+                  up_terms_of_use_page_path(@terms_of_use, page) %></td>
+  <td><%= link_to t('.page_down'), 
+                  down_terms_of_use_page_path(@terms_of_use, page) %></td>
+  <td><%= page.number           %></td>
+  <td><%= page.title            %></td>
+  <td><%= sanitize page.content %></td>
+  <td><%= link_to t('.edit'), edit_terms_of_use_page_path(@terms_of_use,
+                                                          page) %></td>
+  <td><%= link_to t('.delete'), 
+                  terms_of_use_page_path(@terms_of_use, page), 
+                  method: :delete, 
+                  data: { confirm: t('.delete_page') }  %></td>
+</tr>
+

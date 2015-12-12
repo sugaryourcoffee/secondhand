@@ -1,0 +1,29 @@
+<% provide(:title, t('.show_terms_of_use')) %>
+
+<h1><%= t('.show_terms_of_use') %></h1>
+
+<p>
+  <%= link_to t('terms_of_use_overview'), conditions_path %>
+  <%= ">>" %>
+  <%= link_to @conditions.version, condition_path(@conditions) %>
+  <%= ">>" %>
+  <%= LANGUAGES.rassoc(@terms_of_use.locale)[0] %>
+</p>
+
+<% unless @terms_of_use.pages.empty? %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th></th><th></th>
+        <th><%= t('.page') %></th>
+        <th><%= t('.title') %></th>
+        <th><%= t('.content') %>
+        </th></th></th>
+    </thead>
+    <tbody>
+        <%= render partial: 'page', collection: @terms_of_use.pages %>
+    </tbody>
+  </table>
+<% end %>
+
+<p><%= link_to t('.new_page'), new_terms_of_use_page_path(@terms_of_use) %></p>

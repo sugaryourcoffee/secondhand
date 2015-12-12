@@ -11,14 +11,72 @@ en:
         delimiter: ","
         format:    "%u%n"
 
-  terms_of_use:
+  conditions:
+    index:
+      conditions:     "Terms of Use"
+      new_conditions: "Create new Terms of Use"
+    new:
+      new_conditions: "New Terms of Use"
+    form:
+      cancel_and_back: "Cancel and back to Terms of Use overview"
+    edit:
+      edit_conditions: "Edit Terms of Use"
+    edit_form:
+      cancel_and_back: "Cancel and back to Terms of Use overview"
+    conditions:
+      activate:       "Activate"
+      deactivate:     "Deactivate"
+      edit:           "Edit"
+      show:           "Show"
+      delete:         "Delete"
+      confirm_delete: "Delete selected Terms of Use version?"
+      copy:           "Copy"
+    show:
+      conditions_overview: "Terms of Use Overview"
+      show_conditions:     "Show Terms of Use Version"
+      new_locale:          "Create new Language Version"
+      locale:              "Language"
+    terms_of_use:
+      edit:           "Edit"
+      show:           "Show"
+      delete:         "Delete"
+      copy:           "Copy"
+      confirm_delete: "Delete selected Terms of Use locale?"
+
+  submit_terms_of_use:
     display:
-      terms_of_use:         "Terms of Use"
+      terms_of_use:         "Terms of Use (%{number}/%{count})"
       terms_of_use_missing: "To obtain the Terms of Use please turn to your Secondhand organizer"
       back:                 "Back"
       next:                 "Next"
       accept:               "Accept"
       close:                "Close"
+
+  terms_of_use:
+    show:
+      terms_of_use_overview: "Terms of Use Overview"
+      show_terms_of_use:     "Show Terms of Use Language"
+      new_page:              "Add new page"
+      page:                  "Page"
+      title:                 "Title"
+      content:               "Content"
+    page:
+      edit:                  "Edit"
+      delete:                "Delete"
+      delete_page:           "Delete selected page?"
+      page_up:               "Up"
+      page_down:             "Down"
+    edit:
+      edit_terms_of_use:     "Edit Terms of Use"
+      cancel_and_back:       "Cancel and back to Terms of Use version"
+
+  pages:
+    new:
+      new_page:  "Create new page (%{language})"
+    edit:
+      edit_page: "Edit page (%{language})"
+    form:
+      cancel_and_back: "Cancel and back to Terms of Use language"
 
   acceptances:
     index:

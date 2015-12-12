@@ -1,0 +1,12 @@
+<% provide(:title, t('.edit_terms_of_use')) %>
+
+<h1><%= t('.edit_terms_of_use') %></h1>
+
+<%= form_for @terms_of_use do |f| %>
+  <%= hidden_field_tag :conditions_id, @conditions.id %>
+  <%= f.label :locale %>
+  <%= f.select :locale, LANGUAGES %>
+  <%= f.submit class: "btn" %>
+<% end %>
+
+<p><%= link_to t('.cancel_and_back'), condition_path(@conditions) %></p>

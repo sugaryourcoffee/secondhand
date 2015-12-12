@@ -1,0 +1,23 @@
+<% provide(:title, t('.show_conditions')) %>
+
+<h1><%= t('.show_conditions') %></h1>
+
+<p>
+  <%= link_to t('.conditions_overview'), conditions_path %>
+  <%= ">>" %>
+  <%= @condition.version %>
+</p>
+
+<table class="table table-hover">
+  <thead>
+    <tr><th><%= t('.locale') %></th></th></th></th></th>
+  <thead>
+  <tbody>
+    <%= render partial: "terms_of_use", collection: @condition.terms_of_uses %>
+  </tbody>
+</table>
+
+<p>
+  <%= link_to t('.new_locale'), 
+              new_terms_of_use_path(conditions_id: @condition) %>
+</p>

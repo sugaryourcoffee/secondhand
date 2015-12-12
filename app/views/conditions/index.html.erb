@@ -1,0 +1,15 @@
+<% provide(:title, t('.conditions')) %>
+
+<h1><%= t('.conditions') %></h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr><th></th><th>Version</th></th></th></th></th></tr>
+  </thead>
+  <tbody>
+    <%= render @conditions %>
+  </tbody>
+</table>
+
+<p><%= link_to t('.new_conditions'), new_condition_path %></p>
+

@@ -11,12 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151125215228) do
+ActiveRecord::Schema.define(version: 20151207052755) do
 
   create_table "carts", force: true do |t|
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.string   "cart_type",  default: "SALES"
+  end
+
+  create_table "conditions", force: true do |t|
+    t.string   "version"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "active"
   end
 
   create_table "events", force: true do |t|
@@ -119,9 +126,10 @@ ActiveRecord::Schema.define(version: 20151125215228) do
   end
 
   create_table "terms_of_uses", force: true do |t|
-    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "conditions_id"
+    t.string   "locale"
   end
 
   create_table "users", force: true do |t|

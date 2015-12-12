@@ -25,8 +25,27 @@ Secondhand::Application.routes.draw do
     get   '/which_list'     => 'lists#which_list_is_registered_or_closed',
                                defaults: { format: 'atom' }
 
-    get   'terms_of_use'        => 'terms_of_use#display'
-    get   'accept_terms_of_use' => 'terms_of_use#accept'
+    get   'display_terms_of_use' => 'submit_terms_of_use#display'
+    get   'accept_terms_of_use'  => 'submit_terms_of_use#accept'
+
+    resources :terms_of_use do
+      member do
+        get :copy
+      end
+      resources :pages do
+        member do
+          get :up
+          get :down
+        end
+      end
+    end
+
+    resources :conditions do
+      member do
+        get :copy
+        get :activate
+      end
+    end
 
     resources :query, only: [:index]
 

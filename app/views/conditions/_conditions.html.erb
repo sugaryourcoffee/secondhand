@@ -1,0 +1,10 @@
+<tr>
+  <td><%= link_to activate_locale(conditions), 
+                  activate_condition_path(conditions) %>
+  <td><%= conditions.version %></td>
+  <td><%= link_to t('.edit'), edit_condition_path(conditions)   %></td>
+  <td><%= link_to t('.show'), condition_path(conditions)        %></td>
+  <td><%= link_to t('.delete'), condition_path(conditions), 
+      method: :delete, data: { confirm: t('.confirm_delete') }  %></td>
+  <td><%= link_to t('.copy'), copy_condition_path(conditions)   %></td>
+</tr>
