@@ -1,3 +1,6 @@
+<%= render partial: 'shared/generic_error_message', 
+           locals: { topic: @condition } %>
+
 <%= form_for @condition, url: conditions_path do |f| %>
   <%= f.label :version %>
   <%= f.text_field :version%>
