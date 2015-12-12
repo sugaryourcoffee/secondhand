@@ -2,6 +2,10 @@ class TermsOfUse < ActiveRecord::Base
   belongs_to :conditions
   has_many :pages, -> { order(:number) }, dependent: :destroy
 
+  validates :locale, presence: true, 
+                     allow_blank: false, 
+                     uniqueness: { scope: :conditions }
+
   def clone_with_associations
     clone = dup
     clone.save
