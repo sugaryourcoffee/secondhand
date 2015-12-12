@@ -2,6 +2,9 @@
 
 <h1><%= t('.new_terms_of_use') %></h1>
 
+<%= render partial: 'shared/generic_error_message', 
+           locals: { topic: @terms_of_use } %>
+
 <%= form_for @terms_of_use, url: terms_of_use_index_path do |f| %>
   <%= hidden_field_tag :conditions_id, @conditions.id %>
   <%= f.label :locale %>
