@@ -5,8 +5,8 @@ class TermsOfUse < ActiveRecord::Base
   def clone_with_associations
     clone = dup
     clone.save
-    clone.pages.each do |page|
-      clone.pages << page
+    pages.each do |page|
+      clone.pages << page.dup
     end
     clone
   end
