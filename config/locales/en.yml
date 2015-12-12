@@ -394,6 +394,7 @@ en:
       Events:     "Events"
       Lists:      "Lists"
       News:       "News"
+      conditions: "Conditions"
       Users:      "Users"
       Carts:      "Carts"
       Query:      "Search"
@@ -404,9 +405,10 @@ en:
       Sign_in:  "Sign in"
 
     footer:
-      About:   "About"
-      Contact: "Contact"
-      News:    "News"
+      terms_of_use: "Terms of Use"
+      About:        "About"
+      Contact:      "Contact"
+      News:         "News"
 
   password_resets:
     new:

@@ -13,14 +13,72 @@ de:
       delimiter: "."
       precision: 2
 
-  terms_of_use:
+  conditions:
+    index:
+      conditions:     "Nutzungsbedingungen"
+      new_conditions: "Erstelle neue Nutzungsbedingungen"
+    new:
+      new_conditions: "Neue Nutzungsbedingungen"
+    form:
+      cancel_and_back: "Abbrechen und zurück zu Nutzungsbedingungen Übersicht"
+    edit:
+      edit_conditions: "Nutzungsbedingungen Bearbeiten"
+    edit_form:
+      cancel_and_back: "Abbrechen und zurück zu Nutzungsbedingungen Übersicht"
+    conditions:
+      activate:       "Aktivieren"
+      deactivate:     "Deaktivieren"
+      edit:           "Bearbeiten"
+      show:           "Anzeigen"
+      delete:         "Löschen"
+      confirm_delete: "Die angewählten Nutzungsbedingungen löschen?"
+      copy:           "Kopieren"
+    show:
+      conditions_overview: "Nutzungsbedingungen Übersicht"
+      show_conditions:     "Nutzungsbedingungen Version anzeigen"
+      new_locale:          "Erzeuge neue Sprachversion der Nutzungsbedingungen"
+      locale:              "Sprache"
+    terms_of_use:
+      edit:           "Bearbeiten"
+      show:           "Anzeigen"
+      delete:         "Löschen"
+      copy:           "Kopieren"
+      confirm_delete: "Angewählte Sprache der Nutzungsbedingungen löschen?"
+
+  submit_terms_of_use:
     display:
-      terms_of_use:         "Nutzungsbedingungen"
-      terms_of_use_missing: "Bitte wenden Sie sich an den Organisator der Secondhand Veranstaltung um die Nutzungsbedingungen zu erhalten"
+      terms_of_use:         "Nutzungsbedingungen (%{number}/%{count})"
+      terms_of_use_missing: "Die aktuellen Nutzungsbedingungen können Sie bei Ihrem Secondhand Veranstalter beziehen"
       back:                 "Zurück"
-      next:                 "Weiter"
-      accept:               "Annehmen"
+      next:                 "Nächste"
+      accept:               "Akzeptieren"
       close:                "Schließen"
+
+  terms_of_use:
+    show:
+      terms_of_use_overview: "Nutzungsbedingungen Übersicht"
+      show_terms_of_use:     "Nutzungsbedingungen Sprache"
+      new_page:              "Neue Seite hinzufügen"
+      page:                  "Seite"
+      title:                 "Titel"
+      content:               "Inhalt"
+    page:
+      edit:                  "Bearbeiten"
+      delete:                "Löschen"
+      delete_page:           "Angewählte Seite löschen?"
+      page_up:               "Auf"
+      page_down:             "Ab"
+    edit:
+      edit_terms_of_use: "Nutzungsbedingungen bearbeiten"
+      cancel_and_back:   "Abbrechen und zurück zu Nutzungsbedingungen Version"
+
+  pages:
+    new:
+      new_page:  "Create new page (%{language})"
+    edit:
+      edit_page: "Edit page (%{language})"
+    form:
+      cancel_and_back: "Cancel and back to Terms of Use language"
 
   acceptances:
     index:
@@ -339,6 +397,7 @@ de:
       Events:     "Veranstaltungen"
       Lists:      "Listen"
       News:       "Nachrichten"
+      conditions: "Bedingungen"
       Users:      "Benutzer"
       Carts:      "Einkaufswagen"
       Query:      "Suchen"
@@ -349,9 +408,10 @@ de:
       Sign_in:  "Anmelden"
 
     footer:
-      About:   "Über uns"
-      Contact: "Kontakt"
-      News:    "Aktuell"
+      terms_of_use: "Nutzungsbedingungen"
+      About:        "Über uns"
+      Contact:      "Kontakt"
+      News:         "Aktuell"
 
   password_resets:
     new:
