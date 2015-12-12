@@ -30,12 +30,14 @@ class PagesController < ApplicationController
 
   def up
     load_page
-    move_page(-1) and save_page or redirect_to @terms_of_use
+    move_page(-1) 
+    redirect_to @terms_of_use
   end
 
   def down
     load_page
-    move_page(1) and save_page or redirect_to @terms_of_use
+    move_page(1)
+    redirect_to @terms_of_use
   end
 
   private
@@ -53,9 +55,11 @@ class PagesController < ApplicationController
       next_page_number = @terms_of_use.next_page(@page.number, direction)
       target_page = @terms_of_use.pages.find_by(number: next_page_number)
       target_page_number = target_page.number
-      target_page.number = @page.number
-      @page.number = target_page_number
+      source_page_number = @page.number
+      @page.update(number: 0)
+      target_page.number = source_page_number
       target_page.save
+      @page.update(number: target_page_number)
     end
 
     def save_page
