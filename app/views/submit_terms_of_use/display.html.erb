@@ -15,11 +15,13 @@
     <%= link_to t('.accept'), accept_terms_of_use_path, 
                               class: "btn btn-success pull-right" %>
   <% end %>
-  <% if @buttons.include?(:close) && current_user%>
-    <%= link_to t('.close'), user_path(current_user), 
-                             class: "btn pull-right" %>
-  <% else %>
-    <%= link_to t('.close'), root_path, class: "btn pull-right" %>
+  <% if @buttons.include?(:close) %>
+    <% if current_user %>
+      <%= link_to t('.close'), user_path(current_user), 
+                               class: "btn pull-right" %>
+    <% else %>
+      <%= link_to t('.close'), root_path, class: "btn pull-right" %>
+    <% end %>
   <% end %>
   <% if @buttons.include? :back %>
     <%= link_to t('.back'),   display_terms_of_use_path(page: @page.number, 

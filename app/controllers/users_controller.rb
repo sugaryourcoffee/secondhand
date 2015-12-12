@@ -7,6 +7,8 @@ class UsersController < ApplicationController
   before_filter :correct_user, only: [:register_list, 
                                       :deregister_list, :show, :edit, :update]
 
+  before_filter :accept_terms_of_use, only: :show
+
   def index
     @users = User.where(User.search_conditions(params))
                  .order(:last_name)

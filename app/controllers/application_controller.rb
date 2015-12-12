@@ -53,6 +53,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def accept_terms_of_use
+    event = Event.find_by(active: true)
+    conditions = Conditions.find_by(active: true)
+    needs_renewal = (current_user && current_user.terms_of_use.nil? ||
+                    event && event.created_at > current_user.terms_of_use) &&
+                   !(current_user.admin? || current_user.operator)
+    redirect_to display_terms_of_use_path if conditions && needs_renewal
+  end
+
   def set_i18n_locale_from_params
     if params[:locale]
       if I18n.available_locales.include?(params[:locale].to_sym)
