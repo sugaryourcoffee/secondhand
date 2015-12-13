@@ -37,6 +37,7 @@ de:
       conditions_overview: "Nutzungsbedingungen Übersicht"
       show_conditions:     "Nutzungsbedingungen Version anzeigen"
       new_locale:          "Erzeuge neue Sprachversion der Nutzungsbedingungen"
+      no_more_languages:   "Keine freie Sprache mehr verfügbar"
       locale:              "Sprache"
     terms_of_use:
       edit:           "Bearbeiten"
@@ -50,7 +51,7 @@ de:
       terms_of_use:         "Nutzungsbedingungen (%{number}/%{count})"
       terms_of_use_missing: "Die aktuellen Nutzungsbedingungen können Sie bei Ihrem Secondhand Veranstalter beziehen"
       back:                 "Zurück"
-      next:                 "Nächste"
+      next:                 "Weiter"
       accept:               "Akzeptieren"
       close:                "Schließen"
 

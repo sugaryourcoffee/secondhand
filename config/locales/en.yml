@@ -35,6 +35,7 @@ en:
       conditions_overview: "Terms of Use Overview"
       show_conditions:     "Show Terms of Use Version"
       new_locale:          "Create new Language Version"
+      no_more_languages:   "No more free locales available"
       locale:              "Language"
     terms_of_use:
       edit:           "Edit"
@@ -782,11 +783,12 @@ en:
 
   activerecord:
     models:
-      news:  "News"
-      event: "Event"
-      list:  "List"
-      user:  "User"
-      item:  "Item"
+      news:       "News"
+      event:      "Event"
+      list:       "List"
+      user:       "User"
+      item:       "Item"
+      conditions: "Conditions"
     attributes:
       user:
         password_digest: "Password"
