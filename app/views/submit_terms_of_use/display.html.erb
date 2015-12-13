@@ -23,15 +23,15 @@
       <%= link_to t('.close'), root_path, class: "btn pull-right" %>
     <% end %>
   <% end %>
-  <% if @buttons.include? :back %>
-    <%= link_to t('.back'),   display_terms_of_use_path(page: @page.number, 
-                                                        direction: -1),
-                              class: "btn pull-right" %>
-  <% end %>
   <% if @buttons.include? :next %>
     <%= link_to t('.next'),   display_terms_of_use_path(page: @page.number, 
                                                         direction:  1),
                               class: "btn pull-right" %>
+  <% end %>
+  <% if @buttons.include? :back %>
+    <%= link_to t('.back'),   display_terms_of_use_path(page: @page.number, 
+                                                        direction: -1),
+                              class: "btn pull-left" %>
   <% end %>
 <% end %>
 

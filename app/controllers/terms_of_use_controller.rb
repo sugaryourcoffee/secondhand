@@ -25,7 +25,7 @@ class TermsOfUseController < ApplicationController
   end
 
   def copy
-    copy_terms_of_use and render 'edit' or redirect_to @conditions
+    copy_terms_of_use or redirect_to @conditions
   end
 
   def destroy
@@ -60,6 +60,7 @@ class TermsOfUseController < ApplicationController
     def copy_terms_of_use
       @terms_of_use = terms_of_use_all.find(params[:id]).clone_with_associations
       @conditions = @terms_of_use.conditions 
+      redirect_to edit_terms_of_use_path @terms_of_use
     end
 
     def terms_of_use_all

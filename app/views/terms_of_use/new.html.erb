@@ -8,7 +8,7 @@
 <%= form_for @terms_of_use, url: terms_of_use_index_path do |f| %>
   <%= hidden_field_tag :conditions_id, @conditions.id %>
   <%= f.label :locale %>
-  <%= f.select :locale, LANGUAGES %>
+  <%= f.select :locale, @conditions.available_locales %>
   <%= f.submit class: "btn" %>
 <% end %>
 

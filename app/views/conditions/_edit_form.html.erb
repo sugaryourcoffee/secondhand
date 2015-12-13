@@ -1,6 +1,7 @@
 <%= render partial: 'shared/generic_error_message', 
            locals: { topic: @condition } %>
 
+<%= @condition.inspect %>
 <%= form_for @condition, url: condition_path do |f| %>
   <%= f.label :version %>
   <%= f.text_field :version%>

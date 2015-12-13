@@ -1,9 +1,9 @@
 <tr>
   <td><%= LANGUAGES.rassoc(terms_of_use.locale)[0] %></td>
-  <td><%= link_to t('.edit'), edit_terms_of_use_path(terms_of_use) %></td>
+  <td><%= edit_language_link(terms_of_use) %></td>
   <td><%= link_to t('.show'), terms_of_use_path(terms_of_use) %></td>
   <td><%= link_to t('.delete'), terms_of_use_path(terms_of_use),
     method: :delete, data: { confirm: t('.confirm_delete') } %></td>
-  <td><%= link_to t('.copy'), copy_terms_of_use_path(terms_of_use) %></td>
+  <td><%= copy_language_link(terms_of_use) %></td>
 </tr>
 

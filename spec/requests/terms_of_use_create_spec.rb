@@ -45,8 +45,8 @@ describe "Create terms of use" do
       fill_in "Version", with: "2016/01"
       click_button "Update"
       page.current_path.should eq condition_path(locale: :en, 
-                                                 id: conditions)
-      conditions.reload.version.should eq "2016/01"
+                                                 id: Conditions.last)
+      Conditions.last.version.should eq "2016/01"
       Conditions.all.count.should eq conditions_count + 1
     end
 
@@ -57,7 +57,7 @@ describe "Create terms of use" do
     it "should create new locale for terms of use" do
       visit condition_path(locale: :en, id: conditions)
       click_link "Create new Language Version"
-      select "English", from: "Locale"
+      select "Deutsch", from: "Locale"
       expect { click_button "Create" }.to change(TermsOfUse, :count).by(1)
       page.current_path.should eq terms_of_use_path(locale: :en, 
                                                     id: TermsOfUse.last)
@@ -91,8 +91,8 @@ describe "Create terms of use" do
       locale_count = conditions.terms_of_uses.count
       visit condition_path(locale: :en, id: conditions)
       click_link "Copy"
-      page.current_path.should eq copy_terms_of_use_path(locale: :en,
-                                                         id: terms_of_use)
+      page.current_path.should eq edit_terms_of_use_path(locale: :en,
+                                                         id: TermsOfUse.last)
       select "Deutsch", from: "Locale"
       click_button "Update"
       page.current_path.should eq terms_of_use_path(locale: :en, 

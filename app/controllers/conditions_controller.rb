@@ -35,7 +35,7 @@ class ConditionsController < ApplicationController
   end
 
   def copy
-    copy_condition and render 'edit' or redirect_to conditions_path
+    copy_condition or redirect_to conditions_path
   end
 
   def activate
@@ -67,6 +67,7 @@ class ConditionsController < ApplicationController
 
     def copy_condition
       @condition = conditions_all.find(params[:id]).clone_with_associations
+      redirect_to edit_condition_path @condition
     end
 
     def activate_condition

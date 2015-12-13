@@ -40,7 +40,7 @@ describe "Conditions" do
     Conditions.last.terms_of_uses.first.pages.size.should eq 2
     Conditions.last.terms_of_uses.last.pages.size.should eq 2
 
-    visit conditions_path(locale: :en)
+    click_link "Terms of Use Overview"
     click_link "Copy"
     fill_in "Version", with: "02/2016"
     click_button "Update"

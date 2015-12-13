@@ -17,7 +17,7 @@ describe "Pages" do
 
     it "should add a new page" do
       click_link "Add new page"
-      fill_in "Number", with: "1"
+      fill_in "Number", with: "2"
       fill_in "Title", with: "Title"
       fill_in "Content", with: "Content"
 

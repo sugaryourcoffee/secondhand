@@ -6,8 +6,13 @@ class TermsOfUse < ActiveRecord::Base
                      allow_blank: false, 
                      uniqueness: { scope: :conditions }
 
-  def clone_with_associations
+  def clone_with_associations(parent = conditions)
     clone = dup
+    if parent.id == conditions.id
+      clone.locale = conditions.next_available_locale 
+    else
+      clone.conditions_id = parent.id
+    end
     clone.save
     pages.each do |page|
       clone.pages << page.dup

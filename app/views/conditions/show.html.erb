@@ -17,7 +17,4 @@
   </tbody>
 </table>
 
-<p>
-  <%= link_to t('.new_locale'), 
-              new_terms_of_use_path(conditions_id: @condition) %>
-</p>
+<p><%= new_language_link(@condition) %></p>

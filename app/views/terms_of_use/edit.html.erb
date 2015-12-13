@@ -4,11 +4,11 @@
 
 <%= render partial: 'shared/generic_error_message', 
            locals: { topic: @terms_of_use } %>
-
+  
 <%= form_for @terms_of_use do |f| %>
   <%= hidden_field_tag :conditions_id, @conditions.id %>
   <%= f.label :locale %>
-  <%= f.select :locale, LANGUAGES %>
+  <%= f.select :locale, language_selections_for_edit(@terms_of_use) %>
   <%= f.submit class: "btn" %>
 <% end %>
 
