@@ -59,6 +59,7 @@ class ItemsController < ApplicationController
 
     def save_item
       if @item.save
+        reset_list_sent_on
         flash[:success] = I18n.t('.created', 
                                  model: t('activerecord.models.item'))
         if params[:commit] == I18n.t('.items.form.create_and_new')
@@ -71,7 +72,8 @@ class ItemsController < ApplicationController
 
     def update_item
       respond_to do |format|
-        if @item.update_attributes(item_params)
+        if @item.save
+          reset_list_sent_on
           return_url = request.referer.include?("/items/") ? 
                        user_list_items_path(@user, @list) : request.referer
           format.html { redirect_to return_url, 
@@ -120,6 +122,13 @@ class ItemsController < ApplicationController
       flash[:warning] = I18n.t('.list_accepted_destroy', 
                                list_number: @list.list_number)
       redirect_to current_user
+    end
+
+    def reset_list_sent_on
+      if @list.user == @user and @list.sent_on
+        @list.sent_on = nil
+        @list.save
+      end
     end
 
     def item_params
