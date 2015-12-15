@@ -20,9 +20,9 @@ class Item < ActiveRecord::Base
   before_save :ensure_not_in_accepted_list
   before_save :ensure_not_in_cart
   before_save :ensure_not_sold
-  before_save :reset_list_sent_on
+#  before_save :reset_list_sent_on
 
-  before_destroy :ensure_not_referenced, :reset_list_sent_on
+  before_destroy :ensure_not_referenced #, :reset_list_sent_on
 
   def sold?
     line_items.

@@ -93,6 +93,7 @@ class ItemsController < ApplicationController
     def destroy_item
       unless @list.accepted_on
         @item.destroy
+        reset_list_sent_on
         flash[:success] = I18n.t('.destroyed', 
                                  model: t('activerecord.models.item'))
         redirect_to user_list_items_path(@user, @list)
