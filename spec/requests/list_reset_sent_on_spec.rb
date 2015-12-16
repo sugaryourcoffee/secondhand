@@ -6,7 +6,7 @@ describe 'List operation' do
   let(:user)     { FactoryGirl.create(:user) }
   let(:admin)    { FactoryGirl.create(:admin) }
   let(:operator) { FactoryGirl.create(:operator) }
-  let(:list)     { FactoryGirl.create(:list, event: active, user: user) }
+  let(:list)     { FactoryGirl.create(:assigned, event: active, user: user) }
 
   before do
     add_items_to_list(list, 1)
@@ -16,60 +16,171 @@ describe 'List operation' do
   context "by list's owner" do
     before { sign_in user }
 
-    it "should reset sent_on when deleting item" do
-      visit user_list_items_path(locale: :en, user_id: user, list_id: list)
-      expect { click_link "Destroy" }.to change(Item, :count).by(-1)
-      list.reload.sent_on.should be_nil
+    describe "user's view" do
+      it "should reset sent_on when deleting item" do
+        visit user_list_items_path(locale: :en, user_id: user, list_id: list)
+        expect { click_link "Destroy" }.to change(Item, :count).by(-1)
+        list.reload.sent_on.should be_nil
+      end
+
+      it "should reset sent_on when editing item" do
+        visit user_list_items_path(locale: :en, user_id: user, list_id: list)
+        click_link "Edit"
+        fill_in "Price", with: 1.5
+        click_button "Update"
+        list.reload.sent_on.should be_nil
+      end
+
+      it "should reset sent_on when editing list" do
+        visit user_path(locale: :en, id: user)
+        fill_in "Enter container color", with: "Red"
+        click_button "Save Container Color"
+        list.reload.sent_on.should_not be_nil
+      end
     end
 
-    it "should reset sent_on when editing item" do
-      visit user_list_items_path(locale: :en, user_id: user, list_id: list)
-      click_link "Edit"
-      fill_in "Price", with: 1.5
-      click_button "Update"
-      list.reload.sent_on.should be_nil
-    end
-
-    it "should reset sent_on when editing list" do
-      visit user_path(locale: :en, id: user)
-      fill_in "Enter container color", with: "Red"
-      click_button "Save Container Color"
-      list.reload.sent_on.should be_nil
+    describe "in model" do
     end
   end
 
   context "by operator" do
     before { sign_in operator }
 
-    it "should not reset sent_on when deleting item" do
+    describe "in acceptance dialog" do
+      before { visit edit_acceptance_path(locale: :en, id: list) } 
+      
+      it "should not reset sent_on when editing item", js: true do
+        click_link "edit-item-#{list.items.first.item_number}"
+        fill_in "item_price", with: 2.5
+        click_button "Update"
+        list.reload.sent_on.should_not be_nil
+      end
+
+      it "should not reset sent_on when deleting item", js: true do
+        click_link "Delete"
+        modal = page.driver.browser.switch_to.alert
+        modal.accept
+        list.reload.sent_on.should_not be nil
+      end
+
+      it "should not reset sent_on when editing list", js: true do
+        click_link "edit_container"
+        fill_in "Container", with: "Red"
+        click_button "Update"
+        list.reload.sent_on.should_not be_nil
+      end
+
+      it "should not reset sent_on when accepting list", js: true do
+        click_button "Accept List"
+        list.reload.sent_on.should_not be_nil
+      end
     end
 
-    it "should not reset sent_on when editing item " do
-    end
+    describe "in model" do
+      it "should not reset sent_on when editing item" do
+        list.items.first.update(price: 2.5)
+        list.reload.sent_on.should_not be_nil
+      end
 
-    it "should not reset sent_on when editing list" do
-    end
+      it "should not reset sent_on when deleting item" do
+        expect { list.items.first.destroy }.to change(Item, :count).by(-1)
+        list.reload.sent_on.should_not be nil
+      end
 
-    it "should not reset sent_on when accepting list" do
+      it "should not reset sent_on when editing list" do
+        list.update(container: "Red")
+        list.reload.sent_on.should_not be_nil
+      end
+
+      it "should not reset sent_on when accepting list" do
+        list.update(accepted_on: Time.now)
+        list.reload.sent_on.should_not be_nil
+      end
     end
   end
 
   context "by admin" do
     before { sign_in admin }
 
-    it "should not reset sent_on when deleting item" do
+    describe "in user's view" do
+      it "should not reset sent_on when deleting item in user view" do
+        visit user_list_items_path(locale: :en, user_id: user, list_id: list)
+        expect { click_link "Destroy" }.to change(Item, :count).by(-1)
+        list.reload.sent_on.should_not be_nil
+      end
+
+      it "should not reset sent_on when editing item  in user view" do
+        visit user_list_items_path(locale: :en, user_id: user, list_id: list)
+        click_link "Edit"
+        fill_in "Price", with: 1.5
+        click_button "Update"
+        list.reload.sent_on.should_not be_nil
+      end
+
+      it "should not reset sent_on when editing list in user view" do
+        visit user_path(locale: :en, id: user)
+        fill_in "Enter container color", with: "Red"
+        click_button "Save Container Color"
+        list.reload.sent_on.should_not be_nil
+      end
+
+      it "should reset sent_on when deregistering list in user view" do
+        visit user_path(locale: :en, id: user)
+        click_link "Deregister"
+        list.reload.sent_on.should be_nil
+      end
     end
 
-    it "should not reset sent_on when editing item " do
+    describe "in acceptance dialog" do
+      before { visit edit_acceptance_path(locale: :en, id: list) } 
+      
+      it "should not reset sent_on when editing item", js: true do
+        click_link "edit-item-#{list.items.first.item_number}"
+        fill_in "item_price", with: 2.5
+        click_button "Update"
+        list.reload.sent_on.should_not be_nil
+      end
+
+      it "should not reset sent_on when deleting item", js: true do
+        click_link "Delete"
+        modal = page.driver.browser.switch_to.alert
+        modal.accept
+        list.reload.sent_on.should_not be nil
+      end
+
+      it "should not reset sent_on when editing list", js: true do
+        click_link "edit_container"
+        fill_in "Container", with: "Red"
+        click_button "Update"
+        list.reload.sent_on.should_not be_nil
+      end
+
+      it "should not reset sent_on when accepting list", js: true do
+        click_button "Accept List"
+        list.reload.sent_on.should_not be_nil
+      end
     end
 
-    it "should not reset sent_on when editing list" do
-    end
+    describe "in model" do
+      it "should not reset sent_on when editing item" do
+        list.items.first.update(price: 2.5)
+        list.reload.sent_on.should_not be_nil
+      end
 
-    it "should not reset sent_on when accepting list" do
-    end
+      it "should not reset sent_on when deleting item" do
+        expect { list.items.first.destroy }.to change(Item, :count).by(-1)
+        list.reload.sent_on.should_not be nil
+      end
 
-    it "should reset sent_on when deregistering list" do
+      it "should not reset sent_on when editing list" do
+        list.update(container: "Red")
+        list.reload.sent_on.should_not be_nil
+      end
+
+      it "should not reset sent_on when accepting list" do
+        list.update(accepted_on: Time.now)
+        list.reload.sent_on.should_not be_nil
+      end
     end
   end
 end
