@@ -126,10 +126,7 @@ class ItemsController < ApplicationController
     end
 
     def reset_list_sent_on
-      if @list.user == @user and @list.sent_on
-        @list.sent_on = nil
-        @list.save
-      end
+      @list.update(sent_on: nil) if @list.user == current_user and @list.sent_on
     end
 
     def item_params

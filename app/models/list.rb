@@ -23,11 +23,13 @@ class List < ActiveRecord::Base
   belongs_to :event
   has_many :items
 
+  attr_accessor :reset_sent_on
+
   validates :event_id, :list_number, :registration_code, presence: true
 
   before_destroy :ensure_not_registered_by_a_user
 
-  before_update :reset_sent_on
+  before_update :check_reset_sent_on
 
   # Returns true if the list has been registered
   def registered?
@@ -550,8 +552,8 @@ class List < ActiveRecord::Base
     end
   end
 
-  def reset_sent_on
-    self.sent_on = nil unless sent_on_changed?
+  def check_reset_sent_on
+    self.sent_on = nil if !sent_on_changed? and reset_sent_on
   end
 
 end

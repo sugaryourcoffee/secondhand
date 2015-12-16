@@ -94,6 +94,7 @@ class UsersController < ApplicationController
     else
       list.user_id = nil
       list.container = nil
+      list.sent_on = nil
       list.items.destroy_all
       if list.save
         UserMailer.list_deregistered(user, list).deliver
