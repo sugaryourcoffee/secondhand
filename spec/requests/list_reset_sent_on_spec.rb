@@ -9,14 +9,14 @@ describe 'List operation' do
   let(:list)     { FactoryGirl.create(:assigned, event: active, user: user) }
 
   before do
-    add_items_to_list(list, 1)
+    list.items.create!(item_attributes(item_number: 1, price: 22.5))
     list.update(sent_on: Time.now)
   end
 
   context "by list's owner" do
     before { sign_in user }
 
-    describe "user's view" do
+    describe "in user's view" do
       it "should reset sent_on when deleting item" do
         visit user_list_items_path(locale: :en, user_id: user, list_id: list)
         expect { click_link "Destroy" }.to change(Item, :count).by(-1)
@@ -40,6 +40,22 @@ describe 'List operation' do
     end
 
     describe "in model" do
+      it "should reset sent_on when editing item" do
+        list.items.first.update(price: 2.5, reset_list_sent_on: true)
+        list.reload.sent_on.should be_nil
+      end
+
+      it "should reset sent_on when deleting item" do
+        item = list.items.first
+        item.reset_list_sent_on = true
+        expect { item.destroy }.to change(Item, :count).by(-1)
+        list.reload.sent_on.should be_nil
+      end
+
+      it "should not reset sent_on when editing list's container color" do
+        list.update(container: "Red", reset_sent_on: true)
+        list.reload.sent_on.should_not be_nil
+      end
     end
   end
 
@@ -60,7 +76,7 @@ describe 'List operation' do
         click_link "Delete"
         modal = page.driver.browser.switch_to.alert
         modal.accept
-        list.reload.sent_on.should_not be nil
+        list.reload.sent_on.should_not be_nil
       end
 
       it "should not reset sent_on when editing list", js: true do
@@ -84,7 +100,7 @@ describe 'List operation' do
 
       it "should not reset sent_on when deleting item" do
         expect { list.items.first.destroy }.to change(Item, :count).by(-1)
-        list.reload.sent_on.should_not be nil
+        list.reload.sent_on.should_not be_nil
       end
 
       it "should not reset sent_on when editing list" do
@@ -103,13 +119,13 @@ describe 'List operation' do
     before { sign_in admin }
 
     describe "in user's view" do
-      it "should not reset sent_on when deleting item in user view" do
+      it "should not reset sent_on when deleting item" do
         visit user_list_items_path(locale: :en, user_id: user, list_id: list)
         expect { click_link "Destroy" }.to change(Item, :count).by(-1)
         list.reload.sent_on.should_not be_nil
       end
 
-      it "should not reset sent_on when editing item  in user view" do
+      it "should not reset sent_on when editing item" do
         visit user_list_items_path(locale: :en, user_id: user, list_id: list)
         click_link "Edit"
         fill_in "Price", with: 1.5
@@ -117,14 +133,14 @@ describe 'List operation' do
         list.reload.sent_on.should_not be_nil
       end
 
-      it "should not reset sent_on when editing list in user view" do
+      it "should not reset sent_on when editing list" do
         visit user_path(locale: :en, id: user)
         fill_in "Enter container color", with: "Red"
         click_button "Save Container Color"
         list.reload.sent_on.should_not be_nil
       end
 
-      it "should reset sent_on when deregistering list in user view" do
+      it "should reset sent_on when deregistering list" do
         visit user_path(locale: :en, id: user)
         click_link "Deregister"
         list.reload.sent_on.should be_nil
@@ -134,18 +150,18 @@ describe 'List operation' do
     describe "in acceptance dialog" do
       before { visit edit_acceptance_path(locale: :en, id: list) } 
       
+      it "should not reset sent_on when deleting item", js: true do
+        click_link "Delete"
+        modal = page.driver.browser.switch_to.alert
+        modal.accept
+        list.reload.sent_on.should_not be_nil
+      end
+
       it "should not reset sent_on when editing item", js: true do
         click_link "edit-item-#{list.items.first.item_number}"
         fill_in "item_price", with: 2.5
         click_button "Update"
         list.reload.sent_on.should_not be_nil
-      end
-
-      it "should not reset sent_on when deleting item", js: true do
-        click_link "Delete"
-        modal = page.driver.browser.switch_to.alert
-        modal.accept
-        list.reload.sent_on.should_not be nil
       end
 
       it "should not reset sent_on when editing list", js: true do
@@ -169,7 +185,7 @@ describe 'List operation' do
 
       it "should not reset sent_on when deleting item" do
         expect { list.items.first.destroy }.to change(Item, :count).by(-1)
-        list.reload.sent_on.should_not be nil
+        list.reload.sent_on.should_not be_nil
       end
 
       it "should not reset sent_on when editing list" do

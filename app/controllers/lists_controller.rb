@@ -136,6 +136,7 @@ class ListsController < ApplicationController
   
   def create
     build_list
+    reset_sent_on
     save_list(@list, notice(".created", model)) or render 'new'
   end
 
@@ -171,6 +172,7 @@ class ListsController < ApplicationController
   def update
     load_list
     build_list
+    reset_sent_on
     save_list(return_url, notice(".updated", model)) or render 'edit'
   end
 
@@ -196,6 +198,7 @@ class ListsController < ApplicationController
   # DELETE /lists/1.json
   def destroy
     load_list
+    reset_sent_on
     @list.destroy
     flash_destroy_notice
     redirect_to lists_path
@@ -312,7 +315,7 @@ class ListsController < ApplicationController
                                        :list_number, 
                                        :registration_code, 
                                        :user_id, 
-                                       :sent_on) : { reset_sent_on: permission }
+                                       :sent_on) : { }
 
 #      params.require(:list).permit(:container, :event_id, :list_number, 
 #                                   :registration_code, :user_id, :sent_on)
@@ -335,13 +338,14 @@ class ListsController < ApplicationController
       t('activerecord.models.list')
     end
 
-    def permission
-      @user == @list.user
+    def reset_sent_on
+      @list.reset_sent_on = current_user?(@list.user)
     end
 
     def correct_user
-#      @user = User.find(params[:user_id])
-      redirect_to(root_path) unless current_user?(@user) or current_user.admin?
+      unless current_user?(@user) or current_user.admin?
+        redirect_to(root_path) 
+      end
     end
 
     def all_lists

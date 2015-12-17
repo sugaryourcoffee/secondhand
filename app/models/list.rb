@@ -553,7 +553,9 @@ class List < ActiveRecord::Base
   end
 
   def check_reset_sent_on
-    self.sent_on = nil if !sent_on_changed? and reset_sent_on
+    if !(container_changed? or sent_on_changed?) and reset_sent_on
+      self.sent_on = nil 
+    end
   end
 
 end

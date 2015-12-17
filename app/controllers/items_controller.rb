@@ -15,6 +15,7 @@ class ItemsController < ApplicationController
 
   def create
     build_item
+    reset_list_sent_on
     save_item or render :new
   end
 
@@ -30,11 +31,13 @@ class ItemsController < ApplicationController
   def update
     load_item
     build_item
+    reset_list_sent_on
     update_item
   end
 
   def destroy
     load_item
+    reset_list_sent_on
     destroy_item or redirect_to_user
   end
 
@@ -59,7 +62,6 @@ class ItemsController < ApplicationController
 
     def save_item
       if @item.save
-        reset_list_sent_on
         flash[:success] = I18n.t('.created', 
                                  model: t('activerecord.models.item'))
         if params[:commit] == I18n.t('.items.form.create_and_new')
@@ -73,7 +75,6 @@ class ItemsController < ApplicationController
     def update_item
       respond_to do |format|
         if @item.save
-          reset_list_sent_on
           return_url = request.referer.include?("/items/") ? 
                        user_list_items_path(@user, @list) : request.referer
           format.html { redirect_to return_url, 
@@ -93,7 +94,6 @@ class ItemsController < ApplicationController
     def destroy_item
       unless @list.accepted_on
         @item.destroy
-        reset_list_sent_on
         flash[:success] = I18n.t('.destroyed', 
                                  model: t('activerecord.models.item'))
         redirect_to user_list_items_path(@user, @list)
@@ -125,20 +125,20 @@ class ItemsController < ApplicationController
       redirect_to current_user
     end
 
-    def reset_list_sent_on
-      @list.update(sent_on: nil) if @list.user == current_user and @list.sent_on
-    end
-
     def item_params
       item_params = params[:item]
       item_params ? item_params.permit(:description, 
                                        :item_number, 
                                        :price, 
-                                       :size) : {}
+                                       :size) : { }
+    end
+
+    def reset_list_sent_on
+      @item.reset_list_sent_on = current_user?(@list.user)
     end
 
     def correct_user
-      unless @list.user == @user or current_user.admin?
+      unless current_user?(@list.user) or current_user.admin?
         flash[:warning] = I18n.t('.list_not_assigned', 
                                  model: t('activerecord.models.item'))
         redirect_to(root_path)

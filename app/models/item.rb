@@ -5,9 +5,9 @@ class Item < ActiveRecord::Base
   has_many :reversals, through: :line_items
   has_many :carts,     through: :line_items
   
-#  attr_accessible :description, :item_number, :price, :size
-
   scope :by_item_number, -> { order(:item_number) }
+
+  attr_accessor :reset_list_sent_on
 
   validates :list_id, :description, :price, presence: true
   validates :item_number, numericality: { greater_than_or_equal_to: 1 }
@@ -20,9 +20,9 @@ class Item < ActiveRecord::Base
   before_save :ensure_not_in_accepted_list
   before_save :ensure_not_in_cart
   before_save :ensure_not_sold
-#  before_save :reset_list_sent_on
+  before_save :check_reset_list_sent_on
 
-  before_destroy :ensure_not_referenced #, :reset_list_sent_on
+  before_destroy :ensure_not_referenced, :check_reset_list_sent_on
 
   def sold?
     line_items.
@@ -77,11 +77,8 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def reset_list_sent_on
-    if list.sent_on
-      list.sent_on = nil
-      list.save
-    end
+  def check_reset_list_sent_on
+    list.update(sent_on: nil) if list.sent_on and reset_list_sent_on
   end
 
 end
