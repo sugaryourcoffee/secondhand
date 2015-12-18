@@ -59,6 +59,7 @@ Spork.prefork do
     end
 
     config.after(:each) do
+      Capybara.reset_session!
       DatabaseCleaner.clean
     end
     # 'end of DatabaseCleaner'
