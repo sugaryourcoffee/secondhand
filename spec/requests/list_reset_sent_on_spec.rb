@@ -66,7 +66,8 @@ describe 'List operation' do
       before { visit edit_acceptance_path(locale: :en, id: list) } 
       
       it "should not reset sent_on when editing item", js: true do
-        click_link "edit-item-#{list.items.first.item_number}"
+        item = list.items.first
+        click_link "edit-item-#{item.item_number}"
         fill_in "item_price", with: 2.5
         click_button "Update"
         list.reload.sent_on.should_not be_nil
@@ -86,7 +87,7 @@ describe 'List operation' do
         list.reload.sent_on.should_not be_nil
       end
 
-      it "should not reset sent_on when accepting list", js: true do
+      it "should not reset sent_on when accepting list" do
         click_button "Accept List"
         list.reload.sent_on.should_not be_nil
       end
@@ -158,7 +159,8 @@ describe 'List operation' do
       end
 
       it "should not reset sent_on when editing item", js: true do
-        click_link "edit-item-#{list.items.first.item_number}"
+        item = list.items.first
+        click_link "edit-item-#{item.item_number}"
         fill_in "item_price", with: 2.5
         click_button "Update"
         list.reload.sent_on.should_not be_nil
@@ -171,7 +173,7 @@ describe 'List operation' do
         list.reload.sent_on.should_not be_nil
       end
 
-      it "should not reset sent_on when accepting list", js: true do
+      it "should not reset sent_on when accepting list"  do
         click_button "Accept List"
         list.reload.sent_on.should_not be_nil
       end
