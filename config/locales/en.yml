@@ -342,6 +342,7 @@ en:
   static_pages:
     home:
       welcome_html: "Welcome to <em>Secondhand</em> the list collection program of <a href=\"http://messe-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a> where you can collect your items you want to sell at <strong>%{event}</strong>"
+      event_title: "the Event (not active yet)"
       sign_up_now: "Sign up now!"
       sign_in:     "Sign in at my account"
       profile:     "My Lists"
