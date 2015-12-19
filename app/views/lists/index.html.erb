@@ -15,27 +15,10 @@
       <div class="span4">
         <article>
           <header>
-            <h5><%= @event.title %></h5>
+            <h5><%= @event ? @event.title : t('.no_active_event') %></h5>
           </header>
           <section>
-            <table>
-              <tr>
-                <td><%= t('.registered') %></td>
-                <td class="list_count"><%= @event.not_closed_lists.count %></td>
-              </tr>
-              <tr>
-                <td><%= t('.closed') %></td>
-                <td class="list_count"><%= @event.closed_lists.count %></td>
-              </tr>
-              <tr>
-                <td><%= t('.open') %></td>
-                <td class="list_count"><%= @event.open_lists.count %></td>
-              </tr>
-              <tr class="total_line">
-                <td><%= t('.total') %></td>
-                <td class="list_count"><%= @event.lists.count %></td>
-              </tr>
-            </table>
+            <%= render 'show_active_event_stats' if @event %>
           </section>
         </article>
       </div>

@@ -224,7 +224,7 @@ class ListsController < ApplicationController
   private
 
     def load_lists
-      params[:search_event_id] ||= @event.id.to_s
+      params[:search_event_id] ||= @event.id.to_s if @event
 
       @lists = List.where(List.search_conditions(params))
                    .order(:event_id)

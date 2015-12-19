@@ -616,6 +616,7 @@ en:
   lists:
     index:
       All_lists:            "All lists"
+      no_active_event:      "No active event"
       List_number:          "List"
       Item_count:           "Items"
       Registration_code:    "Code"

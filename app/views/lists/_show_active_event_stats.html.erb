@@ -1,0 +1,19 @@
+<table>
+  <tr>
+    <td><%= t('.registered') %></td>
+    <td class="list_count"><%= @event.not_closed_lists.count %></td>
+  </tr>
+  <tr>
+    <td><%= t('.closed') %></td>
+    <td class="list_count"><%= @event.closed_lists.count %></td>
+  </tr>
+  <tr>
+    <td><%= t('.open') %></td>
+    <td class="list_count"><%= @event.open_lists.count %></td>
+  </tr>
+  <tr class="total_line">
+    <td><%= t('.total') %></td>
+    <td class="list_count"><%= @event.lists.count %></td>
+  </tr>
+</table>
+
