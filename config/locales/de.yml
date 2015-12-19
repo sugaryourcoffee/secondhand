@@ -621,6 +621,7 @@ de:
   lists:
     index:
       All_lists:            "Listen"
+      no_active_event:      "Keine Veranstaltung aktiviert"
       List_number:          "Liste"
       Item_count:           "Artikel"
       Registration_code:    "Code"
