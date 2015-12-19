@@ -1,6 +1,7 @@
 <table class="table table-hover">
   <thead>
     <tr>
+      <th><%= t('.item_changed') %></th>
       <th><%= link_to_if !edit, t('.item_number'), 
         edit_acceptance_path(@list, 
                              sort: "item_number", 
@@ -30,6 +31,7 @@
   <tbody>
     <% @items.each do |item| %>
       <tr class=<%= row_status(item) %>>
+        <td><%= indicate_item_change(item, @list) %></td>
         <% if edit and @item == item %>
           <td><%= item.item_number %></td>
           <td><%= f.text_field :description, size: 50 %></td>

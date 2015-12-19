@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207052755) do
+ActiveRecord::Schema.define(version: 20151219121012) do
 
   create_table "carts", force: true do |t|
     t.datetime "created_at",                   null: false
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20151207052755) do
     t.datetime "updated_at",        null: false
     t.datetime "sent_on"
     t.datetime "accepted_on"
+    t.datetime "labels_printed_on"
   end
 
   create_table "news", force: true do |t|

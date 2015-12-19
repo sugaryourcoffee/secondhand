@@ -170,3 +170,34 @@ Account                    | yes  | yes      | yes
 
 The access rigths are managed in the `app/views/layouts/_header.html.erb` file. 
 
+Item changes after labels printed or list closed
+------------------------------------------------
+When a user has finished the item collection for a list she will print the
+labels and tag them to the items. No the user changes the price of an item and
+forgets to tag the item with the new price. The impact will be as shown in the
+table.
+
+Old price | New Price | Impact
+--------- | --------- | ------------------------------
+2.50      | 3.50      | The organizer will loose 1 EUR
+3.50      | 2.50      | The seller will loose 1 EUR
+
+Other situations are that the user adds an item and forgets to submit it at the
+acceptance. Then when returning the items after the event this item will be
+perceived as lost or stolen.
+
+If the user deletes an item but it is submitted at the acceptance it won't harm
+as it will be relized when a customer is checking the item out at the cachier. 
+In that case the item can be added to the list and subsequently sold.
+
+The table shows when to indicate an item change in the acceptance edit view. A 
+0 indicates that the action has been conducted before the item change or not
+at all. A 1 indicates that the change has been made before the action.
+
+Print labels | Close list | Indicate | Updated time
+------------ | ---------- | -------- | -----------------------------
+     0       |      0     |    1     | item > print and item > close
+     0       |      1     |    0     | item > print and item < close
+     1       |      0     |    0     | item < print and item > close
+     1       |      1     |    0     | item < print and item < close
+

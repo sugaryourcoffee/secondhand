@@ -13,6 +13,7 @@ describe List do
   it { should respond_to(:event_id) }
   it { should respond_to(:user_id) }
   it { should respond_to(:sent_on) }
+  it { should respond_to(:labels_printed_on) }
 
   it { should be_valid }
 

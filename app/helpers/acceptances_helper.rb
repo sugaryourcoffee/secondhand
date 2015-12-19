@@ -36,9 +36,18 @@ module AcceptancesHelper
 
   def edit_acceptances_action(list)
     if @list.accepted?
-      button_to t('.revoke_acceptance'), accept_acceptance_path(list), class: "btn btn-warning" unless list.has_sold_items?
+      button_to t('.revoke_acceptance'), accept_acceptance_path(list), 
+        class: "btn btn-warning" unless list.has_sold_items?
     else
-      button_to t('.accept_list'), accept_acceptance_path(list), class: "btn btn-primary"
+      button_to t('.accept_list'), accept_acceptance_path(list), 
+        class: "btn btn-primary"
     end
+  end
+
+  def indicate_item_change(item, list)
+    '>>>' if (list.sent_on.nil? || 
+              item.updated_at > list.sent_on) && 
+             (list.labels_printed_on.nil? || 
+              item.updated_at > list.labels_printed_on)
   end
 end

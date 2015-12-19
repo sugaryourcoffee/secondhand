@@ -271,6 +271,7 @@ class ListsController < ApplicationController
     end
 
     def print_labels_to_pdf
+      @list.update(labels_printed_on: Time.now)
       respond_to do |format|
         format.html
         format.pdf do
