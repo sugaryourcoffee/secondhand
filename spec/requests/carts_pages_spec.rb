@@ -3,11 +3,24 @@ require 'spec_helper'
 describe Cart do
   include ItemsHelper
 
-  let(:admin)  { FactoryGirl.create(:admin) }
-  let(:seller) { FactoryGirl.create(:user) }
-  let(:event)  { FactoryGirl.create(:active) }
-  let(:list1)  { FactoryGirl.create(:accepted, user: seller, event: event) }
-  let(:list2)  { FactoryGirl.create(:accepted, user: seller, event: event) }
+  let(:admin)   { FactoryGirl.create(:admin) }
+  let(:seller)  { FactoryGirl.create(:user) }
+  let!(:event)  { FactoryGirl.create(:active) }
+  let(:list1)   { FactoryGirl.create(:accepted, user: seller, event: event) }
+  let(:list2)   { FactoryGirl.create(:accepted, user: seller, event: event) }
+
+  describe "with no active event" do
+    before do
+      sign_in admin
+      event.update(active: false)
+      visit item_collection_carts_path(locale: :en)
+    end
+
+    it "should indicate missing active event" do
+      event.active.should be_falsey
+      page.should have_text "Missing active Event"
+    end
+  end
 
   describe "item collection page" do
 

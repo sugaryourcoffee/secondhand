@@ -120,6 +120,7 @@ de:
     header:
       select_list:  "Liste"
       search:       "Suchen"
+      action:       "Listenannahme"
       missing_event_html: "<h2>Fehlende aktive Veranstaltung</h2><h5>Für die Listenannahme ist es erforderlich, dass eine Veranstaltung aktiv ist. Unter %{link} kann eine Veranstaltung aktiviert werden. Danach können Sie hier mit der Listenannahme beginnen.</h5>"
       events:        "Veranstaltungen"
     acceptance_status:
@@ -188,10 +189,13 @@ de:
     item_collection:
       title:       "Einkaufswagen"
       heading:     "Einkaufswagen %{number}"
+      events:      "Veranstaltungen"
+      action:      "Verkauf"
     line_item_collection:
       title:       "Warenrückgabe"
       heading:     "Warenrückgabe %{number}"
       redemption:  "Warenrückgabe"
+      events:      "Veranstaltungen"
     item_collection_header:
       select_list_number: "Liste"
       select_item_number: "Artikel"
@@ -216,8 +220,10 @@ de:
 
   sellings:
     index:
-      selling:     "Verkauf"
+      selling:     "Verkäufe"
       go_to_cart:  "Zum Einkaufswagen"
+      action:      "Verkauf"
+      events:      "Veranstaltungen"
     show:
       title:            "Verkauf"
       heading:          "Verkauf %{number}"
@@ -268,6 +274,8 @@ de:
     index:
       reversal:   "Gutschriften"
       go_to_cart: "Zur Warenrückgabe"
+      action:     "Gutschrift"
+      events:     "Veranstaltungen"
     show:
       title:            "Gutschrift"
       heading:          "Gutschrift %{number}"
@@ -318,6 +326,8 @@ de:
       statistics: "Statistik"
       sellings:   "Verkauf (%{count})"
       reversals:  "Rücknahme (%{count})"
+      action:     "Kasse"
+      events:     "Veranstaltungen"
     carts:
       cart_number: "Nummer"
       cart_type:   "Art"
@@ -1032,7 +1042,7 @@ de:
       create: "Erstelle %{model} und zurück zur Übersicht"
       update: "Aktualisiere %{model}"
 
-  missing_event_html: "<h2>Fehlende aktive Veranstaltung</h2><h5>Für die %{action} ist es erforderlich, dass eine Veranstaltung aktiv ist. Unter %{link} kann eine Veranstaltung aktiviert werden. Danach können Sie hier mit der %{action} beginnen.</h5>"
+  missing_event_html: "<h2>Fehlende aktive Veranstaltung</h2><p>Für %{action} ist es erforderlich, dass eine Veranstaltung aktiv ist.</p><p>Unter %{link} kann eine Veranstaltung aktiviert werden.</p><p>Danach können Sie hier mit %{action} beginnen.</p>"
 
   missing_container_color: "Korbfarbe fehlt! Um die Liste annehmen zu können, bite Korbfarbe ergänzen"
   next_event_date:      "Nächste Börse am %{date}"

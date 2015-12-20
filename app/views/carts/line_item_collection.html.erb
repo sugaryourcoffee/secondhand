@@ -2,16 +2,16 @@
 
 <% if @event %>
   <h1><%= t('.heading', number: @cart.id) %></h1>
-  <h2><%= @event.title if @event %></h2>
+  <h2><%= @event.title %></h2>
 
   <%= render 'carts/line_item_collection_header' %>
   <%= render 'carts/items' %>
 <% else %>
   <h1><%= t('.title') %></h1>
   <div class="center well">
-    <%= t('missing_event_html', action: t('.action'), 
-          link: link_to(t('events_button'), events_path, id: 'activate_event', 
-                        class: 'btn')) %>
+    <%= t('missing_event_html', action: t('.redemption'), 
+          link: link_to(t('.events'), events_path, id: 'activate_event', 
+                        class: 'btn btn-small')) %>
   </div>
 <% end %>
 

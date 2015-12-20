@@ -19,8 +19,9 @@
   </div>
 <% else %>
   <div class="center well">
-    <%= t('.missing_event_html', 
-          link: link_to(t('.events'), events_path, id: 'activate_event', class: 'btn')) %>
+    <%= t('missing_event_html', action: t('.action'), 
+          link: link_to(t('.events'), events_path, 
+                        id: 'activate_event', class: 'btn btn-small')) %>
   </div>
 <% end %>
 

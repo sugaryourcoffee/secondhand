@@ -115,6 +115,7 @@ en:
     header:
       select_list:   "List"
       search:        "Search"
+      action:        "list acceptance"
       missing_event_html: "<h2>Missing active Event</h2><h5>For list acceptance it is neccessary to have an active event. At %{link} you can activate an event. Then come back to start with list acceptance.</h5>"
       events:        "Events"
     acceptance_status:
@@ -184,6 +185,7 @@ en:
     item_collection:
       title:       "Cart"
       heading:     "Cart %{number}"
+      action:      "selling"
     line_item_collection:
       title:       "Redemption"
       heading:     "Redemption %{number}"
@@ -212,8 +214,10 @@ en:
 
   sellings:
     index:
-      selling:     "Selling"
+      selling:     "Sellings"
+      action:      "selling"
       go_to_cart:  "Go to cart"
+      events:      "Events"
     show:
       title:            "Selling"
       heading:          "Selling %{number}"
@@ -264,6 +268,7 @@ en:
     index:
       reversal:   "Redemptions"
       go_to_cart: "Go to goods return"
+      action:     "redemption"
     show:
       title:            "Redemption"
       heading:          "Redemption %{number}"
@@ -314,6 +319,8 @@ en:
       statistics: "Statistic"
       sellings:   "Selling (%{count})"
       reversals:  "Redemption (%{count})"
+      action:     "Counter"
+      events:     "Events"
     carts:
       cart_number: "Number"
       cart_type:   "Type"
@@ -868,7 +875,7 @@ en:
     page_gap:           "..."
     next_label:         "Next"
     
-  missing_event_html: "<h2>Missing active Event</h2><h5>For %{action} it is neccessary to have an active event. At %{link} you can activate an event. Then come back to start with %{action}.</h5>"
+  missing_event_html: "<h2>Missing active Event</h2><p>For %{action} it is neccessary to have an active event.</p><p>At %{link} you can activate an event.</p><p>Then come back to start with %{action}.</p>"
   
   missing_container_color: "Missing container color! In order to accept list please add container color"
   next_event_date:      "Next event on %{date}"

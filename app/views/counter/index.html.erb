@@ -2,21 +2,29 @@
 
 <h1><%= t('.heading') %></h1>
 
-<div class="row">
-  <div class="span6">
-    <h2><%= t('.carts', count: @carts.length) %></h2><%= render 'carts' %>
+<% if @event %>
+  <div class="row">
+    <div class="span6">
+      <h2><%= t('.carts', count: @carts.length) %></h2><%= render 'carts' %>
+    </div>
+    <div class="span6">
+      <h2><%= t('.statistics') %></h2><%= render 'statistics' %>
+    </div>
   </div>
-  <div class="span6">
-    <h2><%= t('.statistics') %></h2><%= render 'statistics' %>
+  <div class="row">
+    <div class="span6">
+      <h2><%= t('.sellings', count: @event.sellings_count) %></h2>
+      <%= render 'sellings' %>
+    </div>
+    <div class="span6">
+      <h2><%= t('.reversals', count: @event.reversals_count) %></h2>
+      <%= render 'reversals' %>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="span6">
-    <h2><%= t('.sellings', count: @event.sellings_count) %></h2>
-    <%= render 'sellings' %>
+<% else %>
+  <div class="center well">
+    <%= t('missing_event_html', action: t('.action'), 
+          link: link_to(t('.events'), events_path, id: 'activate_event', 
+                        class: 'btn btn-small')) %>
   </div>
-  <div class="span6">
-    <h2><%= t('.reversals', count: @event.reversals_count) %></h2>
-    <%= render 'reversals' %>
-  </div>
-</div>
+<% end %>
