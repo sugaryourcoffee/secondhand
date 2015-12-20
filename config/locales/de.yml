@@ -764,6 +764,9 @@ de:
   query:
     index:
       query_title: "Suchen"
+      action:      "Suche"
+      events:      "Veranstaltungen"
+    query_form:
       query_description: "Bitte geben Sie Ihren Suchbegriff für die Artikelsuche ein"
       keywords:    "Artikel"
       find:        "Suchen"

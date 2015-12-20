@@ -757,6 +757,9 @@ en:
   query:
     index:
       query_title: "Search"
+      action:      "search"
+      events:      "Events"
+    query_form:
       query_description: "Please enter your keyword to search items for"
       keywords:    "Item"
       find:        "Search"
@@ -765,7 +768,6 @@ en:
       size:        "Size"
       price:       "Price"
       list:        "List"
-
 
   shared:
     selling:

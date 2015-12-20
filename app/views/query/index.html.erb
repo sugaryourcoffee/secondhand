@@ -2,45 +2,13 @@
 
 <h1><%= t('.query_title') %></h1>
 
-<p> <%= t('.query_description') %> </p>
-
-<%= form_tag query_index_path, method: :get, class: "form-search" do %>
-  <div class="input-group input-group-lg">
-    <%= text_field_tag :keywords, params[:keywords], 
-                       autofocus: true, onfocus: "this.select()",
-                       placeholder: t('.keywords'),
-                       class: "span6 input-medium search-query" %>
-    <%= submit_tag t('.find'), class: "btn" %>
-  </div>
-<% end %>
-
-<% if @items %>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th><%= t('.item_number') %></th>
-        <th><%= t('.description') %></th>
-        <th><%= t('.size') %></th>
-        <th><%= t('.price') %></th>
-        <th><%= t('.list') %></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @items.each do |item| %>
-        <tr>
-          <td><%= item.item_number %></td>
-          <td><%= item.description %></td>
-          <td><%= item.size %></td>
-          <td><%= number_to_currency item.price %></td>
-          <td><%= link_to item.list.list_number, sold_items_list_path(item.list.id) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<% if @event %>
+  <%= render 'query_form' %>
 <% else %>
-  <p><%= t('.no_query_result') %></p>
-<% end %>
+  <div class="center well">
+    <%= t('missing_event_html', action: t('.action'), 
+          link: link_to(t('.events'), events_path, 
+                        id: 'activate_event', class: 'btn btn-small')) %>
+  </div>
+<% end %> 
+
