@@ -1360,7 +1360,7 @@ with
 ## Deployment
 Before deployment move the file 
 `/var/www/secondhand/shared/assests/manifest.yml` to 
-`/var/www/secondhand/current/assets\_manifest.yml`.
+`/var/www/secondhand/current/assets_manifest.yml`.
 
     $ cd /var/www/secondhand
     $ mv shared/assets/manifest.yml current/assets_manifest.yml
