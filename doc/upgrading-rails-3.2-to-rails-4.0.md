@@ -1023,7 +1023,13 @@ It should run without errors. In my case I got one error. I ran the spec in
 isolation then it passed. Then I ran all specs again and it passed.
 
 As we didn't have to change anything we can checkout the master tree and 
-proceed with deployment.
+proceed with deployment. But before we do we tag this version as a new major
+version `2.0.0`.
+
+    $ git checkout -b v2.0-stable
+    $ git push --set-upstream origin v2.0-stable
+    $ git tag -a v2.0.0 -m "Secondhand V2.0.0 - Release 2015-12-24"
+    $ git push --tags
 
 # Stage 3 - Deploying the application
 The final step is to deploy the application. We already have a running 
