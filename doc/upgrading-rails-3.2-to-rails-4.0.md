@@ -1357,7 +1357,7 @@ with
       run "cp #{config_dir}/database.yml #{current_path}/config/database.yml"
     end 
 
-## Deployment
+### Deployment
 Before deployment move the file 
 `/var/www/secondhand/shared/assests/manifest.yml` to 
 `/var/www/secondhand/current/assets_manifest.yml`.
@@ -1374,4 +1374,162 @@ And then run the database migrations
     $ cap staging deploy:migrations
 
 Go to [http://syc.dyndns.org:8082](http://syc.dyndns.org:8082) to check up your newly deployed application.
+
+## Deploying to the production server
+At the production server we have slightly different situation as on the staging
+server. We need to first install new Ruby and Rails versions. The list shows 
+the steps we have to take
+
+* Install Ruby 2.0.0
+* Install Rails 4.0.13
+* Set up Apache 2 to point to the new Ruby and Rails version
+* Move the manifest file to the current application directory
+* Adjust `config/deploy/production.rb`
+* Deploy the application
+* Migrate the database
+
+### Install Ruby 2.0.0 and Rails 4.0.13 on the production server
+First we ssh to the production server
+
+    saltspring$ ssh secondhand@mercury
+
+Before installation we check whether we have the latest RVM installed. If not
+it would potentially not find the latest Ruby version. To upgrade to the latest
+RVM version do
+
+    mercury$ rvm get head
+
+If you get an error about the key just follow the instructions RVM gives you.
+
+After having installed the newest RVM version we proceed with installing and 
+activating Ruby 2.0.0
+
+    mercury$ rvm install 2.0.0 && rvm use 2.0.0
+
+Then we create a gemset
+
+    mercury$ rvm gemset create rails4013
+
+and switch to the gemset
+
+    mercury$ rvm ruby-2.0.0-p643@rails4013
+
+Finally we install Rails 4.0.13
+
+    mercury$ gem install rails --version 4.0.13 --no-ri --no-rdoc
+
+### Setup Apache 2
+Change the default Ruby in `/etc/apache2/apache2.conf` from
+
+    <IfModule mod_passenger.c>
+      PassengerRoot /home/secondhand/.rvm/gems/ruby-1.9.3-p448@rails3211/gems/passenger-5.0.8
+      PassengerDefaultRuby /home/secondhand/.rvm/wrappers/ruby-1.9.3-p448@rails3211/ruby
+    </IfModule>
+
+so it looks like the following
+
+    <IfModule mod_passenger.c>
+      PassengerRoot /home/secondhand/.rvm/gems/ruby-1.9.3-p448@rails3211/gems/passenger-5.0.8
+      PassengerDefaultRuby /home/secondhand/.rvm/gems/ruby-2.0.0-p643@rails4013/wrappers/ruby
+    </IfModule>
+
+As we have only one application running we don't need to change 
+`/etc/apache2/sites-available/secondhand.conf`.
+
+In order to make the changes take effect we have to restart Apache 2 with
+
+    mercury$ sudo apachectl restart
+
+### Move manifest.yml
+Next we need to move `manifest.yml` to the current release
+
+`/home/secondhand/secondhand.mercury/shared/assests/manifest.yml` to 
+`/home/secondhand/secondhand.mercury/current/assets_manifest.yml`.
+
+    $ cd /home/secondhand/secondhand.mercury
+    $ mv shared/assets/manifest.yml current/assets_manifest.yml
+
+### Adjust `config/deploy/production.rb`
+We have to process changes in `config/deploy/production.rb` as shown below.
+
+replace the value of the `rvm_ruby_string`
+
+    set :rvm_ruby_string, '1.9.3' 
+    
+with the new gemset
+
+    set :rvm_ruby_string, '2.0.0@rails4013'
+
+This will ensure that the new used Ruby version will be installed in 
+`shared/bundle/ruby/`. If you just use `2.0.0` you will get an error like
+
+     * 2015-12-24 08:14:16 executing `bundle:install`
+     * alot of output
+    ** [out :: secondhand.mercury] ERROR: Gem bundler is not installed, run `gem install bundler` firrst.
+
+This is because Capistrano will use the Ruby version that is available in
+`shared/bundle/ruby` which before deployment is `1.9.3` from previous 
+deployments before we upgraded.
+
+Then replace
+
+    after 'deploy:create_symlink', 'copy_database_yml'
+
+    desc "copy shared/database.yml to current/config/database.yml"
+    task :copy_database_yml do
+      config_dir = "#{shared_path}/config"
+
+      unless run("if [ -f '#{config_dir}/database.yml' ]; 
+                    then echo -n 'true'; 
+                  fi")
+        run "mkdir -p #{config_dir}" 
+        upload("config/database.yml", "#{config_dir}/database.yml")
+      end
+
+      run "cp #{config_dir}/database.yml #{current_path}/config/database.yml"
+    end
+
+with
+
+    before 'deploy:assets:precompile', 'copy_database_yml_to_release_path'
+    after 'deploy:create_symlink', 'copy_database_yml'
+
+    desc "copy shared/database.yml to RELEASE_PATH/config/database.yml"
+    task :copy_database_yml_to_release_path do
+      config_dir = "#{shared_path}/config"
+
+      unless run("if [ -f '#{config_dir}/database.yml' ]; 
+                    then echo -n 'true'; 
+                  fi")
+        run "mkdir -p #{config_dir}" 
+        upload("config/database.yml", "#{config_dir}/database.yml")
+      end
+
+      run "cp #{config_dir}/database.yml #{release_path}/config/database.yml"
+    end
+
+    desc "copy shared/database.yml to current/config/database.yml"
+    task :copy_database_yml do
+      config_dir = "#{shared_path}/config"
+
+      unless run("if [ -f '#{config_dir}/database.yml' ]; then 
+                    echo -n 'true'; 
+                  fi")
+        run "mkdir -p #{config_dir}" 
+        upload("config/database.yml", "#{config_dir}/database.yml")
+      end
+
+      run "cp #{config_dir}/database.yml #{current_path}/config/database.yml"
+    end 
+
+### Deployment
+Now it is save to deploy your application with
+
+    $ cap production deploy
+
+And then run the database migrations
+
+    $ cap production deploy:migrations
+
+Go to [http://syc.dyndns.org:8080](http://syc.dyndns.org:8080) to check up your newly deployed application.
 
