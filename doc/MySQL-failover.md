@@ -37,9 +37,6 @@ master server
 
     bind-address = 192.168.178.61
 
-This configuration accepts connections on all IPv4 host interfaces. We could
-also explicitly set the IP address that we want to bind the server to.
-
 After changing the configuration we have to restart the server
 
     $ sudo service mysql restart
