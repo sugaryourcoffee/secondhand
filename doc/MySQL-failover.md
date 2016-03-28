@@ -1,4 +1,4 @@
-Failover MySQL and Rails
+Fail over MySQL and Rails
 ========================
 We have two machines with each having a MySQL server and the Rails application
 running Secondhand. One of the servers is the master with IP address 
@@ -20,7 +20,7 @@ assuming we have both servers running with MySQL and Secondhand
   * Check the connection from the slave to the master database
   * On the MySQL slave set the server ID and bind address
   * Configure the master server
-* Restore the masterdatabse on the MySQL slave
+* Restore the master database on the MySQL slave
 * Start replication on the MySQL slave
 
 Configure the MySQL server
@@ -82,7 +82,7 @@ by setting the *server-id* and the *bind-address* of the slave
 
     uranus$ sudo vi /etc/mysql/my.cnf
 
-We ajdust my.conf to
+We adjust my.cnf to
 
     server-id = 2
     bind-address = 192.168.178.66
@@ -90,7 +90,7 @@ We ajdust my.conf to
 The server-id has to be unique. We just increment for each slave the IP address.
 Our master has the server-id 1 and our slave 2.
 
-After the configuration we have restart the server in order the changes take
+After the configuration we have to restart the server in order the changes take
 effect
 
     uranus$ sudo service mysql restart
@@ -108,7 +108,7 @@ user to connect
 Restore database on server
 --------------------------
 We now restore the previously dumped database from the server on the slave. This
-will include the logfile name and logfile position.
+will include the log file name and log file position.
 
     development$ ssh uranus
 
@@ -138,7 +138,7 @@ We can check the slave status with
 
 Sources
 -------
-(MySQL replication - YouTube)[https://www.youtube.com/watch?v=JXDuVypcHNA]
-(High Performance MySQL - O'Reilly)[http://shop.oreilly.com/product/0636920022343.do]
-(Deploying Rails Applications - Pragmatic Programmer)[https://pragprog.com/book/cbdepra/deploying-rails]
+[MySQL replication - YouTube](https://www.youtube.com/watch?v=JXDuVypcHNA)
+[High Performance MySQL - O'Reilly](http://shop.oreilly.com/product/0636920022343.do)
+[Deploying Rails Applications - Pragmatic Programmer](https://pragprog.com/book/cbdepra/deploying-rails)
 
