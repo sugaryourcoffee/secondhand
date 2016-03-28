@@ -138,7 +138,7 @@ We can check the slave status with
 
 Sources
 -------
-[MySQL replication - YouTube](https://www.youtube.com/watch?v=JXDuVypcHNA)
-[High Performance MySQL - O'Reilly](http://shop.oreilly.com/product/0636920022343.do)
-[Deploying Rails Applications - Pragmatic Programmer](https://pragprog.com/book/cbdepra/deploying-rails)
+* [MySQL replication - YouTube](https://www.youtube.com/watch?v=JXDuVypcHNA)
+* [High Performance MySQL - O'Reilly](http://shop.oreilly.com/product/0636920022343.do)
+* [Deploying Rails Applications - Pragmatic Programmer](https://pragprog.com/book/cbdepra/deploying-rails)
 
