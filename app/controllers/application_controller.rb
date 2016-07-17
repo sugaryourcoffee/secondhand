@@ -56,10 +56,20 @@ class ApplicationController < ActionController::Base
   def accept_terms_of_use
     event = Event.find_by(active: true)
     conditions = Conditions.find_by(active: true)
+    reset_user_acceptance_if_is_older_than(event)
     needs_renewal = (current_user && current_user.terms_of_use.nil? ||
                     event && event.created_at > current_user.terms_of_use) &&
                    !(current_user.admin? || current_user.operator)
     redirect_to display_terms_of_use_path if conditions && needs_renewal
+  end
+
+  def reset_user_acceptance_if_is_older_than(event)
+      user = current_user
+      user.update!(terms_of_use: nil) if event && 
+                                         user &&
+                                         user.terms_of_use &&
+                                         event.created_at > user.terms_of_use
+      current_user = user
   end
 
   def set_i18n_locale_from_params
