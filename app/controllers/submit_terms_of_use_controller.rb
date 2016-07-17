@@ -28,15 +28,6 @@ class SubmitTermsOfUseController < ApplicationController
       end
     end
 
-    def load_user
-      @user = current_user
-      event = Event.find_by(active: true)
-      @user.update!(terms_of_use: nil) if event && 
-                                          @user &&
-                                          @user.terms_of_use &&
-                                          event.created_at > @user.terms_of_use
-    end
-
     def create_buttons(first_page, last_page)
       buttons = []
       buttons << :next if @page.number < last_page
