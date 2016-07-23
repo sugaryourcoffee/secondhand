@@ -4,7 +4,7 @@
 # field and the following 2 digits to the #search_item_number field. If the
 # size is unequal to 6 the original value is left in the field. The 6th value
 # is the check digit which is currently not checked
-$(document).ready ->
+jQuery ->
   $('#search_list_number').keydown (e) ->
     if e.keyCode == 13
       value = $(this).val()
