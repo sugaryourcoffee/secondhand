@@ -10,6 +10,8 @@ gem 'prawn-table', '~> 0.2.2'
 gem 'syc-barcode', '~> 0.0.3'
 gem 'net-ssh', '~> 2.9.2'
 gem 'turbolinks'
+# SYC extension in order to make JavaScript links active after page load
+gem 'jquery-turbolinks'
 
 # TODO Temporarily use protected_attribute gem and then migrate to strong
 # prameters
