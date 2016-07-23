@@ -65,7 +65,7 @@ class ListsController < ApplicationController
   def send_list
     load_list
     send_and_mark_list_as_sent 
-    save_list(@user, notice(".send_list")) or redirect_to_user
+    save_list(@user, make_notice(".send_list")) or redirect_to_user
   end
 
 #  def send_list
@@ -137,7 +137,7 @@ class ListsController < ApplicationController
   def create
     build_list
     reset_sent_on
-    save_list(@list, notice(".created", model)) or render 'new'
+    save_list(@list, make_notice(".created", model)) or render 'new'
   end
 
   # POST /lists
@@ -173,7 +173,7 @@ class ListsController < ApplicationController
     load_list
     build_list
     reset_sent_on
-    save_list(return_url, notice(".updated", model)) or render 'edit'
+    save_list(return_url, make_notice(".updated", model)) or render 'edit'
   end
 
 #  def update
@@ -301,7 +301,7 @@ class ListsController < ApplicationController
     end
 
     def redirect_to_user
-      redirect_to @user, alert: notice('.send_list_error') 
+      redirect_to @user, alert: make_notice('.send_list_error') 
       #I18n.t('.send_list_error') 
     end
 
@@ -326,12 +326,12 @@ class ListsController < ApplicationController
       if @list.errors.any?
         flash[:error] = @list.errors.full_messages.first
       else
-        flash[:notice] = notice('.destroyed', model) 
+        flash[:notice] = make_notice('.destroyed', model) 
         #I18n.t('.destroyed', model: model)
       end
     end
 
-    def notice(notice, model=nil)
+    def make_notice(notice, model=nil)
       model ? I18n.t("#{notice}", model: model) : I18n.t("#{notice}")
     end
 
