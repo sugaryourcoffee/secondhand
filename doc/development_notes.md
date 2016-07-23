@@ -260,3 +260,65 @@ branch into it
     $ git merge new_function_name
     $ git push
 
+Selenium Webdriver with Firefox
+===============================
+After upgrading Firefox to 47.0 the Selenium webdriver is not working anymore.
+It opens the Firefox default window but doesn't go to the requested website.
+After the specs ran it shows an error message like
+
+     Failure/Error: sign_in(admin)
+     Selenium::WebDriver::Error::WebDriverError:
+     unable to obtain stable firefox connection in 60 seconds (127.0.0.1:7055)
+
+First we update to the newest Selenium Webdriver. To do that we create a new 
+Git branch
+
+    $ git checkout -b selenium-webdriver-upgrade
+
+Then we update the selenium-webdriver gem with
+   
+    $ bundle update selenium-webdriver
+
+This will update the gem and all dependencies.
+
+When running the specs again the Firefox window doesn't show up anymore and 
+shows the error
+
+    Failure/Error: sign_in user
+    Errno::ECONNREFUSED:
+      Connection refused - connect(2)
+
+This issue results from an incompatibility of selenium-webdriver 2.53.4 and
+Firefox 47.0 but selenium-webdriver runs with Firefox 47.0.1 so we need to 
+update to that version. But unfortunately it is not available in the Ubuntu
+repository. So we need to install it manually as describe [here](http://libre-software.net/how-to-install-firefox-on-ubuntu-linux-mint/).
+Following is a summary of the installation steps.
+
+We download Firefox from [https://www.mozilla.org/de/firefox/channel/#firefox](https://www.mozilla.org/de/firefox/channel/#firefox).
+
+Then we go to the download location and extract the bz2 file
+
+    $ cd Downloads
+    $ tar xjf firefox-47.0.1.tar.bz2
+
+Next we move the directory to `/opt/firefox`. If this already exists we rename
+the old one to `/opt/firefox-47`.
+
+    $ mv firefox /opt/firefox-47.0.1
+
+We want to use Firefox 47.0.1 as the default browser and rename the existing 
+firefox launcher
+
+    $ sudo mv /usr/bin/firefox /usr/bin/firefox-47
+
+and create a symbolic link to the firefox launcher for version 47.0.1
+
+    $ sudo ln -s /opt/firefox-47.0.1/firefox /usr/bin/firefox
+
+From command line we can check that we are now start version 47.0.1
+
+    $ firefox --version
+    Mozill Firefox 47.0.1
+
+If we run now `rspec` it should work as before.
+
