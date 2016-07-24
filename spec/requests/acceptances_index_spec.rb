@@ -108,6 +108,12 @@ describe "Acceptances index page" do
         page.current_path.should eq edit_acceptance_path(locale: :en, id: list)
       end
 
+      it "should show acceptance diaglog when scanning label", js: true do
+        list.items.create!(item_attributes)
+        fill_in "List", with: barcode_encoding_for(list, list.items.first)
+        page.current_path.should eq edit_acceptance_path(locale: :en, id: list)
+      end
+
       it "should show acceptance dialog when searching for an accepted list" do
         fill_in "List", with: accepted_list.list_number
         click_button "Search"

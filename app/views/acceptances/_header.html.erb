@@ -5,8 +5,8 @@
         <p>
           <%= label_tag :search_list_number, t('.select_list') %>
           <%= text_field_tag :search_list_number, params[:search_list_number], 
-                             class: "input-medium search-query", 
-                             type: "number" %>
+               class: "input-medium search-query search-acceptance-list-number",
+               type: "number" %>
           <%= submit_tag t('.search'), name: nil, class: "btn" %>
         </p>
       <% end %>
