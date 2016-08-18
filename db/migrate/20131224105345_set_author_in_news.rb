@@ -7,7 +7,7 @@ class SetAuthorInNews < ActiveRecord::Migration
 
   def up
     author = User.find_by_admin(true)
-    News.update_all(user_id: author.id)
+    News.update_all(user_id: author.id) if author
   end
 
   def down

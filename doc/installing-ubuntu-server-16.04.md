@@ -24,8 +24,9 @@ When prompted for _Software selection_ select
 4. Install Nodejs
 5. Install RVM
 6. Install Rails
-7. Install Passenger
-8. Configure Apache 2
+7. Install Git
+8. Install Passenger
+9. Configure Apache 2
 
 ## Create an application directory
 Apache 2's default application directory is at `/var/www`. There we add the 
@@ -160,7 +161,8 @@ to Ubunter 16.04 Server LTS.
 If the deployment is canceled because of an credential issue try 
 `ssh-add -l`. If it doesn't return a fingerprint but instead saying 
 `The agent has no identities` then redo `ssh-add` but this time with the path to
-you key `$ ssh-add .ssh/id_rsa`.
+you key `$ ssh-add .ssh/id_rsa`. Then check on the server wheather you can
+connect to github with `$ ssh -T git@github.com`.
 
 ### MySQL gem cannot be installed
 When capistrano is executing bunlder on the backup server an error might occur
