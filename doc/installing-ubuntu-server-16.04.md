@@ -41,6 +41,21 @@ Now we can create the directory which will be owned by the user
 
     $ sudo mkdir /var/www/secondhand
 
+## Install MySQL
+We have to install MySQL and create the database. Make sure not to only install
+the _mysql-server_ but also the _libmysqlclient-dev_ otherwise bundler will fail
+to install the _mysql2_ gem.
+
+    $ sudo apt-get install mysql-server libmysqlclient-dev
+
+Next we have to create a database
+
+    $ mysql -uroot -p
+    mysql> create database secondhand_production default character set utf8;
+    mysql> grant all privileges on secondhand_production.* 
+        -> to 'pierre'@'localhost' identified by 'secret';
+    mysql> exit
+
 ## Install Passenger
 
     $ gem install passenger
@@ -101,6 +116,11 @@ In this step we conduct following ajustments
 4. Add a _backup_ group to `config/database.yml`
 5. Add the server hostname _backup.secondhand.jupiter_ to `/etc/hosts`
 
+# Adjust `config/deploy/backup.rb`
+Set the _rvm_ruby_string_ to the gemset where we have installed rails
+
+    set :rvm_ruby_string, '2.0.0@rails4013'
+
 # Deploy to the backup server
 During deployment the application is downloaded from Github. To download from
 Github a rsa key is required that is known to Github. We use the key from our
@@ -127,8 +147,71 @@ commands to prepare deployment
     $ cap backup deploy:check
     $ cap backup deploy:cold
 
+## Errors during deployment
+Here are listed some errors that might come up during deployment.
+
+### No connection to Github
 If the deployment is canceled because of an credential issue try 
 `ssh-add -l`. If it doesn't return a fingerprint but instead saying 
 `The agent has no identities` then redo `ssh-add` but this time with the path to
 you key `$ ssh-add .ssh/id_rsa`.
+
+### MySQL gem cannot be installed
+When capistrano is executing bunlder on the backup server an error might occur
+saying
+
+    * 2016-08-18 14:06:30 executing `bundle:install'                            
+    * executing "cd /var/www/secondhand/releases/20160818120630 && bundle 
+    install --gemfile /var/www/secondhand/releases/20160818120630/Gemfile 
+    --path /var/www/secondhand/shared/bundle --deployment --quiet 
+    --without development test"         
+      servers: ["backup.secondhand.jupiter"]                                    
+      [backup.secondhand.jupiter] executing command                             
+    ** [out :: backup.secondhand.jupiter] An error occurred while installing 
+    mysql2 (0.3.20), and Bundler cannot continue.                               
+    ** [out :: backup.secondhand.jupiter] Make sure that 
+   `gem install mysql2 -v '0.3.20'` succeeds before bundling.                   
+      command finished in 12435ms                                               
+    *** [deploy:update_code] rolling back
+
+This most likely is because you are missing _libmysqlclient_dev_ on the backup
+server. To resolve this issue
+
+    $ sudo apt-get install libmysqlclient-dev
+
+### MySQL access denied
+If the deployment is aborted during _deploy:migrate_ with the error 
+`MySQL2::Error, Access denied for user` then you probably don't have created
+the database.
+
+### Mysql2::Error: All parts of a PRIMARY KEY must be NOT NULL
+Ubuntu Server 16.04 LTS ships with MySQL 5.7.13. Since version 5.7 it is not 
+allowed to have PRIMARY KEYs to be NULL. Here we are using Rails 4.0.13 and we
+have to monkey patch the _Mysql2Adapter_ to fix this.
+
+The error during deployment is showing
+
+    * 2016-08-18 15:22:36 executing `deploy:migrate'                          
+    * executing "cd /var/www/secondhand/releases/20160818132225 && bundle exec
+    rake RAILS_ENV=backup  db:migrate"                                        
+      servers: ["backup.secondhand.jupiter"]
+      [backup.secondhand.jupiter] executing command
+    *** [err :: backup.secondhand.jupiter] rake aborted!
+    *** [err :: backup.secondhand.jupiter] StandardError: An error has occurred,
+    all later migrations canceled:
+    *** [err :: backup.secondhand.jupiter]
+    *** [err :: backup.secondhand.jupiter] Mysql2::Error: All parts of a PRIMARY
+    KEY must be NOT NULL; if you need NULL in a key, use UNIQUE 
+    instead: CREATE TABLE `events` (`id` int(11) DEFAULT NULL auto_increment 
+    PRIMARY KEY, `title` varchar(255), `event_date` datetime, `location` 
+    varchar(255), `fee` decimal(2,2), `deduction` decimal(2,2), `provision` 
+    decimal(2,2), `max_lists` int(11), `max_items_per_list` int(11), 
+    `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB 
+
+The monkey patch is to be saved to `config/initializers/mysql_adapter`
+
+    class ActiveRecord::ConnectionAdapters::Mysql2Adapter
+      NATIVE_DATABASE_TYPES[:primary_key] = "int(11) auto_increment PRIMARY KEY"
+    end
+
 
