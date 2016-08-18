@@ -1,6 +1,9 @@
-# Install Ubuntu Server 16.04 on a Dell Poweredge T130 server hardware
-To install Ubuntu Server 16.04 there are some easy steps to follow. We are 
+# Install Ubuntu Server on a Dell Poweredge T130 server hardware
+To install Ubuntu Server there are some easy steps to follow. We are 
 using a Dell PowerEdge T130. The manuals can be found at [dell.com/poweredgemanuals](http://www.dell.com/support/home/de/de/debsdt1/product-support/product/poweredge-t130/research)
+
+The current Secondhand application is best hosted on a Ubuntu Server 14.04 LTS
+but we will also point out some hints in regard to 16.04 LTS.
 
 1. Download ISO file from [ubuntu.com](http://www.ubuntu.com/download/server/install-ubuntu-server)
 2. Burn CD with the downloaded ISO file
@@ -64,8 +67,8 @@ Next we have to create a database
 There might be missing some modules and the installer will tell which are
 missing and have to be installed.
 
-    $ sudo apt-get install libcurl4-openssl-dev apache2-dev libapr1-dev\
-    libaprutil1-dev
+    $ sudo apt-get install libcurl4-openssl-dev apache2-threaded-dev \
+    libapr1-dev libaprutil1-dev
 
 Even though the installer might tell you to install `apache2-threaded-dev` in
 Ubuntu 16.04 you have to use `apache2-dev`.
@@ -90,12 +93,12 @@ following message:
     Press ENTER when you are done editing.
 
 Add the above code snippet to `/etc/apache2/conf-available/passenger.conf` and 
-run `$ apache2 a2enconf`.
+run `$ sudo a2enconf passenger` and `service apache2 reload`.
 
 ## Configure Apache 2
-Create a virtual host in `/etc/apache2/sites-available/secondhand.conf
+Create a virtual host in `/etc/apache2/sites-available/secondhand.conf`
 
-    <VirtualHost *:8083>
+    <VirtualHost *:8086>
       DocumentRoot /var/www/secondhand/current/public
       Servername backup.secondhand.jupiter
       PassengerRuby /home/pierre/.rvm/gems/ruby-2.0.0-p648@rails4013/wrappers/ruby 
@@ -107,7 +110,9 @@ Create a virtual host in `/etc/apache2/sites-available/secondhand.conf
       RackEnv backup
     </VirtualHost>
 
-# Adjust development environment
+Then run `$ sudo a2ensite secondhand` and `service apache2 reload`.
+
+# Adjust the development environment
 In this step we conduct following ajustments
 
 1. Create a backup environment in `config/environments/backup.rb`
@@ -117,7 +122,7 @@ In this step we conduct following ajustments
 5. Add the server hostname _backup.secondhand.jupiter_ to `/etc/hosts`
 
 # Adjust `config/deploy/backup.rb`
-Set the _rvm_ruby_string_ to the gemset where we have installed rails
+Set the `rvm_ruby_string` to the gemset where we have installed rails
 
     set :rvm_ruby_string, '2.0.0@rails4013'
 
@@ -148,7 +153,8 @@ commands to prepare deployment
     $ cap backup deploy:cold
 
 ## Errors during deployment
-Here are listed some errors that might come up during deployment.
+Here are listed some errors that might come up during deployment. Some specific
+to Ubunter 16.04 Server LTS.
 
 ### No connection to Github
 If the deployment is canceled because of an credential issue try 
@@ -187,7 +193,8 @@ the database.
 ### Mysql2::Error: All parts of a PRIMARY KEY must be NOT NULL
 Ubuntu Server 16.04 LTS ships with MySQL 5.7.13. Since version 5.7 it is not 
 allowed to have PRIMARY KEYs to be NULL. Here we are using Rails 4.0.13 and we
-have to monkey patch the _Mysql2Adapter_ to fix this.
+have to monkey patch the _Mysql2Adapter_ to fix this. In later versions 4.1 and
+above this is fixed.
 
 The error during deployment is showing
 
@@ -214,4 +221,6 @@ The monkey patch is to be saved to `config/initializers/mysql_adapter`
       NATIVE_DATABASE_TYPES[:primary_key] = "int(11) auto_increment PRIMARY KEY"
     end
 
+But this is not reliably working in all cases. If it doesn't consider upgrading 
+or using Ubuntu 14.04 Server.
 
