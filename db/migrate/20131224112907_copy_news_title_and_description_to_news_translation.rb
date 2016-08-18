@@ -1,7 +1,7 @@
 class CopyNewsTitleAndDescriptionToNewsTranslation < ActiveRecord::Migration
 
   class NewsTranslation < ActiveRecord::Base
-    attr_accessible :title, :description, :language, :news_id
+#    attr_accessible :title, :description, :language, :news_id
 
     belongs_to :news
   end
