@@ -21,12 +21,14 @@ When prompted for _Software selection_ select
 1. Install Apache 2
 2. Create the application directory
 3. Install MySQL
-4. Install Nodejs
-5. Install RVM
-6. Install Rails
-7. Install Git
-8. Install Passenger
-9. Configure Apache 2
+4. Install Posfix
+5. Setup printer
+6. Install Nodejs
+7. Install RVM
+8. Install Rails
+9. Install Git
+10. Install Passenger
+11. Configure Apache 2
 
 ## Create an application directory
 Apache 2's default application directory is at `/var/www`. There we add the 
@@ -123,7 +125,7 @@ In this step we conduct following ajustments
 4. Add a _backup_ group to `config/database.yml`
 5. Add the server hostname _backup.secondhand.jupiter_ to `/etc/hosts`
 
-# Adjust `config/deploy/backup.rb`
+## Adjust `config/deploy/backup.rb`
 Set the `rvm_ruby_string` to the gemset where we have installed rails
 
     set :rvm_ruby_string, '2.0.0@rails4013'
@@ -183,7 +185,7 @@ saying
       command finished in 12435ms                                               
     *** [deploy:update_code] rolling back
 
-This most likely is because you are missing _libmysqlclient_dev_ on the backup
+This most likely is because you are missing `libmysqlclient_dev` on the backup
 server. To resolve this issue
 
     $ sudo apt-get install libmysqlclient-dev
