@@ -102,7 +102,8 @@ Create a virtual host in `/etc/apache2/sites-available/secondhand.conf`
     <VirtualHost *:8086>
       DocumentRoot /var/www/secondhand/current/public
       Servername backup.secondhand.jupiter
-      PassengerRuby /home/pierre/.rvm/gems/ruby-2.0.0-p648@rails4013/wrappers/ruby 
+      PassengerRuby /home/pierre/.rvm/gems/ruby-2.0.0-p648@rails4013/wrappers/\
+      ruby 
       <Directory /var/www/secondhand/public>
         AllowOverride all
         Options -MultiViews
@@ -224,5 +225,11 @@ The monkey patch is to be saved to `config/initializers/mysql_adapter`
     end
 
 But this is not reliably working in all cases. If it doesn't consider upgrading 
-or using Ubuntu 14.04 Server.
+to Rais 4.1 or using Ubuntu 14.04 Server.
+
+# Configuring Failover
+In case our secondhand master server mercury is crashing we want to point to our
+secondhand backup server jupiter. We already installed secondhand on jupiter.
+Next we need to start replicating the database from mercury. How this can be
+accomplished is described in [MySQL-failover](https://github.com/sugaryourcoffee/secondhand/blob/master/doc/MySQL-failover.md).
 

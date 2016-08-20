@@ -85,7 +85,8 @@ We adjust my.cnf to
     bind-address = 192.168.178.66
 
 The server-id has to be unique. We just increment for each slave the IP address.
-Our master has the server-id 1 and our slave 2.
+Our master has the server-id 1 and our slave 2. If we add additional slaves we
+just increment each slave's server-id by 1.
 
 After the configuration we have to restart the server in order the changes take
 effect
@@ -102,8 +103,8 @@ user to connect
         -> master_password='slavepass';
     mysql> exit
 
-Restore database on server
---------------------------
+Restore database on slave server
+--------------------------------
 We now restore the previously dumped database from the server on the slave. This
 will include the log file name and log file position.
 
@@ -132,6 +133,25 @@ On the slave server uranus we start the replication
 We can check the slave status with
 
     mysql> show slave status\G;
+
+Adding additional slaves
+------------------------
+If we want to have additional slaves for replicating the master database then we
+just follow the steps above, that is
+
+On the master server
+
+* dump the master database and copy it to the new slave server
+
+On the slave server
+
+* set `server-id` to a unique positive integer and set the bind-address to the
+  master server's IP address. Both is done in /etc/mysql/my.cnf 
+* restart the MySQL server
+* configure the master server in mysql
+* create the database in MySQL
+* restore the dumped database into MySQL
+* start the replication
 
 Sources
 -------
