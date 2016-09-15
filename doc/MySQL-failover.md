@@ -103,6 +103,10 @@ user to connect
         -> master_password='slavepass';
     mysql> exit
 
+Note: If your MySQL server or your slave gets a new IP address you have to 
+adjust the `bind-address` in **/etc/mysql/my.conf** and in **mysql** 
+accordingly.
+
 Restore database on slave server
 --------------------------------
 We now restore the previously dumped database from the server on the slave. This
@@ -146,7 +150,7 @@ On the master server
 On the slave server
 
 * set `server-id` to a unique positive integer and set the bind-address to the
-  master server's IP address. Both is done in /etc/mysql/my.cnf 
+  slave server's IP address. Both is done in /etc/mysql/my.cnf 
 * restart the MySQL server
 * configure the master server in mysql
 * create the database in MySQL
