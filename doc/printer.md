@@ -47,6 +47,9 @@ to the `/etc/cups/cupsd.conf` configuration file
 
     Listen 192.168.178.66:631
 
+Note: When the IP changes you have to adjust the IP-address in the configuration
+file.
+
 We also want to have access to the CUPS web interface from all machines within
 the local network to be able to conduct administration tasks on the CUPS server.
 We make following additions to `/etc/cups/cupsd.conf` in the 
