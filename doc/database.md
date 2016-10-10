@@ -45,6 +45,7 @@ Then we select the database
     Database changed
 
 First we list all tables
+
 ´´´
 +---------------------------------+
 | Tables_in_secondhand_production |
