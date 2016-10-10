@@ -46,85 +46,78 @@ Then we select the database
 
 First we list all tables
 
-´´´
-+---------------------------------+
-| Tables_in_secondhand_production |
-+---------------------------------+
-| carts                           |
-| conditions                      |
-| events                          |
-| items                           |
-| line_items                      |
-| lists                           |
-| news                            |
-| news_translations               |
-| pages                           |
-| reversals                       |
-| schema_migrations               |
-| sellings                        |
-| terms_of_uses                   |
-| users                           |
-+---------------------------------+
-14 rows in set (0.00 sec)
+
+> +---------------------------------+
+> | Tables_in_secondhand_production |
+> +---------------------------------+
+> | carts                           |
+> | conditions                      |
+> | events                          |
+> | items                           |
+> | line_items                      |
+> | lists                           |
+> | news                            |
+> | news_translations               |
+> | pages                           |
+> | reversals                       |
+> | schema_migrations               |
+> | sellings                        |
+> | terms_of_uses                   |
+> | users                           |
+> +---------------------------------+
+> 14 rows in set (0.00 sec)
 ```
 
 To show the schema of a table run `desc`
 
     mysql> desc events;
 
-```
-+-----------------------+--------------+------+-----+---------+----------------+
-| Field                 | Type         | Null | Key | Default | Extra          |
-+-----------------------+--------------+------+-----+---------+----------------+
-| id                    | int(11)      | NO   | PRI | NULL    | auto_increment |
-| title                 | varchar(255) | YES  |     | NULL    |                |
-| event_date            | datetime     | YES  |     | NULL    |                |
-| location              | varchar(255) | YES  |     | NULL    |                |
-| fee                   | decimal(5,2) | YES  |     | NULL    |                |
-| deduction             | decimal(5,2) | YES  |     | NULL    |                |
-| provision             | decimal(4,2) | YES  |     | NULL    |                |
-| max_lists             | int(11)      | YES  |     | NULL    |                |
-| max_items_per_list    | int(11)      | YES  |     | NULL    |                |
-| created_at            | datetime     | NO   |     | NULL    |                |
-| updated_at            | datetime     | NO   |     | NULL    |                |
-| active                | tinyint(1)   | YES  |     | 0       |                |
-| list_closing_date     | date         | YES  |     | NULL    |                |
-| delivery_date         | date         | YES  |     | NULL    |                |
-| delivery_start_time   | time         | YES  |     | NULL    |                |
-| delivery_end_time     | time         | YES  |     | NULL    |                |
-| delivery_location     | varchar(255) | YES  |     | NULL    |                |
-| collection_date       | date         | YES  |     | NULL    |                |
-| collection_start_time | time         | YES  |     | NULL    |                |
-| collection_end_time   | time         | YES  |     | NULL    |                |
-| collection_location   | varchar(255) | YES  |     | NULL    |                |
-| information           | varchar(255) | YES  |     | NULL    |                |
-| alert_terms           | varchar(255) | YES  |     | NULL    |                |
-| alert_value           | int(11)      | YES  |     | 20      |                |
-+-----------------------+--------------+------+-----+---------+----------------+
-24 rows in set (0.00 sec)
-```
+
+> +-----------------------+--------------+------+-----+---------+---------------
+> | Field                 | Type         | Null | Key | Default | Extra         
+> +-----------------------+--------------+------+-----+---------+---------------
+> | id                    | int(11)      | NO   | PRI | NULL    | auto_increment
+> | title                 | varchar(255) | YES  |     | NULL    |               
+> | event_date            | datetime     | YES  |     | NULL    |               
+> | location              | varchar(255) | YES  |     | NULL    |               
+> | fee                   | decimal(5,2) | YES  |     | NULL    |               
+> | deduction             | decimal(5,2) | YES  |     | NULL    |               
+> | provision             | decimal(4,2) | YES  |     | NULL    |               
+> | max_lists             | int(11)      | YES  |     | NULL    |               
+> | max_items_per_list    | int(11)      | YES  |     | NULL    |               
+> | created_at            | datetime     | NO   |     | NULL    |               
+> | updated_at            | datetime     | NO   |     | NULL    |               
+> | active                | tinyint(1)   | YES  |     | 0       |               
+> | list_closing_date     | date         | YES  |     | NULL    |               
+> | delivery_date         | date         | YES  |     | NULL    |               
+> | delivery_start_time   | time         | YES  |     | NULL    |               
+> | delivery_end_time     | time         | YES  |     | NULL    |               
+> | delivery_location     | varchar(255) | YES  |     | NULL    |               
+> | collection_date       | date         | YES  |     | NULL    |               
+> | collection_start_time | time         | YES  |     | NULL    |               
+> | collection_end_time   | time         | YES  |     | NULL    |               
+> | collection_location   | varchar(255) | YES  |     | NULL    |               
+> | information           | varchar(255) | YES  |     | NULL    |               
+> | alert_terms           | varchar(255) | YES  |     | NULL    |               
+> | alert_value           | int(11)      | YES  |     | 20      |               
+> +-----------------------+--------------+------+-----+---------+---------------
+> 24 rows in set (0.00 sec)
+
 
     mysql> desc lists;
-```
-+-------------------+--------------+------+-----+---------+----------------+
-| Field             | Type         | Null | Key | Default | Extra          |
-+-------------------+--------------+------+-----+---------+----------------+
-| id                | int(11)      | NO   | PRI | NULL    | auto_increment |
-| list_number       | int(11)      | YES  |     | NULL    |                |
-| registration_code | varchar(255) | YES  |     | NULL    |                |
-| container         | varchar(255) | YES  |     | NULL    |                |
-| event_id          | int(11)      | YES  |     | NULL    |                |
-| user_id           | int(11)      | YES  |     | NULL    |                |
-| created_at        | datetime     | NO   |     | NULL    |                |
-| updated_at        | datetime     | NO   |     | NULL    |                |
-| sent_on           | datetime     | YES  |     | NULL    |                |
-| accepted_on       | datetime     | YES  |     | NULL    |                |
-| labels_printed_on | datetime     | YES  |     | NULL    |                |
-+-------------------+--------------+------+-----+---------+----------------+
-11 rows in set (0.00 sec)
-```
 
-
-
-
-
+> +-------------------+--------------+------+-----+---------+----------------+
+> | Field             | Type         | Null | Key | Default | Extra          |
+> +-------------------+--------------+------+-----+---------+----------------+
+> | id                | int(11)      | NO   | PRI | NULL    | auto_increment |
+> | list_number       | int(11)      | YES  |     | NULL    |                |
+> | registration_code | varchar(255) | YES  |     | NULL    |                |
+> | container         | varchar(255) | YES  |     | NULL    |                |
+> | event_id          | int(11)      | YES  |     | NULL    |                |
+> | user_id           | int(11)      | YES  |     | NULL    |                |
+> | created_at        | datetime     | NO   |     | NULL    |                |
+> | updated_at        | datetime     | NO   |     | NULL    |                |
+> | sent_on           | datetime     | YES  |     | NULL    |                |
+> | accepted_on       | datetime     | YES  |     | NULL    |                |
+> | labels_printed_on | datetime     | YES  |     | NULL    |                |
+> +-------------------+--------------+------+-----+---------+----------------+
