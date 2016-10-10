@@ -157,6 +157,20 @@ On the slave server
 * restore the dumped database into MySQL
 * start the replication
 
+Error Messages
+--------------
+If you get an error message saying
+
+    Mysql2::Error (Can't connect to local MySQL server through socket 
+    '/var/run/mysqld/mysqld.sock' (2)):
+
+Then you probably have the wrong IP address in you MySQL slave server. Check 
+that the IP address in /etc/mysql/my.conf is the IP address of the slave server
+itself.
+
+Changing IP address might happen when you retrieve your IP address from a new
+DHCP server.
+
 Sources
 -------
 * [MySQL replication - YouTube](https://www.youtube.com/watch?v=JXDuVypcHNA)
