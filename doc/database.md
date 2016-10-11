@@ -121,3 +121,68 @@ To show the schema of a table run `desc`
     +-------------------+--------------+------+-----+---------+----------------+
     11 rows in set (0.00 sec)
 
+    mysql> desc line_items;
+
+    +-------------+----------+------+-----+---------+----------------+
+    | Field       | Type     | Null | Key | Default | Extra          |
+    +-------------+----------+------+-----+---------+----------------+
+    | id          | int(11)  | NO   | PRI | NULL    | auto_increment |
+    | item_id     | int(11)  | YES  |     | NULL    |                |
+    | cart_id     | int(11)  | YES  |     | NULL    |                |
+    | reversal_id | int(11)  | YES  |     | NULL    |                |
+    | created_at  | datetime | NO   |     | NULL    |                |
+    | updated_at  | datetime | NO   |     | NULL    |                |
+    | selling_id  | int(11)  | YES  |     | NULL    |                |
+    +-------------+----------+------+-----+---------+----------------+
+    7 rows in set (0.00 sec)
+
+    mysql> desc items;
+
+    +-------------+--------------+------+-----+---------+----------------+
+    | Field       | Type         | Null | Key | Default | Extra          |
+    +-------------+--------------+------+-----+---------+----------------+
+    | id          | int(11)      | NO   | PRI | NULL    | auto_increment |
+    | item_number | int(11)      | YES  |     | NULL    |                |
+    | description | varchar(255) | YES  |     | NULL    |                |
+    | size        | varchar(255) | YES  |     | NULL    |                |
+    | price       | decimal(5,2) | YES  |     | NULL    |                |
+    | created_at  | datetime     | NO   |     | NULL    |                |
+    | updated_at  | datetime     | NO   |     | NULL    |                |
+    | list_id     | int(11)      | YES  |     | NULL    |                |
+    +-------------+--------------+------+-----+---------+----------------+
+    8 rows in set (0.00 sec)
+
+To do database queries we can do that with queries within the MySQL console or
+we can dump the database tables into text files and use an external program as
+[syc-svpro](https://github.org/gems/sycsvpro).
+
+To dump the database we use mysqldump with
+
+    $ mysqldump -upierre -p --tab=dump_dir secondhand_production
+
+In order to be able to dump the database tables into files we need the file 
+priviliges. We have to following command in MySQL
+
+    mysql> GRAND FILE *.* to 'pierre'@'localhost';
+
+Rather than useing syc-svpro we want to use generic MySQL commands to retrieve 
+the data an present it in a table.
+
+* Event name
+* Event date
+* Total value of lists
+* Count of lists
+* Count of registered and closed lists
+* Count of sellings
+* Revenue
+* Average revenue
+* Count of returns
+* Value of returns
+* Average value of returns
+* Profit
+
+Event | Date | Value | Lists | Closed | Sellings | Revenue | Profit
+----- | ---- | ----- | ----- | ------ | -------- | ------- | ------
+..    | ..   | ..    | ..    | ..     | ..       | ..      | ..
+
+
