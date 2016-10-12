@@ -185,4 +185,42 @@ Event | Date | Value | Lists | Closed | Sellings | Revenue | Profit
 ----- | ---- | ----- | ----- | ------ | -------- | ------- | ------
 ..    | ..   | ..    | ..    | ..     | ..       | ..      | ..
 
+First we want to retrieve the count of lists for each of the events
+
+    mysql> select e.title, count(l.id) lists 
+        -> from events e inner join lists l 
+        -> on l.event_id = e.id group by e.title;
+    +---------------------------------+-------+
+    | title                           | lists |
+    +---------------------------------+-------+
+    | Frühjahrsbörse Burgthann 2014   |   250 |
+    | Frühjahrsbörse Burgthann 2015   |   275 |
+    | Frühjahrsbörse Burgthann 2016   |   275 |
+    | Frühjahrsbörse Burgthann 2017   |   275 |
+    | Herbstbörse Burgthann 2013      |   232 |
+    | Herbstbörse Burgthann 2014      |   270 |
+    | Herbstbörse Burgthann 2015      |   275 |
+    | Herbstbörse Burgthann 2016      |   277 |
+
+    +---------------------------------+-------+
+    8 rows in set (0.01 sec)
+
+To get the value of the lists for each event
+
+    mysql> select e.title, sum(i.price) 
+        -> from events e inner join lists l 
+        -> on l.event_id = e.id inner join items i 
+        -> on i.list_id = l.id group by e.title;
+    +---------------------------------+--------------+
+    | title                           | sum(i.price) |
+    +---------------------------------+--------------+
+    | Frühjahrsbörse Burgthann 2014   |     25549.50 |
+    | Frühjahrsbörse Burgthann 2015   |     29361.50 |
+    | Frühjahrsbörse Burgthann 2016   |     30691.00 |
+    | Herbstbörse Burgthann 2013      |     27885.00 |
+    | Herbstbörse Burgthann 2014      |     32101.00 |
+    | Herbstbörse Burgthann 2015      |     32555.50 |
+    | Herbstbörse Burgthann 2016      |     32728.50 |
+    +---------------------------------+--------------+
+    7 rows in set (0.26 sec)
 
