@@ -207,12 +207,12 @@ First we want to retrieve the count of lists for each of the events
 
 To get the value of the lists for each event
 
-    mysql> select e.title, sum(i.price) 
+    mysql> select e.title, sum(i.price) value
         -> from events e inner join lists l 
         -> on l.event_id = e.id inner join items i 
         -> on i.list_id = l.id group by e.title;
     +---------------------------------+--------------+
-    | title                           | sum(i.price) |
+    | title                           | value        |
     +---------------------------------+--------------+
     | Frühjahrsbörse Burgthann 2014   |     25549.50 |
     | Frühjahrsbörse Burgthann 2015   |     29361.50 |
