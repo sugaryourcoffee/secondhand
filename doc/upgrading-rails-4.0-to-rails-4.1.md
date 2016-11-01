@@ -136,31 +136,35 @@ Finally we run our test and make sure everything runs without errors.
 
 If anything breaks make sure to first fix the error before moving on.
 
-## Update to the latest Rails 3.2 version
-We could start to upgrade our app from the current version to version 4.0, but 
+## Update to the latest Rails 4.0 version
+We could start to upgrade our app from the current version to version 4.1, but 
 it is advised to upgrade from the most current version. To find the most recent
 version we can issue
 
-    $ gem list ^rails$ --remote --all | grep -oP "3.2.\d{1,}"
-    3.2.22
-    3.2.21
-    3.2.20
+    $ gem list ^rails$ --remote --all | grep -oP "4.0(.\d{1,})*"
+    4.0.13
+    4.0.12
+    4.0.11.1
+    4.0.11
     ...
-    3.2.0
+    4.0.1
+    4.0.0
+    
+So it seems we are already on the most recent Rails version which is 4.0.13. 
 
-So the most recent Rails version is 3.2.22 that we want to update our 
-application to. The first step is to add the version to our *Gemfile*. We 
-replace the line `gem 'rails', '3.2.11'` with `gem 'rails' '3.2.22'`. Then we
-need to run
+To make this step complete we are assuming that we are on 4.0.12. So we would 
+are not on the latest version, and the first step is to add the version to our 
+*Gemfile* by replacng the line `gem 'rails', '4.0.12'` with 
+`gem 'rails' '4.0.13'`. Then we need to run
 
     $ bundle update rails
 
-Next run your tests with
+and run your tests with
 
     $ rspec
 
-If the update issues any errors, fix them and then run your tests. If you get 
-errors than try `$ rake db:test:prepare` and *rspec* again.
+If the update issues any errors, we have to fix them and then run the tests
+again. If you get errors than try `$ rake db:test:prepare` and *rspec* again.
 
 Only move on if all your tests pass without errors.
 
@@ -170,10 +174,10 @@ versions we want to merge the changes back to the master branch. We first
 checkout the master branch and then push them to github.
 
     $ git checkout master
-    $ git merge rails4-0
+    $ git merge rails4-1
     $ git push
 
-Now we are ready to actually upgrade to Rails 4.0.
+Now we are ready to actually upgrade to Rails 4.1.
 
 # Stage 2 - Upgrade to Rails 4
 Now we are prepared to actually upgrade to Rails 4. We checkout a new branch
