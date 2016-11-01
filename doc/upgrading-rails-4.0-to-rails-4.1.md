@@ -177,13 +177,15 @@ checkout the master branch and then push them to github.
     $ git merge rails4-1
     $ git push
 
+Just to be sure we run rspec again.
+
 Now we are ready to actually upgrade to Rails 4.1.
 
-# Stage 2 - Upgrade to Rails 4
-Now we are prepared to actually upgrade to Rails 4. We checkout a new branch
+# Stage 2 - Upgrade to Rails 4.1
+Now we are prepared to actually upgrade to Rails 4.1. We checkout a new branch
 
-    $ git checkout -b upgrade-to-rails-4
-    $ git push --set-upstream origin upgrade-to-rails-4
+    $ git checkout -b upgrade-to-rails-4.1
+    $ git push --set-upstream origin upgrade-to-rails-4.1
 
 ## Prepare the Gemfile
 The first step is to change the Ruby version in the Gemfile. But we also want
