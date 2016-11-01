@@ -43,6 +43,9 @@ The actual migration is as follows
 
 # Stage 1 - Prepare for Upgrade
 This is stage 1 where we prepare for upgrading our Rails 4.0 app to Rails 4.1.
+We first move to the gemset that is hosting Secondhand
+
+    $ rvm ruby-2.0.0-p643@rails4013
 
 ## Run the tests first
 First make sure all your tests pass by running *rspec*.
@@ -60,21 +63,24 @@ We first want to create a branch with the released version in order to be able
 to make changes especially bug fixes to this version. This is necessary if 
 users won't immediately upgrade to the new version.
 
-    $ git checkout --branch v1.1-stable
-    $ git push --set-upstream origin v1.1-stable
+    $ git checkout -b v2.0.1-stable
+    $ git push --set-upstream origin v2.0.1-stable
 
-Next we want to tag this branch with a version number. To list the tags we can 
-issue
+Next we want to tag this branch with a version number. To list the already taken
+tags we can issue
 
     $ git tag
     v1.0
     v1.0.1
     v1.0.2
+    v1.1.0
+    v2.0.0
 
-To tag our branch we checkout *v1.1-stable* and then issue the tag command
+To tag our branch we checkout *v1.1-stable* (we should already be on that 
+branch from the previous checkout command though) and then issue the tag command
 
-    $ git checkout v1.1-stable
-    $ git tag -a v1.1.0 -m "Secondhand V1.1.0 - Release 2015-09-18"
+    $ git checkout v2.0.1-stable
+    $ git tag -a v2.0.1 -m "Secondhand V2.0.1 - Release 2016-11-01"
 
 Finally push the tagged commit to Github with
 
@@ -85,32 +91,44 @@ Before you do any changes to your project check out a new branch. In case you
 mess up your project you always can safely rewind to your master branch and
 start from a blank slate again.
 
-    $ git checkout -b rails4-0
+    $ git checkout -b rails4-1
 
 ## Update Ruby to the latest patch level
 That is not necessary but to be on the safe side I want to have the latest 
-patch level of Ruby 1.9.3. We can check the versions with
+patch level of Ruby 2.0.0. We can check the latest available versions with
 
-    $ rvm list known | grep 1.9.3
-    [ruby-]1.9.3[-p551]
+    $ rvm list known | grep 2.0.0
+    [ruby-]2.0.0[-p648]
 
-To update to that version we issue
+While being in the *ruby-2.0.0-p643@rails4013* gemsest we update to that
+version we issue
 
-    $ rvm install 1.9.3
+    $ rvm install 2.0.0
 
-Now we copy the current gemset to a new gemset with the freshly installed Ruby 
-version
+This will create new gemsets that we can list with 
 
-    $ rvm gemset copy ruby-1.9.3-p547@rails3211 ruby-1.9.3-p551@rails3211
-    $ rvm ruby-1.9.3-p551@rails3211
+    $ rvm list gemsets | grep ruby-2.0.0-p648
+    => ruby-2.0.0-p648 [ x86_64 ]
+       ruby-2.0.0-p648@global [ x86_64 ]
+       ruby-2.0.0-p648@rails4013 [ x86_64 ]
+    
+As we've been in the gemset *rails4013* this has been created for us with the
+newly install Ruby 2.0.0-p648. Before we move on we switch to the new created
+gemset
 
-We check that we have the Ruby version available and the Rails version of the
-old gemset
+    $ rvm ruby-2.0.0-p648@rails4013
+
+Next we copy our old gemset to the newly created gemset with
+
+    $ rvm gemset copy ruby-2.0.0-p643@rails4013 ruby-2.0.0-p648@rails4013
+
+We check that we have the freshly installed Ruby version and the Rails version
+of the old gemset
 
     $ ruby -v
-    ruby 1.9.3p551 (2014-11-13 revision 48407) [x86_64-linux]
+    ruby 2.0.0-p648 (2015-12-16 revision 53162) [x86_64-linux]
     $ rails -v
-    Rails 3.2.11
+    Rails 4.0.13
 
 Finally we run our test and make sure everything runs without errors.
 
