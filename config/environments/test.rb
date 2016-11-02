@@ -1,4 +1,4 @@
-Secondhand::Application.configure do
+Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # The test environment is used exclusively to run your application's
@@ -14,14 +14,11 @@ Secondhand::Application.configure do
 
   # Configure static asset server for tests with Cache-Control for performance.
   config.serve_static_assets  = true
-  config.static_cache_control = "public, max-age=3600"
+  config.static_cache_control = 'public, max-age=3600'
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
-
-  # SYC extension
-  config.action_controller.default_url_options = { host: "localhost:3000" }
 
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
@@ -29,14 +26,17 @@ Secondhand::Application.configure do
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
 
+  # SYC Extension
+  config.action_controller.default_url_options = { host: "localhost:3000" }
+
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  # SYC extension
+  # SYC Extension
   config.action_mailer.default_url_options = { host: "localhost:3000" }
-  
+
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 

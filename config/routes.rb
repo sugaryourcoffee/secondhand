@@ -1,4 +1,4 @@
-Secondhand::Application.routes.draw do
+Rails.application.routes.draw do
 
   scope '(:locale)' do
     root                'static_pages#home' # root to: 'static_pages#home'

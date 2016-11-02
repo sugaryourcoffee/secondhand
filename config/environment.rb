@@ -2,9 +2,9 @@
 require File.expand_path('../application', __FILE__)
 
 # Initialize the rails application
-Secondhand::Application.initialize!
+Rails.application.initialize!
 
-Secondhand::Application.configure do
+Rails.application.configure do
   config.action_mailer.delivery_method = :sendmail
   config.action_mailer.sendmail_settings = {
     location: '/usr/sbin/sendmail',
