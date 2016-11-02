@@ -105,16 +105,14 @@ describe "event pages" do
         end
 
         it "should not delete event with list register by a user" do
-#          event_other.lists.should have(1).items
           event_other.lists.size.should eq(1)
 
-#          List.all.should have(2).items
           List.all.size.should eq(2)
 
-          expect { event_other.destroy }.to change(Event, :count).by(0)
-          expect { event_other.save }.not_to raise_error #(ActiveRecord::RecordNotFound)
+          expect { event_other.destroy }
+                 .to raise_error(ActiveRecord::RecordNotDestroyed)
+          expect { event_other.save }.not_to raise_error
 
-#          List.all.should have(2).items
           List.all.size.should eq(2)
         end
 
