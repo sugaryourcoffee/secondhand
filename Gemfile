@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.13'
+gem 'rails', '4.1.16'
 gem 'bootstrap-sass', '~> 2.3.1.0'
 gem 'faker', '~> 1.5.0'
 gem 'will_paginate', '~> 3.0.7'
@@ -47,7 +47,7 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'jquery-rails'
 gem 'best_in_place'
-gem 'gritter', '~> 1.1.0'
+gem 'gritter', '~> 1.2.0'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
