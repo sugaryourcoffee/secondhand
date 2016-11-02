@@ -100,7 +100,7 @@ patch level of Ruby 2.0.0. We can check the latest available versions with
     $ rvm list known | grep 2.0.0
     [ruby-]2.0.0[-p648]
 
-While being in the *ruby-2.0.0-p643@rails4013* gemsest we update to that
+While being in the *ruby-2.0.0-p643@rails4013* gemset we update to that
 version we issue
 
     $ rvm install 2.0.0
@@ -190,99 +190,112 @@ Now we are prepared to actually upgrade to Rails 4.1. We checkout a new branch
 ## Prepare the Gemfile
 The first step is to change the Ruby version in the Gemfile. But we also want
 to set the version numbers for the other gems listed in the Gemfile so they
-meet the pre-conditions working with Rails 4.0. To see what gem versions we need
-in combination with Ruby 4.0 we create a Rails project with the most recent
-Rails 4.0 version, which is at this writing *4.0.13*.
+meet the pre-conditions working with Rails 4.1. To see what gem versions we need
+in combination with Ruby 4.1 we create a Rails project with the most recent
+Rails 4.1 version, which is at this writing *4.1.16*.
+
+To not override our gemset *rails4013* we use *ruby 2.0.0-p648* and create a new
+gemset and switch to it before installing the new rails version
 
     $ mkdir ~/Work/rails-version-test
     $ cd ~/Work/rails-version-test
-    $ gem install rails --version 4.0.13
-    $ rails _4.0.13_ new test-4.0.13
+    $ rvm 2.0.0-p648
+    $ rvm create gemset rails-4.1.16-version-test
+    $ rvm ruby-2.0.0-p648@rails-4.1.16-version-test
+    $ gem install rails --version 4.1.16
+    $ rails _4.1.16_ new test-4.1.16
  
-In the Gemfile we can see the gem version that work together with Rails 4.0.13.
+In the Gemfile we can see the gem version that work together with Rails 4.1.16.
 The table below lists the gems (from the Secondhand Gemfile) with the versions
-of the *test-4.0.13* app indicated by `~>` and `>=`.
+of the *test-4.1.16* app indicated by `~>` and `>=`. Note that only part of the
+gems are in the 4.1.16 Gemfile, the other gems we have to lookup at 
+[rubygems.org](https://rubygems.org) that go together with Rails 4.1.16.
 
-Gem                      | Rails 3.2.22 | Rails 4.0.13    | Group
------------------------- | ------------ | --------------- | -----
-rails                    | 3.2.22       | 4.0.13          | top
-bootstrap-sass           | 2.3.1.0      | 2.3.1.0         | top
-faker                    | 1.0.1        | ~> 1.5.0        | top
-will\_paginate           | 3.0.3        | 3.0.7           | top
-bootstrap-will\_paginate | 0.0.6        | 0.0.10          | top
-prawn                    | 0.12.0       | 1.3.0           | top
-syc-barcode              | 0.0.3        | 0.0.3           | top
-net-ssh                  | 2.9.2        | -               | top
-turbolinks               | -            | 2.5.3           | top
-sqlite3                  |              |                 | development
-rspec-rails              | 2.99.0       | 2.99.0          | development, test
-guard-rspec              | 4.6          | 4.6             | development
-annotate                 | 2.5.0        | 2.6.10          | development
-guard-spork              | 2.1          | 2.1             | test
-spork                    | 0.9          | 0.9             | test
-capybara                 | 2.1.0        | 2.1.0           | test
-rb-inotify               | 0.9.0        | 0.9.0           | test
-libnotify                | 0.5.9        | 0.5.9           | test
-factory\_girl\_rails     | 1.4.0        | 1.4.0           | test
-cucumber-rails           | 1.2.1        | 1.2.1           | test
-database\_cleaner        | 0.7.0        | 0.7.0           | test
-selenium-webdriver       |              |                 | test
-sass-rails               | 3.2.3        | ~> 4.0.2        | assets -> top
-coffee-rails             | 3.2.1        | ~> 4.0.0        | assets -> top
-uglifier                 | 1.0.3        | >= 1.3.0        | assets -> top
-jquery-rails             |              |                 | top
-best\_in\_place          |              |                 | top
-gritter                  | 1.1.0        | 1.1.0           | top
-bcrypt-ruby              | 3.0.1        | ~> bcrypt 3.1.7 | top
-rvm-capistrano           | 1.5.6        | 1.5.6           | top
-mysql2                   |              |                 | production
-turbolinks               | -            |                 | top
-jbuilder                 | -            | ~> 1.2          | top
-sdoc                     | -            |                 | doc
+Gem                      | Rails 4.0.13    | Rails 4.1.16 | Group            | 
+------------------------ | --------------- | ------------ | ---------------- | -
+rails                    | 4.0.13          | 4.1.16       | top              |
+bootstrap-sass           | 2.3.1.0         | 2.3.2.0      | top              |
+faker                    | ~> 1.5.0        | ~> 1.6.6     | top              |
+will\_paginate           | 3.0.7           | 3.1.5        | top              |
+bootstrap-will\_paginate | 0.0.10          | 0.0.10       | top              |
+prawn                    | 1.3.0           | 1.3.0        | top              |
+prawn-table              | ~> 0.2.2        | ~> 0.2.2     | top              |
+syc-barcode              | 0.0.3           | 0.0.3        | top              |
+net-ssh                  | ~> 2.9.2        | ~> 2.9.2     | top              |
+turbolinks               | 2.5.3           |              | top              |
+jquery-turbolinks        |                 |              | top              |
+sqlite3                  |                 |              | development      |
+rspec-rails              | 2.99.0          | 2.99.0       | development,test |
+guard-rspec              | 4.6             | 4.6          | development      |
+annotate                 | 2.5.0           | 2.6.10       | development      |
+guard-spork              | 2.1             | 2.1          | test             |
+spork                    | 0.9             | 0.9          | test             |
+capybara                 | 2.1.0           | 2.1.0        | test             |
+rb-inotify               | 0.9.0           | 0.9.0        | test             |
+libnotify                | 0.5.9           | 0.5.9        | test             |
+factory\_girl\_rails     | 1.4.0           | 1.4.0        | test             |
+cucumber-rails           | 1.2.1           | 1.2.1        | test             |
+database\_cleaner        | 1.5.0           | 1.5.0        | test             |
+selenium-webdriver       |                 |              | test             |
+sass-rails               | ~> 4.0.2        | ~> 4.0.3     | top              |
+coffee-rails             | ~> 4.0.0        | ~> 4.0.0     | top              |
+uglifier                 | >= 1.3.0        | >= 1.3.0     | top              |
+jquery-rails             |                 |              | top              |
+best\_in\_place          |                 |              | top              |
+gritter                  | ~> 1.1.0        | ~> 1.2.0     | top              |
+bcrypt                   | ~> 3.1.7        | ~> 3.1.7     | top              |
+rvm-capistrano           | ~> 1.5.6        | ~> 1.5.6     | top              |
+mysql2                   |                 |              | production       |
+jbuilder                 | ~> 1.2          | ~> 2.0       | top              |
+sdoc                     |                 | ~> 0.4.0     | doc              | x
+spring                   | -               |              | development      | x
+
+x = not installed
 
 We start by changing the rails version in our Gemfile to 
 
-    gem 'rails', '4.0.13'
+    gem 'rails', '4.1.16'
 
-and then run `bundle install`. After the installation we get following post
-install messages.
+and then run `bundle install`. We will get a bundler message saying
 
-    Post-install message from capybara:
-    IMPORTANT! Some of the defaults have changed in Capybara 2.1. If you're 
-    experiencing failures,                                                                  
-    please revert to the old behaviour by setting:
+    Bundler could not find compatible versions for gem "actionpack":
+      In snapshot (Gemfile.lock):
+        actionpack (= 4.0.13)
 
-        Capybara.configure do |config|
-          config.match = :one
-          config.exact_options = true
-          config.ignore_hidden_elements = true
-          config.visible_text_only = true
-        end
-          
-    If you're migrating from Capybara 1.x, try:
+      In Gemfile:
+        best_in_place was resolved to 3.0.3, which depends on
+          actionpack (>= 3.2)
 
-        Capybara.configure do |config|
-          config.match = :prefer_exact
-          config.ignore_hidden_elements = false
-        end
+        rails (= 4.1.16) was resolved to 4.1.16, which depends
+          actionpack (= 4.1.16)
 
-    Details here: http://www.elabs.se/blog/60-introducing-capybara-2-1
+        rails (= 4.1.16) was resolved to 4.1.16, which depends
+          actionpack (= 4.1.16)
 
-    Post-install message from prawn:
+        rails (= 4.1.16) was resolved to 4.1.16, which depends
+          sprockets-rails (~> 2.0) was resolved to 2.3.3, whic
+            actionpack (>= 3.0)
 
-      ********************************************
+        rails (= 4.1.16) was resolved to 4.1.16, which depends
+          sprockets-rails (~> 2.0) was resolved to 2.3.3, whic
+            actionpack (>= 3.0)
 
+    Running `bundle update` will rebuild your snapshot from sc
+    the gems in your Gemfile, which may resolve the conflict.
 
-      A lot has changed recently in Prawn.
+If we run
 
-      Please read the changelog for details:
+    $ bundle update actionpack
 
-      https://github.com/prawnpdf/prawn/wiki/CHANGELOG
+We get the same message for `activemodel` and `railties`. To solve all 
+dependendcies we update all 3 gems with one swoop
 
+    $ bundle update actionpack activemodel railties
 
-      ******************************************** 
+Now we should have the version 4.1.16 installed. We can proof it by issuing
 
-We come back to them if we encounter problems. 
+    $ rails -v
+    Rails 4.1.16
 
 ## Update Secondhand configuration files
 Now we use a rake task that helps to interactively update configuration files.
@@ -294,79 +307,52 @@ can diff the old and the new file. Here is how we process Secondhand.
 
 File                                    | Overwrite | After update action
 --------------------------------------- | --------- | -------------------
-config/boot.rb                          | yes       | no
+config/boot.rb                          | no        | no
 config/routes.rb                        | no        | yes
-config/application.rb                   | yes       | yes
-config/environment.rb                   | no        | no
-conifg/environments/development.rb      | yes       | yes
+config/application.rb                   | no        | no
+config/environment.rb                   | no        | yes
+conifg/environments/development.rb      | no        | yes
 config/environsments/production.rb      | yes       | yes
+config/environments/staging.rb          | no        | yes
 config/environments/test.rb             | yes       | yes
-config/initializers/inflections.rb      | yes       | yes
+config/environments/beta.rb             | no        | yes
+config/initializers/inflections.rb      | no        | no
+config/initializers/mime\_types.rb      | yes       | no
 config/initializers/secret\_token.rb    | yes       | no
 config/initializers/sessions\_store.rb  | yes       | no
 config/initializers/wrap\_parameters.rb | yes       | no
 config/locales/en.yml                   | no        | no
-bin/rails                               | yes       | no
-bin/rake                                | yes       | no
 
 ### config/routes.rb
-If we run `rspec` we will get error messages which can be considered hints in
-regard of changes in the REST actions.
 
-    $ rspec
-    /home/pierre/.rvm/gems/ruby-1.9.3-p551@rails4013/gems/actionpack-4.0.13/
-    lib/action_dispatch/routing/mapper.rb:191:in `normalize_conditions!': You 
-    should not use the `match` method in your router without specifying an 
-    HTTP method. (RuntimeError)
-    If you want to expose your action to both GET and POST, add 
-      `via: [:get, :post]` option.
-    If you want to expose your action to GET, use `get` in the router:
-      Instead of: match "controller#action"
-      Do: get "controller#action"
-
-We replace the `match` method with a `get` or `delete` method in 
-`config/routes.rb` as shown in the table.
-
-Ruby 4.0                                    | Ruby 3.2
-------------------------------------------- | --------------------------------
-root                'static\_pages#home'    | root to: 'static\_pages#home'
-get    'signup'  => 'users#new'             | match '/signup', to: 'users#new'
-get    'signin'  => 'sessions#new'          | match '/signin', to: 'sessions#new'
-delete 'signout' => 'sessions#destroy'      | match '/signout', to: 'sessions#destroy', via: :delete
-get    'about'   => 'static\_pages#about'   | match '/about', to: 'static\_pages#about'
-get    'help'    => 'static\_pages#help'    | match '/help', to: 'static\_pages#help'
-get    'contact' => 'static\_pages#contact' | match '/contact', to: 'static\_pages#contact'
-post   'message' => 'static\_pages#message' | match '/message', to: 'static\_pages#message'
-put :update\_list                           | patch :update\_list
-put :update\_item                           | patch :update\_item
+Rails 4.0.13                        | Rails 4.1.16
+----------------------------------- | -----------------------------
+Secondhand::Application.routes.draw | Rails.application.routes.draw
 
 When done we can run `rspec` again and check whether routing errors occur. But
 we also can check the `rake routes` command whether it draws error messages.
 
     $ rake routes
 
-### config/application.rb
+### config/environment.rb
 
-Action                   | Description
------------------------- | ------------------------------------------------
-require 'interleave2of5' | require 'interleave2of5'
-autoload files from lib/ | config.autoload\_paths << Rails.root.join('lib')
+Rails 4.0.13                        | Rails 4.1.16
+----------------------------------- | -----------------------------
+Secondhand::Application.initialize! | Rails.application.initialize!
+Secondhand::Application.configure   | Rails.application.configure
 
 ### config/environments/development.rb
 
-Action                 | Description
----------------------- | -----------------------------------------------
-default URL            | config.action\_mailer.default\_url\_options = \
-                       |   { host: "localhost:3000" } 
-mailer delivery method | config.action\_mailer.delivery\_method = :test 
+Rails 4.0.13                        | Rails 4.1.16
+----------------------------------- | -----------------------------------------
+Secondhand::Application.configure   | Rails.application.configure
+                                    | config.assets.raise_runtime_errors = true
 
 ### config/environments/staging.rb
 
-Action      | Description
------------ | ------------------------------------------------
-deliveries  | config.action\_mailer.perform\_deliveries = true
-default URL | config.action\_mailer.default\_url\_options = \
-            |   { host: "syc.dyndns.org:8082" }
+Rails 4.0.13                        | Rails 4.1.16
+----------------------------------- | -----------------------------------------
+Secondhand::Application.configure   | Rails.application.configure
 
 ### config/environments/production.rb
 
@@ -374,7 +360,7 @@ Action      | Description
 ----------- | ------------------------------------------------
 deliveries  | config.action\_mailer.perform\_deliveries = true
 default URL | config.action\_mailer.default\_url\_options = \
-            |   { host: "syc.dyndns.org:8080" }
+              { host: "syc.dyndns.org:8080" }
 
 ### config/environments/test.rb
 
@@ -382,51 +368,147 @@ Action      | Description
 ----------- | --------------------------------------------  
 default URL | config.action\_mailer.default\_url\_options = \
             |   { host: "localhost:3000" }
+            | config.action\_controller.default\_url\_options = \
+            |   { host: "localhost:3000" }
 
-### config/initializers/inflections.rb
+### config/environments/beta.rb
 
-Action            | Description
------------------ | -------------------------------------------------
-Pluralize 'Liste' | ActiveSupport::Inflector.inflections do |inflect|
-                  |   inflect.plural 'Liste', 'Listen' 
-                  | end
-
-## Upgrade bin/ directory
-When you run `rails server` or `rails console` you will get a message saying
-
-```
-Looks like your app's ./bin/rails is a stub that was generated by Bundler.
-
-In Rails 4, your app's bin/ directory contains executables that are versioned
-like any other source code, rather than stubs that are generated on demand.
-
-Here's how to upgrade:
-
-  bundle config --delete bin    # Turn off Bundler's stub generator
-  rake rails:update:bin         # Use the new Rails 4 executables
-  git add bin                   # Add bin/ to source control
-
-You may need to remove bin/ from your .gitignore as well.
-
-When you install a gem whose executable you want to use in your app,
-generate it and add it to source control:
-
-  bundle binstubs some-gem-name
-  git add bin/new-executable
-```
-
-To upgrade we just follow the instructions and interactively upgrade the bin/ 
-directory. The table shows that we overwrite `bin/rails` and `bin/rake` without
-any after update actions.
-
-File      | Overwrite | After update action
---------- | --------- | -------------------
-bin/rails | yes       | no
-bin/rake  | yes       | no
+Rails 4.0.13                        | Rails 4.1.16
+----------------------------------- | -----------------------------------------
+Secondhand::Application.configure   | Rails.application.configure
 
 ## Error Messages
 In this section error message are discussed that have arisen after upgrading to
-Rals 4.
+Rails 4.1.
+
+## 'last\_comment' is deprecated
+When running `rake routes` we get following deprecation warning
+
+    [DEPRECATION] `last_comment` is deprecated.  Please use `last_description` 
+    instead.
+
+without any hint which gem is sending the deprecation warning. Therefore we 
+grep into the gems directory of our current gemset which is `ruby-2.0.0-p648@rails4013`
+
+    $ grep -r "last_comment" ~/.rvm/gems/ruby20.0.-p648@rails4013/gems
+
+It reveals that the warning is coming from `Rake` version 11.3.0 but actually
+triggered by rspec calling `Rake.application.last_comment`. For the moment we
+don't upgrade rspec as we want to get our test passing and then coping with
+deprecation warnings.
+
+## Fixing errors revealed by rspec runs
+When running rspec we get following 5 errors that worked with the previously 
+used Rails 4.0.13 version.
+
+      1) User when password confirmation is nil should not be valid
+         Failure/Error: it {should_not be_valid}
+         expected #<User id: nil, first_name: "Example", last_name: "User", 
+         street: "Street 1", zip_code: "12345", town: "Town", 
+         country: "Country", phone: "1234 567890", email: "user@example.com",
+         password_digest: "$2a$04$MKAFoGLFe6BCExGSdpM/geuZnSaE.oWzUzbsItzIEJa.",
+         news: false, created_at: nil, updated_at: nil, remember_token: nil,
+         admin: false, auth_token: nil, password_reset_token: nil,
+         password_reset_sent_at: nil, preferred_language: nil, operator: false,
+         terms_of_use: nil> not to be valid
+         # ./spec/models/user_spec.rb:112:in `block (3 levels) in
+         <top (required)>'
+
+      2) event pages index with admin user signed in delete button should not
+         delete event with list register by a user
+         Failure/Error: expect { event_other.destroy }.to change(Event, :count)
+         .by(0)
+         ActiveRecord::RecordNotDestroyed:
+           ActiveRecord::RecordNotDestroyed
+         # ./spec/requests/event_pages_spec.rb:114:in `block (6 levels) in
+           <top (required)>'
+         # ./spec/requests/event_pages_spec.rb:114:in `block (5 levels) in
+           <top (required)>'
+
+      3) Newsletter create by admin user should show errors on unclomplete input
+         Failure/Error: page.all('input', visible: true).size.should eq 9
+
+         expected: 9
+         got: 8
+
+         (compared using ==)
+         # ./spec/requests/newsletter_pages_spec.rb:46:in `block (4 levels) in
+           <top (required)>'
+
+      4) Role authentication as operator user in the acceptances controller
+          edit list
+         Failure/Error: before { visit edit_list_acceptance_path(list,
+             locale: :en) }
+         ActionController::InvalidCrossOriginRequest:
+         Security warning: an embedded <script> tag on another site requested
+         protected JavaScript. If you know what you're doing, go ahead and
+         disable forgery protection on this action to permit cross-origin
+         JavaScript embedding.
+         # ./spec/requests/role_authentication_spec.rb:131:in `block
+           (5 levels) in <top (required)>'
+
+      5) Role authentication as admin user in the acceptances controller edit
+         list
+         Failure/Error: before { visit edit_list_acceptance_path(list,
+             locale: :en) }
+         ActionController::InvalidCrossOriginRequest:
+         Security warning: an embedded <script> tag on another site requested
+         protected JavaScript. If you know what you're doing, go ahead and
+         disable forgery protection on this action to permit cross-origin
+         JavaScript embedding.
+         # ./spec/requests/role_authentication_spec.rb:246:in `block
+           (5 levels) in <top (required)>'
+
+### 1) User when password confirmation is nil should not be valid
+After the upgrade `bcrypt` allows to update a user without setting the password
+confirmation. So the test has to be tested for truthy.
+
+### 2) event pages ... not delete event with list register by a user
+The test expects that the record is not deleted which actually is true.
+
+    Failure/Error: expect { event_other.destroy }.to change(Event, :count).by(0)
+
+But the error `ActiveRecord::RecordNotDestroyed:` is thrown.
+
+To make the test pass change
+
+          expect { event_other.destroy }.to_not change(Event :count).by(0)
+
+to 
+
+          expect { event_other.destroy }
+                 .to raise_error(ActiveRecord::RecordNotDestroyed)
+
+### 4) ActionController::InvalidCrossOriginRequest
+[guides.rubyonrails.org](http://guides.rubyonrails.org/upgrading_ruby_on_rails.html#csrf-protection-from-remote-script-tags)
+explain the origin of the error. In Rails 4.1 CSRF protection now covers GET
+requests with JavaScript responses. We have to replace
+
+    get :index, format: :js
+
+with 
+
+    xhr :get, :index, format: :js
+
+in the tests that fail due to the `ActionController::InvalidCrossOriginRequest`
+
+## Asset filtered out and will not be served
+The error message in caused by Gritter. First update to the latest version with
+
+    gem "gritter", "1.2.0"
+
+Then rund `bundle install`
+
+When starting the server with `rails s` and going to `localhost:3000` following
+error is thrown
+
+    Asset filtered out and will not be served: 
+    add `Rails.application.config.assets.precompile += 
+    %w( glyphicons-halflings.png )` to 
+    `config/initializers/assets.rb` and restart your server
+
+After adding the code and restarting the server, `localhost:3000` will show the
+next entry we have to add, go on until the application starts without error.
 
 ## undefined method 'table' for Prawn
 The *Prawn* version 1.3.0 has extracted `table`. So whe running *Secondhand* we
