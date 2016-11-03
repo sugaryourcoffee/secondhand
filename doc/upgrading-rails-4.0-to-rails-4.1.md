@@ -479,10 +479,22 @@ to
           expect { event_other.destroy }
                  .to raise_error(ActiveRecord::RecordNotDestroyed)
 
-### 4) ActionController::InvalidCrossOriginRequest
+### 3) Newsletter create by admin user should show errors on unclomplete input
+After the upgrade Capybara finds 8 instead of previously 9 input fields with
+
+    page.all('input', visible: true).size
+
+After changing to 8
+
+    page.all('input', visible: true).size.should eq 8
+
+The tests pass. Actually there are only 6 visible input fields. So Capybara's 
+command is presumably not working reliably.
+
+### 4), 5) ActionController::InvalidCrossOriginRequest
 [guides.rubyonrails.org](http://guides.rubyonrails.org/upgrading_ruby_on_rails.html#csrf-protection-from-remote-script-tags)
 explain the origin of the error. In Rails 4.1 CSRF protection now covers GET
-requests with JavaScript responses. We have to replace
+requests with JavaScript responses. The document states that we have to replace
 
     get :index, format: :js
 
@@ -490,7 +502,8 @@ with
 
     xhr :get, :index, format: :js
 
-in the tests that fail due to the `ActionController::InvalidCrossOriginRequest`
+in the tests but we are doing a plain visit. So the cause might lay somewhere
+beneath the visit method.
 
 ## Asset filtered out and will not be served
 The error message in caused by Gritter. First update to the latest version with

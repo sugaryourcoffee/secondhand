@@ -43,12 +43,12 @@ describe "Newsletter" do
       it "should show errors on unclomplete input" do
         visit new_news_path
 
-        page.all('input', visible: true).size.should eq 9
+        page.all('input', visible: true).size.should eq 8
 
         expect { click_button 'Create new news' }.to change(News, :count).by 0
         page.should have_text "error"
 
-        page.all('input', visible: true).size.should eq 9
+        page.all('input', visible: true).size.should eq 8
       end
     end
 
