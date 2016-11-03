@@ -53,7 +53,7 @@ Rails.application.routes.draw do
 
     resources :acceptances, only: [:index, :edit] do
       member do
-        get    :edit_list
+        get    :edit_list, format: 'js'
         patch  :update_list
         get    :edit_item
         patch  :update_item

@@ -44,7 +44,10 @@ class AcceptancesController < ApplicationController
 
   def edit_list
     load_list
-    render template: 'acceptances/edit_list.js.erb' 
+#    render template: 'acceptances/edit_list.js.erb' 
+    respond_to do |format|
+      format.js
+    end
   end
 
   def update_list
