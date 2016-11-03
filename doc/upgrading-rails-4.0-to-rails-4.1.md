@@ -502,15 +502,25 @@ with
 
     xhr :get, :index, format: :js
 
-in the tests but we are doing a plain visit. So the cause might lay somewhere
-beneath the visit method.
+in the tests. We have to change
+
+    before { visit edit_list_acceptance_path(list, locale: :en) }
+    it { page.current_path.should eq edit_list_acceptance_path(list, 
+                                                               locale: :en) }
+
+to
+
+    it "number" do
+      xhr :get,  edit_list_acceptance_path(list, locale: :en), format: :js 
+      expect(page.status_code).to be(200)
+    end
 
 ## Asset filtered out and will not be served
 The error message in caused by Gritter. First update to the latest version with
 
     gem "gritter", "1.2.0"
 
-Then rund `bundle install`
+Then run `bundle install`
 
 When starting the server with `rails s` and going to `localhost:3000` following
 error is thrown
