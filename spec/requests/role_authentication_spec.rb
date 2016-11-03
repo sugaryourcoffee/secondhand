@@ -128,9 +128,10 @@ describe 'Role authentication' do
       end
 
       describe 'edit list' do
-        before { visit edit_list_acceptance_path(list, locale: :en) }
-        it { page.current_path.should eq edit_list_acceptance_path(list, 
-                                                                  locale: :en) }
+        it "number" do
+          xhr :get,  edit_list_acceptance_path(list, locale: :en), format: :js 
+          expect(page.status_code).to be(200)
+        end
       end
 
     end
@@ -243,8 +244,10 @@ describe 'Role authentication' do
       end
 
       describe 'edit list' do
-        before { visit edit_list_acceptance_path(list, locale: :en) }
-        it { page.current_path.should eq edit_list_acceptance_path(list, locale: :en) }
+        it "number" do
+          xhr :get,  edit_list_acceptance_path(list, locale: :en), format: :js 
+          expect(page.status_code).to be(200)
+        end
       end
 
     end
