@@ -377,11 +377,10 @@ Rails 4.0.13                        | Rails 4.1.16
 ----------------------------------- | -----------------------------------------
 Secondhand::Application.configure   | Rails.application.configure
 
-## Error Messages
-In this section error message are discussed that have arisen after upgrading to
-Rails 4.1.
+## Deprecation Warnings
+This section describes deprecation warnings after upgrading to Rails 4.1.16.
 
-## 'last\_comment' is deprecated
+### 'last\_comment' is deprecated
 When running `rake routes` we get following deprecation warning
 
     [DEPRECATION] `last_comment` is deprecated.  Please use `last_description` 
@@ -397,7 +396,11 @@ triggered by rspec calling `Rake.application.last_comment`. For the moment we
 don't upgrade rspec as we want to get our test passing and then coping with
 deprecation warnings.
 
-## Fixing errors revealed by rspec runs
+## Error Messages
+In this section error message are discussed that have arisen after upgrading to
+Rails 4.1.
+
+### Fixing errors revealed by rspec runs
 When running rspec we get following 5 errors that worked with the previously 
 used Rails 4.0.13 version.
 
@@ -459,11 +462,11 @@ used Rails 4.0.13 version.
          # ./spec/requests/role_authentication_spec.rb:246:in `block
            (5 levels) in <top (required)>'
 
-### 1) User when password confirmation is nil should not be valid
+#### 1) User when password confirmation is nil should not be valid
 After the upgrade `bcrypt` allows to update a user without setting the password
 confirmation. So the test has to be tested for truthy.
 
-### 2) event pages ... not delete event with list register by a user
+#### 2) event pages ... not delete event with list register by a user
 The test expects that the record is not deleted which actually is true.
 
     Failure/Error: expect { event_other.destroy }.to change(Event, :count).by(0)
@@ -479,7 +482,7 @@ to
           expect { event_other.destroy }
                  .to raise_error(ActiveRecord::RecordNotDestroyed)
 
-### 3) Newsletter create by admin user should show errors on unclomplete input
+#### 3) Newsletter create by admin user should show errors on unclomplete input
 After the upgrade Capybara finds 8 instead of previously 9 input fields with
 
     page.all('input', visible: true).size
@@ -491,7 +494,7 @@ After changing to 8
 The tests pass. Actually there are only 6 visible input fields. So Capybara's 
 command is presumably not working reliably.
 
-### 4), 5) ActionController::InvalidCrossOriginRequest
+#### 4), 5) ActionController::InvalidCrossOriginRequest
 [guides.rubyonrails.org](http://guides.rubyonrails.org/upgrading_ruby_on_rails.html#csrf-protection-from-remote-script-tags)
 explain the origin of the error. In Rails 4.1 CSRF protection now covers GET
 requests with JavaScript responses. The document states that we have to replace
@@ -515,7 +518,10 @@ to
       expect(page.status_code).to be(200)
     end
 
-## Asset filtered out and will not be served
+## Runtime Errors
+Runtime errors after upgrading to Rails 4.1.16.
+
+### Asset filtered out and will not be served
 The error message in caused by Gritter. First update to the latest version with
 
     gem "gritter", "1.2.0"
@@ -533,629 +539,20 @@ error is thrown
 After adding the code and restarting the server, `localhost:3000` will show the
 next entry we have to add, go on until the application starts without error.
 
-## undefined method 'table' for Prawn
-The *Prawn* version 1.3.0 has extracted `table`. So whe running *Secondhand* we
-get an error message saying
-
-    NoMethodError:
-      undefined method `table` for #<Prawn::Document:0x000000006b397a8>
-
-In order to get rid of the error we have to add *prawn-table* to our *Gemfile*.
-
-    gem 'prawn-table', '~> 0.2.2'
-
-And then run `$ bundle install`
-
-We render the generated pdf to a file. In the previous version 0.12.0 the 
-generated filename was returned. No `pdf.generate_file` returns `nil`. To get
-the filename we have to return the filename explicitly.
-
-    pdf.render_file("tmp/selling_#{id}.pdf")
-    File.absolute_path("tmp/selling_#{id}.pdf")
-
-In the calling method we expect the old behaviour to get a file handle where we
-retrieve the path with `to_path`. In the new version we have to remove method 
-call as we already receive the filename.
-
-In `app/controllers/sellings_controller.rb` we change 
-
-    if system('lpr', @selling.to_pdf.to_path)
-
-to
-
-    if system('lpr', @selling.to_pdf)
-
-## ActionController::UnknownFormat
-This error is caused by *Capybara* when clicking a link that is configured with
-`remote: true` and should render a *JavaScript* template. The `js` format is not
-forwarded to the controller and hence the error occurs. When clicking the link
-in the application it working without errors. To overcome this issue in the 
-tests we have to explicitly specify the template to render.
-
-The custom action uses `respond_to` in 
-`app/controllers/acceptances_controller.rb`
-
-    def edit_list
-      @list = List.find(params[:id])
-      respond_to do |format|
-        format.js
-      end
-    end
-
-We change this as follows
-
-    def edit_list
-      @list = List.find(params[:id])
-      render template: 'acceptances/edit_list.js.erb'
-    end
-
-## Error in method\_missing
-In Rails 4 IDs of associated models are determined with `method_missing`. If 
-you overwrite `method_missing` and are operating on the valued that is send to
-method missing you have to send all values to super if the value is not operated
-on.
-
-    class LineItem < ActiveRecord::Base
-      belongs_to :selling # foreign key is selling_id
-
-      def method_missing(name, *args)
-        m = name.to_s.scan(/^.*(?=_opponent$)/).first
-        super if !respond_to? m.to_sym
-        return selling  if m == 'reversal'
-        return reversal if m == 'selling'
-      end
-    end
-
-Now consider accessing `selling_id`
-
-    > line_item = LineItem.new
-    > line_item.selling_id
-    NoMethodError:
-      undefined method 'to_sym' for nil:NilClass
-
-In the example `selling_id` is not known in the `LineItem` model and therefor 
-`selling_id` is send to `method_missing`. But `selling_id` is not recognized
-by the regex and `m` will be `nil` and hence the exception is thrown. To fix
-this we have to check for `m.nil?`
-
-    class LineItem < ActiveRecord::Base
-      belongs_to :selling # foreign key is selling_id
-
-      def method_missing(name, *args)
-        m = name.to_s.scan(/^.*(?=_opponent$)/).first
-        super if m.nil? or !respond_to? m.to_sym
-        return selling  if m == 'reversal'
-        return reversal if m == 'selling'
-      end
-    end
-    
-## Deprecated has\_many options
-
-```
-DEPRECATION WARNING: The following options in your Cart.has_many :line_items 
-declaration are deprecated: :order. Please use a scope block instead. For 
-example, the following: 
-
-    has_many :spam_comments, conditions: { spam: true }, class_name: 'Comment'  
-                                                                                
-should be rewritten as the following:
-                                                                                
-    has_many :spam_comments, -> { where spam: true }, class_name: 'Comment'
-
-. (called from <class:Cart> at 
-   /home/pierre/Work/Secondhand/app/models/cart.rb:2)
-```
-
-In `app/models/cart.rb` we change
-
-    has_many :line_items, :order => "created_at DESC"
-
-to
-
-    has_many :line_items, -> { order(created_at: :desc) }
-
-## Strong parameters in favor of attr\_accessible
-In Rails 4 `attr_accessible` is not used anymore in the model. Accessible 
-attributes are now defined in the controller. The error below shows up when
-using `attr_accessible` in the model.
-
-```
-/home/pierre/.rvm/gems/ruby-1.9.3-p551@rails4013/gems/activemodel-4.0.13/lib/act
-ive_model/deprecated_mass_assignment_security.rb:17:in `attr_accessible': `attr_
-accessible` is extracted out of Rails into a gem. Please use new recommended pro
-tection model for params(strong_parameters) or add `protected_attributes` to you
-r Gemfile to use old one. (RuntimeError) 
-```
-
-To change that we define accessible attributes in the controller and remove
-`attr_accessible` from the model.
-
-In the `app/models/cart.rb` model we remove `attr_accessible :cart_type` and 
-add following to `app/controllers/cart_controller.rb`.
-
-    private
-
-    def cart_params
-      params.require(:cart).permit(:cart_type)
-    end
-
-Then in the `create` and `update` action use the `cart_params` method.
-
-In order to speed up migration we will use the `protected_attributes` gem and
-then gradually migrate to *strong prameters*. Add following line to the
-*Gemfile*.
-
-    gem 'protected_attributes'
-
-and run
-
-    $ bundle install
-
-## scope without passing a callable object
-`scope` without calling a callable object is deprecated.
-
-## database\_cleaner
-Version 0.7.0 has to be upgraded to >= 1.1.0. Replace the version `0.7.0` with
-`1.5.0` (the latest at this time of writing) and run
-
-    $ bundle update --source database_cleaner
-
-## ActionController::RoutingError: uninitialized constant SessionController
-This occurred as I was using `'signin' => 'session#new'` instead of 
-`'singin' => 'sessions#new'`. In this case the `ActionController` is using a
-controller `SessionController` instead of the `SessionsController`
-
-## Missing host to link to
-
-```
-Missing host to link to! Please provide the :host parameter, 
-set default_url_options[:host], or set :only_path to true
-```
-
-In this case add to 
-
-`config/environments/test.rb`  and `config/environment/development.rb`
-
-    config.action_mailer.default_url_options = { host: "localhost:3000" }
-
-`config/environments/staging.rb` 
-
-    config.action_mailer.default_url_options = { host: "syc.dyndns.org:8082" }
-
-`config/environments/production.rb` 
-
-    config.action_mailer.default_url_options = { host: "syc.dyndns.org:8080" }
-
-## Deprecation Warnings
-This section discusses deprecation warnings and how to fix them.
-
-### This dynamic method is deprecated
-
-```
-DEPRECATION WARNING: This dynamic method is deprecated. Please use e.g. 
-Post.where(...).all instead. (called from total_count at 
-/home/pierre/Work/Secondhand/app/models/list.rb:78)
-```
-
-Old                                 | New
------------------------------------ | --------------------------------------
-List.find\_all\_by\_event\_id(event\_id) | List.where(event\_id: event\_id)
-List.find\_all\_by\_event\_id(@event)   | List.where(event\_id: @event)
-List.find\_by\_list\_number!(number)   | List.find\_by!(list\_number: number)
-List.find\_by\_list\_number\_and\_date(number, date) | List.where(list\_number: number, date: date)
-
-Note: When changing to Rails 4 finders note the changed behaviour in regard to 
-exceptions as shown in following table.
-
-Finder               | Exception
--------------------- | --------------------------------------------
-User.find(id)        | if `id` doesn't exist exception is thrown
-User.find\_by(id: id) | if `id` doesn't exist no exception is thrown
-
-### Relation#all is deprecated
-
-```
-DEPRECATION WARNING: Relation#all is deprecated. If you want to eager-load a relation, you can call #load (e.g. `Post.where(published: true).load`). If you want to get an array of records from a relation, you can call #to_a (e.g. `Post.where(published: true).to_a`). (called from block in _app_views_lists_index_html_erb__2537020648015865330_60608460 at /home/pierre/Work/Secondhand/app/views/lists/index.html.erb:85)
-```
-
-To remove the deprecation warning we have to remove `.all` from the `where`
-clauses. To find all of the occurrences we can use *grep* like so
-
-    $ grep -rn "\.all" app/
-
-and then just remove all the occurrences of `.all`.
-
-### Calling #find(:all) is deprecated
-
-```
-DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. (called from block in _app_views_lists_index_html_erb__2537020648015865330_60608460 at /home/pierre/Work/Secondhand/app/views/lists/index.html.erb:85)
-```
-
-This can be cleared with searching for all `find(:all)` occurrences and replace
-them with `all`.
-
-### #apply\_finder\_options is deprecated
-
-```
-DEPRECATION WARNING: #apply_finder_options is deprecated. (called from index at /home/pierre/Work/Secondhand/app/controllers/lists_controller.rb:17)
-```
-
-To solve this deprecation warning we change for instance this snippet in
-`app/controllers/lists_controller.rb`
-
-    @lists = List.order(:event_id).order(:list_number)
-                 .paginate(page: params[:page], 
-                           conditions: List.search_conditions(params))
-
-to
-
-    @lists = List.where(List.search_conditions(params))
-                 .order(:event_id)
-                 .order(:list_number)
-                 .paginate(page: params[:page])
-
-To find all occurrences we issue
-
-    $ grep -rn "conditions:" app/
-
-and replace the occurrences accordingly.
-
-### :confirm option is deprecated
-
-```
-DEPRECATION WARNING: :confirm option is deprecated and will be removed from Rails 4.1. Use 'data: { confirm: 'Text' }' instead. (called from _app_views_users__user_html_erb___3974444937014490660_64610680 at /home/pierre/Work/Secondhand/app/views/users/_user.html.erb:15)
-```
-
-This is typically used in a user dialog to confirm a deletion. We replace all
-the snippets in the view files as shown in the example in
-`app/views/users/_user_html.rb`
-
-    <%= link_to t('.delete'), user, method: :delete, confirm: t('.confirm'),
-        class: "btn btn-warning" %>
-
-to
-
-    <%= link_to t('.delete'), user, method: :delete, 
-        data: { confirm: t('.confirm') }, class: "btn btn-warning" %>
-
-## RSpec deprecation warnings
-RSpec 2.99.0 is a pre-version to RSpec 3 and already pointing to deprecations 
-that will be removed from Rails 3. This section explains the necessary changes
-to make to be ready for Rails 3.
-
-When you run RSpec you will get a general deprecation warnings saying
-
-```
-Deprecation Warnings:
-
---------------------------------------------------------------------------------
-RSpec::Core::ExampleGroup#example is deprecated and will be removed
-in RSpec 3. There are a few options for what you can use instead:
-
-  - rspec-core's DSL methods (`it`, `before`, `after`, `let`, `subject`, etc)
-    now yield the example as a block argument, and that is the recommended
-    way to access the current example from those contexts.
-  - The current example is now exposed via `RSpec.current_example`,
-    which is accessible from any context.
-  - If you can't update the code at this call site (e.g. because it is in
-    an extension gem), you can use this snippet to continue making this
-    method available in RSpec 2.99 and RSpec 3:
-
-      RSpec.configure do |c|
-        c.expose_current_running_example_as :example
-      end
-
-(Called from /home/pierre/.rvm/gems/ruby-1.9.3-p551@rails4013/gems/capybara-2.1.0/lib/capybara/rspec.rb:20:in `block (2 levels) in <top (required)>')
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-RSpec::Core::ExampleGroup#example is deprecated and will be removed
-in RSpec 3. There are a few options for what you can use instead:
-
-  - rspec-core's DSL methods (`it`, `before`, `after`, `let`, `subject`, etc)
-    now yield the example as a block argument, and that is the recommended
-    way to access the current example from those contexts.
-  - The current example is now exposed via `RSpec.current_example`,
-    which is accessible from any context.
-  - If you can't update the code at this call site (e.g. because it is in
-    an extension gem), you can use this snippet to continue making this
-    method available in RSpec 2.99 and RSpec 3:
-
-      RSpec.configure do |c|
-        c.expose_current_running_example_as :example
-      end
-
-(Called from /home/pierre/.rvm/gems/ruby-1.9.3-p551@rails4013/gems/capybara-2.1.0/lib/capybara/rspec.rb:21:in `block (2 levels) in <top (required)>')
---------------------------------------------------------------------------------
-```
-
-These error messages are caused by *Capybara* version 2.1.0. To remove these we
-can add the code snippets mentioned in the deprecation warnings to 
-`spec/spec_helper.rb`.
-
-    RSpec.configure do |config|
-      config.expose_current_running_example_as :example
-      config.infer_spec_type_from_file_location!
-    end
-
-### Use of rspec-core's 'its' method is deprecated.
-
-```
-Use of rspec-core's `its` method is deprecated. Use the rspec-its gem instead. Called from /home/pierre/Work/Secondhand/spec/models/item_spec.rb:22:in `block in <top (required)>'.
-```
-
-We can replace `its` as follows
-
-RSpec 2                                | RSpec 2.99.0 or 3
--------------------------------------- | ---------------------------------
-its(:list) { should == list }          | it { @item.list.should eq(list) }
-
-We could also keep using `its` when intalling *rspec-its* gem instead.
-
-### 'be\_false' is deprecated
-
-```
-`be_false` is deprecated. Use `be_falsey` (for Ruby's conditional semantics) or `be false` (for exact `== false` equality) instead. Called from /home/pierre/Work/Secondhand/spec/models/cart_spec.rb:35:in `block (4 levels) in <top (required)>'.
-```
-
-### 'be\_true' is deprecated
-
-```
-`be_true` is deprecated. Use `be_truthy` (for Ruby's conditional semantics) or `be true` (for exact `== true` equality) instead. Called from /home/pierre/Work/Secondhand/spec/models/cart_spec.rb:43:in `block (4 levels) in <top (required)>'.
-```
-
-### expect { }.not\_to raise\_error(SpecificErrorClass) is deprecated
-
-```
-`expect { }.not_to raise_error(SpecificErrorClass)` is deprecated. Use `expect { }.not_to raise_error` (with no args) instead. Called from /home/pierre/Work/Secondhand/spec/requests/event_pages_spec.rb:111:in `block (5 levels) in <top (required)>'.
-```
-
-### expect(collection).to have(1).items is deprecated
-
-```
-`expect(collection).to have(1).items` is deprecated. Use the rspec-collection_matchers gem or replace your expectation with something like `expect(collection.size).to eq(1)` instead. Called from /home/pierre/Work/Secondhand/spec/models/item_spec.rb:16:in `block (2 levels) in <top (required)>'.
-```
-
-To search for all occurrences we can use *grep* with Perl syntax like so
-
-    $ grep -rnP "have\(\d+\)" spec/
-
-We can replace as follows
-
-RSpec 2                                | RSpec 2.99.0 or 3
--------------------------------------- | -----------------------------------
-it { list.items.should have(1).items } | it { list.items.size.should eq(1) }
-it { list.items.should have(0).items } | it { list.items.should be\_empty }
+<--- to here upgraded. next sections to go
 
 ## Merge to Master
 Now that all our specs run without error we merge our *upgrade-to-rails-4* 
 branch back to the master branch.
 
     $ git checkout master
-    $ git merge upgrade-to-rails-4
+    $ git merge upgrade-to-rails-4.1
 
-## Apply strong attributes
-In the previous step we skipped migration to *strong attributes* in order to get
-our specs to green as fast as possible. Now that everything works we can start
-to implement *strong attributes*.
-
-Strong attributes are used in controllers in the `create`, `build` and `update`
-actions. We determine the attributes we want to allow to be updated by looking 
-in the respective models and use the attributes that are white listed with 
-`attr_accessible`.
-
-In each controller add a `model_params` method and white list the attributes 
-that are allowed to be updated. Then in each `create`, `build` and `update` 
-action send this method to the `new` and `update` respectively 
-`update_attributes` method.
-
-Here is an example for the `AcceptancesController`.
-
-The `update_list` action uses `@list.update_attributes(params[:list])` which
-has to be replaced with `@list.update_attributes(list_params)`
-
-```
-  def update_list
-    @list = List.find(params[:id])
-    respond_to do |format|
-      # if @list.update_attributes(params[:list])
-      if @list.update_attributes(list_params)
-        format.js
-      else
-        format.js { render 'edit_list' }
-      end 
-    end
-  end
-```
-
-The `list_params` method looks like this.
-
-```
-  def list_params
-    params.require(:list).permit(:container)
-  end
-```
-
-In the `AcceptancesController` we only allow the `container` attribute being
-updated in a list, as it is the only change you can make in that corresponding
-view.
-
-The following table shows the controllers where we need to implement the
-`method_params` method.
-
-Controller       | Action       | Model                   | Note
----------------- | ------------ | ----------------------- | ----
-acceptances      | update\_list |                         |
-                 | update\_item |                         |
-application      |              |                         |
-carts            |              | cart                    |
-counter          |              |                         |
-events           | create       | event                   |
-                 | update       |                         |
-items            | create       | item                    |
-                 | update       |                         |
-line\_items      |              | line\_item              |
-lists            | create       | list                    |
-                 | udpate       |                         |
-news             | create       | news, news\_translation | 1)
-                 | udpate       |                         |
-password\_resets | update       |                         |
-reversals        |              | reversal                |
-sellings         |              | selling                 |
-sessions         |              |                         |
-static\_pages    | contact      | message                 | 2)
-                 | message      |                         |
-users            | create       | user                    |
-                 | update       |                         |
-
-** 1) A note on nested models in regard to strong parameters **
-Nested models need a slightly different approach with strong parameters. The
-parent class needs to declare `accepts_nested_attributes_for`. In the controller
-the child attributes are white listed with a hash 
-`models_parameters: [:id, :other_parameter]`. The `:id` is necessary because if
-not provided an `model.update(model_parameters)` will create new nested records
-instead of updating them. Below is an example.
-
-The parent class
-
-```
-class News < ActiveRecord::Base
-
-  belongs_to :user
-
-  has_many :news_translations, dependent: :destroy
-
-  accepts_nested_attributes_for :news_translations
-```
-
-The child class
-
-```
-class NewsTranslation < ActiveRecord::Base
-  belongs_to :news
-
-  validates :title, :description, :language, presence: true
-end
-```
-
-The controller
-
-```
-class NewsController < ApplicationController
-
-  def update
-    @news = News.find(params[:id])
-    
-    if @news.update_attributes(news_params)
-      redirect_to @news
-    else
-      render 'edit'
-    end
-  end
-
-  def create
-    @news = News.new(news_params)
-    if @news.save
-      redirect_to @news
-    else
-      render 'new'
-    end
-  end
-
-  private
-
-    def news_params
-      params.require(:news).permit(:issue, 
-                                   :promote_to_frontpage, 
-                                   :released, 
-                                   :user_id, 
-                                   news_translations_attributes: [:id,
-                                                                  :title, 
-                                                                  :description, 
-                                                                  :language, 
-                                                                  :news_id])
-    end
-```
-
-** 2) A note on empty method_params **
-In the `StaticPagesController` we have a custom action that is used to fill in
-a contact form and to send it via e-mail. The usual case is that the contact 
-form will be empty when displayed and the user fills in the fields. Another case
-is that from the user page the contact form can be invoked with prefilled 
-content. In that case the params hash contains values in the first case it is 
-nil. So we have to cope with both scenarios. That is we have to also return nil
-from the `method_params` method.
-
-The contact action.
-
-```
-  def contact
-    @message = Message.new(message_params) # params[:message])
-  end
-```
-
-The message action.
-
-```
-  def message
-    @message = Message.new(message_params) # params[:message])
-    unless @message.valid?
-      render 'contact'
-    else
-      UserMailer.user_request(@message).deliver
-      redirect_to root_path, notice: I18n.t('.contact_success') 
-    end
-  end
-```
-
-The message\_params method with the params test on nil and returning nil.
-
-```
-  private
-
-    def message_params
-      return nil unless params[:message]
-      params.require(:message).permit(:subject, :category, :message, 
-                                      :email, :copy_me)
-    end
-```
-
-When our specs run with strong parameters we can remove the 
-`protected_attributes` gem by removing it (or commenting it out) and then run
-`bundle install`. After we verify with `bundle show | grep 
-`protected_attributes` that it is not available anymore then we run our specs 
-with `rspec`
-
-## Upgrade Ruby 1.9.3 to Ruby 2.0
-The final upgrade step is to upgrade to the preferred Ruby version for 
-Rails 4.0 which is Ruby 2.0.
-
-We first check out the *upgrade-rails-4* branch.
-
-    $ git checkout upgrade-to-rails-4
-
-To install Ruby 2.0 we just issue
-
-    $ rvm install 2.0.0
-
-Then we change to the gemset `ruby-2.0.0-p643@rails4013`
-
-    $ rvm ruby-2.0.0-p643@rails4013
-
-We now check whether our gems for *Secondhand* are installed under the gemset 
-with 
-
-    $ rails -v
-    
-If gems are missing this will be shown in a error message. In this case we run
-  
-    $ bundle
-    
 Next we verify that everything works with
 
     $ rspec
 
-It should run without errors. In my case I got one error. I ran the spec in
-isolation then it passed. Then I ran all specs again and it passed.
+It should run without errors.
 
 As we didn't have to change anything we can checkout the master tree and 
 proceed with deployment. But before we do we tag this version as a new major
