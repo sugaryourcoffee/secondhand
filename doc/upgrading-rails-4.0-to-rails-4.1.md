@@ -396,6 +396,13 @@ triggered by rspec calling `Rake.application.last_comment`. For the moment we
 don't upgrade rspec as we want to get our test passing and then coping with
 deprecation warnings.
 
+To update from Rspec 2.99.0 we follow the [Rspec upgrade guide](https://relishapp.com/rspec/docs/upgrade).
+
+## Check for required code changes
+This section describes the checks to do to disclose code that has to be changed
+due to changes in Rails 4.1.16
+
+
 ## Error Messages
 In this section error message are discussed that have arisen after upgrading to
 Rails 4.1.
