@@ -1,7 +1,8 @@
 Upgrading from Rails 4.0 to Rails 4.1
 =====================================
 In this document I describe the steps to upgrade *Secondhand* from Rails 4.0 to
-Rails 4.1. 
+Rails 4.1. Further information can be found at 
+[edgeguides](http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html).
 
 Other upgrade instructions can be found at
 
@@ -402,6 +403,7 @@ To update from Rspec 2.99.0 we follow the [Rspec upgrade guide](https://relishap
 This section describes the checks to do to disclose code that has to be changed
 due to changes in Rails 4.1.16
 
+TODO
 
 ## Error Messages
 In this section error message are discussed that have arisen after upgrading to
@@ -546,7 +548,7 @@ error is thrown
 After adding the code and restarting the server, `localhost:3000` will show the
 next entry we have to add, go on until the application starts without error.
 
-<--- to here upgraded. next sections to go
+<--- to here upgraded. next sections TODO
 
 ## Merge to Master
 Now that all our specs run without error we merge our *upgrade-to-rails-4* 
