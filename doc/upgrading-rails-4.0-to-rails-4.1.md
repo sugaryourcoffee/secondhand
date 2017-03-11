@@ -298,6 +298,11 @@ Now we should have the version 4.1.16 installed. We can proof it by issuing
     $ rails -v
     Rails 4.1.16
 
+Note: If we have accidentially installed the new rails version into the current
+gemset (as happened to me) we can rename the gemset with
+
+    rvm gemset rename ruby-2.0.0-p648-rails4013 ruby-2.0.0-p648@rails-4116-secondhand
+
 ## Update Secondhand configuration files
 Now we use a rake task that helps to interactively update configuration files.
 
