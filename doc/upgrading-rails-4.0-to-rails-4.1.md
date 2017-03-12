@@ -560,11 +560,11 @@ next entry we have to add, go on until the application starts without error.
 
 <--- to here upgraded. next sections TODO
 
-## Merge to Master
-Now that all our specs run without error we merge our *upgrade-to-rails-4* 
-branch back to the master branch.
+## Merge to a Beta Branch
+Now that all our specs run without error we merge our *upgrade-to-rails-4.1* 
+branch to a newly created beta branch.
 
-    $ git checkout master
+    $ git checkout -b v3.0-beta
     $ git merge upgrade-to-rails-4.1
 
 Next we verify that everything works with
@@ -573,19 +573,19 @@ Next we verify that everything works with
 
 It should run without errors.
 
-As we didn't have to change anything we can checkout the master tree and 
-proceed with deployment. But before we do we tag this version as a new major
-version `2.0.0`.
+If we didn't have to change anything we can proceed with deployment. But before 
+we do we tag this version as a new major version `3.0.0`.
 
-    $ git checkout -b v2.0-stable
-    $ git push --set-upstream origin v2.0-stable
-    $ git tag -a v2.0.0 -m "Secondhand V2.0.0 - Release 2015-12-24"
+    $ git checkout -b v3.0-beta
+    $ git push --set-upstream origin v3.0-beta
+    $ git tag -a v3.0.0-beta -m "Secondhand V3.0.0 - Beta Release 2017-03-12"
     $ git push --tags
 
-# Stage 3 - Deploying the application
-The final step is to deploy the application. We already have a running 
-application on the staging and production machine. The initial deployment step
-are described in [deployment](https://github.com/sugaryourcoffee/secondhand/blob/master/doc/deployment.md). 
+# Stage 3 - Deploying the Beta Application
+The next step is to deploy the application to the beta server. We already have 
+a running application on the staging and production machine. The initial 
+deployment step are described in 
+[deployment](https://github.com/sugaryourcoffee/secondhand/blob/master/doc/deployment.md). 
 The steps in this section describe how to setup an additional beta server to 
 test our upgraded application. If everything works we deploy to the staging 
 sever and finally to the production server. 
