@@ -55,6 +55,11 @@ First make sure all your tests pass by running *rspec*.
 
 If you encounter errors first fix them before you move on.
 
+Note: Test for JavaScript might not work due to incompatibility between Silenium
+Webdriver and the Firefox versions. If there is an error during the JavaScript 
+Capybara tests check if the description in the 
+[Devlopement Notes](development-notes.md) document helps.
+
 ## Tag the current application version
 Before we move on we want to make sure that we can come back to the currently
 working and released version. To do that we create a branch and tag this 
