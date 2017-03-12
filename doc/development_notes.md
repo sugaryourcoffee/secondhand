@@ -322,7 +322,7 @@ From command line we can check that we are now start version 47.0.1
 
 If we run now `rspec` it should work as before.
 
-A better solution can be found at [blog.pixera.com)[http://blog.pixarea.com/2013/02/locking-the-firefox-version-when-testing-rails-with-capybara-and-selenium/).
+A better solution can be found at [blog.pixera.com](http://blog.pixarea.com/2013/02/locking-the-firefox-version-when-testing-rails-with-capybara-and-selenium/).
 
 Here is the main extract
 
