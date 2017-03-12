@@ -560,27 +560,6 @@ next entry we have to add, go on until the application starts without error.
 
 <--- to here upgraded. next sections TODO
 
-## Merge to a Beta Branch
-Now that all our specs run without error we merge our *upgrade-to-rails-4.1* 
-branch to a newly created beta branch.
-
-    $ git checkout -b v3.0-beta
-    $ git merge upgrade-to-rails-4.1
-
-Next we verify that everything works with
-
-    $ rspec
-
-It should run without errors.
-
-If we didn't have to change anything we can proceed with deployment. But before 
-we do we tag this version as a new major version `3.0.0`.
-
-    $ git checkout -b v3.0-beta
-    $ git push --set-upstream origin v3.0-beta
-    $ git tag -a v3.0.0-beta -m "Secondhand V3.0.0 - Beta Release 2017-03-12"
-    $ git push --tags
-
 # Stage 3 - Deploying the Beta Application
 The next step is to deploy the application to the beta server. We already have 
 a running application on the staging and production machine. The initial 
@@ -802,6 +781,19 @@ and run
     saltspring$ bundle upgrade mysql2
 
 Then push the changes to github an run `cap beta deploy` again.
+
+## Merge to Master
+Now that all our specs run without error and we have tested the application on 
+the beta server we merge our *upgrade-to-rails-4.1* branch to master branch
+
+    $ git checkout master
+    $ git merge upgrade-to-rails-4.1
+
+Next we verify that everything works with
+
+    $ rspec
+
+It should run without errors.
 
 ## Deploying to the staging server
 The staging server is on the same server as the beta server. Therefore we don't 
@@ -1089,4 +1081,13 @@ And then run the database migrations
     $ cap production deploy:migrations
 
 Go to [http://syc.dyndns.org:8080](http://syc.dyndns.org:8080) to check up your newly deployed application.
+
+### Tag the version
+The final step is to tag our version. We do we tag this version as a new major 
+version `3.0.0`.
+
+    $ git checkout -b v3.0.0
+    $ git push --set-upstream origin v3.0.0
+    $ git tag -a v3.0.0 -m "Secondhand V3.0.0 - Release 2017-03-12"
+    $ git push --tags
 
