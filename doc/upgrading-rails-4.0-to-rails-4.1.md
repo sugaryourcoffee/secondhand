@@ -558,8 +558,6 @@ error is thrown
 After adding the code and restarting the server, `localhost:3000` will show the
 next entry we have to add, go on until the application starts without error.
 
-<--- to here upgraded. next sections TODO
-
 # Stage 3 - Deploying the Beta Application
 The next step is to deploy the application to the beta server. We already have 
 a running application on the beta, staging and production machine. The initial 
@@ -587,7 +585,11 @@ First we ssh to the staging server
 
     saltspring$ ssh uranus
 
-We install and activate Ruby 2.0.0p648
+To make sure we have the latest RVM installed we upgrade with
+
+    uranus$ rvm get stable
+
+Now we install and activate Ruby 2.0.0p648
 
     uranus$ rvm install 2.0.0 && rvm use 2.0.0
 
@@ -604,7 +606,7 @@ Finally we install Rails 4.1.16
     uranus$ gem install rails --version 4.1.16 --no-ri --no-rdoc
 
 ### Adjust the virtual host for the beta server
-Copy the secondhand.conf to secondhand-beta.conf and change the Ruby version in 
+Open up secondhand-beta.conf and change the Ruby version in 
 the Apache's secondhand-beta.conf virtual host
 
     uranus$ vi /etc/apache2/sites-available/secondhand-beta.conf
@@ -633,6 +635,8 @@ and reload the configuration and restart Apache 2
 
     uranus$ service apache2 reload && sudo apachectl restart
 
+<--- to here upgraded. next sections TODO
+
 ### Update the beta environment
 Back on the development machine go to `~/Work/Secondhand` and update the beta
 environment 
@@ -647,21 +651,20 @@ and check that following line reads
 
 In `config/deploy.rb` check that `beta` is part of the stages
 
-    set :stages, %w(production, staging, beta) 
+    set :stages, %w(production staging beta backup) 
 
 In `config/deploy/beta.rb` check the `domain`, `application`, `rvm_ruby_string`
 and the `rails_env` and also change `git_application` to `upgrade-to-rails-4.1`.
 
     set :domain, 'beta.secondhand.uranus'
-    set :git_application, 'upgrade-to-rails-4.1'
+    set :git_application, 'secondhand/tree/upgrade-to-rails-4.1'
     set :application, 'secondhand-beta'
     set :repository,  "git@github.com:#{git_user}/#{git_application}.git"
     set :rvm_ruby_string, '2.0.0'
     set :rails_env, :beta
 
-We add a beta group to database.yml
-
-TODO check if secondhand_staging should read secondhand_beta
+Check that there is a beta group in database.yml. The database is the same as 
+with the staging version as they live on the same machine.
 
     beta:
       adapter: mysql2
@@ -674,9 +677,9 @@ TODO check if secondhand_staging should read secondhand_beta
       password: password
       host: localhost
 
-and add a hostname to `/etc/hosts`
+check that we have the hostname in `/etc/hosts`
 
-      19.168.178.66 secondhand.uranus beta.secondhand.uranus
+      192.168.178.66 secondhand.uranus beta.secondhand.uranus
 
 <--- TODO updated description but not implemented yet. Before proceed implement!
 
