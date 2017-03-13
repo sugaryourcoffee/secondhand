@@ -3,13 +3,13 @@ set :git_user, 'sugaryourcoffee'
 set :user, 'pierre'
 set :domain, 'beta.secondhand.uranus'
 set :git_application, "secondhand"
-set :branch, fetch(:branch, "upgrade-to-rails-4.1")
+set :branch, "upgrade-to-rails-4.1"
 set :application, "secondhand-beta"
 set :repository,  "git@github.com:#{git_user}/#{git_application}.git"
 set :deploy_to, "/var/www/#{application}"
 
 require 'rvm/capistrano'
-set :rvm_ruby_string, '2.0.0'
+set :rvm_ruby_string, '2.0.0-p648@rails-4116-secondhand'
 set :rvm_type, :user
 
 role :web, domain                   # Your HTTP server, Apache/etc

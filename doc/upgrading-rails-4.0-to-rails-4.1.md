@@ -617,7 +617,7 @@ We change following part
 <VirtualHost *:8083>
   DocumentRoot /var/www/secondhand-beta/current/public
   Servername beta.secondhand.uranus
-  PassengerRuby /home/pierre/.rvm/gems/ruby-2.0.0-p648@rail-4.1.16-secondhand/wrappers/ruby 
+  PassengerRuby /home/pierre/.rvm/gems/ruby-2.0.0-p648@rails-4116-secondhand/wrappers/ruby 
   <Directory /var/www/secondhand-beta/public>
     AllowOverride all
     Options -MultiViews
@@ -634,8 +634,6 @@ Now run
 and reload the configuration and restart Apache 2
 
     uranus$ service apache2 reload && sudo apachectl restart
-
-<--- to here upgraded. next sections TODO
 
 ### Update the beta environment
 Back on the development machine go to `~/Work/Secondhand` and update the beta
@@ -657,7 +655,8 @@ In `config/deploy/beta.rb` check the `domain`, `application`, `rvm_ruby_string`
 and the `rails_env` and also change `git_application` to `upgrade-to-rails-4.1`.
 
     set :domain, 'beta.secondhand.uranus'
-    set :git_application, 'secondhand/tree/upgrade-to-rails-4.1'
+    set :git_application, 'secondhand'
+    set :branch, "upgrade-to-rails-4.1"
     set :application, 'secondhand-beta'
     set :repository,  "git@github.com:#{git_user}/#{git_application}.git"
     set :rvm_ruby_string, '2.0.0'
@@ -681,8 +680,6 @@ check that we have the hostname in `/etc/hosts`
 
       192.168.178.66 secondhand.uranus beta.secondhand.uranus
 
-<--- TODO updated description but not implemented yet. Before proceed implement!
-
 ### Deploy to the beta server
 Finally run
 
@@ -697,9 +694,13 @@ issue
 
 Check up you application at [secondhand:8083](http://syc.dyndns.org:8083).
 
+<--- TODO processed to here. Errors to be resolved
+
 ### Errors during deployment
 There are probably some errors during the first deployments. This section 
-describes errors after upgrading Secondhand to Rails 4.0.13.
+describes errors after upgrading Secondhand to Rails 4.1.16.
+
+#### bash: bundle: command not found
 
 #### Could not load database configuration
 During the assets pre compile task following error shows up
