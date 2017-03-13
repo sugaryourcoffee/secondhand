@@ -562,59 +562,51 @@ next entry we have to add, go on until the application starts without error.
 
 # Stage 3 - Deploying the Beta Application
 The next step is to deploy the application to the beta server. We already have 
-a running application on the staging and production machine. The initial 
-deployment step are described in 
+a running application on the beta, staging and production machine. The initial 
+deployment steps are described in 
 [deployment](https://github.com/sugaryourcoffee/secondhand/blob/master/doc/deployment.md). 
-The steps in this section describe how to setup an additional beta server to 
-test our upgraded application. If everything works we deploy to the staging 
-sever and finally to the production server. 
+The steps in this section describe how to update the beta server to 
+test our upgraded application. If everything works on the beta server we deploy
+to the staging sever and finally to the production server. 
 
 In the following we assume that our development machine is *saltspring* and our
-beta server is *uranus*. To setup the beta server we have to conduct following 
+beta server is *uranus*. To upgrade the beta server we have to conduct following
 steps:
 
 * ssh to the staging server *uranus*
-* install Ruby 2.0.0
-* create a gemspec rails4013
-* install Rails 4.0.13
-* create the application directory
-* copy the staging virtual host to a beta virtual host and adjust it
+* install Ruby 2.0.0p648
+* create a gemspec rails-4116-secondhand
+* install Rails 4.1.16
+* adjust the Apache's beta virtual host 
 * return to the development machine *saltspring*
-* create a beta environment
-* deploy the application
+* update the beta environment
+* deploy the beta application
 
 ### Install Ruby 2.0.0 and Rails 4.0.13 on the beta server
 First we ssh to the staging server
 
     saltspring$ ssh uranus
 
-We install and activate Ruby 2.0.0
+We install and activate Ruby 2.0.0p648
 
     uranus$ rvm install 2.0.0 && rvm use 2.0.0
 
 Then we create a gemset
 
-    uranus$ rvm gemset create rails4013
+    uranus$ rvm gemset create rails-4116-secondhand
 
 and switch to the gemset
 
-    uranus$ rvm ruby-2.0.0-p643@rails4013
+    uranus$ rvm ruby-2.0.0-p648@rails-4116-secondhand
 
-Finally we install Rails 4.0.13
+Finally we install Rails 4.1.16
 
-    uranus$ gem install rails --version 4.0.13 --no-ri --no-rdoc
+    uranus$ gem install rails --version 4.1.16 --no-ri --no-rdoc
 
-### Create the application directory
-We create a deployment directory to host our beta version of Secondhand.
-
-    uranus$ sudo mkdir /var/www/secondhand-beta/
-    
-### Create a virtual host for the beta server
+### Adjust the virtual host for the beta server
 Copy the secondhand.conf to secondhand-beta.conf and change the Ruby version in 
 the Apache's secondhand-beta.conf virtual host
 
-    uranus$ cp /etc/apache2/sites-available/scondhand.conf \
-    > /etc/apache2/sites-available/secondhand-beta.conf
     uranus$ vi /etc/apache2/sites-available/secondhand-beta.conf
 
 We change following part
@@ -623,7 +615,7 @@ We change following part
 <VirtualHost *:8083>
   DocumentRoot /var/www/secondhand-beta/current/public
   Servername beta.secondhand.uranus
-  PassengerRuby /home/pierre/.rvm/gems/ruby-2.0.0-p643@rail4013/wrappers/ruby 
+  PassengerRuby /home/pierre/.rvm/gems/ruby-2.0.0-p648@rail-4.1.16-secondhand/wrappers/ruby 
   <Directory /var/www/secondhand-beta/public>
     AllowOverride all
     Options -MultiViews
@@ -633,9 +625,6 @@ We change following part
 </VirtualHost>
 ```
 
-In order to access the port `8083` we have to add `Listen 8083` to 
-`/etc/apache2/ports.conf`
-
 Now run 
 
     uranus$ sudo a2ensite secondhand-beta.conf
@@ -644,38 +633,35 @@ and reload the configuration and restart Apache 2
 
     uranus$ service apache2 reload && sudo apachectl restart
 
-### Add a beta environment
-Back on the development machine go to `~/Work/Secondhand` and create a beta
-environment by copying the staging environment
+### Update the beta environment
+Back on the development machine go to `~/Work/Secondhand` and update the beta
+environment 
 
     saltspring$ cd ~/Work/Secondhand
-    saltspring$ cp config/environments/staging.rb config/environments/beta.rb
+    saltspring$ vi config/environments/beta.rb
 
-and change following line so it reads
+and check that following line reads
 
     config.action_mailer
           .default_url_options = { host: "syc.dyndns.org:8083" }
 
-In `config/deploy.rb` add `beta` to the stages
+In `config/deploy.rb` check that `beta` is part of the stages
 
     set :stages, %w(production, staging, beta) 
 
-Copy `config/deploy/staging.rb` to `config/deploy/beta.rb`
-
-    saltspring$ cp config/deploy/staging.rb config/deploy/beta.rb
-
-In `config/deploy/beta.rb` set the `domain`, `application`, `rvm_ruby_string`
-and the `rails_env` and also add `git_application` and exchange `application` in
-the repository URL with `git_application`
+In `config/deploy/beta.rb` check the `domain`, `application`, `rvm_ruby_string`
+and the `rails_env` and also change `git_application` to `upgrade-to-rails-4.1`.
 
     set :domain, 'beta.secondhand.uranus'
-    set :git_application, 'secondhand'
+    set :git_application, 'upgrade-to-rails-4.1'
     set :application, 'secondhand-beta'
     set :repository,  "git@github.com:#{git_user}/#{git_application}.git"
     set :rvm_ruby_string, '2.0.0'
     set :rails_env, :beta
 
 We add a beta group to database.yml
+
+TODO check if secondhand_staging should read secondhand_beta
 
     beta:
       adapter: mysql2
@@ -691,6 +677,8 @@ We add a beta group to database.yml
 and add a hostname to `/etc/hosts`
 
       19.168.178.66 secondhand.uranus beta.secondhand.uranus
+
+<--- TODO updated description but not implemented yet. Before proceed implement!
 
 ### Deploy to the beta server
 Finally run
