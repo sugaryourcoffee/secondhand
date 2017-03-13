@@ -3,7 +3,6 @@ set :git_user, 'sugaryourcoffee'
 set :user, 'pierre'
 set :domain, 'beta.secondhand.uranus'
 set :git_application, "secondhand"
-set :branch, "upgrade-to-rails-4.1"
 set :application, "secondhand-beta"
 set :repository,  "git@github.com:#{git_user}/#{git_application}.git"
 set :deploy_to, "/var/www/#{application}"
@@ -19,7 +18,7 @@ role :db,  domain, :primary => true # This is where Rails migrations will run
 set :ssh_options, :forward_agent => true
 set :deploy_via, :remote_cache
 set :scm, 'git'
-set :branch, 'master'
+set :branch, fetch(:branch, "master")
 set :scm_verbose, true
 set :use_sudo, false
 set :rails_env, :beta
