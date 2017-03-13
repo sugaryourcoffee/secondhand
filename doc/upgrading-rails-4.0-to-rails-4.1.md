@@ -413,8 +413,6 @@ To update from Rspec 2.99.0 we follow the [Rspec upgrade guide](https://relishap
 This section describes the checks to do to disclose code that has to be changed
 due to changes in Rails 4.1.16
 
-TODO
-
 ## Error Messages
 In this section error message are discussed that have arisen after upgrading to
 Rails 4.1.
@@ -656,11 +654,12 @@ and the `rails_env` and also change `git_application` to `upgrade-to-rails-4.1`.
 
     set :domain, 'beta.secondhand.uranus'
     set :git_application, 'secondhand'
-    set :branch, "upgrade-to-rails-4.1"
     set :application, 'secondhand-beta'
     set :repository,  "git@github.com:#{git_user}/#{git_application}.git"
     set :rvm_ruby_string, '2.0.0'
     set :rails_env, :beta
+
+    set :branch, fetch(:branch, "master")
 
 Check that there is a beta group in database.yml. The database is the same as 
 with the staging version as they live on the same machine.
@@ -681,111 +680,15 @@ check that we have the hostname in `/etc/hosts`
       192.168.178.66 secondhand.uranus beta.secondhand.uranus
 
 ### Deploy to the beta server
-Finally run
+We deploy our branch `upgrade-to-rails-4.1` with following command
 
-    saltspring$ cap beta deploy:setup
-    saltspring$ cap beta deploy:check
-    saltspring$ cap beta deploy:cold
+    saltspring$ cap -S branch=upgrade-to-rails-4.1 beta deploy
 
-This is only necessary for the initial deployment. For subsequent deploys we
-issue
-
-    saltspring$ cap beta deploy
+If we would ommit the branch directive we would deploy the master branch.
 
 Check up you application at [secondhand:8083](http://syc.dyndns.org:8083).
 
-<--- TODO processed to here. Errors to be resolved
-
-### Errors during deployment
-There are probably some errors during the first deployments. This section 
-describes errors after upgrading Secondhand to Rails 4.1.16.
-
-#### bash: bundle: command not found
-
-#### Could not load database configuration
-During the assets pre compile task following error shows up
-
-```
-saltspring$ cap beta deploy
-...
-  * executing "cd -- /var/www/secondhand-beta/releases/20151010153506 && RAILS_E
-NV=beta RAILS_GROUPS=assets bundle exec rake assets:precompile"
-    servers: ["beta.secondhand.uranus"]
-    [beta.secondhand.uranus] executing command
-*** [err :: beta.secondhand.uranus] rake aborted!
-*** [err :: beta.secondhand.uranus] Could not load database configuration. No su
-ch file - /var/www/secondhand-beta/releases/20151010153506/config/database.yml
-*** [err :: beta.secondhand.uranus] /var/www/secondhand-beta/shared/bundle/ruby/
-2.0.0/gems/railties-4.0.13/lib/rails/application/configuration.rb:110:in `databa
-se_configuration`
-```
-
-If we look into `config/deploy/beta.rb` we copy the `database.yml` file to the 
-`current/config/database.yml` file. As the error indicates 
-`rake assets:precompile` requests the `database.yml` file in the current release
-directory. So we have to tweak our rake task in `config/deploy/beta.rb` in that
-we have to copy our `database.yml` file to the current release directory 
-`release_path` and not to the current directory `current_path`.
-
-```
-before 'deploy:assets:precompile', 'copy_database_yml_to_release_path'
-# after 'deploy:create_symlink', 'copy_database_yml'
-
-desc "copy shared/database.yml to RELEASE_PATH/config/database.yml"
-task :copy_database_yml_to_release_path do
-  config_dir = "#{shared_path}/config"
-
-  unless run("if [ -f '#{config_dir}/database.yml' ]; then echo -n 'true'; fi")
-    run "mkdir -p #{config_dir}" 
-    upload("config/database.yml", "#{config_dir}/database.yml")
-  end
-
-  run "cp #{config_dir}/database.yml #{release_path}/config/database.yml"
-end
-
-# desc "copy shared/database.yml to current/config/database.yml"
-# task :copy_database_yml do
-#  config_dir = "#{shared_path}/config"
-
-#  unless run("if [ -f '#{config_dir}/database.yml' ]; then echo -n 'true'; fi")
-#    run "mkdir -p #{config_dir}" 
-#    upload("config/database.yml", "#{config_dir}/database.yml")
-#  end
-
-#  run "cp #{config_dir}/database.yml #{current_path}/config/database.yml"
-# end
-```
-
-### Gem mysql2 is not loaded
-When starting the deployed application the following error comes up
-
-```
-Specified 'mysql2' for database adapter, but the gem is not loaded. Add gem 'mysql2' to your Gemfile.
-```
-
-Even though the `mysql2` gem is available it is not recognized. Rails 4 doesn't 
-work well with the `mysql2` v0.4.x gem. In the `Gemfile` change the version to 
-
-    gem 'mysql2', '~> 0.3.20'
-
-and run
-
-    saltspring$ bundle upgrade mysql2
-
-Then push the changes to github an run `cap beta deploy` again.
-
-## Merge to Master
-Now that all our specs run without error and we have tested the application on 
-the beta server we merge our *upgrade-to-rails-4.1* branch to master branch
-
-    $ git checkout master
-    $ git merge upgrade-to-rails-4.1
-
-Next we verify that everything works with
-
-    $ rspec
-
-It should run without errors.
+<--- TODO processed to here. Next is deploying to the staging server
 
 ## Deploying to the staging server
 The staging server is on the same server as the beta server. Therefore we don't 
@@ -1075,7 +978,7 @@ And then run the database migrations
 Go to [http://syc.dyndns.org:8080](http://syc.dyndns.org:8080) to check up your newly deployed application.
 
 ### Tag the version
-The final step is to tag our version. We do we tag this version as a new major 
+The final step is to tag our version. We do tag this version as a new major 
 version `3.0.0`.
 
     $ git checkout -b v3.0.0
