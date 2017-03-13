@@ -3,6 +3,7 @@ set :git_user, 'sugaryourcoffee'
 set :user, 'pierre'
 set :domain, 'beta.secondhand.uranus'
 set :git_application, "secondhand"
+set :branch, fetch(:branch, "upgrade-to-rails-4.1")
 set :application, "secondhand-beta"
 set :repository,  "git@github.com:#{git_user}/#{git_application}.git"
 set :deploy_to, "/var/www/#{application}"
