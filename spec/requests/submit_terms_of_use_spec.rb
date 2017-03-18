@@ -56,7 +56,7 @@ describe "Submit terms of use" do
 
       before { visit display_terms_of_use_path(locale: :en) }
 
-      it { page.should have_text "To obtain the Terms of Use please turn to \
+      it { page.should have_text "To obtain the Terms of Sales please turn to \
            your Secondhand organizer" }
 
     end
@@ -67,7 +67,7 @@ describe "Submit terms of use" do
 
       before { visit display_terms_of_use_path(locale: :en) }
 
-      it { page.should have_text "To obtain the Terms of Use please turn to \
+      it { page.should have_text "To obtain the Terms of Sales please turn to \
            your Secondhand organizer" }
 
     end
@@ -77,7 +77,7 @@ describe "Submit terms of use" do
 
       before { visit display_terms_of_use_path(locale: :en) }
 
-      it { page.should have_text "To obtain the Terms of Use please turn to \
+      it { page.should have_text "To obtain the Terms of Sales please turn to \
            your Secondhand organizer" }
 
     end

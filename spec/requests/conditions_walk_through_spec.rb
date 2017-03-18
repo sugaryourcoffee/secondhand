@@ -9,7 +9,7 @@ describe "Conditions" do
 
   it "should walk through" do
     visit conditions_path(locale: :en)
-    click_link "Create new Terms of Use"
+    click_link "Create new Terms of Sales"
     fill_in "Version", with: "01/2016"
     click_button "Create"
     click_link "Create new Language Version"
@@ -40,7 +40,7 @@ describe "Conditions" do
     Conditions.last.terms_of_uses.first.pages.size.should eq 2
     Conditions.last.terms_of_uses.last.pages.size.should eq 2
 
-    click_link "Terms of Use Overview"
+    click_link "Terms of Sales Overview"
     click_link "Copy"
     fill_in "Version", with: "02/2016"
     click_button "Update"

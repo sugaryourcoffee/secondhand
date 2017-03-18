@@ -15,28 +15,28 @@ de:
 
   conditions:
     index:
-      conditions:     "Nutzungsbedingungen"
-      new_conditions: "Erstelle neue Nutzungsbedingungen"
+      conditions:     "Verkaufsbedingungen"
+      new_conditions: "Erstelle neue Verkaufsbedingungen"
     new:
-      new_conditions: "Neue Nutzungsbedingungen"
+      new_conditions: "Neue Verkaufsbedingungen"
     form:
-      cancel_and_back: "Abbrechen und zurück zu Nutzungsbedingungen Übersicht"
+      cancel_and_back: "Abbrechen und zurück zu Verkaufsbedingungen Übersicht"
     edit:
-      edit_conditions: "Nutzungsbedingungen Bearbeiten"
+      edit_conditions: "Verkaufsbedingungen Bearbeiten"
     edit_form:
-      cancel_and_back: "Abbrechen und zurück zu Nutzungsbedingungen Übersicht"
+      cancel_and_back: "Abbrechen und zurück zu Verkaufsbedingungen Übersicht"
     conditions:
       activate:       "Aktivieren"
       deactivate:     "Deaktivieren"
       edit:           "Bearbeiten"
       show:           "Anzeigen"
       delete:         "Löschen"
-      confirm_delete: "Die angewählten Nutzungsbedingungen löschen?"
+      confirm_delete: "Die angewählten Verkaufsbedingungen löschen?"
       copy:           "Kopieren"
     show:
-      conditions_overview: "Nutzungsbedingungen Übersicht"
-      show_conditions:     "Nutzungsbedingungen Version anzeigen"
-      new_locale:          "Erzeuge neue Sprachversion der Nutzungsbedingungen"
+      conditions_overview: "Verkaufsbedingungen Übersicht"
+      show_conditions:     "Verkaufsbedingungen Version anzeigen"
+      new_locale:          "Erzeuge neue Sprachversion der Verkaufsbedingungen"
       no_more_languages:   "Keine freie Sprache mehr verfügbar"
       locale:              "Sprache"
     terms_of_use:
@@ -44,12 +44,12 @@ de:
       show:           "Anzeigen"
       delete:         "Löschen"
       copy:           "Kopieren"
-      confirm_delete: "Angewählte Sprache der Nutzungsbedingungen löschen?"
+      confirm_delete: "Angewählte Sprache der Verkaufsbedingungen löschen?"
 
   submit_terms_of_use:
     display:
-      terms_of_use:         "Nutzungsbedingungen (%{number}/%{count})"
-      terms_of_use_missing: "Die aktuellen Nutzungsbedingungen können Sie bei Ihrem Secondhand Veranstalter beziehen"
+      terms_of_use:         "Verkaufsbedingungen (%{number}/%{count})"
+      terms_of_use_missing: "Die aktuellen Verkaufsbedingungen können Sie bei Ihrem Secondhand Veranstalter beziehen"
       back:                 "Zurück"
       next:                 "Weiter"
       accept:               "Akzeptieren"
@@ -57,8 +57,8 @@ de:
 
   terms_of_use:
     show:
-      terms_of_use_overview: "Nutzungsbedingungen Übersicht"
-      show_terms_of_use:     "Nutzungsbedingungen Sprache"
+      terms_of_use_overview: "Verkaufsbedingungen Übersicht"
+      show_terms_of_use:     "Verkaufsbedingungen Sprache"
       new_page:              "Neue Seite hinzufügen"
       page:                  "Seite"
       title:                 "Titel"
@@ -70,11 +70,11 @@ de:
       page_up:               "Auf"
       page_down:             "Ab"
     edit:
-      edit_terms_of_use: "Nutzungsbedingungen bearbeiten"
-      cancel_and_back:   "Abbrechen und zurück zu Nutzungsbedingungen Version"
+      edit_terms_of_use: "Verkaufsbedingungen bearbeiten"
+      cancel_and_back:   "Abbrechen und zurück zu Verkaufsbedingungen Version"
     new:
-      new_terms_of_use:  "Neue Nutzungsbedingungen erstellen"
-      cancel_and_back:   "Abbrechen und zurück zu Nutzungsbedingungen Version"
+      new_terms_of_use:  "Neue Verkaufsbedingungen erstellen"
+      cancel_and_back:   "Abbrechen und zurück zu Verkaufsbedingungen Version"
 
   pages:
     new:
@@ -424,7 +424,7 @@ de:
       Sign_in:  "Anmelden"
 
     footer:
-      terms_of_use: "Nutzungsbedingungen"
+      terms_of_use: "Verkaufsbedingungen"
       About:        "Über uns"
       Contact:      "Kontakt"
       News:         "Aktuell"
@@ -918,8 +918,8 @@ de:
       item:         "Artikel"
       message:      "Nachricht"
       page:         "Seite"
-      termsofuse:   "Nutzungsbedingungen"
-      terms_of_use: "Nutzungsbedingungen"
+      termsofuse:   "Verkaufsbedingungen"
+      terms_of_use: "Verkaufsbedingungen"
       conditions:   "Bedingungen"
     attributes:
       page:

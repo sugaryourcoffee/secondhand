@@ -23,7 +23,7 @@ describe "Create terms of use" do
 
     it "should create new terms of use and forward to terms of use show page" do
       page.current_path.should eq conditions_path(locale: :en)
-      click_link "Create new Terms of Use"
+      click_link "Create new Terms of Sales"
       fill_in "Version", with: "2015/01"
       expect { click_button "Create" }.to change(Conditions, :count).by(1)
       page.current_path.should eq condition_path(locale: :en, 
