@@ -92,6 +92,7 @@ class ListsController < ApplicationController
   # GET /lists/1/sold_items
   def sold_items
     load_list
+    load_user_from_list
     statistics_for_sold_items
   end
 
@@ -259,6 +260,13 @@ class ListsController < ApplicationController
 
     def load_user
       @user ||= User.find(params[:user_id])
+    end
+
+    def load_user_from_list
+      if @list.user_id && params[:user_id].nil?
+        params[:user_id] = @list.user_id
+        load_user
+      end
     end
 
     def print_list_to_pdf
