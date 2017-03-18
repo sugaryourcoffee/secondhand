@@ -921,6 +921,7 @@ de:
       termsofuse:   "Verkaufsbedingungen"
       terms_of_use: "Verkaufsbedingungen"
       conditions:   "Bedingungen"
+      lineitem:     "Artikel"
     attributes:
       page:
         number:  "Nummer"
@@ -968,8 +969,10 @@ de:
           attributes:
             password:
               confirmation: "stimmt nicht mit Passwortbestätigung überein"
+        lineitem:
+          attributes:
+            item: "Artikel"
       
-        
   errors:
     template:
       body:    "Es gab Probleme mit folgenden Feldern:"
@@ -1065,3 +1068,7 @@ de:
   no_closed_files_to_zip: "Keine abgeschlossenen Listen vorhanden für Export"
   cannot_add_items:       "Zu angenommener Liste %{list} können keine Artikel hinzugefügt werden"
   list_full:              "Liste %{list} voll - es können keine weiteren Artikel hinzugefügt werden"
+  must_not_be_empty:  "darf nicht leer sein"
+  could_not_add_item: "Artikel konnte nicht hinzugefügt werden"
+  not_accepted:       "%{number} wurde noch nicht angenommen"
+  not_existing:       "%{number} existiert nicht"

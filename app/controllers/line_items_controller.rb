@@ -19,7 +19,21 @@ class LineItemsController < ApplicationController
         format.html { redirect_to item_collection_carts_path }
       else
         @cart = current_cart
-        flash.now[:error] = "Could not add item"
+        flash.now[:error] = I18n.t('could_not_add_item')
+        if params[:search_list_number].blank?
+          @line_item.errors.add(:list, I18n.t('must_not_be_empty'))
+        elsif @list.nil?
+          @line_item.errors.add(:list, I18n.t('not_existing',
+                     number: params[:search_list_number]))
+        elsif @item.nil?
+          if @list.accepted?
+            @line_item.errors.add(:item, I18n.t('not_existing',
+                     number: params[:search_item_number]))
+          else
+            @line_item.errors.add(:list, I18n('not_accepted',
+                     number: params[:search_list_number]))
+         end
+        end
         format.js   { render "carts/item_collection" }
         format.html { render "carts/item_collection" }
       end

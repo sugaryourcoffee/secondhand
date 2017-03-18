@@ -897,3 +897,7 @@ en:
   no_closed_files_to_zip: "No closed files available for export"
   cannot_add_items:       "Cannot add items to accepted list %{list}"
   list_full:              "List %{list} full - cannot add additional items"
+  must_not_be_empty:  "must not be empty"
+  could_not_add_item: "Could not add item"
+  not_accepted:       "%{number} hasn't been accepted"
+  not_existing:       "%{number} doesn't exist"

@@ -76,6 +76,30 @@ describe Cart do
       expect { click_button 'Add' }.to change(LineItem, :count).by(0)
     end
 
+    it "should indicated not existing list" do
+      fill_in 'List', with: "1000"
+      fill_in 'Item', with: "4"
+      click_button 'Add'
+      page.should have_text "Could not add item"
+      page.should have_text "List 1000 doesn't exist"
+    end
+
+    it "should indicate empty list" do
+      fill_in 'List', with: ""
+      fill_in 'Item', with: "4"
+      click_button 'Add'
+      page.should have_text "Could not add item"
+      page.should have_text "List must not be empty"
+    end
+
+    it "should indicate not existing item" do
+      fill_in 'List', with: list1.list_number
+      fill_in 'Item', with: "4"
+      click_button 'Add'
+      page.should have_text "Could not add item"
+      page.should have_text "Item 4 doesn't exist"
+    end
+
     it "should not add item already in the cart" do
       fill_in 'List', with: list1.list_number
       fill_in 'Item', with: list1.items.first.item_number
