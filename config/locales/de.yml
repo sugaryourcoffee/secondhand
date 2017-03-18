@@ -78,11 +78,11 @@ de:
 
   pages:
     new:
-      new_page:  "Create new page (%{language})"
+      new_page:  "Erzeuge neue Seite (%{language})"
     edit:
-      edit_page: "Edit page (%{language})"
+      edit_page: "Seite bearbeiten (%{language})"
     form:
-      cancel_and_back: "Cancel and back to Terms of Use language"
+      cancel_and_back: "Abbrechen und zurück zu Verkaufsbedingungen Sprache"
 
   acceptances:
     index:
