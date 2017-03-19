@@ -956,6 +956,9 @@ de:
         description: "Beschreibung"
         size:        "Größe"
         price:       "Preis"
+      line_item:
+        item_id: "Artikel"
+        list:    "Liste"
     errors:
       messages:
         blank:                    "darf nicht leer sein"
