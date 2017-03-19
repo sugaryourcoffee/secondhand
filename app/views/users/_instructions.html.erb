@@ -1,6 +1,6 @@
 <section>
   <details>
-    <summary><strong>List submission</strong></summary>
+    <summary><strong>List submission <%= @event ? (@event.event_date - (24*60*60*3)).strftime("%d.%m.%Y") : "not defined yet" %></strong></summary>
     <ul>
       <li>
       Latest date for list submissions is <strong><%= @event ? (@event.event_date - (24*60*60*3)).strftime("%d.%m.%Y") : "not defined yet" %></strong>

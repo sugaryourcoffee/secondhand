@@ -1,6 +1,6 @@
 <section>
   <details>
-    <summary><strong>Listenabgabe</strong></summary>
+    <summary><strong>Listenabgabe <%= @event ? (@event.event_date - (24*60*60*3)).strftime("%d.%m.%Y") : "noch nicht festgelegt" %></strong></summary>
     <ul>
       <li>
       Spätester Termin für Listenabgabe ist <strong><%= @event ? (@event.event_date - (24*60*60*3)).strftime("%d.%m.%Y") : "noch nicht festgelegt" %></strong>
