@@ -887,6 +887,8 @@ en:
   item_number:          "No."
   item_sold:            "Sold"
   item_sold_with_selling: "already sold with selling %{selling_number}"
+  item_in_cart:           "is already in the cart"
+  cart_empty:             "Your cart is empty"
   item_quality:         "3. Quality"
   item_description:     "Description"
   item_size:            "Size"

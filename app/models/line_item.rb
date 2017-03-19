@@ -79,7 +79,7 @@ class LineItem < ActiveRecord::Base
       unless line_items.empty?
         raise "Item is in #{line_items.size} carts" if line_items.size > 1
         if line_items.first.cart_id == cart_id
-          errors.add(:items, "Item is already in the cart")
+          errors.add(:item, I18n.t("item_in_cart"))
         else
           errors.add(:items, 
                      "Item is already in cart #{line_items.first.cart_id}")

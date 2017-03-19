@@ -27,7 +27,7 @@ class SellingsController < ApplicationController
   def create
     @cart = current_cart
     if @cart.line_items.empty?
-      redirect_to item_collection_carts_path, notice: "Your cart is empty"
+      redirect_to item_collection_carts_path, notice: I18n.t('cart_empty')
       return
     end
     @selling = Selling.new(event_id: Event.find_by(active: true).id)

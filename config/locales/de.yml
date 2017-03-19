@@ -1058,6 +1058,8 @@ de:
   item_number:          "Nr."
   item_sold:            "Verkauft"
   item_sold_with_selling: "wurde mit Verkauf %{selling_number} verkauft"
+  item_in_cart:           "ist bereits im Einkaufswagen"
+  cart_empty:             "Ihr Einkaufswagen ist leer"
   item_quality:         "3. Wahl"
   item_description:     "Beschreibung"
   item_size:            "Größe"
