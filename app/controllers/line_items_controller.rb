@@ -14,31 +14,32 @@ class LineItemsController < ApplicationController
     
     respond_to do |format|
       if @line_item.save
-        flash.now[:success] = "Successfully added item #{@item.item_number}"
         format.js   { redirect_to item_collection_carts_path }
         format.html { redirect_to item_collection_carts_path }
       else
-        @cart = current_cart
-        flash.now[:error] = I18n.t('could_not_add_item')
-        if !params[:search_item_number].blank?
-          @line_item.errors.messages.delete(:item_id)
-        end
+        message = I18n.t('could_not_add_item')
+
         if params[:search_list_number].blank?
-          @line_item.errors.add(:list, I18n.t('must_not_be_empty'))
+          message << I18n.t('list_must_not_be_empty')
         elsif @list.nil?
-          @line_item.errors.add(:list, I18n.t('not_existing',
-                     number: params[:search_list_number]))
+          message << I18n.t('list_not_existing', 
+                            number: params[:search_list_number])
+        elsif params[:search_item_number].blank?
+          message << I18n.t('item_must_not_be_empty')
         elsif @item.nil?
           if @list.accepted?
-            @line_item.errors.add(:item, I18n.t('not_existing',
-                     number: params[:search_item_number]))
+            message << I18n.t('item_not_existing', 
+                              number: params[:search_item_number])
           else
-            @line_item.errors.add(:list, I18n.t('not_accepted',
-                     number: params[:search_list_number]))
+            message << I18n.t('list_not_accepted', 
+                              number: params[:search_list_number])
          end
+        else
+          message << @line_item.errors.full_messages.join(',')
         end
-        format.js   { render "carts/item_collection" }
-        format.html { render "carts/item_collection" }
+        flash[:error] = message
+        format.js   { redirect_to item_collection_carts_path }
+        format.html { redirect_to item_collection_carts_path }
       end
     end
   end
