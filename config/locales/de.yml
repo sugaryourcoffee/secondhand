@@ -958,6 +958,7 @@ de:
         price:       "Preis"
       line_item:
         item_id: "Artikel"
+        item:    "Artikel"
         list:    "Liste"
     errors:
       messages:

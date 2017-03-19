@@ -20,6 +20,9 @@ class LineItemsController < ApplicationController
       else
         @cart = current_cart
         flash.now[:error] = I18n.t('could_not_add_item')
+        if !params[:search_item_number].blank?
+          @line_item.errors.messages.delete(:item_id)
+        end
         if params[:search_list_number].blank?
           @line_item.errors.add(:list, I18n.t('must_not_be_empty'))
         elsif @list.nil?
