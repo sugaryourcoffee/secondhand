@@ -886,7 +886,7 @@ en:
   list_container_color: "Color"
   item_number:          "No."
   item_sold:            "Sold"
-  item_sold_with_selling: "already sold with selling %{selling_number}"
+  item_sold_with_selling: "is already sold with selling %{selling_number}"
   item_in_cart:           "is already in the cart"
   cart_empty:             "Your cart is empty"
   item_quality:         "3. Quality"

@@ -72,7 +72,7 @@ describe Cart do
         line_item = cart.add(accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_truthy # be_true
+        line_item.errors[:item].any?.should be_truthy # be_true
       end
 
       it "should add an item only once" do
@@ -80,12 +80,12 @@ describe Cart do
         line_item = cart.add(accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_falsey # be_false
+        line_item.errors[:item].any?.should be_falsey # be_false
         
         line_item = cart.add(accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_truthy # be_true
+        line_item.errors[:item].any?.should be_truthy # be_true
 
         cart.reload.line_items.size.should eq 1
       end
@@ -95,17 +95,17 @@ describe Cart do
         line_item = cart.add(accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_falsey # be_false
+        line_item.errors[:item].any?.should be_falsey # be_false
         
         line_item = cart.add(accepted_list.items.last)
         line_item.save
 
-        line_item.errors[:items].any?.should be_falsey # be_false
+        line_item.errors[:item].any?.should be_falsey # be_false
 
         line_item = cart.add(accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_truthy # be_true
+        line_item.errors[:item].any?.should be_truthy # be_true
 
         cart.reload.line_items.size.should eq 2
       end
