@@ -64,8 +64,8 @@ class LineItem < ActiveRecord::Base
       unless items.empty?
         raise "Item is sold #{items.size} times" if items.size > 1
         line_item = items.first
-        errors.add(:items, 
-                   "Item is already sold with selling #{line_item.selling_id}")
+        errors.add(:item, I18n.t('item_sold_with_selling', 
+                                 selling_number: line_item.selling_id))
       end
       items.empty?
     end

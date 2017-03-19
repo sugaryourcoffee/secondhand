@@ -1057,6 +1057,7 @@ de:
   list_container_color: "Korbfarbe"
   item_number:          "Nr."
   item_sold:            "Verkauft"
+  item_sold_with_selling: "wurde mit Verkauf %{selling_number} verkauft"
   item_quality:         "3. Wahl"
   item_description:     "Beschreibung"
   item_size:            "Größe"

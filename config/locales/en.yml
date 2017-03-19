@@ -886,6 +886,7 @@ en:
   list_container_color: "Color"
   item_number:          "No."
   item_sold:            "Sold"
+  item_sold_with_selling: "already sold with selling %{selling_number}"
   item_quality:         "3. Quality"
   item_description:     "Description"
   item_size:            "Size"
