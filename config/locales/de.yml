@@ -900,14 +900,14 @@ de:
   activemodel:
     attributes:
       message:
-        subject: "Betreff"
+        subject:  "Betreff"
         category: "Kategorie"
         message:  "Nachricht"
         email:    "E-Mail"
     errors:
       messages:
-        blank:     "darf nicht leer sein"
-        invalid:   "ist ungültig"
+        blank:    "darf nicht leer sein"
+        invalid:  "ist ungültig"
              
   activerecord:
     models:
@@ -969,10 +969,6 @@ de:
           attributes:
             password:
               confirmation: "stimmt nicht mit Passwortbestätigung überein"
-        lineitem:
-          attributes:
-            item: "Artikel"
-      
   errors:
     template:
       body:    "Es gab Probleme mit folgenden Feldern:"

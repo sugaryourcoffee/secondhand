@@ -30,7 +30,7 @@ class LineItemsController < ApplicationController
             @line_item.errors.add(:item, I18n.t('not_existing',
                      number: params[:search_item_number]))
           else
-            @line_item.errors.add(:list, I18n('not_accepted',
+            @line_item.errors.add(:list, I18n.t('not_accepted',
                      number: params[:search_list_number]))
          end
         end
