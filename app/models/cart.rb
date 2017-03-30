@@ -22,6 +22,11 @@ class Cart < ActiveRecord::Base
     line_item
   end
 
+  # Retrieves all carts that have line items
+  def self.non_empty_carts
+    Cart.joins(:line_items).where("cart_id not ?", nil)
+  end
+
   private
 
     def ensure_line_item_unique!(line_item)

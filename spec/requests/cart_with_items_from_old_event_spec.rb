@@ -1,39 +1,80 @@
 require 'spec_helper'
 
-describe "Remove items from other event from cart" do
+describe "Cart" do
 
   let(:admin)  { FactoryGirl.create(:admin) }
   let(:event1) { FactoryGirl.create(:active) }
-  let(:event2) { FactoryGirl.create(:event) }
+  let!(:event2) { FactoryGirl.create(:event) }
   let(:list1)  { FactoryGirl.create(:accepted, user: admin, event: event1) }
-  let(:list2)  { FactoryGirl.create(:accepted, user: admin, event: event2) }
 
   before do
     add_items_to_list(list1, 1, [12.00])
-    add_items_to_list(list2, 2, [23.50, 34.50])
-  end
-
-  it "it should delete items from other event from cart" do
     sign_in admin
-    click_link "Cart"
-    fill_in "List", with: "1"
-    fill_in "Item", with: "1"
-    click_button "Add"
-    click_link "Events"
-    click_button "Activate"
-    visit item_collection_carts_path(locale: :en)
-    expect(page).to have_text list1.items.first.description
-    expect(page).to have_text list1.items.first.size
-    expect(page).to have_text list1.items.first.price
-    fill_in "List", with: "2"
-    fill_in "Item", with: "2"
-    click_button "Add"
-    click_button "Check out"
-    click_link "Go to counter"
-    click_link "Show"
-    expect(page).to have_text list2.items.second.price
-    expect(page).not_to have_text list1.items.first.price
   end
 
+  describe "without items" do
+    
+    before do
+      click_link "Events"
+    end
+
+    it "should activate event" do
+      click_button "Activate"
+      event1.reload.active.should be_falsey
+      event2.reload.active.should be_truthy
+    end
+
+    it "should deactivate event" do
+      click_button "Deactivate"
+      event1.reload.active.should be_falsey
+      event2.reload.active.should be_falsey
+    end
+
+    it "should print lists" do
+      visit event_path(event1, locale: :en)
+      click_link "Print Lists"
+      begin
+        expect(page).not_to have_text "Cannot print list, because cart"
+      rescue
+      end
+    end
+    
+  end
+
+  describe "with items" do
+    before do
+      click_link "Cart"
+      fill_in "List", with: list1.list_number
+      fill_in "Item", with: list1.items.first.item_number
+      click_button "Add"
+      expect(page).to have_text list1.items.first.description
+      expect(page).to have_text list1.items.first.size
+      expect(page).to have_text list1.items.first.price
+      click_link "Events"
+    end
+
+    it "should not activate new event" do
+      click_button "Activate"
+      expect(page)
+        .to have_text "Cannot activate new event, because cart 1 contains items."
+    end
+
+    it "should not deactivate event" do
+      click_button "Deactivate"
+      expect(page)
+        .to have_text "Cannot deactivate event, because cart 1 contains items."
+    end
+
+    it "should not print lists" do
+      visit event_path(event2, locale: :en)
+      click_link "Print Lists"
+      begin
+        expect(page)
+          .to have_text "Cannot print lists, because cart 1 contains items"
+      rescue
+        raise "but did print list"
+      end
+    end
+  end
 end
 

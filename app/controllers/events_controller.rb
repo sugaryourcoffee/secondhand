@@ -35,11 +35,15 @@ class EventsController < ApplicationController
 
   def print_lists
     @event = Event.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.pdf do
-        send_data @event.lists_to_pdf, content_type: Mime::PDF
+    if carts_empty_for_printing?
+      respond_to do |format|
+        format.html
+        format.pdf do
+          send_data @event.lists_to_pdf, content_type: Mime::PDF
+        end
       end
+    else
+      redirect_to events_path
     end
   end
 
@@ -153,17 +157,19 @@ class EventsController < ApplicationController
   # POST /events/1/activate
   def activate
     @event = Event.find(params[:id])
-    @event.active = @event.active ? false : true
-    updated_events = []
-    updated_events << @event
-    Event.all.each do |event|
-      next if event.id == params[:id]
-      if event.active
-        event.active = false
-        updated_events << event
-      end 
-    end if @event.active
-    updated_events.each { |e| e.save }
+    if carts_empty?
+      @event.active = @event.active ? false : true
+      updated_events = []
+      updated_events << @event
+      Event.all.each do |event|
+        next if event.id == params[:id]
+        if event.active
+          event.active = false
+          updated_events << event
+        end 
+      end if @event.active
+      updated_events.each { |e| e.save }
+    end
     respond_to do |format|
       format.html { redirect_to events_url }
       format.json { head :no_content }
@@ -191,6 +197,50 @@ class EventsController < ApplicationController
   end
 
   private
+
+    def carts_empty_for_printing?
+      non_empty_carts = Cart.non_empty_carts
+      if !non_empty_carts.empty?
+        carts = non_empty_carts.map { |c| c.id }
+        if carts.size > 1
+          flash[:warning] = "Cannot print lists, " + 
+                            "because carts #{carts.join(', ')} contain items."
+        else
+          flash[:warning] = "Cannot print lists, " +
+                            "because cart #{carts.join(', ')} contains items."
+        end
+        false
+      else
+        true
+      end
+    end
+
+    def carts_empty?
+      non_empty_carts = Cart.non_empty_carts
+      if !non_empty_carts.empty?
+        carts = non_empty_carts.map { |c| c.id }
+        if @event.active
+          if carts.size > 1
+            flash[:warning] = "Cannot deactivate event, " + 
+                              "because carts #{carts.join(', ')} contain items."
+          else
+            flash[:warning] = "Cannot deactivate event, " +
+                              "because cart #{carts.join(', ')} contains items."
+          end
+        else
+          if carts.size > 1
+            flash[:warning] = "Cannot activate event, " + 
+                              "because carts #{carts.join(', ')} contain items."
+          else
+            flash[:warning] = "Cannot activate new event, " +
+                              "because cart #{carts.join(', ')} contains items."
+          end
+        end
+        false
+      else
+        true
+      end
+    end
 
     def event_params
       params.require(:event)
