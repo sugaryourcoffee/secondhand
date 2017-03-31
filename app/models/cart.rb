@@ -24,7 +24,7 @@ class Cart < ActiveRecord::Base
 
   # Retrieves all carts that have line items
   def self.non_empty_carts
-    Cart.joins(:line_items).where("cart_id not ?", nil)
+    Cart.joins(:line_items).where("cart_id is not ?", nil)
   end
 
   private
