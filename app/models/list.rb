@@ -233,11 +233,12 @@ class List < ActiveRecord::Base
     csv_file
   end
 
-  def self.as_csv_zip
+  def self.as_csv_zip(event_id)
     download_file = "tmp/csv.tgz"
     files = []
 
-    closed_lists = List.where('sent_on IS NOT ?', nil)
+    closed_lists = List.where('event_id = ? and sent_on IS NOT ?', 
+                              event_id, nil)
 
     if closed_lists.empty?
       File.write("tmp/no_closed_files", I18n.t('.no_closed_files_to_zip'))
