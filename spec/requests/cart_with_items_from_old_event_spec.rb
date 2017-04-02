@@ -44,7 +44,7 @@ describe "Cart" do
   describe "with items" do
     before do
       click_link "Cart"
-      fill_in "List", with: list1.list_number
+      fill_in "List", with: list_number_for_cart(list1) # list1.list_number
       fill_in "Item", with: list1.items.first.item_number
       click_button "Add"
       expect(page).to have_text list1.items.first.description

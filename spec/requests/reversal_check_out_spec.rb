@@ -14,7 +14,7 @@ describe "Reversal check out page" do
   end
 
   it "should show the reversal data" do
-    fill_in 'List', with: list.list_number
+    fill_in 'List', with: list_number_for_cart(list) # list.list_number
     fill_in 'Item', with: list.items.first.item_number
     click_button 'Add'
 
@@ -38,7 +38,7 @@ describe "Reversal check out page" do
   end
 
   it "should forward to counter page" do
-    fill_in 'List', with: list.list_number
+    fill_in 'List', with: list_number_for_cart(list) # list.list_number
     fill_in 'Item', with: list.items.first.item_number
     click_button 'Add'
 
@@ -54,7 +54,7 @@ describe "Reversal check out page" do
   end
 
   it "should forward to new redemption cart" do
-    fill_in 'List', with: list.list_number
+    fill_in 'List', with: list_number_for_cart(list) # list.list_number
     fill_in 'Item', with: list.items.first.item_number
     click_button 'Add'
 
@@ -70,7 +70,7 @@ describe "Reversal check out page" do
   end
 
   it "should have a 'Start selling' link" do
-    fill_in 'List', with: list.list_number
+    fill_in 'List', with: list_number_for_cart(list) # list.list_number
     fill_in 'Item', with: list.items.first.item_number
     click_button 'Add'
 

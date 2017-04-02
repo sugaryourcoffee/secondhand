@@ -9,7 +9,7 @@ class AcceptancesController < ApplicationController
     @event = Event.find_by(active: true)
     
     if @event
-      @list = List.find_by(list_number: params[:search_list_number], 
+      @list = List.find_by(list_number: params[:search_acceptance_list_number], 
                            event_id:    @event) 
       unless @list and @list.registered?
         @lists = List.where(List.list_status_query_string(params[:filter]))
@@ -23,11 +23,12 @@ class AcceptancesController < ApplicationController
         format.html { redirect_to edit_acceptance_path @list }
       else
         if @list and !@list.registered?
-          flash[:warning] = "List #{params[:search_list_number]} "+
+          flash[:warning] = "List #{params[:search_acceptance_list_number]} "+
                             "is not registered. "+
                             "Acceptance is only possible for registered lists!"
-        elsif @list.nil? and params[:search_list_number]
-          flash[:warning] = "List #{params[:search_list_number]} doesn't exist!"
+        elsif @list.nil? and params[:search_acceptance_list_number]
+          flash[:warning] = "List #{params[:search_acceptance_list_number]} "+
+                            "doesn't exist!"
         end
         format.html
       end

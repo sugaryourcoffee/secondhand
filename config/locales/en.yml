@@ -900,10 +900,11 @@ en:
   no_closed_files_to_zip: "No closed files available for export"
   cannot_add_items:       "Cannot add items to accepted list %{list}"
   list_full:              "List %{list} full - cannot add additional items"
-  could_not_add_item:     "Could not add item"
+  could_not_add_item:     "Could not add item: "
   list_must_not_be_empty: "List must not be empty"
   list_not_accepted:      "List %{number} hasn't been accepted"
   list_not_existing:      "List %{number} doesn't exist"
   item_must_not_be_empty: "Item must not be empty"
   item_not_existing:      "Item %{number} doesn't exist"
+  label_from_other_event: "Label from other event"
   

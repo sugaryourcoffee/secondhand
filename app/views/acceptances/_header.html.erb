@@ -3,8 +3,9 @@
     <div class="span4">
       <%= form_tag acceptances_path, method: 'get', class: "form-search" do %>
         <p>
-          <%= label_tag :search_list_number, t('.select_list') %>
-          <%= text_field_tag :search_list_number, params[:search_list_number], 
+          <%= label_tag :search_acceptance_list_number, t('.select_list') %>
+          <%= text_field_tag :search_acceptance_list_number, 
+               params[:search_acceptance_list_number], 
                autofocus: true, 
                class: "input-medium search-query search-acceptance-list-number",
                type: "number" %>

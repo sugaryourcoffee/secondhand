@@ -29,7 +29,7 @@ describe "Item referenced" do
 
     click_link "Cart"
 
-    fill_in "List", with: list.items.first.list.list_number
+    fill_in "List", with: list_number_for_cart(list.items.first.list) # list.items.first.list.list_number
     fill_in "Item", with: list.items.first.item_number
 
     expect { click_button "Add" }.to change(LineItem, :count).by(1)
@@ -77,7 +77,7 @@ describe "Item referenced" do
 
     click_link "Redemption"
 
-    fill_in "List", with: list.list_number
+    fill_in "List", with: list_number_for_cart(list) # list.list_number
     fill_in "Item", with: list.items.first.item_number
 
     click_button "Add"
@@ -122,7 +122,7 @@ describe "Item referenced" do
 
     click_link "Redemption"
 
-    fill_in "List", with: list.list_number
+    fill_in "List", with: list_number_for_cart(list) # list.list_number
     fill_in "Item", with: list.items.first.item_number
 
     click_button "Add"

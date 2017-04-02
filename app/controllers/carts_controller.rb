@@ -16,6 +16,7 @@ class CartsController < ApplicationController
   def update
     @cart  = current_reversal_cart
     @event = Event.find_by(active: true)
+    event = params[:search_list_number].slice!(/^#{@event.id}/)
     @list  = List.find_by(event_id: @event, 
                           list_number: params[:search_list_number])
     @item  = Item.find_by(list_id: @list, 
@@ -23,7 +24,7 @@ class CartsController < ApplicationController
     @line_item = LineItem.sold(@item)
     
     respond_to do |format|
-      if @line_item
+      if event && @line_item
         if @line_item.in_cart?(@cart)
           flash[:warning] = "Line item is already in cart"
         elsif @line_item.in_other_cart?(@cart)
@@ -32,6 +33,8 @@ class CartsController < ApplicationController
           @cart.line_items << @line_item
           flash[:success] = "Successfully added item #{@item.item_number}"
         end
+      elsif event.nil?
+        flash[:error] = "Cannot redeem item from other event"
       else
         flash[:error] = "Cannot redeem unsold item"
       end

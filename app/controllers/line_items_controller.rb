@@ -6,6 +6,7 @@ class LineItemsController < ApplicationController
   def create
     @cart  = current_cart
     @event = Event.find_by(active: true)
+    event = params[:search_list_number].slice!(/^#{@event.id}/)
     @list  = List.find_by(event_id:    @event, 
                           list_number: params[:search_list_number])
     @item  = Item.find_by(list_id:     @list, 
@@ -13,7 +14,7 @@ class LineItemsController < ApplicationController
     @line_item = @cart.add(@item)
     
     respond_to do |format|
-      if @line_item.save
+      if event && @line_item.save
         format.js   { redirect_to item_collection_carts_path }
         format.html { redirect_to item_collection_carts_path }
       else
@@ -21,6 +22,8 @@ class LineItemsController < ApplicationController
 
         if params[:search_list_number].blank?
           message << I18n.t('list_must_not_be_empty')
+        elsif event.nil?
+          message << I18n.t('label_from_other_event')
         elsif @list.nil?
           message << I18n.t('list_not_existing', 
                             number: params[:search_list_number])

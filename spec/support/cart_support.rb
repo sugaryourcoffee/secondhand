@@ -20,3 +20,7 @@ def create_cart_with_line_items(event, line_item_count = 1)
   add_items_to_cart(cart, accept(list), line_item_count)
   cart
 end
+
+def list_number_for_cart(list)
+  "#{list.event_id}#{list.list_number}"
+end

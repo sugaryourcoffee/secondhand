@@ -1077,4 +1077,5 @@ de:
   list_not_existing:      "Liste %{number} existiert nicht"
   item_must_not_be_empty: "Artikel darf nicht leer sein"
   item_not_existing:      "Artikel %{number} existiert nicht"
+  label_from_other_event: "Etikett von anderer Veranstaltung"
 

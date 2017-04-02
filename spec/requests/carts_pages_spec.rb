@@ -43,7 +43,7 @@ describe Cart do
     end
 
     it "should add item" do
-      fill_in 'List', with: list1.list_number
+      fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
       fill_in 'Item', with: list1.items.first.item_number
       click_button 'Add'
 
@@ -57,7 +57,7 @@ describe Cart do
     end
 
     it "should delete item" do
-      fill_in 'List', with: list1.list_number
+      fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
       fill_in 'Item', with: list1.items.first.item_number
       click_button 'Add'
 
@@ -77,7 +77,7 @@ describe Cart do
     end
 
     it "should indicated not existing list" do
-      fill_in 'List', with: "1000"
+      fill_in 'List', with: "#{list1.event_id}1000"
       fill_in 'Item', with: "4"
       click_button 'Add'
       page.should have_text "Could not add item"
@@ -93,7 +93,7 @@ describe Cart do
     end
 
     it "should indicate not existing item" do
-      fill_in 'List', with: list1.list_number
+      fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
       fill_in 'Item', with: "4"
       click_button 'Add'
       page.should have_text "Could not add item"
@@ -101,11 +101,11 @@ describe Cart do
     end
 
     it "should not add item already in the cart" do
-      fill_in 'List', with: list1.list_number
+      fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
       fill_in 'Item', with: list1.items.first.item_number
       click_button 'Add'
       
-      fill_in 'List', with: list1.list_number
+      fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
       fill_in 'Item', with: list1.items.first.item_number
       click_button 'Add'
 
@@ -118,7 +118,7 @@ describe Cart do
       line_item = cart.add(list1.items.first)
       line_item.save
 
-      fill_in 'List', with: list1.list_number
+      fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
       fill_in 'Item', with: list1.items.first.item_number
       click_button 'Add'
 
@@ -135,7 +135,7 @@ describe Cart do
     it "should not add sold item" do
       selling = create_selling_and_items(event, list1)      
       
-      fill_in 'List', with: list1.list_number
+      fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
       fill_in 'Item', with: list1.items.first.item_number
       click_button 'Add'
 
@@ -144,7 +144,7 @@ describe Cart do
     end
 
     it "should check out, create selling and empty cart" do
-      fill_in 'List', with: list1.list_number
+      fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
       fill_in 'Item', with: list1.items.first.item_number
       click_button 'Add'
 

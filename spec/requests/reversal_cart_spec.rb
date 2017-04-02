@@ -48,7 +48,7 @@ describe "Reversal cart pages" do
       end
 
       it "should add line items" do
-        fill_in 'List', with: list1.list_number
+        fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
         fill_in 'Item', with: list1.items.first.item_number
         click_button 'Add'
 
@@ -62,7 +62,7 @@ describe "Reversal cart pages" do
       end
 
       it "should add line item only once" do
-        fill_in 'List', with: list1.list_number
+        fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
         fill_in 'Item', with: list1.items.first.item_number
         click_button 'Add'
 
@@ -72,7 +72,7 @@ describe "Reversal cart pages" do
         page.should have_text list1.items.first.price
         page.should have_link 'Delete'
 
-        fill_in 'List', with: list1.list_number
+        fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
         fill_in 'Item', with: list1.items.first.item_number
         click_button 'Add'
 
@@ -86,7 +86,7 @@ describe "Reversal cart pages" do
         item = selling.line_items.first.item
         list = item.list
 
-        fill_in 'List', with: list.list_number
+        fill_in 'List', with: list_number_for_cart(list) # list.list_number
         fill_in 'Item', with: item.item_number
         click_button 'Add'
 
@@ -100,7 +100,7 @@ describe "Reversal cart pages" do
       end
 
       it "should only add sold items" do
-        fill_in 'List', with: list2.list_number
+        fill_in 'List', with: list_number_for_cart(list2) # list2.list_number
         fill_in 'Item', with: list2.items.first.item_number
         click_button 'Add'
 
@@ -114,7 +114,7 @@ describe "Reversal cart pages" do
       end
 
       it "should remove but not delete line item" do
-        fill_in 'List', with: list1.list_number
+        fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
         fill_in 'Item', with: list1.items.first.item_number
         click_button 'Add'
 
@@ -132,7 +132,7 @@ describe "Reversal cart pages" do
       end
 
       it "should forward to reversal check out" do
-        fill_in 'List', with: list1.list_number
+        fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
         fill_in 'Item', with: list1.items.first.item_number
         click_button 'Add'
 

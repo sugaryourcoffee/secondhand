@@ -467,10 +467,12 @@ class List < ActiveRecord::Base
                          width: label_width - 8,
                          height: 30)
 
-            value = sprintf("%03d%02d", list_number, items_list[item_index][0])
+            value = sprintf("%d%03d%02d", 
+                            event.id, list_number, items_list[item_index][0])
             barcode = Interleave2of5.new(value).encode.to_pdf(pdf, pdf_options)
 
-            value[3,0] = "/"
+            value[-2,0] = "/"
+            value[-6,0] = "-"
             pdf.text_box(value, at: [0,15], 
                          width: barcode[:total_width], 
                          height: 20,
