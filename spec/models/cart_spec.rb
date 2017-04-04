@@ -12,11 +12,17 @@ describe Cart do
     cart.should respond_to :total
   end
 
+  it "should respond to user" do
+    cart = Cart.new
+    cart.should respond_to :user
+  end
+
   describe "adding and removing items" do
     
     let(:seller)        { FactoryGirl.create(:user) }
     let(:list)          { FactoryGirl.create(:list, event: event) }
-    let(:accepted_list) { FactoryGirl.create(:accepted, event: event, user: seller) }
+    let(:accepted_list) { FactoryGirl.create(:accepted, event: event, 
+                                             user: seller) }
     
     before do
       add_items_to_list(list)
