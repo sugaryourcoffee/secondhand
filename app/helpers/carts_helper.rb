@@ -21,4 +21,7 @@ module CartsHelper
     end
   end
 
+  def cashier_name(user)
+    user ? user.first_name : "-"
+  end
 end
