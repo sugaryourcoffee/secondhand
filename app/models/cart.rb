@@ -2,7 +2,7 @@ class Cart < ActiveRecord::Base
   has_many :line_items, -> { order(updated_at: :desc) },
            before_add: :ensure_line_item_unique!
 
-  has_one :user
+  belongs_to :user
 
   CART_TYPES = ['SALES', 'REDEMPTION']
 
