@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     def current_cart
       Cart.find(session[:cart_id])
     rescue ActiveRecord::RecordNotFound
-      cart = Cart.create
+      cart = Cart.create(user: current_user)
       session[:cart_id] = cart.id
       cart
     end
@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
     def current_reversal_cart
       Cart.find(session[:reversal_cart_id])
     rescue ActiveRecord::RecordNotFound
-      reversal_cart = Cart.create(cart_type: 'REDEMPTION')
+      reversal_cart = Cart.create(user: current_user, cart_type: 'REDEMPTION')
       session[:reversal_cart_id] = reversal_cart.id
       reversal_cart
     end
