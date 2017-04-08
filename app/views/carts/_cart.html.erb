@@ -14,7 +14,7 @@
         <td><%= cart.id %></td>
         <td><%= cart.cart_type %></td>
         <td><%= cart.line_items.count %></td>
-        <td></td>
+        <td><%= cart.user ? cart.user.first_name : "-" %></td>
         <td><%= link_to t('.show'), cart, id: "show_cart_#{cart.id}" %></td>
         <td><%= link_to t('.delete'),
           cart, id: "delete_cart_#{cart.id}",

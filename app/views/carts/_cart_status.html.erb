@@ -5,6 +5,10 @@
   <section>
     <table>
       <tr>
+        <td><%= t('.cashier') %></td>
+        <td class="list_count"><%= cashier_name @cart.user %></td>
+      </tr>
+      <tr>
         <td><%= t('.items') %></td>
         <td class="list_count"><%= @cart.line_items.count %></td>
       </tr>

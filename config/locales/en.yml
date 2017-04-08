@@ -197,6 +197,7 @@ en:
       check_out:          "Check out"
     cart_status:
       cart_status:        "Cart status"
+      cashier:            "Cashier"
       items:              "Items"
       total:              "Total"
       last_added_item:    "Last added item"

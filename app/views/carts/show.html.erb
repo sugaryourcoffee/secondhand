@@ -9,6 +9,12 @@
       <table>
         <tbody>
           <tr>
+            <td><%= t('.cashier') %></td>
+            <td class="list_count">
+              <%= @cart.user ? @cart.user.first_name : "-" %>
+            </td>
+          </tr>
+          <tr>
             <td><%= t('.cart') %></td>
             <td class="list_count"><%= @cart.id %></td>
           </tr>

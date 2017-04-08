@@ -203,6 +203,7 @@ de:
       check_out:          "Zur Kasse"
     cart_status:
       cart_status:        "Einkaufswagen Status"
+      cashier:            "Kassierer(in)"
       items:              "Artikel"
       total:              "Gesamt"
       last_added_item:    "Zuletzt hinzugefügter Artikel"
