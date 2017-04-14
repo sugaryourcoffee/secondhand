@@ -49,19 +49,29 @@ class EventsController < ApplicationController
   end
 
   def create_lists_as_pdf
-    STDERR.puts "creating pdf"
-    STDERR.puts params[:id].inspect
     @event = Event.find(params[:id])
+    response.headers['Content-Type'] = 'text/event-stream' 
     if carts_empty_for_printing?
-      response.headers['Content-Type'] = 'text/event-stream' 
       @event.create_lists_as_pdf(response)
+    else
+      response.stream.write("data: #{{done: true, 
+                                      file: 'no-file'}.to_json}\n\n")
     end
   ensure
     response.stream.close
   end
 
   def download_lists_as_pdf
-    send_file(params[:file], content_type: Mime::PDF)
+    if carts_empty_for_printing?
+      if File.exists?(params[:file])
+        send_file(params[:file], content_type: Mime::PDF)
+      else
+        flash[:warning] = "No file available for download, please try again"
+        redirect_to events_path
+      end
+    else
+      redirect_to events_path
+    end
   end
 
   # GET /events/new
