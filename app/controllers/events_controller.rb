@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   include EventsHelper
+  include ActionController::Live
 
   # GET /events
   # GET /events.json
@@ -45,6 +46,22 @@ class EventsController < ApplicationController
     else
       redirect_to events_path
     end
+  end
+
+  def create_lists_as_pdf
+    STDERR.puts "creating pdf"
+    STDERR.puts params[:id].inspect
+    @event = Event.find(params[:id])
+    if carts_empty_for_printing?
+      response.headers['Content-Type'] = 'text/event-stream' 
+      @event.create_lists_as_pdf(response)
+    end
+  ensure
+    response.stream.close
+  end
+
+  def download_lists_as_pdf
+    send_file(params[:file], content_type: Mime::PDF)
   end
 
   # GET /events/new

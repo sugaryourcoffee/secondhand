@@ -132,7 +132,9 @@ Rails.application.routes.draw do
         post :activate
         get :print_pickup_tickets, defaults: { format: 'pdf' }
         get :print_lists,          defaults: { format: 'pdf' }
+        get :create_lists_as_pdf
       end
+      collection { get :download_lists_as_pdf }
     end
   end
 

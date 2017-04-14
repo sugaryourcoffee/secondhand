@@ -53,5 +53,18 @@
             print_pickup_tickets_event_path(@event) %> |
 <%= link_to t('.print_lists'),
             print_lists_event_path(@event) %> |
+<a href = "#" data-create-lists-as-pdf data-event-id=<%= @event.id %>
+  id='create-lists-as-pdf'>
+  <%= t('.create_lists_as_pdf') %>
+</a> |
+<%= link_to t('.download_lists_as_pdf'),
+              download_lists_as_pdf_events_path(file: ''),
+              id: 'download-lists-as-pdf', style: "display: none" %> |
 <%= link_to t('.Edit'), edit_event_path(@event) %> |
 <%= link_to t('.Back'), events_path %>
+
+<div id="progress-bar" style="display: none">
+  <hr>
+  Processed <span id="create-lists-as-pdf-status">0/0</span> Lists
+  <progress id='create-lists-as-pdf-progress' value="" max=""></progress>
+</div>

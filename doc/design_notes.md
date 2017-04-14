@@ -201,3 +201,27 @@ Print labels | Close list | Indicate | Updated time
      1       |      0     |    0     | item < print and item > close
      1       |      1     |    0     | item < print and item < close
 
+Feedback on printing all lists
+------------------------------
+After sales has closed all lists are printed, that is a pdf document is created
+and displayed for download. The process of creating the document takes minutes
+and the user doesn't merely get any feedback. To minimize the anoyance of not 
+knowing what is exactly going on the user needs a feedback on the current 
+creation process. What we want to do is 
+
+* Send feedback from the server to the client which list is currently processed
+* Additionally a progressbar is showing the current progress of creation
+* After the pdf file has been created a download link is displayed to download
+  the file
+
+We are using `ActionController::Live` to send the feedback to the client. In a
+coffeescript file we are listening for the events from the server and are 
+updating the progressbar. We add following to the application
+
+* route to the events controller for creating the pdf file
+* add `ActionController::Live` to the events controller
+* sending the current created page and total pages to the client
+* add a coffeescript file to app/assets/javascripts that listens for the events
+  from the server
+* add a create file and a download link to the event show page
+

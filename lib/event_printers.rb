@@ -1,5 +1,34 @@
 module EventPrinters
 
+  def create_lists_as_pdf(response)
+    pdf = Prawn::Document.new(page_size: "A4")
+
+    header(pdf)
+
+    page  = 0
+    pages = List.accepted(id).count
+
+    response.stream.write("data: #{{page: page, 
+                                    pages: pages, 
+                                    done: false}.to_json}\n\n")
+
+    self.lists.each do |list|
+      next unless list.registered?
+      list_to(pdf, list)
+      response.stream.write("data: #{{page: page += 1, 
+                                     pages: pages, 
+                                     done: false}.to_json}\n\n")
+      pdf.start_new_page
+    end
+
+    footer(pdf)
+
+    filename = "tmp/#{Time.now.to_i}-lists.pdf"
+    pdf.render_file(filename)
+
+    response.stream.write("data: #{{done: true, file: filename}.to_json}\n\n")
+  end
+
   def lists_to_pdf
     pdf = Prawn::Document.new(page_size: "A4")
 
