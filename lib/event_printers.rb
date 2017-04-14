@@ -6,7 +6,7 @@ module EventPrinters
     header(pdf)
 
     page  = 0
-    pages = List.accepted(id).count
+    pages = List.registered(id).count
 
     response.stream.write("data: #{{page: page, 
                                     pages: pages, 
