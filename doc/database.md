@@ -38,13 +38,15 @@ We start the MySQL console with
 
     $ mysql -upierre -p
 
-Then we select the database
+We can list all databases with `mysql> show databases;`
 
-    myslq>use secondhand-production
+Then we select the database 
+
+    myslq>use secondhand_production
 
     Database changed
 
-First we list all tables
+First we list all tables with `mysql> show tables;`
 
 
     +---------------------------------+
@@ -185,7 +187,29 @@ Event | Date | Value | Lists | Closed | Sellings | Revenue | Profit
 ----- | ---- | ----- | ----- | ------ | -------- | ------- | ------
 ..    | ..   | ..    | ..    | ..     | ..       | ..      | ..
 
-First we want to retrieve the count of lists for each of the events
+Count of sellers per event
+
+    mysql> select e.title, count(distinct s.id) sellers
+        -> from events e 
+        -> inner join lists l on l.event_id = e.id
+        -> inner join users s on l.user_id = s.id
+        -> group by e.title;
+
+    +---------------------------------+---------+
+    | title                           | sellers |
+    +---------------------------------+---------+
+    | Frühjahrsbörse Burgthann 2014   |     139 |
+    | Frühjahrsbörse Burgthann 2015   |     146 |
+    | Frühjahrsbörse Burgthann 2016   |     143 |
+    | Herbstbörse Burgthann 2013      |     130 |
+    | Herbstbörse Burgthann 2014      |     153 |
+    | Herbstbörse Burgthann 2015      |     141 |
+    | Herbstbörse Burgthann 2016      |       9 |
+    | Testbörse 2017 Beta 3.0.0       |       2 |
+    +---------------------------------+---------+
+    8 rows in set (0.00 sec)
+
+Count of lists for each event
 
     mysql> select e.title, count(l.id) lists 
         -> from events e inner join lists l 
@@ -205,7 +229,28 @@ First we want to retrieve the count of lists for each of the events
     +---------------------------------+-------+
     8 rows in set (0.01 sec)
 
-To get the value of the lists for each event
+Count of items for each event
+
+    mysql> select e.title, count(i.id) items from events e
+        -> inner join lists l on l.event_id = e.id
+        -> inner join items i on i.list_id = l.id
+        -> group by e.title;
+
+    +---------------------------------+-------+
+    | title                           | items |
+    +---------------------------------+-------+
+    | Frühjahrsbörse Burgthann 2014   |  8946 |
+    | Frühjahrsbörse Burgthann 2015   |  9969 |
+    | Frühjahrsbörse Burgthann 2016   |  9903 |
+    | Herbstbörse Burgthann 2013      |  8564 |
+    | Herbstbörse Burgthann 2014      |  9238 |
+    | Herbstbörse Burgthann 2015      |  9619 |
+    | Herbstbörse Burgthann 2016      |   251 |
+    | Testbörse 2017 Beta 3.0.0       |     7 |
+    +---------------------------------+-------+
+    8 rows in set (0.00 sec)
+
+Value of the lists for each event
 
     mysql> select e.title, sum(i.price) value
         -> from events e inner join lists l 
@@ -223,4 +268,121 @@ To get the value of the lists for each event
     | Herbstbörse Burgthann 2016      |     32728.50 |
     +---------------------------------+--------------+
     7 rows in set (0.26 sec)
+
+Count of sellings per event
+
+    mysql> select e.title, count(s.id) sellings from events e
+        -> inner join sellings s on s.event_id = e.id
+        -> group by e.title;
+    +---------------------------------+----------+
+    | title                           | sellings |
+    +---------------------------------+----------+
+    | Frühjahrsbörse Burgthann 2016   |      410 |
+    | Herbstbörse Burgthann 2015      |      427 |
+    | Herbstbörse Burgthann 2016      |        1 |
+    | Testbörse 2017 Beta 3.0.0       |        3 |
+    +---------------------------------+----------+
+    4 rows in set (0.00 sec)
+
+Count of sold items per event
+    mysql> select e.title, count(li.id) line_items from events e 
+        -> inner join sellings s on s.event_id = e.id 
+        -> inner join line_items li 
+        ->   on li.selling_id = s.id and li.reversal_id is null 
+        -> group by e.title;
+    +---------------------------------+------------+
+    | title                           | line_items |
+    +---------------------------------+------------+
+    | Frühjahrsbörse Burgthann 2016   |       4975 |
+    | Herbstbörse Burgthann 2015      |       5020 |
+    | Herbstbörse Burgthann 2016      |          2 |
+    | Testbörse 2017 Beta 3.0.0       |          5 |
+    +---------------------------------+------------+
+    4 rows in set (0.06 sec)
+
+Average sales value per event
+
+Revenue per event
+
+    mysql> select e.title, sum(i.price) revenue from events e 
+        -> inner join sellings s on s.event_id = e.id 
+        -> inner join line_items li 
+             on li.selling_id = s.id and li.reversal_id is null 
+        -> inner join items i on i.id = li.item_id 
+        -> group by e.title;
+    +---------------------------------+----------+
+    | title                           | revenue  |
+    +---------------------------------+----------+
+    | Frühjahrsbörse Burgthann 2016   | 14622.00 |
+    | Herbstbörse Burgthann 2015      | 16103.00 |
+    | Herbstbörse Burgthann 2016      |    16.50 |
+    | Testbörse 2017 Beta 3.0.0       |    48.00 |
+    +---------------------------------+----------+
+    4 rows in set (0.06 sec)
+
+Count of reversals per event
+
+    mysql> select e.title, count(r.id) reversals from events e 
+        -> inner join reversals r on r.event_id = e.id group by e.title;
+    +---------------------------------+-----------+
+    | title                           | reversals |
+    +---------------------------------+-----------+
+    | Frühjahrsbörse Burgthann 2016   |         1 |
+    | Herbstbörse Burgthann 2015      |         6 |
+    | Testbörse 2017 Beta 3.0.0       |         1 |
+    +---------------------------------+-----------+
+
+ 3 rows in set (0.00 sec)
+
+Count of reversed items per event
+
+    mysql> select e.title, count(li.id) line_items from events e 
+        -> inner join reversals r on r.event_id = e.id 
+        -> inner join line_items li on li.reversal_id = r.id 
+        -> group by e.title;
+     +---------------------------------+------------+
+     | title                           | line_items |
+     +---------------------------------+------------+
+     | Frühjahrsbörse Burgthann 2016   |          2 |
+     | Herbstbörse Burgthann 2015      |         13 |
+     | Testbörse 2017 Beta 3.0.0       |          1 |
+     +---------------------------------+------------+
+     3 rows in set (0.00 sec)
+ 
+Average reversal value per event
+
+Reversal value per event
+
+    mysql> select e.title, sum(i.price) reversals from events e 
+        -> inner join reversals r on r.event_id = e.id 
+        -> inner join line_items li on li.reversal_id = r.id 
+        -> inner join items i on i.id = li.item_id 
+        -> group by e.title;
+    +---------------------------------+-----------+
+    | title                           | reversals |
+    +---------------------------------+-----------+
+    | Frühjahrsbörse Burgthann 2016   |      7.50 |
+    | Herbstbörse Burgthann 2015      |     84.00 |
+    | Testbörse 2017 Beta 3.0.0       |     10.00 |
+    +---------------------------------+-----------+
+    3 rows in set (0.01 sec)
+
+Reversals, reversed items, reversed amount, average reversal amout per event
+
+    mysql> select e.title, count(distinct r.id) reversals, 
+        -> count(li.id) items, sum(i.price) amount, avg(i.price) average 
+        -> from events e 
+        -> inner join reversals r on r.event_id = e.id 
+        -> inner join line_items li on li.reversal_id = r.id 
+        -> inner join items i on i.id = li.item_id 
+        -> group by e.title;
+    +--------------------------------+-----------+-------+--------+-----------+
+    | title                          | reversals | items | amount | average   |
+    +--------------------------------+-----------+-------+--------+-----------+
+    | Frühjahrsbörse Burgthann 2016  |         1 |     2 |   7.50 |  3.750000 |
+    | Herbstbörse Burgthann 2015     |         6 |    13 |  84.00 |  6.461538 |
+    | Testbörse 2017 Beta 3.0.0      |         1 |     1 |  10.00 | 10.000000 |
+    +--------------------------------+-----------+-------+--------+-----------+
+    3 rows in set (0.00 sec)
+
 
