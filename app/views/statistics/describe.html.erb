@@ -1,0 +1,13 @@
+<% provide(:title, 'Statistics') %>
+
+<h1>Statistics</h1>
+
+<% event_statistics do |statistics| %>
+  <%= render 'general', statistics: statistics %>
+  <%= render 'sellings', statistics: statistics %>
+  <%= render 'reversals', statistics: statistics %>
+<% end %>
+
+<%= link_to t('.export_to_csv'), "#" %> |
+<%= link_to t('.print_to_pdf'), "#" %>
+

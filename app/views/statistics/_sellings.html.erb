@@ -1,0 +1,31 @@
+<h2>Sellings</h2>
+
+<table class="table table-hover" >
+  <thead>
+    <tr>
+      <th><%= t('.title') %></th>
+      <th><%= t('.date') %></th>
+      <th><%= t('.sellings') %>
+      <th><%= t('.sold_items') %>
+      <th><%= t('.average_selling_value') %>
+      <th><%= t('.total_sellings') %>
+    </tr>
+  </thead>
+  <tbody>
+    <% statistics.selling.each do |row| %>
+      <tr>
+        <td><%= row["title"] %></td>
+        <td><%= row["event_date"].to_datetime.strftime("%F") %></td>
+        <td id='right'><%= row["sellings"] %></td>
+        <td id='right'><%= row["sold_items"] %></td>
+        <td id='right'>
+          <%= number_to_currency row["average_selling_value"] %>
+        </td>
+        <td id='right'>
+          <%= number_to_currency row["total_selling_value"] %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

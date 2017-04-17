@@ -1,0 +1,31 @@
+<h2>General Information</h2>
+
+<table class="table table-hover" >
+  <thead>
+    <tr>
+      <th><%= t('.title') %></th>
+      <th><%= t('.date') %></th>
+      <th><%= t('.sellers') %>
+      <th><%= t('.lists') %>
+      <th><%= t('.items') %>
+      <th><%= t('.average_list_value') %>
+      <th><%= t('.total_lists') %>
+    </tr>
+  </thead>
+  <tbody>
+    <% statistics.general.each do |row| %>
+      <tr>
+        <td><%= row["title"] %></td>
+        <td><%= row["event_date"].to_datetime.strftime("%F") %></td>
+        <td id='right'><%= row["sellers"] %></td>
+        <td id='right'><%= row["lists"] %></td>
+        <td id='right'><%= row["items"] %></td>
+        <td id='right'>
+          <%= number_to_currency row["average_list_value"] %>
+        </td>
+        <td id='right'><%= number_to_currency row["total_list_value"] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

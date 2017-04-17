@@ -1,0 +1,31 @@
+<h2>Reversals</h2>
+
+<table class="table table-hover" >
+  <thead>
+    <tr>
+      <th><%= t('.title') %></th>
+      <th><%= t('.date') %></th>
+      <th><%= t('.reversals') %>
+      <th><%= t('.reversed_items') %>
+      <th><%= t('.average_reversal_value') %>
+      <th><%= t('.total_reversals') %>
+    </tr>
+  </thead>
+  <tbody>
+    <% statistics.reversal.each do |row| %>
+      <tr>
+        <td><%= row["title"] %></td>
+        <td><%= row["event_date"].to_datetime.strftime("%F") %></td>
+        <td id='right'><%= row["reversals"] %></td>
+        <td id='right'><%= row["reversed_items"] %></td>
+        <td id='right'>
+          <%= number_to_currency row["average_reversal_value"] %>
+        </td>
+        <td id='right'>
+          <%= number_to_currency row["total_reversal_value"] %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
