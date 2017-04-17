@@ -43,6 +43,15 @@ module ApplicationHelper
     end
   end
 
+  def event_statistics
+    statistics = Statistics.new
+    if block_given?
+      yield statistics
+    else
+      statistics
+    end
+  end
+
   def selling_statistics_for(event = @event)
     statistics = SellingStatistics.new(event)
     if block_given?
