@@ -11,7 +11,7 @@ class Statistics
   end
 
   def general
-    ActiveRecord::Base.connection.execute(
+    prepare ActiveRecord::Base.connection.execute(
       "select 
          e.id,
          e.title, 
@@ -32,8 +32,27 @@ class Statistics
        group by e.title order by e.event_date")
   end
 
+  def general_ar
+    Event.includes({:lists =>  [:items] }, :users)
+         .select("events.id,
+                  events.title,
+                  events.event_date,
+                  count(distinct users.id) as sellers,
+                  count(distinct lists.id) as lists,
+                  count(items.id) as items,
+                  avg(items.price) as average_item_value,
+                  sum(items.price) as total_list_value,
+                  (sum(items.price) * 1.0)/count(distinct lists.id) " + 
+                  "as average_list_value")
+          .joins("left outer join `lists` on lists.event_id = events.id " +
+                 "left outer join `users` on lists.user_id = users.id " +
+                 "left outer join `items` on items.list_id = lists.id")
+          .group("events.title")
+          .order("events.event_date")
+  end
+
   def selling
-    ActiveRecord::Base.connection.execute(
+    prepare ActiveRecord::Base.connection.execute(
       "select 
          e.id,
          e.title, 
@@ -54,7 +73,7 @@ class Statistics
   end
 
   def reversal
-    ActiveRecord::Base.connection.execute(
+    prepare ActiveRecord::Base.connection.execute(
       "select 
          e.id,
          e.title, 
@@ -73,5 +92,24 @@ class Statistics
            on ri.item_id = riv.id
        group by e.title order by e.event_date")
   end
+
+  private
+
+    def prepare(result)
+      if result.class.to_s == "Mysql2::Result"
+        fiels = result.fields
+        transformed = []
+        result.each do |r| 
+          mapping = {}
+          fields.zip(r.entries).each do |k, v|
+            mapping[k] = v
+          end
+          transformed << mapping
+        end 
+        mapping
+      else
+        result
+      end
+    end
 
 end
