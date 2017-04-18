@@ -106,7 +106,7 @@ class Statistics
           end
           transformed << mapping
         end 
-        mapping
+        transformed
       else
         result
       end
