@@ -95,6 +95,11 @@ class Statistics
 
   private
 
+    # TODO: This is a hack. As I am not able to use ActiveRecord to create the
+    #       query I have to check whether the result set comes from MySQL. If
+    #       so I transform the result set into an array of hashes. As soon as
+    #       I find out how to do the query with ActiveRecord this has to be
+    #       refactored!
     def prepare(result)
       if result.class.to_s == "Mysql2::Result"
         fields = result.fields

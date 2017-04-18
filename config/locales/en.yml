@@ -347,6 +347,40 @@ en:
       print_reversal:      "Print"
       search:              "Search"
 
+  statistics:
+    describe:
+      statistics:    "Statistics"
+      export_to_csv: "Export to CSV"
+      print_to_pdf:  "Print as PDF"
+
+    general:
+      general_informations_heading: "General Informations"
+      title:                        "Title"
+      date:                         "Date"
+      sellers:                      "Sellers"
+      items:                        "Items"
+      lists:                        "Lists"
+      average_list_value_html:      "&Oslash; Value"
+      total_lists:                  "Total"
+
+    sellings:
+      sellings_heading:           "Sellings"
+      title:                      "Title"
+      date:                       "Date"
+      sellings:                   "Sellers"
+      sold_items:                 "Items"
+      average_selling_value_html: "&Oslash; Values"
+      total_sellings:             "Total"
+
+    reversals:
+      reversals_heading:           "Reversals"
+      title:                       "Title"
+      date:                        "Date"
+      reversals:                   "Reversals"
+      reversed_items:              "Items"
+      average_reversal_value_html: "&Oslash; Value"
+      total_reversals:             "Total"
+
   static_pages:
     home:
       welcome_html: "Welcome to <em>Secondhand</em> the list collection program of <a href=\"http://messe-burgthann.de/\">Kinderkleider und Spielzeugboerse Burgthann</a> where you can collect your items you want to sell at <strong>%{event}</strong>"
@@ -409,6 +443,7 @@ en:
       Users:      "Users"
       Carts:      "Carts"
       Query:      "Search"
+      Statistics: "Statistics"
       Account:  "Account"
       Profile:    "My Lists"
       Settings:   "Settings"

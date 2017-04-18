@@ -1,6 +1,6 @@
-<% provide(:title, 'Statistics') %>
+<% provide(:title, t('.statistics')) %>
 
-<h1>Statistics</h1>
+<h1><%= t('.statistics') %></h1>
 
 <% event_statistics do |statistics| %>
   <%= render 'general', statistics: statistics %>
