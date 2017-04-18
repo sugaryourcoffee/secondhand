@@ -97,7 +97,7 @@ class Statistics
 
     def prepare(result)
       if result.class.to_s == "Mysql2::Result"
-        fiels = result.fields
+        fields = result.fields
         transformed = []
         result.each do |r| 
           mapping = {}
