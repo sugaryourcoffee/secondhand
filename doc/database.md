@@ -26,6 +26,8 @@ include
 * Value of returns
 * Average value of returns
 * Profit
+* Lists with no sold items
+* Lists with revenue less than 20 EUR
 
 We want to query the database directly within MySQL and later on implement the
 statistics within the secondhand application.
@@ -385,4 +387,22 @@ Reversals, reversed items, reversed amount, average reversal amout per event
     +--------------------------------+-----------+-------+--------+-----------+
     3 rows in set (0.00 sec)
 
+
+Lists with no sold items
+
+    mysql> select e.id, count(distinct l.id) from events e left join lists l 
+        -> on l.event_id = e.id where l.id 
+        -> not in (select l.id id from lists l join items i 
+        -> on i.list_ id = l.id join line_items li on li.item_id = i.id) 
+        -> group by e.id;
+
+Lists with revenue < 20 EUR
+
+    mysql> select e.id, e.title, l.id lists from lists l inner join events e 
+        -> on l.event_id = e.id join 
+        -> (select l.id, sum(i.price) total from lists l join items i 
+        ->  on i.list_id = l.id join line_items li 
+        ->  on li.item_id = i.id and li.reversal_id is null group by l.id) x 
+        -> on x.id = l.id and x.total < 20;
+   
 

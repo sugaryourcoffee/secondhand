@@ -10,6 +10,46 @@ class Statistics
     summary
   end
 
+  def lists_revenue_zero
+    prepare ActiveRecord::Base.connection.execute(
+      "select e.id, e.title, count(distinct l.id) without_sold_items
+         from events e
+           left join lists l on l.event_id = e.id
+         where l.id not in 
+           (select l.id id from lists l 
+            join items i on i.list_id = l.id
+            join line_items li on li.item_id = i.id)
+        group by e.id")
+  end
+
+  def lists_revenue_below(revenue = 20)
+    prepare ActiveRecord::Base.connection.execute(
+      "select e.id, e.title, count(l.id) below_min_revenue
+         from lists l
+         left join events e on l.event_id = e.id
+         join (select l.id, sum(i.price) total
+                 from lists l
+                 join items i on i.list_id = l.id
+                 join line_items li 
+                   on li.item_id = i.id and li.reversal_id is null
+               group by l.id) x on x.id = l.id and x.total < #{revenue}
+       group by e.id")
+  end
+
+  def lists_revenue_frequency
+    prepare ActiveRecord::Base.connection.execute(
+      "select count(x.sum) frequency, x.sum from (select l.id, sum(i.price) sum 
+         from lists l 
+           join items i on i.list_id = l.id 
+           join line_items li 
+             on li.item_id = i.id and li.reversal_id is null 
+         group by l.id) x 
+       group by x.sum")
+  end
+
+  def lists_revenue_histogram(ranges)
+  end
+
   def general
     prepare ActiveRecord::Base.connection.execute(
       "select 
