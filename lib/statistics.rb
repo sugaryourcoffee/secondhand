@@ -10,6 +10,17 @@ class Statistics
     summary
   end
 
+  def list_revenues
+    (prepare ActiveRecord::Base.connection.execute(
+      "select * from (select sum(i.price) sum from lists l
+                        join items i on i.list_id = l.id
+                        join line_items li on li.item_id = i.id and
+                                              li.reversal_id is null
+                      group by l.id) x
+       order by x.sum")
+    ).map { |x| x["sum"] }
+  end
+
   def lists_revenue_zero
     prepare ActiveRecord::Base.connection.execute(
       "select e.id, e.title, count(distinct l.id) without_sold_items
@@ -47,7 +58,40 @@ class Statistics
        group by x.sum")
   end
 
-  def lists_revenue_histogram(ranges)
+  def lists_revenue_histogram(bar_count = nil)
+    stats = quartile(list_revenues)
+
+    bar_count ||= bars(stats[:count])
+
+    r = ranges(stats, bar_count)
+
+    hist_data = prepare ActiveRecord::Base.connection.execute(
+      "select t.range as [range], count(*) as [frequency] 
+         from (select case 
+                 #{r.values.join(' ')}
+               end as range 
+               from (select l.id, sum(i.price) sum 
+                       from lists l 
+                         join items i 
+                           on i.list_id = l.id 
+                         join line_items li 
+                           on li.item_id = i.id and li.reversal_id is null 
+                     group by l.id) x) t 
+       group by t.range")
+
+    hist_data  
+  end
+
+  def lists_revenue_min_max_count
+    prepare ActiveRecord::Base.connection.execute(
+      "select min(x.sum) min, max(x.sum) max, count(x.sum) count
+         from (select l.id, sum(i.price) sum 
+                 from lists l 
+                   join items i 
+                     on i.list_id = l.id 
+                   join line_items li 
+                     on li.item_id = i.id and li.reversal_id is null 
+                group by l.id) x")
   end
 
   def general
@@ -131,6 +175,66 @@ class Statistics
          left join items riv
            on ri.item_id = riv.id
        group by e.title order by e.event_date")
+  end
+
+  # Calculates quartiles and expects a sorted array
+  def quartile(vector)
+    count = vector.count
+
+    result = { count: count,
+               min:   vector.min,
+               max:   vector.max,
+               q2:    median(vector) }
+     
+    if count/4 == count/4.0
+       result[:q1] = (vector[count/4  -1] + vector[count/4  ])/2
+       result[:q3] = (vector[count/4*3-1] + vector[count/4*3])/2
+    else
+       result[:q1] = vector[(count/4.0  ).floor]
+       result[:q3] = vector[(count/4.0*3).floor]
+    end
+
+    result
+  end
+
+  def median(vector)
+    count = vector.count
+    
+    if count.odd?
+      vector[count/2]
+    else
+      (vector[count/2 - 1] + vector[count/2])/2.0
+    end
+  end
+
+  def bars(count)
+    case count
+    when   0..49  then  6
+    when  50..99  then  8
+    when 100..249 then 10
+    else 15
+    end
+  end
+
+  def ranges(stats, bars = 10, bottom = 0.5)
+    range = ((stats[:max] - stats[:min]) / bars).floor
+
+    lower = bottom
+    upper = lower + range
+
+    ranges = {}
+
+    key = "lower - upper"
+    query = "when x.sum between lower and upper then 'lower - upper'"
+
+    1.upto(bars) do |r|
+      ranges[key.gsub(/lower/, lower.to_s).gsub(/upper/, upper.to_s)] = 
+        query.gsub(/lower/, lower.to_s).gsub(/upper/, upper.to_s)
+      lower = upper + bottom
+      upper = lower + range
+    end
+
+    ranges
   end
 
   private
