@@ -10,6 +10,11 @@ class Statistics
     summary
   end
 
+  # Retrieves a sorted array of list revenues. This can be used in conjunction
+  # with quartile.
+  #
+  # stat = Statistics.new
+  # stat.quartile(stat.list_revenues)
   def list_revenues
     (prepare ActiveRecord::Base.connection.execute(
       "select * from (select sum(i.price) sum from lists l
@@ -21,6 +26,14 @@ class Statistics
     ).map { |x| x["sum"] }
   end
 
+  # Returns an array of hashes with the count of lists without sold items per
+  # event.
+  #
+  # stat = Statistics.new
+  # stat.lists_revenue_zero
+  #
+  # => [{"id"=>6, "title"=>"Herbstbörse Burgthann 2013", 
+  #      "without_sold_items"=>204}]
   def lists_revenue_zero
     prepare ActiveRecord::Base.connection.execute(
       "select e.id, e.title, count(distinct l.id) without_sold_items
@@ -33,6 +46,13 @@ class Statistics
         group by e.id")
   end
 
+  # Returns an array of hashes with the count of lists below the provided value.
+  #
+  # stat = Statistics.new
+  # stat.lists_revenue_below(20)
+  #
+  # => [{"id"=>6, "title"=>"Herbstbörse Burgthann 2013", 
+  #      "below_min_revenue"=>3}]
   def lists_revenue_below(revenue = 20)
     prepare ActiveRecord::Base.connection.execute(
       "select e.id, e.title, count(l.id) below_min_revenue
@@ -47,6 +67,12 @@ class Statistics
        group by e.id")
   end
 
+  # Returns an array of hashes with the count of revenues
+  #
+  # stat = Statistics.new
+  # stat.lists_revenue_frequency
+  #
+  # => [{"frequency"=>2, "sum"=>1}, {"frequency"=>2, "sum"=>5}]
   def lists_revenue_frequency
     prepare ActiveRecord::Base.connection.execute(
       "select count(x.sum) frequency, x.sum from (select l.id, sum(i.price) sum 
@@ -58,6 +84,18 @@ class Statistics
        group by x.sum")
   end
 
+  # Returns an array of hashes with histogram data of revenues
+  #
+  # stat = Statistics.new
+  # stat.lists_revenue_histogram
+  #
+  # => [{"sum_range"=>"0.5 - 172.5", "frequency"=>2}]
+  # 
+  # The result can be used with Histogram to create a SVG string that can be
+  # used in a html file
+  #
+  # hist = Histogram.new
+  # hist.to_svg(stat.lists_revenue_histogram)
   def lists_revenue_histogram(bar_count = nil)
     stats = quartile(list_revenues)
 
@@ -81,6 +119,13 @@ class Statistics
 
   end
 
+  # Returns an array of hashes with min and max revenues and the count of 
+  # sellings.
+  #
+  # stat = Statistics.new
+  # stat.lists_revenue_min_max_count
+  #
+  # => [{"min"=>2, "max"=>100, "count"=>5}]
   def lists_revenue_min_max_count
     prepare ActiveRecord::Base.connection.execute(
       "select min(x.sum) min, max(x.sum) max, count(x.sum) count
@@ -176,7 +221,13 @@ class Statistics
        group by e.title order by e.event_date")
   end
 
-  # Calculates quartiles and expects a sorted array
+  # Calculates quartiles and expects a sorted array. This can be used together
+  # with list_revenues
+  #
+  # stat = Statistics.new
+  # stat.quartile(stat.list_revenues)
+  #
+  # => {:count=>11, :min=>1, :max=>1033.0, :q2=>12.0, :q1=>2.5, :q3=>556.5}
   def quartile(vector)
     count = vector.count
 

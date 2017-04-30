@@ -1,0 +1,19 @@
+<h2><%= t('.zero_revenue') %></h2>
+
+<table class="table table-hover" >
+  <thead>
+    <tr>
+      <th><%= t('.title') %></th>
+      <th><%= t('.lists') %>
+    </tr>
+  </thead>
+  <tbody>
+    <% statistics.lists_revenue_zero.each do |row| %>
+      <tr>
+        <td><%= row["title"] %></td>
+        <td id='right'><%= row["without_sold_items"] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

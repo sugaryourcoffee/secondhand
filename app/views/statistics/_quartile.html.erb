@@ -1,0 +1,27 @@
+<h2><%= t('.quartile') %></h2>
+
+<% quartile = statistics.quartile(statistics.list_revenues) %>
+
+<table class="table table-hover" >
+  <thead>
+    <tr>
+      <th><%= t('.count') %></th>
+      <th><%= t('.min') %></th>
+      <th><%= t('.q1') %></th>
+      <th><%= t('.median') %></th>
+      <th><%= t('.q3') %></th>
+      <th><%= t('.max') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= quartile[:count] %></td>
+      <td><%= quartile[:min] %></td>
+      <td><%= quartile[:q1] %></td>
+      <td><%= quartile[:q2] %></td>
+      <td><%= quartile[:q3] %></td>
+      <td><%= quartile[:max] %></td>
+    </tr>
+  </tbody>
+</table>
+

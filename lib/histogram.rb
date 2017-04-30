@@ -24,7 +24,8 @@ class Histogram
     c           = canvas(max, count, width)
     b           = bars(hist, width)
 
-    svg = "<svg width=\"#{@panel[:width]}\" height=\"#{@panel[:height]}\">"
+    svg = "<svg width=\"#{@panel[:width]}\" height=\"#{@panel[:height]}\"
+            xmlns=\"http://www.w3.org/2000/svg\">"
     svg << "<rect x=\"0\" y=\"0\" width=\"#{@panel[:width]}\" 
                   height=\"#{@panel[:height]}\" 
                   style=\"fill:none;stroke:green;stoke-width:1\"/>"
@@ -39,6 +40,7 @@ class Histogram
     File.open(file, "w") do |f|
       f.puts html
     end
+    file
   end
 
   def to_file(hist, file = "hist.svg")
@@ -49,6 +51,7 @@ class Histogram
     File.open(file, "w") do |f|
       f.puts svg + to_svg(hist)
     end
+    file
   end
 
   def canvas(max, count, width=40)
@@ -61,14 +64,14 @@ class Histogram
     scale        = -increment
 
     area = []
-    area << text(30, 
-                 30, 
+    area << text(@canvas[:x0] - 20, 
+                 @canvas[:y0] - 20, 
                  "#{@y_scale[:base]}
                   <tspan baseline-shift=\"super\" font-size=\"10\">
                   #{@y_scale[:exp]}</tspan>") if @y_scale[:base] > 1
 
     @canvas[:height].step(0, -ticks) do |s|
-      area << text(30, 
+      area << text(@canvas[:x0] - 20, 
                    (@canvas[:y0]+s).to_i, 
                     format_number(scale += increment, @y_scale))
       area << line(s.to_i, @canvas)

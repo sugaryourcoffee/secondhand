@@ -52,6 +52,16 @@ module ApplicationHelper
     end
   end
 
+  def event_graphic_statistics(width = 940, height = 600)
+    statistics = Statistics.new
+    histogram  = Histogram.new(width, height)
+    if block_given?
+      yield statistics, histogram
+    else
+      [statistics, histogram]
+    end
+  end
+
   def selling_statistics_for(event = @event)
     statistics = SellingStatistics.new(event)
     if block_given?

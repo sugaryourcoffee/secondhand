@@ -1,0 +1,19 @@
+<h2><%= t('.below_revenue') %></h2>
+
+<table class="table table-hover" >
+  <thead>
+    <tr>
+      <th><%= t('.title') %></th>
+      <th><%= t('.lists') %>
+    </tr>
+  </thead>
+  <tbody>
+    <% statistics.lists_revenue_below.each do |row| %>
+      <tr>
+        <td><%= row["title"] %></td>
+        <td id='right'><%= row["below_min_revenue"] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

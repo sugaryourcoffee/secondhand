@@ -1,0 +1,14 @@
+<% provide(:title, t('.statistics')) %>
+
+<h1><%= t('.statistics') %></h1>
+
+<% event_graphic_statistics do |statistics, histogram| %>
+  <%= render 'zero', statistics: statistics %>
+  <%= render 'below', statistics: statistics %>
+  <%= render 'histogram', statistics: statistics, histogram: histogram %>
+  <%= render 'quartile', statistics: statistics %>
+<% end %>
+
+<%= link_to t('.export_to_csv'), "#" %> |
+<%= link_to t('.print_to_pdf'), "#" %>
+
