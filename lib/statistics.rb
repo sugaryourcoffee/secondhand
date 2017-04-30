@@ -89,7 +89,7 @@ class Statistics
   # stat = Statistics.new
   # stat.lists_revenue_histogram
   #
-  # => [{"sum_range"=>"0.5 - 172.5", "frequency"=>2}]
+  # => ["0.5" => {"sum_range"=>"0.5 - 172.5", "frequency"=>2}]
   # 
   # The result can be used with Histogram to create a SVG string that can be
   # used in a html file
@@ -103,7 +103,7 @@ class Statistics
 
     r = ranges(stats, bar_count)
 
-    prepare ActiveRecord::Base.connection.execute(
+    q = prepare ActiveRecord::Base.connection.execute(
       "select t.sum_range as sum_range, count(*) as frequency 
          from (select case 
                  #{r.values.join(' ')}
@@ -117,6 +117,20 @@ class Statistics
                      group by l.id) x) t 
        group by t.sum_range")
 
+    q.map { |q|
+      { (q["sum_range"] || "0").scan(/^\d+\.\d+|^\d+/).first.to_f => q }
+    }.sort_by { |k, v| k.keys }
+  end
+
+
+  # Extracts the x-values of the lists_revenues_histogram result
+  def histogram_x_values(hist)
+    hist.map { |h| h.keys }.flatten
+  end
+
+  # Extracts the y-values of the lists_revenues_histogram result
+  def histogram_y_values(hist)
+    hist.map { |h| h.values }.flatten
   end
 
   # Returns an array of hashes with min and max revenues and the count of 

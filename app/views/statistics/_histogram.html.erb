@@ -1,6 +1,6 @@
 <h2><%= t('.revenues_histogram') %></h2>
 
-<% hist = statistics.lists_revenue_histogram %>
+<% hist = statistics.histogram_y_values(statistics.lists_revenue_histogram) %>
 
 <%= render file: histogram.to_file(hist, "tmp/hist.svg") %>
 
