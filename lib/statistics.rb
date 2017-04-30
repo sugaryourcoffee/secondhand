@@ -65,11 +65,11 @@ class Statistics
 
     r = ranges(stats, bar_count)
 
-    hist_data = prepare ActiveRecord::Base.connection.execute(
-      "select t.range as [range], count(*) as [frequency] 
+    prepare ActiveRecord::Base.connection.execute(
+      "select t.sum_range as sum_range, count(*) as frequency 
          from (select case 
                  #{r.values.join(' ')}
-               end as range 
+               end as sum_range 
                from (select l.id, sum(i.price) sum 
                        from lists l 
                          join items i 
@@ -77,9 +77,8 @@ class Statistics
                          join line_items li 
                            on li.item_id = i.id and li.reversal_id is null 
                      group by l.id) x) t 
-       group by t.range")
+       group by t.sum_range")
 
-    hist_data  
   end
 
   def lists_revenue_min_max_count
