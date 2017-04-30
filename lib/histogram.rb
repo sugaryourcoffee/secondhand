@@ -16,72 +16,107 @@ class Histogram
                  exp:  1 }
   end
 
-  def histogram(hist)
-    count = hist.count
+  def to_svg(hist)
+    count       = hist.count
     frequencies = hist.map { |h| h["frequency"] }
-    width = @canvas[:width] / count
-    max = frequencies.max
-    c = canvas(max, count, width)
-    b = bars(hist, width)
-    File.open("hist.html", "w") do |f|
-      f.puts "<html>"
-      f.puts "<svg width=\"#{@panel[:width]}\" height=\"#{@panel[:height]}\">"
-      f.puts "<rect x=\"0\" y=\"0\" width=\"#{@panel[:width]}\" height=\"#{@panel[:height]}\" style=\"fill:none;stroke:green;stoke-width:1\"/>"
-      f.puts c
-      f.puts b
-      f.puts "</svg>"
-      f.puts "</html>"
+    width       = @canvas[:width] / count
+    max         = frequencies.max
+    c           = canvas(max, count, width)
+    b           = bars(hist, width)
+
+    svg = "<svg width=\"#{@panel[:width]}\" height=\"#{@panel[:height]}\">"
+    svg << "<rect x=\"0\" y=\"0\" width=\"#{@panel[:width]}\" 
+                  height=\"#{@panel[:height]}\" 
+                  style=\"fill:none;stroke:green;stoke-width:1\"/>"
+    svg << c
+    svg << b
+    svg << "</svg>"
+  end
+
+  def to_html(hist, file = "hist.html")
+    html = "<html>#{to_svg(hist)}</html>"
+
+    File.open(file, "w") do |f|
+      f.puts html
+    end
+  end
+
+  def to_file(hist, file = "hist.svg")
+    svg = "<?xml version=\"1.0\"?> 
+           <!DOCTYPE sv PUBLIC \"-//W3C//DTD SVG 1.1//EN\" 
+           \"http://www.w3.org/Graphics/SVG/SVG/1.1/DTD/svg11.dtd\">"
+
+    File.open(file, "w") do |f|
+      f.puts svg + to_svg(hist)
     end
   end
 
   def canvas(max, count, width=40)
-    width_scale = @canvas[:width] / (count * width)
+    width_scale  = @canvas[:width] / (count * width)
     height_scale = @canvas[:height] / max 
-    @scales = { x: width_scale, y: height_scale }
-    @y_scale = number_format(max, 3)
-    increment = steps(max)
-    puts increment
-    ticks = increment * height_scale
-    puts ticks
+    @scales      = { x: width_scale, y: height_scale }
+    @y_scale     = number_format(max, 3)
+    increment    = steps(max)
+    ticks        = increment * height_scale
+    scale        = -increment
+
     area = []
-    area << text(30, 30, "#{@y_scale[:base]}<tspan baseline-shift=\"super\" font-size=\"10\">#{@y_scale[:exp]}</tspan>") if @y_scale[:base] > 1
-    scale = -increment
+    area << text(30, 
+                 30, 
+                 "#{@y_scale[:base]}
+                  <tspan baseline-shift=\"super\" font-size=\"10\">
+                  #{@y_scale[:exp]}</tspan>") if @y_scale[:base] > 1
+
     @canvas[:height].step(0, -ticks) do |s|
-      area << text(30, (@canvas[:y0]+s).to_i, format_number(scale += increment, @y_scale))
+      area << text(30, 
+                   (@canvas[:y0]+s).to_i, 
+                    format_number(scale += increment, @y_scale))
       area << line(s.to_i, @canvas)
     end 
+
     area.join("\n")
   end
 
   def bars(hist, width=40)
     x = @canvas[:x0]
     y = @canvas[:y0] + @canvas[:height]
+
     width *= @scales[:x]
+
     bars = []
+
     hist.each_with_index do |h, i|
       freq = h["frequency"] * @scales[:y]
 
-      bars << text(x + width/2, y - freq - 10, h["frequency"], "middle", "baseline")
+      bars << text(x + width/2, 
+                   y - freq - 10, h["frequency"], "middle", "baseline")
       bars << bar(x, y - freq, width, freq)
       bars << category(x + width/2, y+20, roman(i+1))
+
       x += width
     end  
+
     bars.join("\n")
   end
 
   def text(x, y, text, anchor = "end", alignment = "middle")
-    "<text x=\"#{x}\" y=\"#{y}\" fill=\"red\" text-anchor=\"#{anchor}\" alignment-baseline=\"#{alignment}\">#{text}</text>"
+    "<text x=\"#{x}\" y=\"#{y}\" fill=\"red\" 
+     text-anchor=\"#{anchor}\" 
+     alignment-baseline=\"#{alignment}\">#{text}</text>"
   end
 
   def legend
   end
 
   def bar(x, y, width, height)
-    "<rect x=\"#{x}\" y=\"#{y}\" width=\"#{width}\" height=\"#{height}\" style=\"fill:rgb(0,0,255);stroke-width:1;stroke:rgb(255,255,255)\" />"  
+    "<rect x=\"#{x}\" y=\"#{y}\" width=\"#{width}\" height=\"#{height}\" 
+      style=\"fill:rgb(0,0,255);stroke-width:1;stroke:rgb(255,255,255)\" />"  
   end
 
   def category(x, y, cat)
-    "<text x=\"#{x}\" y=\"#{y}\" fill=\"red\" text-anchor=\"middle\">#{cat}</text>"
+    "<text x=\"#{x}\" y=\"#{y}\" fill=\"red\" text-anchor=\"middle\">
+       #{cat}
+     </text>"
   end
 
   def line(step, svg)
@@ -89,7 +124,8 @@ class Histogram
     y  = svg[:y0] + step
     x2 = svg[:x0] + svg[:width] + 5
 
-    "<line x1=\"#{x1}\" y1=\"#{y}\" x2=\"#{x2}\" y2=\"#{y}\" style=\"stroke:rgb(255,0,0)\" />"
+    "<line x1=\"#{x1}\" y1=\"#{y}\" x2=\"#{x2}\" y2=\"#{y}\" 
+     style=\"stroke:rgb(255,0,0)\" />"
   end
 
   # Numbers on the y-axes are dependent on the maximum value. 
@@ -111,6 +147,19 @@ class Histogram
     else
       10 * factor
     end
+  end
+
+  def number_format(number, digits)
+    if number / 10 ** digits > 0
+      exp = Math.log10(number).floor - 2
+      { divisor: (10 ** exp), base: 10, exp: exp }
+    else
+      { divisor: 1, base: 1, exp: 1 }
+    end
+  end
+
+  def format_number(number, scale)
+    y = (number / scale[:divisor]).to_i
   end
 
   # Roman numerals used for conversion. The notation from 5000 upwards the 
@@ -162,16 +211,4 @@ class Histogram
     roman << ROMANS[base] * decimal
   end
 
-  def number_format(number, digits)
-    if number / 10 ** digits > 0
-      exp = Math.log10(number).floor - 2
-      { divisor: (10 ** exp), base: 10, exp: exp }
-    else
-      { divisor: 1, base: 1, exp: 1 }
-    end
-  end
-
-  def format_number(number, scale)
-    y = (number / scale[:divisor]).to_i
-  end
 end
