@@ -29,7 +29,8 @@ Rails.application.routes.draw do
     get   'accept_terms_of_use'  => 'submit_terms_of_use#accept'
 
     get   'statistics/overview' => 'statistics#describe'
-    get   'statistics/sales'     => 'statistics#graphic'
+    get   'statistics/sales'    => 'statistics#graphic'
+    get   'statistics/export'   => 'statistics#export'
 
     resources :terms_of_use do
       member do
