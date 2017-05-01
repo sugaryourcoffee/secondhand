@@ -6,7 +6,7 @@ describe 'Statistic pages' do
   let(:base_title) { "Secondhand" }
 
   before { sign_in admin }
-  before { visit descriptive_statistics_path(locale: :en) }
+  before { visit statistics_overview_path(locale: :en) }
 
   it "should have title 'Statistics'" do
     expect(page).to have_title("#{base_title} | Statistics")
