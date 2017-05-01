@@ -5,4 +5,10 @@ class StatisticsController < ApplicationController
 
   def graphic
   end
+
+  def export
+  end
+
+  def pdf
+  end
 end
