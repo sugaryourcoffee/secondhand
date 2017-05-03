@@ -26,6 +26,37 @@ class Statistics
     ).map { |x| x["sum"] }
   end
 
+  # Retrieves a sorted array of list revenues ordered by event. This can be 
+  # used in conjunction with quartile.
+  #
+  # stat = Statistics.new
+  # result = stat.event_list_revenues
+  # result.map { |k,v| stat.quartile(v["values"]) }
+  def event_list_revenues
+    query = prepare ActiveRecord::Base.connection.execute(
+      "select * from (select e.id id, e.title title , sum(i.price) sum 
+                      from events e
+                        join lists l on l.event_id = e.id
+                        join items i on i.list_id = l.id
+                        join line_items li on li.item_id = i.id and
+                                              li.reversal_id is null
+                      group by l.id) x
+       order by x.sum")
+
+    result = {}
+    
+    query.map do |q|
+      if result[q["id"]].nil?
+        result[q["id"]] = { "title" => q["title"], "values" => [q["sum"]] }
+      else
+        result[q["id"]]["values"] << q["sum"]
+      end
+    end
+    
+    result.each { |k,v| result[k]["values"] = v["values"].sort }
+    Hash[result.sort]
+  end
+
   # Returns an array of hashes with the count of lists without sold items per
   # event.
   #

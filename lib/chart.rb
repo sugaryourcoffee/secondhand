@@ -51,25 +51,26 @@ class Chart
   def canvas(max, count, width=40, options = {})
     @scales      = { x: @canvaz[:width]  / (count * width), 
                      y: @canvaz[:height] / max }
-    @y_scale     = number_format(max, 3)
+    @y_scale     = number_format(max, 4)
     increment    = steps(max)
     ticks        = increment * @scales[:y]
     scale        = -increment
     ruler_width  = options[:ticks] ? 5 : @canvaz[:width] + 5
 
     area = []
-    area << text(@canvaz[:x0] - 20, 
-                 @canvaz[:y0] - 20, 
-                 "#{@y_scale[:base]}
+    area << text(@canvaz[:x0] - 15, 
+                 @canvaz[:y0] - 15, 
+                 "#{@y_scale[:base]} 
                   <tspan baseline-shift=\"super\" font-size=\"10\">
-                  #{@y_scale[:exp]}</tspan>") if @y_scale[:base] > 1
+                  #{@y_scale[:exp]}</tspan>",
+                  { text_anchor: "end" }) if @y_scale[:base] > 1
 
     area << rect(@canvaz[:x0], @canvaz[:y0], 
                  @canvaz[:width], @canvaz[:height],
                  { stroke_opacity: 0.1 }) if options[:frame]
 
     @canvaz[:height].step(0, -ticks) do |s|
-      area << text(@canvaz[:x0] - 20, 
+      area << text(@canvaz[:x0] - 15, 
                    (@canvaz[:y0]+s).to_i, 
                     format_number(scale += increment, @y_scale))
       area << hline(@canvaz[:x0] - 5, (@canvaz[:y0] + s).to_i, ruler_width)
@@ -204,7 +205,7 @@ class Chart
   end
 
   def number_format(number, digits)
-    if number / 10 ** digits > 0
+    if number.floor / 10 ** digits > 0
       exp = Math.log10(number).floor - 2
       { divisor: (10 ** exp), base: 10, exp: exp }
     else
