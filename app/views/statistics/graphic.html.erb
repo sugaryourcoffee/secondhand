@@ -2,11 +2,12 @@
 
 <h1><%= t('.statistics') %></h1>
 
-<% event_graphic_statistics do |statistics, histogram| %>
+<% event_graphic_statistics do |statistics, histogram, boxplot| %>
   <%= render 'zero', statistics: statistics %>
   <%= render 'below', statistics: statistics %>
   <%= render 'histogram', statistics: statistics, histogram: histogram %>
   <%= render 'quartile', statistics: statistics %>
+  <%= render 'boxplot', statistics: statistics, boxplot: boxplot %>
 <% end %>
 
 <%= link_to t('.export_to_csv'), "#" %> |

@@ -34,7 +34,7 @@ class Chart
            \"http://www.w3.org/Graphics/SVG/SVG/1.1/DTD/svg11.dtd\">"
 
     File.open(file, "w") do |f|
-      f.puts svg + to_svg(hist)
+      f.puts svg + to_svg(data)
     end
     file
   end

@@ -55,10 +55,11 @@ module ApplicationHelper
   def event_graphic_statistics(width = 940, height = 600)
     statistics = Statistics.new
     histogram  = Histogram.new(width, height)
+    boxplot    = Boxplot.new(width, height)
     if block_given?
-      yield statistics, histogram
+      yield statistics, histogram, boxplot
     else
-      [statistics, histogram]
+      [statistics, histogram, boxplot]
     end
   end
 

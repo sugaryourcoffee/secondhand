@@ -1,0 +1,42 @@
+<h2><%= t('.revenues_boxplot') %></h2>
+
+<% event_revenues = statistics.event_list_revenues %>
+<% quartiles = event_revenues.map { |k,v| boxplot.quartile(v["values"]) } %>
+
+<%= render file: boxplot.to_file(quartiles, "tmp/boxplot.svg") %>
+
+<table class="table table-hover" >
+  <thead>
+    <tr>
+      <th><%= t('.legend') %></th>
+      <th><%= t('.title') %></th>
+      <th><%= t('.count') %></th>
+      <th><%= t('.min') %></th>
+      <th><%= t('.q1') %></th>
+      <th><%= t('.median') %></th>
+      <th><%= t('.q3') %></th>
+      <th><%= t('.max') %></th>
+      <th><%= t('.iqr') %></th>
+      <th><%= t('.outliers') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% i = 0 %>
+    <% event_revenues.each do |k, v| %>
+      <tr>
+        <td><%= boxplot.roman(i+1) %></td> 
+        <td><%= v["title"] %></td>
+        <td id='right'><%= quartiles[i][:count] %></td>
+        <td id='right'><%= quartiles[i][:min] %></td>
+        <td id='right'><%= quartiles[i][:q1] %></td>
+        <td id='right'><%= quartiles[i][:q2] %></td>
+        <td id='right'><%= quartiles[i][:q3] %></td>
+        <td id='right'><%= quartiles[i][:max] %></td>
+        <td id='right'><%= quartiles[i][:iqr] %></td>
+        <td id='right'><%= quartiles[i][:outliers].count %></td>
+      </tr>
+      <% i += 1 %>
+    <% end %>
+  </tbody>
+</table>
+
