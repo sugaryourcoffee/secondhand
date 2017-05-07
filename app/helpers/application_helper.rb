@@ -52,6 +52,24 @@ module ApplicationHelper
     end
   end
 
+  def event_multi_panel(width = 940, chart_height = 300, charts_per_row = 2)
+    statistics = Statistics.new
+    titles, histograms = statistics.event_list_revenues_histogram
+    histogram_count = histograms.count
+    multipanel = Multipanel.new(width, 
+                                chart_height, 
+                                histogram_count, 
+                                charts_per_row) 
+    histogram = Histogram.new(multipanel.panel[:width], 
+                              multipanel.panel[:height])
+    histograms.each_with_index do |h,i| 
+      multipanel.add(histogram.content(h, { title: titles[i], 
+                                            x_label: :number} ))
+    end
+
+    multipanel.to_file("tmp/multi.svg")
+  end
+
   def event_graphic_statistics(width = 940, height = 600)
     statistics = Statistics.new
     histogram  = Histogram.new(width, height)

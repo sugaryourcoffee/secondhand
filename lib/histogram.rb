@@ -16,21 +16,28 @@ class Histogram
                  exp:  1 }
   end
 
-  def to_svg(hist)
+  def content(hist, options = {})
     count       = hist.count
     frequencies = hist.map { |h| h["frequency"] }
     width       = @canvas[:width] / count
     max         = frequencies.max
     c           = canvas(max, count, width)
-    b           = bars(hist, width)
+    b           = bars(hist, width, options)
 
-    svg = "<svg width=\"#{@panel[:width]}\" height=\"#{@panel[:height]}\"
-            xmlns=\"http://www.w3.org/2000/svg\">"
-    svg << "<rect x=\"0\" y=\"0\" width=\"#{@panel[:width]}\" 
-                  height=\"#{@panel[:height]}\" 
-                  style=\"fill:none;stroke:green;stoke-width:1\"/>"
+    svg = "<rect x=\"0\" y=\"0\" width=\"#{@panel[:width]}\" 
+             height=\"#{@panel[:height]}\" 
+             style=\"fill:none;stroke:green;stoke-width:1\"/>"
+    if options[:title]
+      svg << text(@panel[:width] / 2, 25, options[:title], "middle")
+    end
     svg << c
     svg << b
+  end
+
+  def to_svg(hist)
+    svg = "<svg width=\"#{@panel[:width]}\" height=\"#{@panel[:height]}\"
+            xmlns=\"http://www.w3.org/2000/svg\">"
+    svg << content(hist) 
     svg << "</svg>"
   end
 
@@ -73,18 +80,27 @@ class Histogram
     @canvas[:height].step(0, -ticks) do |s|
       area << text(@canvas[:x0] - 20, 
                    (@canvas[:y0]+s).to_i, 
-                    format_number(scale += increment, @y_scale))
+                    format_number(scale += increment, increment, @y_scale))
       area << line(s.to_i, @canvas)
     end 
 
     area.join("\n")
   end
 
-  def bars(hist, width=40)
+  def bars(hist, width=40, options = {})
     x = @canvas[:x0]
     y = @canvas[:y0] + @canvas[:height]
 
     width *= @scales[:x]
+
+    x_label = lambda do |x, h, i|
+      if options[:x_label] == :number
+        label = h.scan(/\d+\.?\d*$/)
+        category(x + width, y + 20, '%.1f' % label)
+      else
+        category(x + width/2, y + 20, roman(i+1))
+      end
+    end
 
     bars = []
 
@@ -94,7 +110,7 @@ class Histogram
       bars << text(x + width/2, 
                    y - freq - 10, h["frequency"], "middle", "baseline")
       bars << bar(x, y - freq, width, freq)
-      bars << category(x + width/2, y+20, roman(i+1))
+      bars << x_label.call(x, h["sum_range"], i)
 
       x += width
     end  
@@ -161,8 +177,9 @@ class Histogram
     end
   end
 
-  def format_number(number, scale)
-    y = (number / scale[:divisor]).to_i
+  def format_number(number, increment, scale)
+    y = (number / scale[:divisor])
+    increment == 0.5 ? y.to_f : y.to_i
   end
 
   # Roman numerals used for conversion. The notation from 5000 upwards the 

@@ -154,6 +154,16 @@ class Statistics
   end
 
 
+  def event_list_revenues_histogram
+    query = event_list_revenues
+    values = query.map { |k,v| v["values"] }
+    titles = query.map { |k,v| v["title"] }
+    histograms = values.map {|v| histogram(v) }.map do |h|
+      h.map { |v| v.values }
+    end.map {|v| v.flatten}
+    [titles, histograms]
+  end
+
   # Extracts the x-values of the lists_revenues_histogram result
   def histogram_x_values(hist)
     hist.map { |h| h.keys }.flatten
@@ -290,6 +300,36 @@ class Statistics
     end
 
     result
+  end
+
+  # Takes an array and a range. Sorts the array data into buckets each with a 
+  # range of 20. The first bucket takes values from 0 to 20, the second 20 to <
+  # 40 and so on.
+  #
+  # stat = Statistics.new
+  # stat.histogram([1,1,3,4,5,6,10,15,20,21], 20)
+  # => {{0=>{"sum_range"=>"0 - 20", "values"=>[1,1,3,4,5,6,10,15], 
+  #          "frequency"=>8}, 
+  #     {20=>{"sum_range"=>"20 - 40", "values"=>[20,21], "frequency"=>1}}
+  def histogram(vector, range = nil, sort = false)
+    range ||= (vector.max/bars(vector.count).to_f).ceil
+    upper = range * (vector.max/range + 1.0).ceil
+
+    vector.sort! if sort
+    
+    buckets = []
+
+    range.step(upper, range) do |step|
+      bucket                    = {}
+      bucket[step]              = { "sum_range" => "#{step - range} - #{step}" }
+      bucket[step]["values"]    = vector.select { |e| e < step }
+      bucket[step]["frequency"] = bucket[step]["values"].count
+
+      vector -= bucket[step]["values"]
+
+      buckets << bucket
+    end 
+    buckets
   end
 
   def median(vector)
