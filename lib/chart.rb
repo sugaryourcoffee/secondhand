@@ -19,8 +19,8 @@ class Chart
                  exp:  1 }
   end
 
-  def to_html(data, file = "chart.html")
-    html = "<html>#{to_svg(data)}</html>"
+  def to_html(data, file = "chart.html", options = {})
+    html = "<html>#{to_svg(data, options)}</html>"
 
     File.open(file, "w") do |f|
       f.puts html
@@ -28,13 +28,13 @@ class Chart
     file
   end
 
-  def to_file(data, file = "chart.svg")
+  def to_file(data, file = "chart.svg", options = {})
     svg = "<?xml version=\"1.0\"?> 
            <!DOCTYPE sv PUBLIC \"-//W3C//DTD SVG 1.1//EN\" 
            \"http://www.w3.org/Graphics/SVG/SVG/1.1/DTD/svg11.dtd\">"
 
     File.open(file, "w") do |f|
-      f.puts svg + to_svg(data)
+      f.puts svg + to_svg(data, options)
     end
     file
   end
@@ -45,9 +45,11 @@ class Chart
   # count: number of elements drawn (bars, boxes, ...)
   # width: width of the element
   # options: 
-  # * ruler: if true draws horizontally are ruler over the canvas else draws
-  #          ticks at the y axes
-  # * frame: if true draws a frame around the canvas
+  # * ruler:  if true draws horizontally are ruler over the canvas else draws
+  #           ticks at the y axes
+  # * frame:  if true draws a frame around the canvas
+  # * ylabel: print a label on the y axes
+  # * xlabel: print a label on the x axes
   def canvas(max, count, width=40, options = {})
     @scales      = { x: @canvaz[:width]  / (count * width), 
                      y: @canvaz[:height] / max }
@@ -76,13 +78,32 @@ class Chart
       area << hline(@canvaz[:x0] - 5, (@canvaz[:y0] + s).to_i, ruler_width)
     end 
 
+    area << xlabel(options["xlabel"]) if options["xlabel"]
+    area << ylabel(options["ylabel"]) if options["ylabel"]
+
     area.join("\n")
+  end
+
+  # Print a label on the x axes
+  def xlabel(label)
+    text(@panel[:width]/2, @panel[:height] - 20, label, 
+         { text_anchor: "middle" })
+  end
+
+  # Print a label on the y axes
+  def ylabel(label)
+    x = 20
+    y = @panel[:height]/2
+
+    text(x, y, label, { text_anchor: "middle", 
+                        transform: "rotate(270,#{x},#{y})" })
   end
 
   # Default SVG text options
   TEXT_OPTIONS = { fill: 'red',
                    text_anchor: 'end',
-                   alignment_baseline: 'middle' }
+                   alignment_baseline: 'middle',
+                   transform: '' }
 
   # Draws a text starting at position (x,y) 
   #
@@ -95,7 +116,8 @@ class Chart
     "<text x=\"#{x}\" y=\"#{y}\" 
            fill=\"#{options[:fill]}\" 
            text-anchor=\"#{options[:text_anchor]}\" 
-           alignment-baseline=\"#{options[:alignment_baseline]}\">
+           alignment-baseline=\"#{options[:alignment_baseline]}\"
+           transform=\"#{options[:transform]}\">
        #{text}
      </text>"
   end
