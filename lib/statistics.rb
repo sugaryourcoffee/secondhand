@@ -158,7 +158,8 @@ class Statistics
     query = event_list_revenues
     values = query.map { |k,v| v["values"] }
     titles = query.map { |k,v| v["title"] }
-    histograms = values.map {|v| histogram(v) }.map do |h|
+    range  = values.map { |v| (v.max/bars(v.count)).ceil }.max
+    histograms = values.map {|v| histogram(v, range) }.map do |h|
       h.map { |v| v.values }
     end.map {|v| v.flatten}
     [titles, histograms]
