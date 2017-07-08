@@ -9,7 +9,7 @@ class Boxplot < Chart
   # => {:count=>12, :q2=>7.5, :q1=>3, :q3=>10, :iqr=>15:,
   #     :outliers=>[41], :min=>1, :max=>40}
   # b.to_svg(data)
-  def to_svg(data)
+  def to_svg(data, options = {})
     count       = data.count
     frequencies = data.map { |h| h[:outliers].max || h[:max] }
     space       = 5
