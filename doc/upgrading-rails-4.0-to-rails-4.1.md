@@ -569,7 +569,7 @@ In the following we assume that our development machine is *saltspring* and our
 beta server is *uranus*. To upgrade the beta server we have to conduct following
 steps:
 
-* ssh to the staging server *uranus*
+* ssh to the beta server *uranus*
 * install Ruby 2.0.0p648
 * create a gemspec rails-4116-secondhand
 * install Rails 4.1.16
@@ -579,7 +579,7 @@ steps:
 * deploy the beta application
 
 ### Install Ruby 2.0.0 and Rails 4.0.13 on the beta server
-First we ssh to the staging server
+First we ssh to the beta server
 
     saltspring$ ssh uranus
 
@@ -686,7 +686,7 @@ We deploy our branch `upgrade-to-rails-4.1` with following command
 
 If we would ommit the branch directive we would deploy the master branch.
 
-Check up you application at [secondhand:8083](http://syc.dyndns.org:8083).
+Check up your application at [secondhand:8083](http://syc.dyndns.org:8083).
 
 <--- TODO processed to here. Next is deploying to the staging server
 
