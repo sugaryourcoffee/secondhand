@@ -187,7 +187,7 @@ slave with
 
 If the error is gone. The slave might be gradually synced with the master. If
 data is not propperly synced then dump the database on the server and restore
-it on the slave as shown [Copy master database to the slave database](markdown-header-copy-master-database-to-the-slave-database) and in [Restore database on slave server](markdown-header-restore-database-on-slave-server).
+it on the slave as shown [Copy master database to the slave database](#copy-master-database-to-the-slave-database) and in [Restore database on slave server](#restore-database-on-slave-server).
 
 Sources
 -------
