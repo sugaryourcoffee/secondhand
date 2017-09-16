@@ -171,6 +171,24 @@ itself.
 Changing IP address might happen when you retrieve your IP address from a new
 DHCP server.
 
+### Fatal Error 1236
+The master and slave might get out of sync if the slave is shut down for a
+while or the connection is interrupted. As long as the `Master_Log_File` value
+on the slave is still available on the master the slave will catch up the
+master. If the `Master_Log_File` is overridden then `show slave status\G`
+will have the value `Last_IO_Errno: 1236` and the `Last_IO_Error: Got fatal
+error 1236 from master when reading data from binary log: 'Could not find first log file name in binary log index file'`. It might help to reset the
+slave with 
+
+    mysql> stop slave;
+    mysql> reset slave;
+    mysql> start slave;
+    mysql> show slave status\G;
+
+If the error is gone. The slave might be gradually synced with the master. If
+data is not propperly synced then dump the database on the server and restore
+it on the slave as shown [Copy master database to the slave database](markdown-header-copy-master-database-to-the-slave-database) and in [Restore database on slave server](markdown-header-restore-database-on-slave-server).
+
 Sources
 -------
 * [MySQL replication - YouTube](https://www.youtube.com/watch?v=JXDuVypcHNA)
