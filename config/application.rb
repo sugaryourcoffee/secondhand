@@ -9,7 +9,7 @@ require 'interleave2of5'
 # Create a version file from git
 if Rails.env.development?
   File.open('config/version', 'w') do |file|
-    file.write `git describe --tags --abbrev=0`
+    file.write `git describe --tags`
   end
 end
 
