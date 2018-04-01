@@ -656,7 +656,7 @@ and the `rails_env` and also change `git_application` to `upgrade-to-rails-4.1`.
     set :git_application, 'secondhand'
     set :application, 'secondhand-beta'
     set :repository,  "git@github.com:#{git_user}/#{git_application}.git"
-    set :rvm_ruby_string, '2.0.0'
+    set :rvm_ruby_string, '2.0.0-p648@rails-4116-secondhand'
     set :rails_env, :beta
 
     set :branch, fetch(:branch, "master")
@@ -767,15 +767,15 @@ At the production server we have slightly different situation as on the staging
 server. We need to first install new Ruby and Rails versions. The list shows 
 the steps we have to take
 
-* Install Ruby 2.0.0
-* Install Rails 4.0.13
+* Install Ruby 2.0.0-p648
+* Install Rails 4.1.16
 * Set up Apache 2 to point to the new Ruby and Rails version
 * Move the manifest file to the current application directory
 * Adjust `config/deploy/production.rb`
 * Deploy the application
 * Migrate the database
 
-### Install Ruby 2.0.0 and Rails 4.0.13 on the production server
+### Install Ruby 2.0.0 and Rails 4.1.16 on the production server
 First we ssh to the production server
 
     saltspring$ ssh secondhand@mercury
@@ -795,29 +795,29 @@ activating Ruby 2.0.0
 
 Then we create a gemset
 
-    mercury$ rvm gemset create rails4013
+    mercury$ rvm gemset create rails-4116-secondhand
 
 and switch to the gemset
 
-    mercury$ rvm ruby-2.0.0-p643@rails4013
+    mercury$ rvm ruby-2.0.0-p648@rails-4116-secondhand
 
-Finally we install Rails 4.0.13
+Finally we install Rails 4.1.16
 
-    mercury$ gem install rails --version 4.0.13 --no-ri --no-rdoc
+    mercury$ gem install rails --version 4.1.16 --no-ri --no-rdoc
 
 ### Setup Apache 2
 Change the default Ruby in `/etc/apache2/apache2.conf` from
 
     <IfModule mod_passenger.c>
       PassengerRoot /home/secondhand/.rvm/gems/ruby-1.9.3-p448@rails3211/gems/passenger-5.0.8
-      PassengerDefaultRuby /home/secondhand/.rvm/wrappers/ruby-1.9.3-p448@rails3211/ruby
+      PassengerDefaultRuby /home/secondhand/.rvm/wrappers/ruby-2.0.0@rails3211/ruby
     </IfModule>
 
 so it looks like the following
 
     <IfModule mod_passenger.c>
       PassengerRoot /home/secondhand/.rvm/gems/ruby-1.9.3-p448@rails3211/gems/passenger-5.0.8
-      PassengerDefaultRuby /home/secondhand/.rvm/gems/ruby-2.0.0-p643@rails4013/wrappers/ruby
+      PassengerDefaultRuby /home/secondhand/.rvm/gems/ruby-2.0.0-p648@rails-4116-secondhand/wrappers/ruby
     </IfModule>
 
 As we have only one application running we don't need to change 
@@ -827,26 +827,18 @@ In order to make the changes take effect we have to restart Apache 2 with
 
     mercury$ sudo apachectl restart
 
-### Move manifest.yml
-Next we need to move `manifest.yml` to the current release
-
-`/home/secondhand/secondhand.mercury/shared/assests/manifest.yml` to 
-`/home/secondhand/secondhand.mercury/current/assets_manifest.yml`.
-
-    $ cd /home/secondhand/secondhand.mercury
-    $ mv shared/assets/manifest.yml current/assets_manifest.yml
-
 ### Adjust `config/deploy/production.rb`
 We have to process changes in `config/deploy/production.rb` as shown below.
 
 replace the value of the `rvm_ruby_string`
 
-    set :rvm_ruby_string, '1.9.3' 
+    set :rvm_ruby_string, '2.0.0@rails4013' 
     
 with the new gemset
 
-    set :rvm_ruby_string, '2.0.0@rails4013'
+    set :rvm_ruby_string, '2.0.0-p648@@rails-4116-secondhand'
 
+#<-- probably delete
 This will ensure that the new used Ruby version will be installed in 
 `shared/bundle/ruby/`. If you just use `2.0.0` you will get an error like
 
@@ -857,59 +849,36 @@ This will ensure that the new used Ruby version will be installed in
 This is because Capistrano will use the Ruby version that is available in
 `shared/bundle/ruby` which before deployment is `1.9.3` from previous 
 deployments before we upgraded.
+#-->
 
-Then replace
+For testing the deployment we will first deploy the branch 
+`upgrade-to-rails-4.1`. If it works we will merge the branch to the master
+branch and do the final deployment. In order to provide a specific branch we
+change in `config/deploy/production.rb`
 
-    after 'deploy:create_symlink', 'copy_database_yml'
+    set :branch, 'master'
 
-    desc "copy shared/database.yml to current/config/database.yml"
-    task :copy_database_yml do
-      config_dir = "#{shared_path}/config"
+to
 
-      unless run("if [ -f '#{config_dir}/database.yml' ]; 
-                    then echo -n 'true'; 
-                  fi")
-        run "mkdir -p #{config_dir}" 
-        upload("config/database.yml", "#{config_dir}/database.yml")
-      end
+    set :branch, fetch(:branch, 'master')
 
-      run "cp #{config_dir}/database.yml #{current_path}/config/database.yml"
-    end
+### Test Deployment
+To test the deployment we issue
 
-with
+    $ cap -S branch=upgrade-to-rails-4.1 production deploy
+    
+If this works we merge the `upgrade-to-rails-4.1` branch to the `master` branch
 
-    before 'deploy:assets:precompile', 'copy_database_yml_to_release_path'
-    after 'deploy:create_symlink', 'copy_database_yml'
+### Merge upgrade-to-rails-4.1 to master
+We checkout the master branch
 
-    desc "copy shared/database.yml to RELEASE_PATH/config/database.yml"
-    task :copy_database_yml_to_release_path do
-      config_dir = "#{shared_path}/config"
+    $ git checkout master
 
-      unless run("if [ -f '#{config_dir}/database.yml' ]; 
-                    then echo -n 'true'; 
-                  fi")
-        run "mkdir -p #{config_dir}" 
-        upload("config/database.yml", "#{config_dir}/database.yml")
-      end
+and merge the upgrade-to-rails-4.1 branch to the master branch
 
-      run "cp #{config_dir}/database.yml #{release_path}/config/database.yml"
-    end
+    $ git merge upgrade-to-rails-4.1
 
-    desc "copy shared/database.yml to current/config/database.yml"
-    task :copy_database_yml do
-      config_dir = "#{shared_path}/config"
-
-      unless run("if [ -f '#{config_dir}/database.yml' ]; then 
-                    echo -n 'true'; 
-                  fi")
-        run "mkdir -p #{config_dir}" 
-        upload("config/database.yml", "#{config_dir}/database.yml")
-      end
-
-      run "cp #{config_dir}/database.yml #{current_path}/config/database.yml"
-    end 
-
-### Deployment
+### Deploy
 Now it is save to deploy your application with
 
     $ cap production deploy

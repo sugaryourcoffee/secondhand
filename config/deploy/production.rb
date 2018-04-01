@@ -7,7 +7,7 @@ set :repository,  "git@github.com:#{git_user}/#{application}.git"
 set :deploy_to, "/home/#{user}/#{domain}"
 
 require 'rvm/capistrano'
-set :rvm_ruby_string, '2.0.0@rails4013'
+set :rvm_ruby_string, '2.0.0-p648@rails-4116-secondhand'
 set :rvm_type, :user
 
 role :web, domain                   # Your HTTP server, Apache/etc
@@ -17,7 +17,7 @@ role :db,  domain, :primary => true # This is where Rails migrations will run
 set :ssh_options, :forward_agent => true
 set :deploy_via, :remote_cache
 set :scm, 'git'
-set :branch, 'master'
+set :branch, fetch(:branch, 'master')
 set :scm_verbose, true
 set :use_sudo, false
 set :rails_env, :production
