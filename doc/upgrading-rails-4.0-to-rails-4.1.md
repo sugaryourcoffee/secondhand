@@ -741,12 +741,15 @@ We have to process changes in `config/deploy/staging.rb` as shown below.
 replace
 
     set :rvm_ruby_string, '1.9.3' 
+    set :branch, 'master'
     
 with
 
     set :rvm_ruby_string, '2.0.0-p648@rails-4116-secondhand'
+    set :branch, fetch(:branch, "master")
 
-#<--- TODO processed to here. Next is 
+The `fetch(:branch, "master")` command allows to provide a different deployment
+branch while invoking the `cap` command as shown in the Deployment section.
 
 ### Deployment
 Now it is save to deploy your application with
