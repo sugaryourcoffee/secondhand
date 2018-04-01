@@ -838,19 +838,6 @@ with the new gemset
 
     set :rvm_ruby_string, '2.0.0-p648@@rails-4116-secondhand'
 
-#<-- probably delete
-This will ensure that the new used Ruby version will be installed in 
-`shared/bundle/ruby/`. If you just use `2.0.0` you will get an error like
-
-     * 2015-12-24 08:14:16 executing `bundle:install`
-     * alot of output
-    ** [out :: secondhand.mercury] ERROR: Gem bundler is not installed, run `gem install bundler` firrst.
-
-This is because Capistrano will use the Ruby version that is available in
-`shared/bundle/ruby` which before deployment is `1.9.3` from previous 
-deployments before we upgraded.
-#-->
-
 For testing the deployment we will first deploy the branch 
 `upgrade-to-rails-4.1`. If it works we will merge the branch to the master
 branch and do the final deployment. In order to provide a specific branch we
@@ -893,8 +880,100 @@ Go to [http://syc.dyndns.org:8080](http://syc.dyndns.org:8080) to check up your 
 The final step is to tag our version. We do tag this version as a new major 
 version `3.0.0`.
 
-    $ git checkout -b v3.0.0
+    $ git checkout -b v3.0.0-stable
     $ git push --set-upstream origin v3.0.0
     $ git tag -a v3.0.0 -m "Secondhand V3.0.0 - Release 2018-04-01"
     $ git push --tags
 
+## Upgrade the Backup Server
+The final step is to upgrade the back server. We process the same steps as with
+the production server.
+
+* Install Ruby 2.0.0-p648
+* Install Rails 4.1.16
+* Set up Apache 2 to point to the new Ruby and Rails version
+* Adjust `config/deploy/backup.rb`
+* Deploy the application
+* Copy the production database to the backup server
+
+### Install Ruby 2.0.0 and Rails 4.1.16 on the backup server
+First we ssh to the backup server
+
+    saltspring$ ssh jupiter
+
+We first update the RVM version
+
+    mercury$ rvm get head
+
+If you get an error about the key just follow the instructions RVM gives you.
+
+After having installed the newest RVM version we proceed with installing and 
+activating Ruby 2.0.0
+
+    mercury$ rvm install 2.0.0 && rvm use 2.0.0
+
+Then we create a gemset
+
+    mercury$ rvm gemset create rails-4116-secondhand
+
+and switch to the gemset
+
+    mercury$ rvm ruby-2.0.0-p648@rails-4116-secondhand
+
+Finally we install Rails 4.1.16
+
+    mercury$ gem install rails --version 4.1.16 --no-ri --no-rdoc
+
+### Setup Apache 2
+Change the default Ruby in `/etc/apache2/conf-available/passenger.conf` from
+
+    <IfModule mod_passenger.c>
+      PassengerRoot /home/pierre/.rvm/gems/ruby-2.0.0-p648@rails4013/gems/passenger-5.0.30
+      PassengerDefaultRuby /home/pierre/.rvm/gems/ruby-2.0.0-p648@rails4013/wrappers/ruby
+    </IfModule>
+
+so it looks like the following
+
+    <IfModule mod_passenger.c>
+      PassengerRoot /home/pierre/.rvm/gems/ruby-2.0.0-p648@rails4013/gems/passenger-5.0.30
+      PassengerDefaultRuby /home/pierre/.rvm/gems/ruby-2.0.0-p648@rails-4116-secondhand/wrappers/ruby
+    </IfModule>
+
+In order to make the changes take effect we have to restart Apache 2 with
+
+    mercury$ sudo apachectl restart
+
+### Adjust `config/deploy/backup.rb`
+We have to process changes in `config/deploy/backup.rb` as shown below.
+
+replace the value of the `rvm_ruby_string`
+
+    set :rvm_ruby_string, '2.0.0@rails4013' 
+    
+with the new gemset
+
+    set :rvm_ruby_string, '2.0.0-p648@@rails-4116-secondhand'
+
+### Deploy
+Now it is save to deploy your application with
+
+    $ cap backup deploy
+
+### Copy the production to the backup database
+We dump the production database and then copy the dump file from the master to
+the slave server. On the slave server we restore the dump file into the slave
+database.
+
+    development$ ssh mercury
+    mercury$ mysqldump -uroot -p --quick --single-transaction --triggers \
+      --master-data secondhand_production | gzip > secondhand-repl.sql.gz
+    mercury$ scp secondhand-repl.sql.gz user@uranus:secondhand-repl.sql.gz
+    mercury$ exit
+
+Now we restore the database into secondhand\_production
+
+    development$ ssh jupiter
+    jupiter$ gunzip < secondhand-repl.sql.gz | mysql -uroot -p \
+    secondhand_production
+
+Details about backing up the database can be found in [Fail over MySQL and Rails](Fail over MySQL and Rails)  
