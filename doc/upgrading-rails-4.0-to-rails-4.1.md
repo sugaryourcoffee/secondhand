@@ -770,7 +770,6 @@ the steps we have to take
 * Install Ruby 2.0.0-p648
 * Install Rails 4.1.16
 * Set up Apache 2 to point to the new Ruby and Rails version
-* Move the manifest file to the current application directory
 * Adjust `config/deploy/production.rb`
 * Deploy the application
 * Migrate the database
@@ -894,7 +893,6 @@ the production server.
 * Set up Apache 2 to point to the new Ruby and Rails version
 * Adjust `config/deploy/backup.rb`
 * Deploy the application
-* Copy the production database to the backup server
 
 ### Install Ruby 2.0.0 and Rails 4.1.16 on the backup server
 First we ssh to the backup server
@@ -941,7 +939,7 @@ so it looks like the following
 
 In order to make the changes take effect we have to restart Apache 2 with
 
-    mercury$ sudo apachectl restart
+    jupiter$ sudo apachectl restart
 
 ### Adjust `config/deploy/backup.rb`
 We have to process changes in `config/deploy/backup.rb` as shown below.
@@ -958,22 +956,5 @@ with the new gemset
 Now it is save to deploy your application with
 
     $ cap backup deploy
-
-### Copy the production to the backup database
-We dump the production database and then copy the dump file from the master to
-the slave server. On the slave server we restore the dump file into the slave
-database.
-
-    development$ ssh mercury
-    mercury$ mysqldump -uroot -p --quick --single-transaction --triggers \
-      --master-data secondhand_production | gzip > secondhand-repl.sql.gz
-    mercury$ scp secondhand-repl.sql.gz user@uranus:secondhand-repl.sql.gz
-    mercury$ exit
-
-Now we restore the database into secondhand\_production
-
-    development$ ssh jupiter
-    jupiter$ gunzip < secondhand-repl.sql.gz | mysql -uroot -p \
-    secondhand_production
 
 Details about backing up the database can be found in [Fail over MySQL and Rails](Fail over MySQL and Rails)  
