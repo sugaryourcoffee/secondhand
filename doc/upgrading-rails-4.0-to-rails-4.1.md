@@ -895,6 +895,6 @@ version `3.0.0`.
 
     $ git checkout -b v3.0.0
     $ git push --set-upstream origin v3.0.0
-    $ git tag -a v3.0.0 -m "Secondhand V3.0.0 - Release 2017-03-12"
+    $ git tag -a v3.0.0 -m "Secondhand V3.0.0 - Release 2018-04-01"
     $ git push --tags
 
