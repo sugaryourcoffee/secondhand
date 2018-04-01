@@ -688,8 +688,6 @@ If we would ommit the branch directive we would deploy the master branch.
 
 Check up your application at [secondhand:8083](http://syc.dyndns.org:8083).
 
-<--- TODO processed to here. Next is deploying to the staging server
-
 ## Deploying to the staging server
 The staging server is on the same server as the beta server. Therefore we don't 
 need to update Ruby and Rails and can concentrate on the configuration. We need 
@@ -703,28 +701,11 @@ On the development machine we have to configure
 
 * `config/deploy/staging.rb`
 
-*Important*
-Before deployment we have to follow the instructions at [Capistrano Upgrading to Rails 4 - Asset Pipeline](https://github.com/capistrano/capistrano/wiki/Upgrading-to-Rails-4#asset-pipeline)
-
 ### Server configuration
 We have to process changes in `/etc/apache2/sites-available/secondhand.conf` as
 shown below.
 
 replace
-
-    <VirtualHost *:8082>
-      DocumentRoot /var/www/secondhand/current/public
-      ServerName secondhand.uranus
-      PassengerRuby /home/pierre/.rvm/gems/ruby-1.9.3-p551@rails3211/\
-      wrappers/ruby
-      <Directory /var/www/secondhand/public>
-        AllowOverride all
-        Options -MultiViews
-        Require all granted
-      </Directory>
-    </VirtualHost>
-
-with
 
     <VirtualHost *:8082>
       DocumentRoot /var/www/secondhand/current/public
@@ -739,7 +720,22 @@ with
       RackEnv staging
     </VirtualHost>
 
-### Development machine configuration
+with
+
+    <VirtualHost *:8082>
+      DocumentRoot /var/www/secondhand/current/public
+      ServerName secondhand.uranus
+      PassengerRuby /home/pierre/.rvm/gems/\
+      ruby-2.0.0-p648@rails-4116-secondhand/wrappers/ruby
+      <Directory /var/www/secondhand/public>
+        AllowOverride all
+        Options -MultiViews
+        Require all granted
+      </Directory>
+      RackEnv staging
+    </VirtualHost>
+
+## Development machine configuration
 We have to process changes in `config/deploy/staging.rb` as shown below.
 
 replace
@@ -748,74 +744,18 @@ replace
     
 with
 
-    set :rvm_ruby_string, '2.0.0'
+    set :rvm_ruby_string, '2.0.0-p648@rails-4116-secondhand'
 
-replace
-
-    after 'deploy:create_symlink', 'copy_database_yml'
-
-    desc "copy shared/database.yml to current/config/database.yml"
-    task :copy_database_yml do
-      config_dir = "#{shared_path}/config"
-
-      unless run("if [ -f '#{config_dir}/database.yml' ]; 
-                    then echo -n 'true'; 
-                  fi")
-        run "mkdir -p #{config_dir}" 
-        upload("config/database.yml", "#{config_dir}/database.yml")
-      end
-
-      run "cp #{config_dir}/database.yml #{current_path}/config/database.yml"
-    end
-
-with
-
-    before 'deploy:assets:precompile', 'copy_database_yml_to_release_path'
-    after 'deploy:create_symlink', 'copy_database_yml'
-
-    desc "copy shared/database.yml to RELEASE_PATH/config/database.yml"
-    task :copy_database_yml_to_release_path do
-      config_dir = "#{shared_path}/config"
-
-      unless run("if [ -f '#{config_dir}/database.yml' ]; 
-                    then echo -n 'true'; 
-                  fi")
-        run "mkdir -p #{config_dir}" 
-        upload("config/database.yml", "#{config_dir}/database.yml")
-      end
-
-      run "cp #{config_dir}/database.yml #{release_path}/config/database.yml"
-    end
-
-    desc "copy shared/database.yml to current/config/database.yml"
-    task :copy_database_yml do
-      config_dir = "#{shared_path}/config"
-
-      unless run("if [ -f '#{config_dir}/database.yml' ]; then 
-                    echo -n 'true'; 
-                  fi")
-        run "mkdir -p #{config_dir}" 
-        upload("config/database.yml", "#{config_dir}/database.yml")
-      end
-
-      run "cp #{config_dir}/database.yml #{current_path}/config/database.yml"
-    end 
+#<--- TODO processed to here. Next is 
 
 ### Deployment
-Before deployment move the file 
-`/var/www/secondhand/shared/assests/manifest.yml` to 
-`/var/www/secondhand/current/assets_manifest.yml`.
-
-    $ cd /var/www/secondhand
-    $ mv shared/assets/manifest.yml current/assets_manifest.yml
-
 Now it is save to deploy your application with
 
-    $ cap staging deploy
+    $ cap -S branch=upgrade-to-rails-4.1 staging deploy
 
 And then run the database migrations
 
-    $ cap staging deploy:migrations
+    $ cap -S branch=upgrade-to-rails-4.1 staging deploy:migrations
 
 Go to [http://syc.dyndns.org:8082](http://syc.dyndns.org:8082) to check up your newly deployed application.
 

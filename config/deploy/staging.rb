@@ -7,7 +7,7 @@ set :repository,  "git@github.com:#{git_user}/#{application}.git"
 set :deploy_to, "/var/www/#{application}"
 
 require 'rvm/capistrano'
-set :rvm_ruby_string, '1.9.3'
+set :rvm_ruby_string, '2.0.0-p648@rails-4116-secondhand'
 set :rvm_type, :user
 
 role :web, domain                   # Your HTTP server, Apache/etc
