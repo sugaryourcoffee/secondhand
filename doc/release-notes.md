@@ -1,4 +1,4 @@
-#V3.0.0
+# V3.0.0
 * Bei der Listenanzeige wird der Name des Benutzers angezeigt anstatt 
   'nicht registriert'
 * Nutzungsbedingungen in Verkaufsbedingungen umbenannt
