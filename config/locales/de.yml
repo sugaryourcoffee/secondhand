@@ -460,6 +460,7 @@ de:
       Sign_in:  "Anmelden"
 
     footer:
+      privacy_statement: "Datenschutzerklärung"
       terms_of_use: "Verkaufsbedingungen"
       About:        "Über uns"
       Contact:      "Kontakt"

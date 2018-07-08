@@ -17,6 +17,14 @@ class StaticPagesController < ApplicationController
   def about
   end
 
+  def privacy_statement
+    respond_to do |format|
+      format.pdf do
+        send_file "public/privacy-statement-de.pdf", content_type: Mime::PDF
+      end
+    end
+  end
+
   def contact
     @message = Message.new(message_params) # params[:message])
   end

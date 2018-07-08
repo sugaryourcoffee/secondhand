@@ -19,6 +19,8 @@ Rails.application.routes.draw do
                                                # to: 'static_pages#contact'
     post   'message' => 'static_pages#message' # match '/message', 
                                                # to: 'static_pages#message'
+    get    'privacy_statement' => 'static_pages#privacy_statement', 
+                                  defaults: { format: 'pdf' }
 
     get   '/who_registered' => 'users#who_registered', 
                                defaults: { format: 'atom' }

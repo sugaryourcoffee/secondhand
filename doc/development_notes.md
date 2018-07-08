@@ -8,6 +8,10 @@ Views
 =====
 Topics related to views can be found here.
 
+Open a PDF using a link
+-----------------------
+
+
 Read User Input from Textfield and split into different Textfields
 ------------------------------------------------------------------
 When collecting *Items* in a sales transaction or *Lineitems* in a redemption
