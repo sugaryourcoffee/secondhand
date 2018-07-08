@@ -84,6 +84,7 @@ describe "User pages" do
 
     it { should have_selector('h1',    text: 'Sign up') }
     it { should have_title('Sign up') }
+    it { should have_link('Open and read Privacy Statement') }
   end
 
   describe "sign in page" do

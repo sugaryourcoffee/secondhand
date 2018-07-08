@@ -547,6 +547,7 @@ de:
       News:       "Ich möchte Neuigkeiten über E-Mail erhalten"
       Password:   "Passwort *"
       Confirm_Password: "Passwort bestätigen *"
+      open_privacy_statement: "Datenschutzerklärung zum Lesen öffnen"
       privacy_statement_confirmation: "Datenschutzerklärung gelesen und ich stimme zu *"
     user:
       delete:     "Löschen"
