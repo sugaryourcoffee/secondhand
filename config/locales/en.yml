@@ -538,6 +538,7 @@ en:
       News:       "I want to recieve news per e-mail"
       Password:   "Password *"
       Confirm_Password: "Confirm Password *"
+      privacy_statement_confirmation: "I have read and accept the privacy statement *"
 
     user:
       delete:     "delete"

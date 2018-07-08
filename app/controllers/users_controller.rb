@@ -128,7 +128,8 @@ class UsersController < ApplicationController
                     :street, :zip_code, :town, :country, 
                     :email, :phone,
                     :news, :preferred_language,
-                    :password_digest, :password, :password_confirmation)
+                    :password_digest, :password, :password_confirmation,
+                    :privacy_statement)
     end
 
     def correct_user

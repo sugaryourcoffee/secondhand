@@ -411,6 +411,20 @@ describe "User pages" do
     let(:submit) { "Create my account" }
 
     describe "with invalid information" do
+      before do
+        fill_in "First name", with: "Example"
+        fill_in "Last name", with: "User"
+        fill_in "Street", with: "Street 123"
+        fill_in "Zip code", with: "12345"
+        fill_in "Town", with: "Town"
+        fill_in "Country", with: "Country"
+        fill_in "Phone", with: "1234567890"
+        fill_in "E-Mail", with: "user@example.com"
+        fill_in "Password *", with: "pa55w0rd"
+        fill_in "Confirm Password", with: "pa55w0rd"
+        uncheck "I have read and accept the privacy statement"
+      end
+
       it "should not create a user" do
         expect { click_button submit }.not_to change(User, :count)
       end
@@ -428,6 +442,7 @@ describe "User pages" do
         fill_in "E-Mail", with: "user@example.com"
         fill_in "Password *", with: "pa55w0rd"
         fill_in "Confirm Password", with: "pa55w0rd"
+        check "I have read and accept the privacy statement *"
       end
 
       it "should create a user" do

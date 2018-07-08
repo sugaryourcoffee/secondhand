@@ -12,6 +12,7 @@ FactoryGirl.define do
     password_confirmation "pa55w0rd"
     news true
     preferred_language "en"
+    privacy_statement true
 
     factory :admin do
       admin true

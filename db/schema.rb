@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404050221) do
+ActiveRecord::Schema.define(version: 20180708160938) do
 
   create_table "carts", force: true do |t|
     t.datetime "created_at",                   null: false
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 20170404050221) do
     t.string   "preferred_language"
     t.boolean  "operator",               default: false
     t.datetime "terms_of_use"
+    t.boolean  "privacy_statement",      default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

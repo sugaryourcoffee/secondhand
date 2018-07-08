@@ -34,7 +34,8 @@ class User < ActiveRecord::Base
             uniqueness: {case_sensitive: false}
 
   validates :password, presence: true, length: {minimum: 6}, allow_blank: true
-#  validates :password_confirmation, presence: true, allow_nil: true
+
+  validates :privacy_statement, inclusion: { in: [ true ] }
 
   def self.subscribers(language = LANGUAGES.map { |language, code| code })
     select(:email).

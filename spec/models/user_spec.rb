@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe User do
-  before {@user = User.new(first_name: "Example", last_name: "User", email: "user@example.com", street: "Street 1", zip_code: "12345", town: "Town", country: "Country", phone: "1234 567890", news: false, password: "foobar", password_confirmation: "foobar")}
+  before {@user = User.new(first_name: "Example", last_name: "User", email: "user@example.com", street: "Street 1", zip_code: "12345", town: "Town", country: "Country", phone: "1234 567890", news: false, password: "foobar", password_confirmation: "foobar", privacy_statement: true)}
 subject {@user}
   it {should respond_to(:first_name) }
   it {should respond_to(:last_name) }
@@ -20,6 +20,7 @@ subject {@user}
   it {should respond_to(:admin) }
   it {should respond_to(:operator) }
   it {should respond_to(:preferred_language) }
+  it {should respond_to(:privacy_statement) }
 
   it {should be_valid }
   it {should_not be_admin }

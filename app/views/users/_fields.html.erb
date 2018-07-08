@@ -40,4 +40,9 @@
 <%= f.label :password_confirmation, t('.Confirm_Password') %>
 <%= f.password_field :password_confirmation %>
 
+<p>
+  <%= f.check_box :privacy_statement %>
+  <%= f.label :privacy_statement, t('.privacy_statement_confirmation'),
+              class: "checkbox inline" %>
+</p>
 
