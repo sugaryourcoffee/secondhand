@@ -124,7 +124,7 @@ describe "User pages" do
           should_not have_text(user_street)
           should_not have_text(user_phone)
           should_not have_link('deactivate', 
-                               href: deactivate_user_path(admin, locale: :en))
+                               href: deactivate_user_path(user, locale: :en))
         end
       end
     end
