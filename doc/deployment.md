@@ -354,3 +354,9 @@ And in cases we have changed database schemas
 
     $ cap production deploy:migrations
 
+Deployment of a Git branch
+==========================
+If we want to deploy a Git branch instead of the master branch we can do so with
+
+    $ cap -S branch=privacy-statement staging deploy
+
