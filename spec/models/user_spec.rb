@@ -1,7 +1,18 @@
 require 'spec_helper'
 
 describe User do
-  before {@user = User.new(first_name: "Example", last_name: "User", email: "user@example.com", street: "Street 1", zip_code: "12345", town: "Town", country: "Country", phone: "1234 567890", news: false, password: "foobar", password_confirmation: "foobar", privacy_statement: true)}
+  before {@user = User.new(first_name: "Example", 
+                           last_name: "User", 
+                           email: "user@example.com",
+                           street: "Street 1",
+                           zip_code: "12345",
+                           town: "Town",
+                           country: "Country",
+                           phone: "1234 567890",
+                           news: false,
+                           password: "foobar",
+                           password_confirmation: "foobar",
+                           privacy_statement: true)}
 subject {@user}
   it {should respond_to(:first_name) }
   it {should respond_to(:last_name) }
@@ -145,5 +156,23 @@ subject {@user}
     it { should == User.search("example")[0] }
     it { should == User.search("User")[0] }
     it { should == User.search("ser")[0] }    
+  end
+
+  describe "deactivate user" do
+    before { @user.news = true }
+    it "should scrample user data" do
+      original = @user.dup
+
+      @user.deactivate
+
+      puts @user.inspect
+
+      @user.first_name.should_not    eq original.first_name
+      @user.last_name.should_not     eq original.last_name
+      @user.email.should_not         eq original.email
+      @user.street.should_not        eq original.street
+      @user.news.should              be_falsey
+      @user.phone.should_not         eq original.phone
+    end
   end
 end

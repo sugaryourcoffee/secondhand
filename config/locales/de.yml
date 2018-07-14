@@ -551,6 +551,7 @@ de:
       privacy_statement_confirmation: "Datenschutzerklärung gelesen und ich stimme zu *"
     user:
       delete:     "Löschen"
+      deactivate: "Deaktivieren"
       confirm:    "Sind Sie sicher?"
       list:       "Liste"
       registered: "registriert"

@@ -27,4 +27,5 @@ module UsersHelper
                 subject:  I18n.t('static_pages.contact.help') }
     link_to I18n.t('.contact'), contact_path(message: message)
   end
+
 end

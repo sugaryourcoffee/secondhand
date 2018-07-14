@@ -77,6 +77,58 @@ describe "User pages" do
       end
     end
 
+    describe "deactivate links" do
+      it { should_not have_link('deactivate') }
+
+      describe "as an admin user" do
+        let(:admin) { FactoryGirl.create(:admin) }
+        before do
+          sign_in admin
+          visit users_path(locale: :en)
+        end
+
+        it { should_not have_link('deactivate', 
+                                   href: user_path(User.first, locale: :en)) }
+      end
+
+      describe "active when user has registered list" do
+        let(:admin) { FactoryGirl.create(:admin) }
+        let(:event) { FactoryGirl.create(:active) }
+        let!(:list1) { FactoryGirl.create(:list, event: event, list_number: 1,
+                                          registration_code: "2a.b.c") }
+        let!(:list2) { FactoryGirl.create(:list, event: event, list_number: 2,
+                                          registration_code: ".3.d.e") }
+        before do
+          sign_in user
+          visit user_path(user, locale: :en)
+          register_list("2a.b.c")
+          register_list(".3.d.e")
+          sign_in admin
+          visit users_path(locale: :en)
+        end
+
+        it { should have_selector("li", 
+                                text: "#{user.first_name} #{user.last_name}") }
+        it { should have_link("deactivate",
+                               href: deactivate_user_path(user, locale: :en)) } 
+        it "should be able to deactivate another user" do
+          user_last_name  = user.last_name
+          user_first_name = user.first_name
+          user_email      = user.email
+          user_street     = user.street
+          user_phone      = user.phone
+          expect { click_link('deactivate') }.to change(User, :count).by(0)
+          should_not have_text(user_last_name)
+          should_not have_text(user_first_name)
+          should_not have_text(user_email)
+          should_not have_text(user_street)
+          should_not have_text(user_phone)
+          should_not have_link('deactivate', 
+                               href: deactivate_user_path(admin, locale: :en))
+        end
+      end
+    end
+
   end
 
   describe "signup page" do

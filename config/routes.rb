@@ -110,6 +110,7 @@ Rails.application.routes.draw do
       member do
         post :register_list
         post :deregister_list
+        post :deactivate
         get :print_address_labels, defaults: { format: 'pdf' }
       end
       resources :lists do

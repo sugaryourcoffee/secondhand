@@ -57,6 +57,20 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  def deactivate
+    user = User.find(params[:id])
+    user.deactivate
+    if user.save
+      flash[:success] = I18n.t('.deactivated', 
+                               model: t('activerecord.models.user'))
+    else
+      puts user.errors.messages
+      flash[:error] = I18n.t('.deactivation_error',
+                             model: t('activerecord.model.user'))
+    end
+    redirect_to users_path
+  end
+
   def who_registered
     @users = User.all
     respond_to do |format|

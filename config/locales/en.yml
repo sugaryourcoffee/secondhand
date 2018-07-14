@@ -543,6 +543,7 @@ en:
 
     user:
       delete:     "delete"
+      deactivate: "deactivate"
       confirm:    "Are you sure?"
       list:       "list"
       registered: "registered"

@@ -63,6 +63,16 @@ class User < ActiveRecord::Base
     List.where(user_id: id, event_id: event).order(:list_number)
   end
 
+  def deactivate
+    self.first_name = self.first_name.codepoints.join
+    self.last_name  = self.last_name.codepoints.join
+    self.street     = self.street.codepoints.join
+    self.phone      = self.phone.codepoints.join
+    self.email      = scrample_email(self.email) 
+    self.news       = false
+    self.privacy_statement = true
+  end
+
   def self.search(search)
     if search
       where('first_name LIKE ? or last_name LIKE ?', 
@@ -156,6 +166,11 @@ class User < ActiveRecord::Base
 
   def create_remember_token
     self.remember_token = SecureRandom.urlsafe_base64
+  end
+
+  def scrample_email(email)
+    name, domain, locality = email.split(/[@.]/)
+    "#{name.codepoints.join}@#{domain.codepoints.join}.#{locality}"
   end
 
 end

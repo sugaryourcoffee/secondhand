@@ -11,10 +11,17 @@
       <%= user.country %><br>
       <%= user.phone %><br>
       <a href="mailto:<%= user.email %>"><%= user.email %></a><br>
-      <% if current_user.admin? && !current_user?(user) && user.lists.empty? %>
-        <%= link_to t('.delete'), user, method: :delete, 
-            data: { confirm: t('.confirm') },
-            class: "btn btn-warning" %>
+      <% if current_user.admin? && !current_user?(user) %>
+        <% if user.lists.empty? %>
+          <%= link_to t('.delete'), user, method: :delete, 
+              data: { confirm: t('.confirm') },
+              class: "btn btn-warning" %>
+        <% else %>
+          <%= link_to t('.deactivate'), deactivate_user_path(user),
+              method: :post,
+              data: { confirm: t('.confirm') },
+              class: "btn btn-error" %> 
+        <% end %>
       <% end %>
     </address>
     </div>
