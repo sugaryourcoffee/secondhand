@@ -12,7 +12,8 @@ describe User do
                            news: false,
                            password: "foobar",
                            password_confirmation: "foobar",
-                           privacy_statement: true)}
+                           privacy_statement: true,
+                           deactivated: false)}
 subject {@user}
   it {should respond_to(:first_name) }
   it {should respond_to(:last_name) }
@@ -32,6 +33,7 @@ subject {@user}
   it {should respond_to(:operator) }
   it {should respond_to(:preferred_language) }
   it {should respond_to(:privacy_statement) }
+  it {should respond_to(:deactivated) }
 
   it {should be_valid }
   it {should_not be_admin }
@@ -165,14 +167,14 @@ subject {@user}
 
       @user.deactivate
 
-      puts @user.inspect
-
       @user.first_name.should_not    eq original.first_name
       @user.last_name.should_not     eq original.last_name
       @user.email.should_not         eq original.email
       @user.street.should_not        eq original.street
       @user.news.should              be_falsey
       @user.phone.should_not         eq original.phone
+      @user.privacy_statement.should be_falsey
+      @user.deactivated.should       be_truthy
     end
   end
 end
