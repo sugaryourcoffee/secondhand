@@ -100,11 +100,13 @@ module EventPrinters
 
     user = list.user
 
+    # Due to the privacy statement full seller address has been removed from
+    # the print outs
     seller_label = I18n.t('list_seller')
-    seller_contact = "#{user.first_name} #{user.last_name}\n" +
-                     "#{user.street}\n" +
-                     "#{user.zip_code} #{user.town}\n" +
-                     "#{user.phone}"
+    seller_contact = "#{user.first_name} #{user.last_name}\n" # +
+                    #  "#{user.street}\n" +
+                    #  "#{user.zip_code} #{user.town}\n" +
+                    #  "#{user.phone}"
 
     container_label = I18n.t('list_container_color')
     container_color = list.container || "-"
