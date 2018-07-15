@@ -267,10 +267,14 @@ class List < ActiveRecord::Base
     footer_center = "mail@boerse-burgthann.de"
 
     seller_label = "Seller:"
-    seller_contact = "#{user.first_name} #{user.last_name}\n" +
-                     "#{user.street}\n" +
-                     "#{user.zip_code} #{user.town}\n" +
-                     "#{user.phone}"
+    seller_contact = if user.active?
+                       "#{user.first_name} #{user.last_name}\n" +
+                       "#{user.street}\n" +
+                       "#{user.zip_code} #{user.town}\n" +
+                       "#{user.phone}"
+                     else
+                       "Anonymous"
+                     end
 
     container_label = "Korbfarbe:"
     container_color = container || "-"
@@ -529,13 +533,23 @@ class List < ActiveRecord::Base
 
   def to_csv(csv)
     csv << ["Listennummer", list_number]
-    csv << ["Name", user.last_name]
-    csv << ["Vorname", user.first_name]
-    csv << ["Strasse", user.street]
-    csv << ["PLZ", user.zip_code]
-    csv << ["Stadt", user.town]
-    csv << ["Telefon", user.phone]
-    csv << ["E-Mail", user.email]
+    if user.active?
+      csv << ["Name", user.last_name]
+      csv << ["Vorname", user.first_name]
+      csv << ["Strasse", user.street]
+      csv << ["PLZ", user.zip_code]
+      csv << ["Stadt", user.town]
+      csv << ["Telefon", user.phone]
+      csv << ["E-Mail", user.email]
+    else
+      csv << ["Name", "Secret"]
+      csv << ["Vorname", "Secret"]
+      csv << ["Strasse", "Secret"]
+      csv << ["PLZ", user.zip_code]
+      csv << ["Stadt", user.town]
+      csv << ["Telefon", "Secret"]
+      csv << ["E-Mail", "Secret"]
+    end
     csv << ["Korbfarbe", container || "-"]
     csv << ["Nummer", "Beschreibung", "Groesse", "Preis"]
     (items.sort_by { |item| item.item_number }).each do |item|

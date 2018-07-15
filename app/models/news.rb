@@ -13,7 +13,7 @@ class News < ActiveRecord::Base
   before_update :send_newsletter
 
   def author
-    "#{user.first_name} #{user.last_name}"
+    user.active? ? "#{user.first_name} #{user.last_name}" : "Anonymous"
   end
 
   def send_pending?

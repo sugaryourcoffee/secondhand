@@ -16,7 +16,7 @@
           <%= gravatar_for(@list.user) %>
         </aside>
         <hgroup>
-          <h1><%= @list.user.first_name %> <%= @list.user.last_name %></h1>
+          <h1><%= name_for(@list.user, :first_name, :last_name) %>
         </hgroup>
       </header>
       <section>

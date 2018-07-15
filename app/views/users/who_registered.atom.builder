@@ -4,8 +4,9 @@ atom_feed do |feed|
 
   feed.updated(latest_registration && latest_registration.updated_at)
   @users.each do |user|
+    next unless user.active?
     feed.entry(user) do |entry|
-      entry.title "#{user.first_name} #{user.last_name}"
+      entry.title name_for(user)
 
       entry.summary type: 'xhtml' do |xhtml|
         xhtml.street user.street
