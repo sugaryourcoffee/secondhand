@@ -64,9 +64,10 @@ class UsersController < ApplicationController
       flash[:success] = I18n.t('.deactivated', 
                                model: t('activerecord.models.user'))
     else
-      puts user.errors.messages
+      logger.debug "Deactivation error: #{user.errors.full_messages}"
       flash[:error] = I18n.t('.deactivation_error',
-                             model: t('activerecord.model.user'))
+                         model: t('activerecord.models.user', 
+                                  errors: user.errors.full_messages.join('\n')))
     end
     redirect_to users_path
   end

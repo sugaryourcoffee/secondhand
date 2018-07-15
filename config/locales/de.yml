@@ -1119,4 +1119,6 @@ de:
   item_must_not_be_empty: "Artikel darf nicht leer sein"
   item_not_existing:      "Artikel %{number} existiert nicht"
   label_from_other_event: "Etikett von anderer Veranstaltung"
+  deactivated:            "Benutzer wurde deaktiviert"
+  deactivation_error:     "Benutzer konnte nicht deaktiviert werden:\n%{errors}"
 
