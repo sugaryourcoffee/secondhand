@@ -1120,5 +1120,5 @@ de:
   item_not_existing:      "Artikel %{number} existiert nicht"
   label_from_other_event: "Etikett von anderer Veranstaltung"
   deactivated:            "Benutzer wurde deaktiviert"
-  deactivation_error:     "Benutzer konnte nicht deaktiviert werden:\n%{reason}"
+  deactivation_error:     "Benutzer konnte nicht deaktiviert werden: %{reason}"
 

@@ -950,5 +950,5 @@ en:
   item_not_existing:      "Item %{number} doesn't exist"
   label_from_other_event: "Label from other event"
   deactivated:            "User has been deactivated"
-  deactivation_error:     "User could not be deactivated:\n%{reason}"
+  deactivation_error:     "User could not be deactivated: %{reason}"
 
