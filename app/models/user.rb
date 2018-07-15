@@ -174,7 +174,7 @@ class User < ActiveRecord::Base
   end
 
   def scrample_email(email)
-    name, domain, locality = email.split(/[@.]/)
+    name, domain, locality = email.scan(/(.*)@(.*)\.(.*)/).flatten
     "#{name.codepoints.join}@#{domain.codepoints.join}.#{locality}"
   end
 
