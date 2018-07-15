@@ -10,6 +10,17 @@ module UsersHelper
               class: "gravatar")
   end
 
+  def name_for(user, first = :first_name, second = :last_name, separator = "")
+    if user.active?
+      name  = first.empty?  ? "" : user.send(first)
+      name += separator
+      name += second.empty? ? "" : " #{user.send(second)}"
+      name
+    else
+      "Anonymous"
+    end
+  end
+
   def link_to_list_forwarding(user)
     message = { email:    user.email, 
                 category: I18n.t('static_pages.contact.category_selections')[1],
