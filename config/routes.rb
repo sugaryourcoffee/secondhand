@@ -53,6 +53,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :event_users, only: [:index]
+
     resources :query, only: [:index]
 
     resources :counter, only: [:index]
