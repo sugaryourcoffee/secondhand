@@ -801,6 +801,17 @@ de:
       description:        "Beschreibung"
       size:               "Größe"
       price:              "Preis"
+
+  event_users:
+    index:
+      event_users:  "Benutzer registerter Listen"
+      list_number:  "Liste"
+      last_name:    "Nachname"
+      first_name:   "Vorname"
+      address:      "Adresse"
+      email:        "E-Mail"
+      phone:        "Telefon"
+      print_to_pdf: "Als PDF drucken"
  
   query:
     index:
