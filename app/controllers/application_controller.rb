@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
                   user.terms_of_use && 
                   event.created_at > user.terms_of_use
     if needs_reset
-      user.update!(terms_of_use: nil)
+      user.update!(privacy_statement: true, terms_of_use: nil)
       sign_in user
     end
   end
