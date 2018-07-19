@@ -205,6 +205,9 @@ module EventPrinters
 
   end
 
+  def sellers_to_pdf(lists)
+  end
+
   def cut_to_fit(pdf, width, value)
     return value if pdf.width_of(value) <= width
     words = value.split(" ")

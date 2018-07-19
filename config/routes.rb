@@ -53,7 +53,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :event_users, only: [:index]
+    resources :event_users, only: [:index] do
+      member do
+        get :print, defaults: { format: 'pdf' }
+      end
+    end
 
     resources :query, only: [:index]
 
