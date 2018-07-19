@@ -9,6 +9,9 @@ describe "Event users index page" do
  let(:operator) { create_operator }
  let(:admin)    { create_admin }
 
+# let(:event)    { create_active_event }
+# let(:list)     { List.create(event, jane, list_attributes) }
+
  context "with logged in user" do
    before { sign_in hacker }
    it "does not allow access to event users index page" do
