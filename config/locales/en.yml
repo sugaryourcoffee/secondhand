@@ -912,11 +912,17 @@ en:
 
   list_full:                   "No more items can be added to list %{list_number}!"
 
-  contact_success:             "Your message has been sent"
-  
   newsletter_success: "Newsletter has been sent to subscribers"
   newsletter_error:   "Newsletter could not be send"
   
+  list:              "List"
+  first_name:        "First Name"
+  last_name:         "Name"
+  address:           "Address"
+  email:             "E-Mail"
+  phone:             "Phone"
+
+  contact_success:   "Your message has been sent"
   contact:           "contact form"
   user_name:         "User name"
   list_number:       "List number"

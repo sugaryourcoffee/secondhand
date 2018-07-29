@@ -1,5 +1,7 @@
 module EventPrinters
 
+  include UsersHelper
+
   def create_lists_as_pdf(response)
     pdf = Prawn::Document.new(page_size: "A4")
 
@@ -43,6 +45,54 @@ module EventPrinters
     footer(pdf)
 
     pdf.render
+  end
+
+  def sellers_to_pdf
+    pdf = Prawn::Document.new(page_size: "A4")
+
+    header(pdf)
+
+    pdf.move_down(20)
+
+    sellers = seller_lists.map do |list|
+      [ list.list_number,
+        list.user.last_name,
+        list.user.first_name,
+        address_for(list.user),
+        list.user.email,
+        list.user.phone ]
+    end
+
+    while !sellers.empty?
+      sellers_to(pdf, sellers.shift(30))
+      pdf.start_new_page unless sellers.empty?
+    end
+
+    footer(pdf)
+
+    pdf.render
+  end
+
+  def sellers_to(pdf, seller)
+    pdf.table([[ I18n.t('.list'), 
+                 I18n.t('.last_name'), 
+                 I18n.t('.first_name'), 
+                 I18n.t('.address'), 
+                 I18n.t('.email'),
+                 I18n.t('.phone')], *seller], 
+              cell_style: { size: 8, padding: 2 }, 
+              column_widths: [31, 70, 70, 150, 130, 70]) do |t|
+                t.header = true
+                t.columns(0).align = :right
+                t.columns(1).align = :left
+                t.columns(2).align = :left
+                t.columns(3).align = :left
+                t.columns(4).align = :left
+                t.columns(5).align = :left
+                t.row(0).style(background_color: '44844', text_color: 'ffffff')
+                t.row(0).font_style = :bold
+                t.row(0).columns(0..7).align = :center
+              end
   end
 
   def header(pdf)
@@ -203,9 +253,6 @@ module EventPrinters
       size: 10
     })
 
-  end
-
-  def sellers_to_pdf(lists)
   end
 
   def cut_to_fit(pdf, width, value)

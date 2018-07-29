@@ -1080,8 +1080,14 @@ de:
 
   list_full:                   "Liste %{list_number} können keine weiteren Artikel hinzugefügt werden!"
 
-  contact_success:             "Ihr Nachricht wurde gesendet"
+  list:              "Liste"
+  first_name:        "Vorname"
+  last_name:         "Nachname"
+  address:           "Adresse"
+  email:             "E-Mail"
+  phone:             "Telefon"
 
+  contact_success:   "Ihr Nachricht wurde gesendet"
   contact:           "Kontaktformular"
   user_name:         "Benutzername"
   list_number:       "Listennummer"

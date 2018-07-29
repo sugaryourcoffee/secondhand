@@ -72,6 +72,13 @@ class Event < ActiveRecord::Base
     end
   end
 
+  def seller_lists
+    List.where(event_id: id)
+        .where.not(user_id: nil)
+        .joins(:user)
+        .where("users.deactivated = ?", false)
+  end
+
   def pickup_tickets_pdf
     list_index = 0
     pdf = Prawn::Document.new(page_size: "A4")

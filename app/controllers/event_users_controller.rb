@@ -1,6 +1,6 @@
 class EventUsersController < ApplicationController
 
-  include EventPrinters
+#  include EventPrinters
 
   def index
     load_event
@@ -9,10 +9,10 @@ class EventUsersController < ApplicationController
 
   def print
     load_event
-    load_lists
+    #load_lists
     respond_to do |format|
       format.pdf do
-        send_data sellers_to_pdf(@lists), content_type: Mime::PDF
+        send_data @event.sellers_to_pdf, content_type: Mime::PDF
       end
     end
   end
@@ -24,10 +24,11 @@ class EventUsersController < ApplicationController
   end
 
   def load_lists
-    @lists = List.where(event_id: @event)
-                 .where.not(user_id: nil)
-                 .joins(:user)
-                 .where("users.deactivated = ?", false)
+    @lists = @event.seller_lists
+#    @lists = List.where(event_id: @event)
+#                 .where.not(user_id: nil)
+#                 .joins(:user)
+#                 .where("users.deactivated = ?", false)
   end
 
 end
