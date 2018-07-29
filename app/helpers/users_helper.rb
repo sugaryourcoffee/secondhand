@@ -21,6 +21,10 @@ module UsersHelper
     end
   end
 
+  def address_for(user)
+    "#{user.street}\n#{user.zip_code} #{user.town}\n#{user.country}"
+  end
+
   def link_to_list_forwarding(user)
     message = { email:    user.email, 
                 category: I18n.t('static_pages.contact.category_selections')[1],

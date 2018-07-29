@@ -450,6 +450,7 @@ de:
       News:       "Nachrichten"
       conditions: "Bedingungen"
       Users:      "Benutzer"
+      Sellers:    "Verkäufer"
       Carts:      "Einkaufswagen"
       Statistics: "Statistik"
       Query:      "Suchen"
@@ -801,6 +802,17 @@ de:
       description:        "Beschreibung"
       size:               "Größe"
       price:              "Preis"
+
+  event_users:
+    index:
+      event_users:  "Benutzer registerter Listen"
+      list_number:  "Liste"
+      last_name:    "Nachname"
+      first_name:   "Vorname"
+      address:      "Adresse"
+      email:        "E-Mail"
+      phone:        "Telefon"
+      print_to_pdf: "Als PDF drucken"
  
   query:
     index:
@@ -1069,8 +1081,14 @@ de:
 
   list_full:                   "Liste %{list_number} können keine weiteren Artikel hinzugefügt werden!"
 
-  contact_success:             "Ihr Nachricht wurde gesendet"
+  list:              "Liste"
+  first_name:        "Vorname"
+  last_name:         "Nachname"
+  address:           "Adresse"
+  email:             "E-Mail"
+  phone:             "Telefon"
 
+  contact_success:   "Ihr Nachricht wurde gesendet"
   contact:           "Kontaktformular"
   user_name:         "Benutzername"
   list_number:       "Listennummer"

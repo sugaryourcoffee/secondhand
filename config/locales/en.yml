@@ -441,6 +441,7 @@ en:
       News:       "News"
       conditions: "Conditions"
       Users:      "Users"
+      Sellers:    "Sellers"
       Carts:      "Carts"
       Query:      "Search"
       Statistics: "Statistics"
@@ -796,6 +797,17 @@ en:
       size:               "Size"
       price:              "Price"
 
+  event_users:
+    index:
+      event_users:  "Users of registered lists"
+      list_number:  "List"
+      last_name:    "Last Name"
+      first_name:   "First Name"
+      address:      "Address"
+      email:        "E-Mail"
+      phone:        "Phone"
+      print_to_pdf: "Print to PDF"
+
   query:
     index:
       query_title: "Search"
@@ -901,11 +913,17 @@ en:
 
   list_full:                   "No more items can be added to list %{list_number}!"
 
-  contact_success:             "Your message has been sent"
-  
   newsletter_success: "Newsletter has been sent to subscribers"
   newsletter_error:   "Newsletter could not be send"
   
+  list:              "List"
+  first_name:        "First Name"
+  last_name:         "Name"
+  address:           "Address"
+  email:             "E-Mail"
+  phone:             "Phone"
+
+  contact_success:   "Your message has been sent"
   contact:           "contact form"
   user_name:         "User name"
   list_number:       "List number"
