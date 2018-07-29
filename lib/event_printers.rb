@@ -52,8 +52,6 @@ module EventPrinters
 
     header(pdf)
 
-    pdf.move_down(20)
-
     sellers = seller_lists.map do |list|
       [ list.list_number,
         list.user.last_name,
@@ -64,7 +62,7 @@ module EventPrinters
     end
 
     while !sellers.empty?
-      sellers_to(pdf, sellers.shift(30))
+      sellers_to(pdf, sellers.shift(22))
       pdf.start_new_page unless sellers.empty?
     end
 
@@ -74,6 +72,8 @@ module EventPrinters
   end
 
   def sellers_to(pdf, seller)
+    pdf.move_down(20)
+
     pdf.table([[ I18n.t('.list'), 
                  I18n.t('.last_name'), 
                  I18n.t('.first_name'), 
