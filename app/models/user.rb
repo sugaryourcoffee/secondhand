@@ -48,6 +48,7 @@ class User < ActiveRecord::Base
     self.password_reset_sent_at = Time.zone.now
     self.password = :password_reset_token
     self.password_confirmation = :password_reset_token
+    self.privacy_statement = true
     save!
     UserMailer.password_reset(self).deliver
   end
