@@ -29,7 +29,7 @@ The preparation steps to follow are
 * Tag the current version to Git
 * Check out a new branch for the migration process
 * Update to the latest Ruby 2.0.0 patch level
-* Update to the latest Rails 4.0 version
+* Update to the latest Rails 4.1 version
 
 The actual migration is as follows
 
@@ -44,10 +44,10 @@ The actual migration is as follows
 * Merge back to the master branch
 
 # Stage 1 - Prepare for Upgrade
-This is stage 1 where we prepare for upgrading our Rails 4.0 app to Rails 4.1.
+This is stage 1 where we prepare for upgrading our Rails 4.1 app to Rails 4.2.
 We first move to the gemset that is hosting Secondhand
 
-    $ rvm ruby-2.0.0-p643@rails4013
+    $ rvm ruby-2.0.0-p648@rails-4116-secondhand
 
 ## Run the tests first
 First make sure all your tests pass by running *rspec*.
@@ -70,8 +70,8 @@ We first want to create a branch with the released version in order to be able
 to make changes especially bug fixes to this version. This is necessary if 
 users won't immediately upgrade to the new version.
 
-    $ git checkout -b v2.0.1-stable
-    $ git push --set-upstream origin v2.0.1-stable
+    $ git checkout -b v3.0.0-stable
+    $ git push --set-upstream origin v3.0.0-stable
 
 Next we want to tag this branch with a version number. To list the already taken
 tags we can issue
@@ -82,12 +82,14 @@ tags we can issue
     v1.0.2
     v1.1.0
     v2.0.0
+    v2.0.1
+    v3.0.0
 
-To tag our branch we checkout *v1.1-stable* (we should already be on that 
+To tag our branch we checkout *v3.0.0-stable* (we should already be on that 
 branch from the previous checkout command though) and then issue the tag command
 
-    $ git checkout v2.0.1-stable
-    $ git tag -a v2.0.1 -m "Secondhand V2.0.1 - Release 2016-11-01"
+    $ git checkout v3.0.0-stable
+    $ git tag -a v3.0.0 -m "Secondhand V3.0.0 - Release 2020-08-03"
 
 Finally push the tagged commit to Github with
 
@@ -98,7 +100,7 @@ Before you do any changes to your project check out a new branch. In case you
 mess up your project you always can safely rewind to your master branch and
 start from a blank slate again.
 
-    $ git checkout -b rails4-1
+    $ git checkout -b rails4-2
 
 ## Update Ruby to the latest patch level
 That is not necessary but to be on the safe side I want to have the latest 
@@ -107,62 +109,27 @@ patch level of Ruby 2.0.0. We can check the latest available versions with
     $ rvm list known | grep 2.0.0
     [ruby-]2.0.0[-p648]
 
-While being in the *ruby-2.0.0-p643@rails4013* gemset we update to that
-version we issue
+    It happens that we are already on the lates Ruby v2.0.0 version. But asuming we wouldn't be the process how to install and create new gemsets is shown in the document ´upgrading-rails-4.1-to-rails-4.2.md'.
 
-    $ rvm install 2.0.0
-
-This will create new gemsets that we can list with 
-
-    $ rvm list gemsets | grep ruby-2.0.0-p648
-    => ruby-2.0.0-p648 [ x86_64 ]
-       ruby-2.0.0-p648@global [ x86_64 ]
-       ruby-2.0.0-p648@rails4013 [ x86_64 ]
-    
-As we've been in the gemset *rails4013* this has been created for us with the
-newly install Ruby 2.0.0-p648. Before we move on we switch to the new created
-gemset
-
-    $ rvm ruby-2.0.0-p648@rails4013
-
-Next we copy our old gemset to the newly created gemset with
-
-    $ rvm gemset copy ruby-2.0.0-p643@rails4013 ruby-2.0.0-p648@rails4013
-
-We check that we have the freshly installed Ruby version and the Rails version
-of the old gemset
-
-    $ ruby -v
-    ruby 2.0.0-p648 (2015-12-16 revision 53162) [x86_64-linux]
-    $ rails -v
-    Rails 4.0.13
-
-Finally we run our test and make sure everything runs without errors.
-
-    $ rspec
-
-If anything breaks make sure to first fix the error before moving on.
-
-## Update to the latest Rails 4.0 version
+## Update to the latest Rails 4.1 version
 We could start to upgrade our app from the current version to version 4.1, but 
 it is advised to upgrade from the most current version. To find the most recent
 version we can issue
 
-    $ gem list ^rails$ --remote --all | grep -oP "4.0(.\d{1,})*"
-    4.0.13
-    4.0.12
-    4.0.11.1
-    4.0.11
-    ...
-    4.0.1
-    4.0.0
+    $ gem list ^rails$ --remote --all | grep -oP "4.1(.\d{1,})*"
+    4.1.16
+    4.1.15
+    4.1.14.2
+    ..
+    4.1.0
+    4.1
     
-So it seems we are already on the most recent Rails version which is 4.0.13. 
+So it seems we are already on the most recent Rails version which is 4.1.16. 
 
-To make this step complete we are assuming that we are on 4.0.12. So we would 
-are not on the latest version, and the first step is to add the version to our 
-*Gemfile* by replacng the line `gem 'rails', '4.0.12'` with 
-`gem 'rails' '4.0.13'`. Then we need to run
+To make this step complete we are assuming that we are on 4.1.15. So we would 
+be not on the latest version, and the first step is to add the version to our 
+*Gemfile* by replacng the line `gem 'rails', '4.1.15'` with 
+`gem 'rails' '4.1.16'`. Then we need to run
 
     $ bundle update rails
 
@@ -181,14 +148,14 @@ versions we want to merge the changes back to the master branch. We first
 checkout the master branch and then push them to github.
 
     $ git checkout master
-    $ git merge rails4-1
+    $ git merge rails4-2
     $ git push
 
 Just to be sure we run rspec again.
 
-Now we are ready to actually upgrade to Rails 4.1.
+Now we are ready to actually upgrade to Rails 4.2.
 
-# Stage 2 - Upgrade to Rails 4.1
+# Stage 2 - Upgrade to Rails 4.2
 Now we are prepared to actually upgrade to Rails 4.1. We checkout a new branch
 
     $ git checkout -b upgrade-to-rails-4.1
