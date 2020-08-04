@@ -203,8 +203,8 @@ of the *test-4.2.11.3* app indicated by `~>` and `>=`. Note that only part of
 the gems are in the 4.2.11.3 Gemfile, the other gems we have to lookup at 
 [rubygems.org](https://rubygems.org) that go together with Rails 4.2.11.3.
 
-Gem                      | Rails 4.1.16 | Rails 4.2.11.3   | Group             
------------------------- | -------------| ---------------- | -----------------
+Gem                      | Rails 4.1.16 | Rails 4.2.11.3   | Group
+------------------------ | ------------ | ---------------- | -----------------
 rails                    | 4.1.16       | 4.2.11.3         | top              
 bootstrap-sass           | 2.3.2.0      |                  | top              
 faker                    | ~> 1.6.6     |                  | top              
@@ -248,53 +248,109 @@ x = not installed
 
 We start by changing the rails version in our Gemfile to 
 
-    gem 'rails', '4.1.16'
+    gem 'rails', '4.2.11.3'
 
 and then run `bundle install`. We will get a bundler message saying
 
-    Bundler could not find compatible versions for gem "actionpack":
+    Your Gemfile lists the gem rspec-rails (~> 2.99.0) more than once.
+    You should probably keep only one of them.
+    While it's not a problem now, it could cause errors if you change the 
+    version of one of them later.
+    Fetching gem metadata from https://rubygems.org/................
+    Fetching version metadata from https://rubygems.org/...
+    Fetching dependency metadata from https://rubygems.org/..
+    Resolving dependencies........
+    Bundler could not find compatible versions for gem "railties":
       In snapshot (Gemfile.lock):
-        actionpack (= 4.0.13)
-
+          railties (= 4.1.16)
+          
       In Gemfile:
         best_in_place was resolved to 3.0.3, which depends on
-          actionpack (>= 3.2)
+          railties (>= 3.2)
+                      
+        coffee-rails (~> 4.0.0) was resolved to 4.0.1, which depends on
+          railties (< 5.0, >= 4.0.0)
+                                
+        coffee-rails (~> 4.0.0) was resolved to 4.0.1, which depends on
+          railties (< 5.0, >= 4.0.0)
+                                          
+        factory_girl_rails (= 1.4.0) was resolved to 1.4.0, which depends on
+          railties (>= 3.0.0)
+                                                    
+        jquery-rails was resolved to 3.1.4, which depends on
+          railties (< 5.0, >= 3.0)
+                                                              
+        jquery-turbolinks was resolved to 2.1.0, which depends on
+          railties (>= 3.1.0)
+                                                                        
+        rails (= 4.2.11.3) was resolved to 4.2.11.3, which depends on
+          railties (= 4.2.11.3)
 
-        rails (= 4.1.16) was resolved to 4.1.16, which depends
-          actionpack (= 4.1.16)
+        rspec-rails (~> 2.99.0) was resolved to 2.99.0, which depends on
+          railties (>= 3.0)
 
-        rails (= 4.1.16) was resolved to 4.1.16, which depends
-          actionpack (= 4.1.16)
-
-        rails (= 4.1.16) was resolved to 4.1.16, which depends
-          sprockets-rails (~> 2.0) was resolved to 2.3.3, whic
-            actionpack (>= 3.0)
-
-        rails (= 4.1.16) was resolved to 4.1.16, which depends
-          sprockets-rails (~> 2.0) was resolved to 2.3.3, whic
-            actionpack (>= 3.0)
-
-    Running `bundle update` will rebuild your snapshot from sc
-    the gems in your Gemfile, which may resolve the conflict.
-
+      Running `bundle update` will rebuild your snapshot from scratch, using 
+      only the gems in your Gemfile, which may resolve the conflict.
+  
 If we run
 
-    $ bundle update actionpack
+    $ bundle update 
+    
+    Gem::InstallError: rake requires Ruby version >= 2.2.
+    An error occurred while installing rake (13.0.1), and Bundler
+    cannot continue.
+    Make sure that `gem install rake -v '13.0.1'` succeeds before bundling.
 
-We get the same message for `activemodel` and `railties`. To solve all 
-dependendcies we update all 3 gems with one swoop
+Now we get the information in order to install rake we need to upgrade our 
+Ruby version to '>= 2.2`. Let's try that by using Ruby 2.5.7 as we have been
+notified to use Ruby 2.5 when we experimentally installed Rails 4.2.
 
-    $ bundle update actionpack activemodel railties
+    $ rvm ruby-2.5.7
+
+    IMPORTANT! Some of the defaults have changed in Capybara 2.1. 
+    If you're experiencing failures, please revert to the old behaviour by 
+    setting:
+
+        Capybara.configure do |config|
+          config.match = :one
+          config.exact_options = true
+          config.ignore_hidden_elements = true
+          config.visible_text_only = true
+        end
+
+    If you're migrating from Capybara 1.x, try:
+
+        Capybara.configure do |config|
+          config.match = :prefer_exact
+          config.ignore_hidden_elements = false
+        end
+
+    Details here: http://www.elabs.se/blog/60-introducing-capybara-2-1
+
+    Post-install message from prawn:
+
+      ********************************************
+
+
+      A lot has changed recently in Prawn.
+
+      Please read the changelog for details:
+
+      https://github.com/prawnpdf/prawn/wiki/CHANGELOG
+
+
+      ********************************************
 
 Now we should have the version 4.1.16 installed. We can proof it by issuing
 
     $ rails -v
-    Rails 4.1.16
+    Rails 4.2.11.3
 
-Note: If we have accidentially installed the new rails version into the current
-gemset (as happened to me) we can rename the gemset with
+Note: We have installed the new rails version into the current
+gemset 'ruby-2.5.7'. We want to rename the gemset so it reflects the ruby 
+version, the rails version and the application we are using it for.
 
-    rvm gemset rename ruby-2.0.0-p648-rails4013 ruby-2.0.0-p648@rails-4116-secondhand
+    $ rvm gemset copy ruby-2.5.7 ruby-2.5.7@rails-4.2.11.3-secondhand-upgrade
 
 ## Update Secondhand configuration files
 Now we use a rake task that helps to interactively update configuration files.
