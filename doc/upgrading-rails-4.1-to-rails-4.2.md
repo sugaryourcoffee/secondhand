@@ -158,71 +158,91 @@ Now we are ready to actually upgrade to Rails 4.2.
 # Stage 2 - Upgrade to Rails 4.2
 Now we are prepared to actually upgrade to Rails 4.1. We checkout a new branch
 
-    $ git checkout -b upgrade-to-rails-4.1
-    $ git push --set-upstream origin upgrade-to-rails-4.1
+    $ git checkout -b upgrade-to-rails-4.2
+    $ git push --set-upstream origin upgrade-to-rails-4.2
 
 ## Prepare the Gemfile
 The first step is to change the Ruby version in the Gemfile. But we also want
 to set the version numbers for the other gems listed in the Gemfile so they
-meet the pre-conditions working with Rails 4.1. To see what gem versions we need
-in combination with Ruby 4.1 we create a Rails project with the most recent
-Rails 4.1 version, which is at this writing *4.1.16*.
+meet the pre-conditions working with Rails 4.2. To see what gem versions we need
+in combination with Ruby 4.2 we create a Rails project with the most recent
+Rails 4.2 version, which is at this writing *4.2.11.3*.
 
-To not override our gemset *rails4013* we use *ruby 2.0.0-p648* and create a new
-gemset and switch to it before installing the new rails version
+To not override our gemset *rails-4116-secondhand* we use *ruby 2.0.0-p648* and
+create a new gemset and switch to it before installing the new rails version
 
     $ mkdir ~/Work/rails-version-test
     $ cd ~/Work/rails-version-test
     $ rvm 2.0.0-p648
-    $ rvm create gemset rails-4.1.16-version-test
-    $ rvm ruby-2.0.0-p648@rails-4.1.16-version-test
-    $ gem install rails --version 4.1.16
-    $ rails _4.1.16_ new test-4.1.16
- 
-In the Gemfile we can see the gem version that work together with Rails 4.1.16.
-The table below lists the gems (from the Secondhand Gemfile) with the versions
-of the *test-4.1.16* app indicated by `~>` and `>=`. Note that only part of the
-gems are in the 4.1.16 Gemfile, the other gems we have to lookup at 
-[rubygems.org](https://rubygems.org) that go together with Rails 4.1.16.
+    $ rvm gemset create rails-4.2.11.3-version-test
+    $ rvm ruby-2.0.0-p648@rails-4.2.11.3-version-test
+    $ gem install rails --version 4.2.11.3
 
-Gem                      | Rails 4.0.13    | Rails 4.1.16 | Group            | 
------------------------- | --------------- | ------------ | ---------------- | -
-rails                    | 4.0.13          | 4.1.16       | top              |
-bootstrap-sass           | 2.3.1.0         | 2.3.2.0      | top              |
-faker                    | ~> 1.5.0        | ~> 1.6.6     | top              |
-will\_paginate           | 3.0.7           | 3.1.5        | top              |
-bootstrap-will\_paginate | 0.0.10          | 0.0.10       | top              |
-prawn                    | 1.3.0           | 1.3.0        | top              |
-prawn-table              | ~> 0.2.2        | ~> 0.2.2     | top              |
-syc-barcode              | 0.0.3           | 0.0.3        | top              |
-net-ssh                  | ~> 2.9.2        | ~> 2.9.2     | top              |
-turbolinks               | 2.5.3           |              | top              |
-jquery-turbolinks        |                 |              | top              |
-sqlite3                  |                 |              | development      |
-rspec-rails              | 2.99.0          | 2.99.0       | development,test |
-guard-rspec              | 4.6             | 4.6          | development      |
-annotate                 | 2.5.0           | 2.6.10       | development      |
-guard-spork              | 2.1             | 2.1          | test             |
-spork                    | 0.9             | 0.9          | test             |
-capybara                 | 2.1.0           | 2.1.0        | test             |
-rb-inotify               | 0.9.0           | 0.9.0        | test             |
-libnotify                | 0.5.9           | 0.5.9        | test             |
-factory\_girl\_rails     | 1.4.0           | 1.4.0        | test             |
-cucumber-rails           | 1.2.1           | 1.2.1        | test             |
-database\_cleaner        | 1.5.0           | 1.5.0        | test             |
-selenium-webdriver       |                 |              | test             |
-sass-rails               | ~> 4.0.2        | ~> 4.0.3     | top              |
-coffee-rails             | ~> 4.0.0        | ~> 4.0.0     | top              |
-uglifier                 | >= 1.3.0        | >= 1.3.0     | top              |
-jquery-rails             |                 |              | top              |
-best\_in\_place          |                 |              | top              |
-gritter                  | ~> 1.1.0        | ~> 1.2.0     | top              |
-bcrypt                   | ~> 3.1.7        | ~> 3.1.7     | top              |
-rvm-capistrano           | ~> 1.5.6        | ~> 1.5.6     | top              |
-mysql2                   |                 |              | production       |
-jbuilder                 | ~> 1.2          | ~> 2.0       | top              |
-sdoc                     |                 | ~> 0.4.0     | doc              | x
-spring                   | -               |              | development      | x
+Surprisingly the rails installation stops with an error even though Rails 4.2
+should be compatible with Ruby 2.0.0. This is because rails uses Sprockets 
+which requires Ruby 2.5.0 at least. Allright then, we try it with Ruby 2.5.7
+
+    $ rvm install 2.5
+
+Now let's repeat the process from before
+
+    $ rvm 2.5.7
+    $ rvm gemset create rails-4.2.11.3-version-test
+    $ rvm ruby-2.5.7@rails-4.2.11.3-version-test
+    $ gem install rails --version 4.2.11.3
+    $ rails _4.2.11.3_ new test-4.2.11.3
+ 
+By the way, we don't need the gemset rails-4.2.11.3-version-test so let's delete
+it with
+
+    $ rvm 2.0.0-p648 do rvm gemset delete rails-4.2.11.3-version-test
+
+In the Gemfile we can see the gem version that work together with Rails 4.2.11.3
+The table below lists the gems (from the Secondhand Gemfile) with the versions
+of the *test-4.2.11.3* app indicated by `~>` and `>=`. Note that only part of
+the gems are in the 4.2.11.3 Gemfile, the other gems we have to lookup at 
+[rubygems.org](https://rubygems.org) that go together with Rails 4.2.11.3.
+
+Gem                      | Rails 4.1.16 | Rails 4.2.11.3   | Group             
+------------------------ | -------------| ---------------- | -----------------
+rails                    | 4.1.16       | 4.2.11.3         | top              
+bootstrap-sass           | 2.3.2.0      |                  | top              
+faker                    | ~> 1.6.6     |                  | top              
+will\_paginate           | 3.1.5        |                  | top              
+bootstrap-will\_paginate | 0.0.10       |                  | top              
+prawn                    | 1.3.0        |                  | top              
+prawn-table              | ~> 0.2.2     |                  | top              
+syc-barcode              | 0.0.3        |                  | top              
+net-ssh                  | ~> 2.9.2     |                  | top              
+turbolinks               |              |                  | top              
+jquery-turbolinks        |              |                  | top              
+sqlite3                  |              |                  | development      
+rspec-rails              | 2.99.0       |                  | development,test 
+guard-rspec              | 4.6          |                  | development      
+annotate                 | 2.6.10       |                  | development      
+guard-spork              | 2.1          |                  | test             
+spork                    | 0.9          |                  | test             
+capybara                 | 2.1.0        |                  | test             
+rb-inotify               | 0.9.0        |                  | test             
+libnotify                | 0.5.9        |                  | test             
+factory\_girl\_rails     | 1.4.0        |                  | test             
+cucumber-rails           | 1.2.1        |                  | test             
+database\_cleaner        | 1.5.0        |                  | test             
+selenium-webdriver       |              |                  | test             
+sass-rails               | ~> 4.0.3     | ~> 5.0           | top              
+coffee-rails             | ~> 4.0.0     | ~> 4.1.0         | top              
+uglifier                 | >= 1.3.0     | >= 1.3.0         | top              
+jquery-rails             |              |                  | top              
+best\_in\_place          |              |                  | top              
+gritter                  | ~> 1.2.0     |                  | top              
+bcrypt                   | ~> 3.1.7     | ~> 3.1.7         | top              
+rvm-capistrano           | ~> 1.5.6     |                  | top              
+mysql2                   |              |                  | production       
+jbuilder                 | ~> 2.0       | ~> 2.0           | top              
+sdoc                     | ~> 0.4.0     | ~> 0.4.0         | doc               
+spring                   | x            |                  | development       
+byebug                   | x            |                  | development,test 
+web-console              | x            | ~> 2.0           | development      
 
 x = not installed
 
