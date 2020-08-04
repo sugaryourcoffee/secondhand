@@ -109,7 +109,7 @@ patch level of Ruby 2.0.0. We can check the latest available versions with
     $ rvm list known | grep 2.0.0
     [ruby-]2.0.0[-p648]
 
-    It happens that we are already on the lates Ruby v2.0.0 version. But asuming we wouldn't be the process how to install and create new gemsets is shown in the document ´upgrading-rails-4.1-to-rails-4.2.md'.
+    It happens that we are already on the lates Ruby v2.0.0 version. But asuming we wouldn't be the process how to install and create new gemsets is shown in the document [upgrading-rails-4.0-to-rails-4.1.md](https://github.com/sugaryourcoffee/secondhand/blob/master/doc/upgrading-rails-4.0-to-rails-4.1.md#update-ruby-to-the-latest-patch-level).
 
 ## Update to the latest Rails 4.1 version
 We could start to upgrade our app from the current version to version 4.1, but 
