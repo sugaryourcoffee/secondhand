@@ -128,7 +128,7 @@ So it seems we are already on the most recent Rails version which is 4.1.16.
 
 To make this step complete we are assuming that we are on 4.1.15. So we would 
 be not on the latest version, and the first step is to add the version to our 
-*Gemfile* by replacng the line `gem 'rails', '4.1.15'` with 
+*Gemfile* by replacing the line `gem 'rails', '4.1.15'` with 
 `gem 'rails' '4.1.16'`. Then we need to run
 
     $ bundle update rails
