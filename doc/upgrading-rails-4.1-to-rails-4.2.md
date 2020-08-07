@@ -341,7 +341,7 @@ notified to use Ruby 2.5 when we experimentally installed Rails 4.2.
 
       ********************************************
 
-Now we should have the version 4.1.16 installed. We can proof it by issuing
+Now we should have the version 4.2.11.3 installed. We can proof it by issuing
 
     $ rails -v
     Rails 4.2.11.3
@@ -351,6 +351,8 @@ gemset 'ruby-2.5.7'. We want to rename the gemset so it reflects the ruby
 version, the rails version and the application we are using it for.
 
     $ rvm gemset copy ruby-2.5.7 ruby-2.5.7@rails-4.2.11.3-secondhand-upgrade
+
+    HERE WE ARE NOW
 
 ## Update Secondhand configuration files
 Now we use a rake task that helps to interactively update configuration files.
@@ -362,21 +364,24 @@ can diff the old and the new file. Here is how we process Secondhand.
 
 File                                    | Overwrite | After update action
 --------------------------------------- | --------- | -------------------
-config/boot.rb                          | no        | no
-config/routes.rb                        | no        | yes
-config/application.rb                   | no        | no
-config/environment.rb                   | no        | yes
-conifg/environments/development.rb      | no        | yes
-config/environsments/production.rb      | yes       | yes
+config/boot.rb                          | no        | no *
+config/routes.rb                        | no        | yes *
+config/application.rb                   | no        | no *
+config/environment.rb                   | no        | no *
+config/secrets.yml                      | yes       | no *
+conifg/environments/development.rb      | no        | yes *
+config/environsments/production.rb      | no        | yes *
 config/environments/staging.rb          | no        | yes
-config/environments/test.rb             | yes       | yes
+config/environments/test.rb             | no        | yes *
 config/environments/beta.rb             | no        | yes
-config/initializers/inflections.rb      | no        | no
-config/initializers/mime\_types.rb      | yes       | no
-config/initializers/secret\_token.rb    | yes       | no
-config/initializers/sessions\_store.rb  | yes       | no
-config/initializers/wrap\_parameters.rb | yes       | no
-config/locales/en.yml                   | no        | no
+config/initializers/assets.rb           | no        | no *
+config/initializers/cookies_serializer.rb | yes       | no * 
+config/initializers/inflections.rb      | no        | no *
+config/initializers/mime\_types.rb      | no        | no *
+config/initializers/secret\_token.rb    | yes       | no -
+config/locales/en.yml                   | no        | no *
+bin/rails                               | yes       | no *
+bin/setup                               | create    | no *
 
 ### config/routes.rb
 
@@ -396,12 +401,17 @@ Rails 4.0.13                        | Rails 4.1.16
 Secondhand::Application.initialize! | Rails.application.initialize!
 Secondhand::Application.configure   | Rails.application.configure
 
+### config/secrets.yml
+
+Change of the scret\_key\_base by rake rails:update
+
 ### config/environments/development.rb
 
 Rails 4.0.13                        | Rails 4.1.16
 ----------------------------------- | -----------------------------------------
 Secondhand::Application.configure   | Rails.application.configure
                                     | config.assets.raise_runtime_errors = true
+>                                   | config.assets.digest = true
 
 ### config/environments/staging.rb
 
@@ -416,7 +426,7 @@ Action      | Description
 deliveries  | config.action\_mailer.perform\_deliveries = true
 default URL | config.action\_mailer.default\_url\_options = \
               { host: "syc.dyndns.org:8080" }
-
+>           | config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
 ### config/environments/test.rb
 
 Action      | Description
@@ -425,6 +435,13 @@ default URL | config.action\_mailer.default\_url\_options = \
             |   { host: "localhost:3000" }
             | config.action\_controller.default\_url\_options = \
             |   { host: "localhost:3000" }
+>           | # Randomize the order test cases are executed.
+            | config.active_support.test_order = :random
+
+
+Rails 4.1.16                        | Rails 4.2.11.3
+----------------------------------- | -----------------------------------------
+config.serve\_static\_assets = true | config.serve\_static\_files   = true
 
 ### config/environments/beta.rb
 

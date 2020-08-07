@@ -12,8 +12,9 @@ Rails.application.configure do
   # preloads Rails for running tests, you may have to set it to true.
   config.eager_load = false
 
-  # Configure static asset server for tests with Cache-Control for performance.
-  config.serve_static_assets  = true
+  # Configure static file server for tests with Cache-Control for performance.
+  # until 4.1.16: config.serve_static_assets  = true
+  config.service_static_files = true // since 4.2.11.3
   config.static_cache_control = 'public, max-age=3600'
 
   # Show full error reports and disable caching.
@@ -36,6 +37,9 @@ Rails.application.configure do
 
   # SYC Extension
   config.action_mailer.default_url_options = { host: "localhost:3000" }
+  
+  # Randomize the order test cases are executed
+  config.active_support.test_oder = :random
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr

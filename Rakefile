@@ -4,4 +4,13 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+# Fix 'no method error 'last_comment'
+module FixRakeLastComment
+  def last_comment
+    last_description
+  end
+end
+Rake::Application.send :include, FixRakeLastComment
+# Fix end
+
 Secondhand::Application.load_tasks
