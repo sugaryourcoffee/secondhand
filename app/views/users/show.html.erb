@@ -12,7 +12,7 @@
   <div class="span8">
     <fieldset>
       <legend><%= t('.List_Registration') %></legend>
-      <%= form_tag(register_list_user_path(@user, params)) do %>
+      <%= form_tag(register_list_user_path(@user)) do %>
         <%= label_tag :registration_code, t('.Enter_registration_code') %>
         <%= text_field_tag :registration_code, params[:registration_code] %>
         <%= submit_tag t('.Register_List'), class: "btn btn-success" %>

@@ -352,15 +352,27 @@ version, the rails version and the application we are using it for.
 
     $ rvm gemset copy ruby-2.5.7 ruby-2.5.7@rails-4.2.11.3-secondhand-upgrade
 
-    HERE WE ARE NOW
-
 ## Update Secondhand configuration files
 Now we use a rake task that helps to interactively update configuration files.
 
     $ rake rails:update
 
-This will ask whether to overwrite the old files with new files. With `d` we
-can diff the old and the new file. Here is how we process Secondhand.
+We get an error running the update tast. It is caused by rspec-rails 2.99 which is using an obsolete method 'last_comment' that has been replace in Rake.
+To fix this we add to the Rakefile (source stackoverflow)
+
+    # Fix no method error 'last_comment'
+    module FixRakeLastComment
+    def last_comment
+      last_description
+    end
+    end
+    Rake::Application.send :include, FixRakeLastComment
+    # Fix end
+
+A description on how to update from Rspec 2.99.0 can be found at [Rspec upgrade guide](https://relishapp.com/rspec/docs/upgrade).
+
+Now the update task runs and will ask whether to overwrite the old files with
+new files. With `d` we can diff the old and the new file. Here is how we process Secondhand.
 
 File                                    | Overwrite | After update action
 --------------------------------------- | --------- | -------------------
@@ -371,11 +383,11 @@ config/environment.rb                   | no        | no *
 config/secrets.yml                      | yes       | no *
 conifg/environments/development.rb      | no        | yes *
 config/environsments/production.rb      | no        | yes *
-config/environments/staging.rb          | no        | yes
+config/environments/staging.rb          | no        | no
 config/environments/test.rb             | no        | yes *
-config/environments/beta.rb             | no        | yes
+config/environments/beta.rb             | no        | no
 config/initializers/assets.rb           | no        | no *
-config/initializers/cookies_serializer.rb | yes       | no * 
+config/initializers/cookies\_serializer.rb | yes       | no * 
 config/initializers/inflections.rb      | no        | no *
 config/initializers/mime\_types.rb      | no        | no *
 config/initializers/secret\_token.rb    | yes       | no -
@@ -383,219 +395,191 @@ config/locales/en.yml                   | no        | no *
 bin/rails                               | yes       | no *
 bin/setup                               | create    | no *
 
-### config/routes.rb
-
-Rails 4.0.13                        | Rails 4.1.16
------------------------------------ | -----------------------------
-Secondhand::Application.routes.draw | Rails.application.routes.draw
-
-When done we can run `rspec` again and check whether routing errors occur. But
-we also can check the `rake routes` command whether it draws error messages.
-
-    $ rake routes
-
-### config/environment.rb
-
-Rails 4.0.13                        | Rails 4.1.16
------------------------------------ | -----------------------------
-Secondhand::Application.initialize! | Rails.application.initialize!
-Secondhand::Application.configure   | Rails.application.configure
-
 ### config/secrets.yml
 
 Change of the scret\_key\_base by rake rails:update
 
 ### config/environments/development.rb
 
-Rails 4.0.13                        | Rails 4.1.16
------------------------------------ | -----------------------------------------
-Secondhand::Application.configure   | Rails.application.configure
-                                    | config.assets.raise_runtime_errors = true
->                                   | config.assets.digest = true
-
-### config/environments/staging.rb
-
-Rails 4.0.13                        | Rails 4.1.16
------------------------------------ | -----------------------------------------
-Secondhand::Application.configure   | Rails.application.configure
+Rails 4.1.16                        | Rails 4.2.11.3
+----------------------------------- | ---------------------------------------
+                                    | config.assets.digest = true
 
 ### config/environments/production.rb
 
-Action      | Description
------------ | ------------------------------------------------
-deliveries  | config.action\_mailer.perform\_deliveries = true
-default URL | config.action\_mailer.default\_url\_options = \
-              { host: "syc.dyndns.org:8080" }
->           | config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
+Rails 4.1.16                          | Rails 4.2.11.3
+------------------------------------- | ------------------------------------------------
+config\_serve\_static\_assets = false | config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
+
 ### config/environments/test.rb
 
 Action      | Description
 ----------- | --------------------------------------------  
-default URL | config.action\_mailer.default\_url\_options = \
-            |   { host: "localhost:3000" }
-            | config.action\_controller.default\_url\_options = \
-            |   { host: "localhost:3000" }
->           | # Randomize the order test cases are executed.
+test\_order | # Randomize the order test cases are executed.
             | config.active_support.test_order = :random
 
 
 Rails 4.1.16                        | Rails 4.2.11.3
------------------------------------ | -----------------------------------------
+----------------------------------- | ------------------------------------
 config.serve\_static\_assets = true | config.serve\_static\_files   = true
 
-### config/environments/beta.rb
+## Run the specs
+When running the specs we get the information that we should add SQLITE3 into
+our Gemfile. Actually it is there. A duckduckgo search reports on an issue of
+Rails in combination with SQLITE3. What works ist SQLITE 1.3.6.
 
-Rails 4.0.13                        | Rails 4.1.16
------------------------------------ | -----------------------------------------
-Secondhand::Application.configure   | Rails.application.configure
+We clean up the gem SQLITE3 1.4. Then we add 'gem 'sqlite3', '~>1.3.6' and
+run 'bundle install'.
+
+Another run of 'rspec' shows that the issue is fixed but we get deprecation 
+warnings, failures and a problem with 'Selenium::WebDriver'. But first we 
+have a look at the deprecation warnings.
 
 ## Deprecation Warnings
-This section describes deprecation warnings after upgrading to Rails 4.1.16.
+This section describes deprecation warnings revealed by rspec after upgrading
+to Rails 4.2.11.3
 
-### 'last\_comment' is deprecated
-When running `rake routes` we get following deprecation warning
+### 'name\_routes.helpers'
+`named_routes.helpers` is deprecated, please use `route_defined?(route_name)`
+to see if a named route was defined.
 
-    [DEPRECATION] `last_comment` is deprecated.  Please use `last_description` 
-    instead.
+This is caused in combination with rails 4.2 and rspec 2.99.0 which doesn't go together. 
 
-without any hint which gem is sending the deprecation warning. Therefore we 
-grep into the gems directory of our current gemset which is `ruby-2.0.0-p648@rails4013`
+Action is to upgrade to rspec 3 as described in [Project: RSpec Rails 3.9](https://relishapp.com/rspec/rspec-rails/v/3-9/docs/upgrade)
 
-    $ grep -r "last_comment" ~/.rvm/gems/ruby20.0.-p648@rails4013/gems
+### '#deliver'
+`#deliver` is deprecated and will be removed in Rails 5. Use `#deliver_now`
 
-It reveals that the warning is coming from `Rake` version 11.3.0 but actually
-triggered by rspec calling `Rake.application.last_comment`. For the moment we
-don't upgrade rspec as we want to get our test passing and then coping with
-deprecation warnings.
+### URL Helpers
+Calling URL helpers with string keys controller, action is deprecated. Use 
+symbols instead.
 
-To update from Rspec 2.99.0 we follow the [Rspec upgrade guide](https://relishapp.com/rspec/docs/upgrade).
+There is one usage in the 'user\_show' view. For what ever reason I put 'params' in the 'register\_list\_user\_path(@user, params)' but it works just fine
+without 'params' as far as I can tell. Let's keep the change and observe it.
+
+### ActiveRecord::Base.find
+You are passing an instance of ActiveRecord::Base to `find`. Please pass the id of the object by calling `.id`.
 
 ## Check for required code changes
-This section describes the checks to do to disclose code that has to be changed
-due to changes in Rails 4.1.16
+This section describes the checks to do to disclose code that has to be 
+changed due to changes in Rails 4.2 according to 
+[rails guides](https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-4-1-to-rails-4-2)
+
+File         | Action
+------------ | ----------------------------------------
+Gemfile      | add web-console and run 'bundle install'
+ActionMailer | replace 'deliver' with 'deliver_now'
+
+There are more upgrade topics but not relevant for the Secondhand
+application.
 
 ## Error Messages
-In this section error message are discussed that have arisen after upgrading to
-Rails 4.1.
+In this section error message are discussed that have arisen after upgrading 
+to Rails 4.2.
 
 ### Fixing errors revealed by rspec runs
-When running rspec we get following 5 errors that worked with the previously 
-used Rails 4.0.13 version.
+When running rspec we get following 19 errors that worked with the previously
+used Rails 4.1.16 version.
 
-      1) User when password confirmation is nil should not be valid
-         Failure/Error: it {should_not be_valid}
-         expected #<User id: nil, first_name: "Example", last_name: "User", 
-         street: "Street 1", zip_code: "12345", town: "Town", 
-         country: "Country", phone: "1234 567890", email: "user@example.com",
-         password_digest: "$2a$04$MKAFoGLFe6BCExGSdpM/geuZnSaE.oWzUzbsItzIEJa.",
-         news: false, created_at: nil, updated_at: nil, remember_token: nil,
-         admin: false, auth_token: nil, password_reset_token: nil,
-         password_reset_sent_at: nil, preferred_language: nil, operator: false,
-         terms_of_use: nil> not to be valid
-         # ./spec/models/user_spec.rb:112:in `block (3 levels) in
-         <top (required)>'
+    1) List export to CSV should not have ';' in any field
+       Failure/Error: list.as_csv.split(';').size.should eq 16
+       ArgumentError:
+         unknown encoding name - u
+    2) User when password is not present should not be valid
+       Failure/Error: it {should_not be_valid}
+         expected #<User id: nil .....> not to be valid
 
-      2) event pages index with admin user signed in delete button should not
-         delete event with list register by a user
-         Failure/Error: expect { event_other.destroy }.to change(Event, :count)
-         .by(0)
-         ActiveRecord::RecordNotDestroyed:
-           ActiveRecord::RecordNotDestroyed
-         # ./spec/requests/event_pages_spec.rb:114:in `block (6 levels) in
-           <top (required)>'
-         # ./spec/requests/event_pages_spec.rb:114:in `block (5 levels) in
-           <top (required)>'
+    17) Newsletter create by admin user should show errors on unclomplete 
+        input
+        Failure/Error: page.all('input', visible: true).size.should eq 8
 
-      3) Newsletter create by admin user should show errors on unclomplete input
-         Failure/Error: page.all('input', visible: true).size.should eq 9
+           expected: 8
+                got: 9
 
-         expected: 9
-         got: 8
+           (compared using ==)
+    x1) Unable to find Mozilla geckodriver. Please download the server from 
+        [https://github.com/mozilla/geckodriver/releases](https://github.com/mozilla/geckodriver/releases) 
+        and place it somewhere on your PATH. More info at 
+        [https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette/WebDriver](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette/WebDriver).
 
-         (compared using ==)
-         # ./spec/requests/newsletter_pages_spec.rb:46:in `block (4 levels) in
-           <top (required)>'
+#### 1) List export to CSV should not have ';' in any field
+The CSV module changed the UTF-8 encoding name from 'u' to 'UTF-8'.
 
-      4) Role authentication as operator user in the acceptances controller
-          edit list
-         Failure/Error: before { visit edit_list_acceptance_path(list,
-             locale: :en) }
-         ActionController::InvalidCrossOriginRequest:
-         Security warning: an embedded <script> tag on another site requested
-         protected JavaScript. If you know what you're doing, go ahead and
-         disable forgery protection on this action to permit cross-origin
-         JavaScript embedding.
-         # ./spec/requests/role_authentication_spec.rb:131:in `block
-           (5 levels) in <top (required)>'
+#### 2) User when password is not present should not be valid
+With Rails 4.2 the validation of 'allow\_blank' now also includes empty
+strings, therefore the validation fails and hence the test. Changed the code
+from 'allow\_blank' to 'unless: -> { password.nil? || password.empty? }'
 
-      5) Role authentication as admin user in the acceptances controller edit
-         list
-         Failure/Error: before { visit edit_list_acceptance_path(list,
-             locale: :en) }
-         ActionController::InvalidCrossOriginRequest:
-         Security warning: an embedded <script> tag on another site requested
-         protected JavaScript. If you know what you're doing, go ahead and
-         disable forgery protection on this action to permit cross-origin
-         JavaScript embedding.
-         # ./spec/requests/role_authentication_spec.rb:246:in `block
-           (5 levels) in <top (required)>'
+#### 17) Newsletter create by admin user should show errors on unclomplete input
 
-#### 1) User when password confirmation is nil should not be valid
-After the upgrade `bcrypt` allows to update a user without setting the password
-confirmation. So the test has to be tested for truthy.
+#### x1) Selenium::WebDriver::Error::WebDriverError:
+RSpec comes up with following error message
 
-#### 2) event pages ... not delete event with list register by a user
-The test expects that the record is not deleted which actually is true.
+    Unable to find Mozilla geckodriver. Please download the server from
+    [https://github.com/mozilla/geckodriver/releases](https://github.com/mozilla/geckodriver/releases) 
+    and place it somewhere on your PATH. More info at 
+    [https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette/WebDriver](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette/WebDriver).
 
-    Failure/Error: expect { event_other.destroy }.to change(Event, :count).by(0)
+A step by step process is described in the [development-notes](development-notes.md]). A short summary follows.
 
-But the error `ActiveRecord::RecordNotDestroyed:` is thrown.
+* download as described the geckodriver for Firefox
+* copy the geckodriver to a directory
+* add the directory to the PATH environment variable
 
-To make the test pass change
+After having the geckodriver installed RSpec runs and starts the Selenium 
+webdriver. But the RSpec run reveals a deprecation warning of the Selenium
+webdriver and has two new error messages, in total now 3 with number 17) from
+above.
 
-          expect { event_other.destroy }.to_not change(Event :count).by(0)
+    3) Acceptances JavaScript with unsold items should delete an item
+        Failure/Error: page.should_not have_text item.description
+          expected #has_text?("Item of the list") to return false, got true
+        # ./spec/requests/acceptances_edit_spec.rb:202:in `block (4 levels) 
+        in <top (required)>'
+ 
+    4) Acceptances index page with active event with no sold items should 
+       show acceptance diaglog when scanning label
+        Failure/Error: page.current_path.should eq 
+        edit_acceptance_path(locale: :en, id: list)
+ 
+          expected: "/en/acceptances/1/edit"
+               got: "/en/acceptances"
+ 
+          (compared using ==)
+        # ./spec/requests/acceptances_index_spec.rb:114:in `block (4 levels)
+        in <top (required)>'
+ 
+    5) Newsletter create by admin user should show errors on unclomplete 
+       input
+        Failure/Error: page.all('input', visible: true).size.should eq 8
+ 
+          expected: 8
+               got: 9
+ 
+          (compared using ==)
+        # ./spec/requests/newsletter_pages_spec.rb:46:in `block (4 levels) in
+        <top (required)>
 
-to 
+    x2) WARN Selenium [DEPRECATION] 
+        Selenium::WebDriver::Error::UnhandledError is deprecated. Use 
+        Selenium::WebDriver::Error::UnknownError (ensure the driver supports
+        W3C WebDriver specification) instead.                                
+    x3) WARN Selenium [DEPRECATION] 
+        Selenium::WebDriver::Error::ElementNotVisibleError is deprecated. Use
+        Selenium::WebDriver::Error::ElementNotInteractableError (ensure the 
+        driver supports W3C WebDriver specification) instead. 
 
-          expect { event_other.destroy }
-                 .to raise_error(ActiveRecord::RecordNotDestroyed)
 
-#### 3) Newsletter create by admin user should show errors on unclomplete input
-After the upgrade Capybara finds 8 instead of previously 9 input fields with
+### 3) Acceptances JavaScript with unsold items should delete an item
+Running the spec individually it passes. Persumably previous tests have
+set a condition that interferes with the spec or maybe a timing issue.
 
-    page.all('input', visible: true).size
-
-After changing to 8
-
-    page.all('input', visible: true).size.should eq 8
-
-The tests pass. Actually there are only 6 visible input fields. So Capybara's 
-command is presumably not working reliably.
-
-#### 4), 5) ActionController::InvalidCrossOriginRequest
-[guides.rubyonrails.org](http://guides.rubyonrails.org/upgrading_ruby_on_rails.html#csrf-protection-from-remote-script-tags)
-explain the origin of the error. In Rails 4.1 CSRF protection now covers GET
-requests with JavaScript responses. The document states that we have to replace
-
-    get :index, format: :js
-
-with 
-
-    xhr :get, :index, format: :js
-
-in the tests. We have to change
-
-    before { visit edit_list_acceptance_path(list, locale: :en) }
-    it { page.current_path.should eq edit_list_acceptance_path(list, 
-                                                               locale: :en) }
-
-to
-
-    it "number" do
-      xhr :get,  edit_list_acceptance_path(list, locale: :en), format: :js 
-      expect(page.status_code).to be(200)
-    end
-
+### x2)/x3) WARN Selenium [DEPRECATION]
+The deprecation warning is probably from the RSpec version. Let's update
+RSpec first before we proceede. The upgrade process can be found 
+[Rspec upgrade guide](https://relishapp.com/rspec/docs/upgrade)
+ 
+------------------old stuff-------------
 ## Runtime Errors
 Runtime errors after upgrading to Rails 4.1.16.
 

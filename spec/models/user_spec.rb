@@ -86,7 +86,11 @@ subject {@user}
     before {@user.password = @user.password_confirmation = " "}
     it {should_not be_valid}
   end
-
+  describe "when password is empty" do
+    before {@user.password.clear; @user.password_confirmation.clear}
+    it {should be_valid}
+  end
+  
   describe "when email format is invalid" do
     it "should be invalid" do
       addresses = %w{user@foo,com user_at_foo.org example.user@foo. foo@bar_baz.com foo@bar+baz.com}

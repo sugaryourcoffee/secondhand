@@ -330,12 +330,44 @@ A better solution can be found at [blog.pixera.com](http://blog.pixarea.com/2013
 
 Here is the main extract
 
-Create a new file `spec/helpers/env.helper` and add following lines
+Create a new file `spec/support/env.helper` and add following lines
 
     Capybara.register_driver :selenium do |app|
       require 'selenium/webdriver'
       Selenium::WebDriver::Firefox::Binary.path = "/opt/firefox-47.0.1/firefox"
       Capybara::Selenium::Driver.new(app, browser: :firefox)
     end
+
+Selenium WebDriver with GeckoDriver
+===================================
+Selenium-WebDriver, at least version 3.142.7 requires Mozilla geckodriver
+together with Firefox. Description of the driver requirements with the 
+different web browser can be found at [Selenium](https://www.selenium.dev/documentation/en/webdriver/driver_requirements/).
+
+We need to download the geckodriver from [https://github.com/mozilla/geckodriver/releases](https://github.com/mozilla/geckodriver/releases).
+
+At the time of this writing I downloaded the version 0.27.0 in a tar-file
+_geckodriver-v0.27.0-linux64.tar.gz_.
+
+Create a directory 'sudo mkdir /opt/geckodriver/version-0.27.0/' where the
+version should be the version of the actual downloaded file.
+
+Copy the tar-file to the newly created geckodriver directory with
+'sudo mv geckodriver-v0.27.0-linux64.tar.gz /opt/geckodriver/'
+
+Change into director /opt/geckodriver if not yet done and untar the file into
+/opt/geckodriver/version-0.27.0/ 
+'tar xf geckodriver-v0.27.0-linux64.tar.gz -C version-0.27.0'
+
+To check that the geckodriver is working, start it
+
+    : cd version-0.27.0
+    : ./geckodriver
+
+It should show something like
+
+    1596970402693   geckodriver     INFO    Listening on 127.0.0.1:4444
+
+Finally add the geckodriver to the path so selenium-webdriver can find it
 
 
