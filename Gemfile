@@ -3,8 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.11.3'
 gem 'bootstrap-sass', '~> 2.3.1.0'
 gem 'faker', '~> 1.5.0'
-gem 'will_paginate', '~> 3.0.7'
-gem 'bootstrap-will_paginate', '~> 0.0.10'
+gem 'will_paginate', '~> 3.3.0'
+gem 'bootstrap-will_paginate', '~> 1.0.0'
 gem 'prawn', '~> 1.3.0'
 gem 'prawn-table', '~> 0.2.2'
 gem 'syc-barcode', '~> 0.0.3'
@@ -20,16 +20,18 @@ gem 'jquery-turbolinks'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+group :development, :test do
+  gem 'sqlite3', '~> 1.3.6'
+  gem 'rspec-rails', '~> 2.99.0'
+ end
 
 group :development do
-  gem 'sqlite3'
-  gem 'rspec-rails', '~> 2.99.0'
   gem 'guard-rspec', '~> 4.6'
   gem 'annotate', '~> 2.5.0'
+  gem 'web-console', '~> 2.0'
 end
 
 group :test do
-  gem 'rspec-rails', '~> 2.99.0'
   gem 'guard-spork', '~> 2.1'
   gem 'spork', '~> 0.9'
   gem 'capybara', '~> 2.1.0'
