@@ -219,7 +219,7 @@ class List < ActiveRecord::Base
 
   def as_csv
     (data = "").tap do
-      CSV.generate(data, encoding: 'u', col_sep: ';') do |csv|
+      CSV.generate(data, encoding: 'UTF-8', col_sep: ';') do |csv|
         to_csv(csv)
       end
     end
@@ -227,7 +227,7 @@ class List < ActiveRecord::Base
 
   def as_csv_file
     csv_file = "tmp/#{sprintf("%03d", list_number)}.csv"
-    CSV.open(csv_file, 'w', encoding: 'u', col_sep: ';') do |csv|
+    CSV.open(csv_file, 'w', encoding: 'UTF-8', col_sep: ';') do |csv|
       to_csv(csv)
     end
     csv_file
