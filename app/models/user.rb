@@ -30,10 +30,13 @@ class User < ActiveRecord::Base
   
   EMAIL_PATTERN = /\A[\w!#\$%&'*+\/=?`{|}~^-]+(?:\.[\w!#\$%&'*+\/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}\Z/
 
-  validates :email, presence: true, format: {with: EMAIL_PATTERN}, 
-            uniqueness: {case_sensitive: false}
+  validates :email, presence: true, 
+                    format: {with: EMAIL_PATTERN}, 
+                    uniqueness: {case_sensitive: false}
 
-  validates :password, presence: true, length: {minimum: 6}, allow_blank: true
+  validates :password, presence: true, 
+                       length: {minimum: 6}, 
+                       unless: -> { password.nil? || password.empty? }
 
   validates :privacy_statement, inclusion: { in: [ true ] }, if: :active?
 
@@ -50,7 +53,7 @@ class User < ActiveRecord::Base
     self.password_confirmation = :password_reset_token
     self.privacy_statement = true
     save!
-    UserMailer.password_reset(self).deliver
+    UserMailer.password_reset(self).deliver_now
   end
 
   def generate_token(column)

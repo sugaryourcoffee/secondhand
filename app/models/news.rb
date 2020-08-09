@@ -41,7 +41,7 @@ class News < ActiveRecord::Base
       if sent_on_changed?
         LANGUAGES.each do |name, code|
           Newsletter.publish(self.news_translation(code), 
-                             User.subscribers(code)).deliver
+                             User.subscribers(code)).deliver_now
         end
       else
         self.sent_on = nil

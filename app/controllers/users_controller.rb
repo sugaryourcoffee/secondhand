@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       sign_in @user
-      UserMailer.registered(@user).deliver
+      UserMailer.registered(@user).deliver_now
       flash[:success] = I18n.t('.welcome')
       redirect_to @user
     else
@@ -90,7 +90,7 @@ class UsersController < ApplicationController
       else
         list.user_id = user.id
         list.save
-        UserMailer.list_registered(user, list).deliver
+        UserMailer.list_registered(user, list).deliver_now
         flash[:success] = I18n.t('.registered', 
                                  model: t('activerecord.models.list'))
       end
@@ -112,7 +112,7 @@ class UsersController < ApplicationController
       list.sent_on = nil
       list.items.destroy_all
       if list.save
-        UserMailer.list_deregistered(user, list).deliver
+        UserMailer.list_deregistered(user, list).deliver_now
         flash[:success] = I18n.t('.deregistered',
                                  model: t('activerecord.models.list'))
       else

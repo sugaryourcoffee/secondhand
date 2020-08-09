@@ -34,7 +34,7 @@ class StaticPagesController < ApplicationController
     unless @message.valid?
       render 'contact'
     else
-      UserMailer.user_request(@message).deliver
+      UserMailer.user_request(@message).deliver_now
       redirect_to root_path, notice: I18n.t('.contact_success') 
     end
   end

@@ -298,7 +298,7 @@ class ListsController < ApplicationController
     end
 
     def send_and_mark_list_as_sent
-      ListNotifier.received(@list).deliver
+      ListNotifier.received(@list).deliver_now
       @list.sent_on = Time.now
 #      if @list.save
 #        redirect_to @user, notice: notice('.send_list') #I18n.t('.send_list')
