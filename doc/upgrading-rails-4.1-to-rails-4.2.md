@@ -579,6 +579,8 @@ The deprecation warning is probably from the RSpec version. Let's update
 RSpec first before we proceede. The upgrade process can be found 
 [Rspec upgrade guide](https://relishapp.com/rspec/docs/upgrade)
  
+    > gem install transpec
+
 ------------------old stuff-------------
 ## Runtime Errors
 Runtime errors after upgrading to Rails 4.1.16.
