@@ -27,8 +27,8 @@ describe "Query" do
         it "should show all items containing the string" do
           fill_in "keywords", with: "One"
           click_button "Search"
-          page.should have_text "One"
-          page.should have_text "One Word"
+          expect(page).to have_text "One"
+          expect(page).to have_text "One Word"
         end
       end
 
@@ -39,7 +39,7 @@ describe "Query" do
         end
 
         it "should return to root path" do
-          page.current_path.should eq root_path(locale: :en)
+          expect(page.current_path).to eq root_path(locale: :en)
         end
       end
 
@@ -55,7 +55,7 @@ describe "Query" do
     end
 
     it "should indicate no active event" do
-      page.should have_text "Missing active Event"
+      expect(page).to have_text "Missing active Event"
     end
 
   end

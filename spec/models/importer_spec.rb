@@ -42,30 +42,30 @@ describe Importer do
   end
 
   it "should respond to row size" do
-    @importer.row_count.should eq 3
+    expect(@importer.row_count).to eq 3
   end
 
   it "should respond to column size" do
-    @importer.col_count.should eq @col_count
+    expect(@importer.col_count).to eq @col_count
   end
 
   it "should have header data" do
-    @importer.header.should eq @header
+    expect(@importer.header).to eq @header
   end
 
   it "should respond to item" do
-    @importer.rows.first.item.should eq "1"
+    expect(@importer.rows.first.item).to eq "1"
   end
 
   it "should respond to description" do 
-    @importer.rows.first.description.should eq "One"
+    expect(@importer.rows.first.description).to eq "One"
   end
 
   it "should respond to size" do
-    @importer.rows.first.size.should eq "1"
+    expect(@importer.rows.first.size).to eq "1"
   end
 
   it "should respond to price" do
-    @importer.rows.first.price.should eq "1.0"
+    expect(@importer.rows.first.price).to eq "1.0"
   end
 end

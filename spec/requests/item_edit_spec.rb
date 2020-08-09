@@ -13,22 +13,22 @@ describe 'Edit item' do
     end
 
     it "should not be updated when in accepted list" do
-      list.accepted?.should be_truthy
+      expect(list.accepted?).to be_truthy
       item = list.items.first
       item.price = 123.5
       item.save
-      item.errors.any?.should be_truthy
+      expect(item.errors.any?).to be_truthy
     end
 
     it "should not be updated when in cart" do
       cart = Cart.create!
       item = list.items.first
       line_item = cart.add(item)
-      line_item.should_not be_nil
+      expect(line_item).not_to be_nil
       expect { line_item.save }.to change(LineItem, :count).by(1)
       item.price = 432.50
       item.save
-      item.errors.any?.should be_truthy
+      expect(item.errors.any?).to be_truthy
     end
   end
 
@@ -39,7 +39,7 @@ describe 'Edit item' do
       item = selling.line_items.first.item
       item.price = 333.5
       item.save
-      item.errors.any?.should be_truthy
+      expect(item.errors.any?).to be_truthy
     end
   end
 
@@ -49,11 +49,11 @@ describe 'Edit item' do
 
     it "should be updated when redeemed" do
       item = selling.line_items.first.item
-      item.should eq reversal.line_items.first.item
+      expect(item).to eq reversal.line_items.first.item
       revoke_acceptance(item.list) 
       item.price = 444.5
       item.save
-      item.errors.any?.should be_falsey
+      expect(item.errors.any?).to be_falsey
     end
   end
 

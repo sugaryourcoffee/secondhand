@@ -12,22 +12,22 @@ describe "Reversals index page" do
   end
 
   it "should have title Reversals" do
-    page.should have_title 'Redemptions'
+    expect(page).to have_title 'Redemptions'
   end
 
   it "should have heading Reversals" do
-    page.should have_selector 'h1', 'Redemptions'
+    expect(page).to have_selector 'h1', 'Redemptions'
   end
 
   describe "with no active event" do
     let(:event)     { FactoryGirl.create(:event) }
 
     it "should show a warning about no active event" do
-      page.should have_text 'Missing active Event'
+      expect(page).to have_text 'Missing active Event'
     end
 
     it "should forward to events page to activate an event" do
-      page.should have_link 'Events'
+      expect(page).to have_link 'Events'
     end
   end
 
@@ -44,45 +44,45 @@ describe "Reversals index page" do
 
     it "should show reversal statistics" do
       total = reversal1.total + reversal2.total
-      page.should have_text 'Redemption Status'
-      page.should have_text 'Redemptions'
-      page.should have_text '2'
-      page.should have_text 'Items'
-      page.should have_text '3'
-      page.should have_text 'Total'
-      page.should have_text total.to_s
+      expect(page).to have_text 'Redemption Status'
+      expect(page).to have_text 'Redemptions'
+      expect(page).to have_text '2'
+      expect(page).to have_text 'Items'
+      expect(page).to have_text '3'
+      expect(page).to have_text 'Total'
+      expect(page).to have_text total.to_s
     end
 
     it "should show available reversals" do
-      page.should have_text 'Number'
-      page.should have_text 'Items'
-      page.should have_text 'Redemption'
-      page.should have_text reversal1.id
-      page.should have_text reversal1.line_items.count
-      page.should have_text reversal1.total
-      page.should have_link "show_reversal_#{reversal1.id}"
-      page.should have_link "print_reversal_#{reversal1.id}"
-      page.should have_text reversal2.id
-      page.should have_text reversal2.line_items.count
-      page.should have_text reversal2.total
-      page.should have_link "show_reversal_#{reversal2.id}"
-      page.should have_link "print_reversal_#{reversal2.id}"
+      expect(page).to have_text 'Number'
+      expect(page).to have_text 'Items'
+      expect(page).to have_text 'Redemption'
+      expect(page).to have_text reversal1.id
+      expect(page).to have_text reversal1.line_items.count
+      expect(page).to have_text reversal1.total
+      expect(page).to have_link "show_reversal_#{reversal1.id}"
+      expect(page).to have_link "print_reversal_#{reversal1.id}"
+      expect(page).to have_text reversal2.id
+      expect(page).to have_text reversal2.line_items.count
+      expect(page).to have_text reversal2.total
+      expect(page).to have_link "show_reversal_#{reversal2.id}"
+      expect(page).to have_link "print_reversal_#{reversal2.id}"
     end
 
     it "should forward to reversal show page" do
       click_link "show_reversal_#{reversal1.id}"
-      page.current_path.should eq reversal_path(locale: :en, id: reversal1.id)
+      expect(page.current_path).to eq reversal_path(locale: :en, id: reversal1.id)
     end
 
     it "should forward to reversal show page through find" do
       fill_in 'Redemption', with: reversal1.id
       click_button "Search"
-      page.current_path.should eq reversal_path(locale: :en, id: reversal1.id)
+      expect(page.current_path).to eq reversal_path(locale: :en, id: reversal1.id)
     end
 
     it "should print a reversal" do
       click_link "print_reversal_#{reversal2.id}"
-      page.should have_text "Printed redemption #{reversal2.id}"
+      expect(page).to have_text "Printed redemption #{reversal2.id}"
     end
 
     it "should not delete a reversal with items", :js => true do
@@ -90,12 +90,12 @@ describe "Reversals index page" do
       modal = page.driver.browser.switch_to.alert
       modal.accept
 
-      page.current_path.should eq reversals_path(locale: :en)
+      expect(page.current_path).to eq reversals_path(locale: :en)
 
-      page.should have_text reversal1.id
-      page.should have_text reversal1.total
+      expect(page).to have_text reversal1.id
+      expect(page).to have_text reversal1.total
 
-      page.should have_text "Cannot delete redemption when containing items"
+      expect(page).to have_text "Cannot delete redemption when containing items"
     end
   end
 

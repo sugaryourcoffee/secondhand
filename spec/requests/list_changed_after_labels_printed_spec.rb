@@ -17,7 +17,7 @@ describe "List change" do
       visit user_path(locale: :en, id: user)
       click_link "Labels"
       visit edit_acceptance_path(locale: :en, id: list)
-      page.should_not have_text ">>>"
+      expect(page).not_to have_text ">>>"
     end
   end
 
@@ -25,7 +25,7 @@ describe "List change" do
     it "should not indicate item changed" do
       list.update(sent_on: Time.now)
       visit edit_acceptance_path(locale: :en, id: list)
-      page.should_not have_text ">>>"
+      expect(page).not_to have_text ">>>"
     end
   end
 
@@ -35,7 +35,7 @@ describe "List change" do
       click_link "Labels"
       list.items.first.update(price: 1000)
       visit edit_acceptance_path(locale: :en, id: list)
-      page.should have_text ">>>"
+      expect(page).to have_text ">>>"
     end
   end
 
@@ -44,7 +44,7 @@ describe "List change" do
       list.update(sent_on: Time.now)
       list.items.first.update(price: 1000)
       visit edit_acceptance_path(locale: :en, id: list)
-      page.should have_text ">>>"
+      expect(page).to have_text ">>>"
     end 
   end
 

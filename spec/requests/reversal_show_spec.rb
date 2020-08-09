@@ -16,36 +16,36 @@ describe "Reversal show page" do
   end
 
   it "should have title 'Reversal'" do
-    page.should have_title 'Redemption'
+    expect(page).to have_title 'Redemption'
   end
 
   it "should have headline 'Reversal #'" do
-    page.should have_selector 'h1', "Redemption #{selling.id}"
+    expect(page).to have_selector 'h1', "Redemption #{selling.id}"
   end
 
   it "should have information about the reversal" do
-    page.should have_text "Redemption Status"
-    page.should have_text "Item count"
-    page.should have_text reversal.line_items.count
-    page.should have_text "Total"
-    page.should have_text reversal.total
+    expect(page).to have_text "Redemption Status"
+    expect(page).to have_text "Item count"
+    expect(page).to have_text reversal.line_items.count
+    expect(page).to have_text "Total"
+    expect(page).to have_text reversal.total
   end
 
   it "should have a button to forward to reversal index page" do
-    page.should have_link "Back to Redemptions"
+    expect(page).to have_link "Back to Redemptions"
   end
 
   it "should show the items" do
-    page.should have_text "Item"
-    page.should have_text "Selling"
-    page.should have_text "Description"
-    page.should have_text "Size"
-    page.should have_text "Price"
-    page.should have_text list_item_number_for(reversal.line_items.first.item)
-    page.should have_text reversal.line_items.first.selling.id
-    page.should have_text reversal.line_items.first.description
-    page.should have_text reversal.line_items.first.size
-    page.should have_text reversal.line_items.first.price
+    expect(page).to have_text "Item"
+    expect(page).to have_text "Selling"
+    expect(page).to have_text "Description"
+    expect(page).to have_text "Size"
+    expect(page).to have_text "Price"
+    expect(page).to have_text list_item_number_for(reversal.line_items.first.item)
+    expect(page).to have_text reversal.line_items.first.selling.id
+    expect(page).to have_text reversal.line_items.first.description
+    expect(page).to have_text reversal.line_items.first.size
+    expect(page).to have_text reversal.line_items.first.price
   end
 
 end

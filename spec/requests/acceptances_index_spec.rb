@@ -20,19 +20,19 @@ describe "Acceptances index page" do
     end
 
     it "should have title Acceptance" do
-      page.should have_title "Acceptance"
+      expect(page).to have_title "Acceptance"
     end
 
     it "should have selector Acceptance" do
-      page.should have_selector('h1', text: 'Acceptance')
+      expect(page).to have_selector('h1', text: 'Acceptance')
     end
 
     it "should have warning about no active event" do
-      page.should have_text "For list acceptance it is neccessary to have an \
+      expect(page).to have_text "For list acceptance it is neccessary to have an \
       active event"
-      page.should have_link "activate_event"
+      expect(page).to have_link "activate_event"
       click_link "activate_event"
-      current_path.should eq events_path(locale: :en)
+      expect(current_path).to eq events_path(locale: :en)
     end
   end
 
@@ -47,111 +47,111 @@ describe "Acceptances index page" do
       end
 
       it "should have title Acceptance" do
-        page.should have_title "Acceptance"
+        expect(page).to have_title "Acceptance"
       end
 
       it "should have selector Acceptance" do
-        page.should have_selector('h1', text: 'Acceptance')
+        expect(page).to have_selector('h1', text: 'Acceptance')
       end
 
       it "should have status" do
-        page.should have_text "List Acceptance Status"
-        page.should have_link "Accepted"
-        page.should have_link "Not accepted"
-        page.should have_link "Registered"
-        page.should have_link "Not registered"
-        page.should have_link "Total"
+        expect(page).to have_text "List Acceptance Status"
+        expect(page).to have_link "Accepted"
+        expect(page).to have_link "Not accepted"
+        expect(page).to have_link "Registered"
+        expect(page).to have_link "Not registered"
+        expect(page).to have_link "Total"
       end
 
       it "should show not accepted lists per default" do
-        page.should have_text list.list_number
-        page.should have_text user_for(list)
+        expect(page).to have_text list.list_number
+        expect(page).to have_text user_for(list)
         
-        page.should have_link "Acceptance Dialog"
+        expect(page).to have_link "Acceptance Dialog"
       end
 
       it "should filter not accepted lists" do
         click_link "Not accepted"
-        page.should have_text list.list_number
-        page.should have_text user_for(list)
+        expect(page).to have_text list.list_number
+        expect(page).to have_text user_for(list)
         
-        page.should have_link "Acceptance Dialog"
+        expect(page).to have_link "Acceptance Dialog"
       end
 
       it "should filter accepted lists" do
         click_link "Accepted"
-        page.should have_text accepted_list.list_number
-        page.should have_text user_for(accepted_list)
+        expect(page).to have_text accepted_list.list_number
+        expect(page).to have_text user_for(accepted_list)
         
-        page.should have_button "Revoke Acceptance"
+        expect(page).to have_button "Revoke Acceptance"
       end
 
       it "should filter all lists" do
         click_link "Total"
-        page.should have_text accepted_list.list_number
-        page.should have_text user_for(accepted_list)
-        page.should have_text list.list_number
-        page.should have_text user_for(list)
+        expect(page).to have_text accepted_list.list_number
+        expect(page).to have_text user_for(accepted_list)
+        expect(page).to have_text list.list_number
+        expect(page).to have_text user_for(list)
         
-        page.should have_button "Revoke Acceptance"
-        page.should have_link   "Acceptance Dialog"
+        expect(page).to have_button "Revoke Acceptance"
+        expect(page).to have_link   "Acceptance Dialog"
       end
 
       it "should show the acceptance dialog when clicking on 'Acceptance Dialog'"     do
         click_link "Acceptance Dialog"
-        page.current_path.should eq edit_acceptance_path(locale: :en, id: list)
+        expect(page.current_path).to eq edit_acceptance_path(locale: :en, id: list)
       end
 
       it "should show acceptance dialog when searching for a registered list" do
         fill_in "List", with: list.list_number
         click_button "Search"
-        page.current_path.should eq edit_acceptance_path(locale: :en, id: list)
+        expect(page.current_path).to eq edit_acceptance_path(locale: :en, id: list)
       end
 
       it "should show acceptance diaglog when scanning label", js: true do
         list.items.create!(item_attributes)
         fill_in "List", with: barcode_encoding_for(list, list.items.first)
-        page.current_path.should eq edit_acceptance_path(locale: :en, id: list)
+        expect(page.current_path).to eq edit_acceptance_path(locale: :en, id: list)
       end
 
       it "should show acceptance dialog when searching for an accepted list" do
         fill_in "List", with: accepted_list.list_number
         click_button "Search"
-        page.current_path.should eq edit_acceptance_path(locale: :en, 
+        expect(page.current_path).to eq edit_acceptance_path(locale: :en, 
                                                          id: accepted_list)
       end
 
       it "should show warning when searching for a not registered list" do
         fill_in "List", with: unregistered_list.list_number
         click_button "Search"
-        page.current_path.should eq acceptances_path(locale: :en)
-        page.should have_text "Not Accepted Lists"
-        page.should have_text "List #{unregistered_list.list_number} \
+        expect(page.current_path).to eq acceptances_path(locale: :en)
+        expect(page).to have_text "Not Accepted Lists"
+        expect(page).to have_text "List #{unregistered_list.list_number} \
         is not registered."
       end
 
       it "should show warning when searching for a not existing list" do
         fill_in "List", with: "123454321"
         click_button "Search"
-        page.current_path.should eq acceptances_path(locale: :en)
-        page.should have_text "Not Accepted Lists"
-        page.should have_text "List #{123454321} doesn't exist!"
+        expect(page.current_path).to eq acceptances_path(locale: :en)
+        expect(page).to have_text "Not Accepted Lists"
+        expect(page).to have_text "List #{123454321} doesn't exist!"
       end
 
       it "should revoke acceptance of an accepted list when clicking on \
       'Revoke Acceptance'" do
         click_link "Accepted"
 
-        page.should have_text accepted_list.list_number
-        page.should have_text user_for(accepted_list)
+        expect(page).to have_text accepted_list.list_number
+        expect(page).to have_text user_for(accepted_list)
 
-        accepted_list.accepted_on.should_not be_nil
+        expect(accepted_list.accepted_on).not_to be_nil
 
         click_button "Revoke Acceptance"
 
-        accepted_list.reload.accepted_on.should be_nil
+        expect(accepted_list.reload.accepted_on).to be_nil
 
-        page.current_path.should eq edit_acceptance_path(locale: :en, 
+        expect(page.current_path).to eq edit_acceptance_path(locale: :en, 
                                                          id: accepted_list)
       end
 
@@ -170,7 +170,7 @@ describe "Acceptances index page" do
         end
 
         it "should show revoke acceptance button" do
-          page.should have_button "Revoke Acceptance"          
+          expect(page).to have_button "Revoke Acceptance"          
         end
 
       end
@@ -184,7 +184,7 @@ describe "Acceptances index page" do
         end
 
         it "shouldn't show revoke acceptance button" do
-          page.should_not have_button "Revoke Acceptance"
+          expect(page).not_to have_button "Revoke Acceptance"
         end
 
       end

@@ -14,37 +14,37 @@ describe "Selling finish page" do
   end
 
   it "should have title 'Selling #'" do
-    page.should have_title "Selling #{selling.id}"
+    expect(page).to have_title "Selling #{selling.id}"
   end
 
   it "should have heading 'Selling #'" do
-    page.should have_selector 'h1', "Selling #{selling.id}"
+    expect(page).to have_selector 'h1', "Selling #{selling.id}"
   end
 
   it "should have information about the selling" do
-    page.should have_text 'Selling'
-    page.should have_text selling.id
-    page.should have_text 'Total'
-    page.should have_text selling.total
+    expect(page).to have_text 'Selling'
+    expect(page).to have_text selling.id
+    expect(page).to have_text 'Total'
+    expect(page).to have_text selling.total
   end
 
   it "should have a 'Start new selling' button" do
     click_link 'Start new selling'
-    page.current_path.should eq item_collection_carts_path(locale: :en)
+    expect(page.current_path).to eq item_collection_carts_path(locale: :en)
   end
 
   it "should have a 'Start redemption' link" do
     click_link 'Start redemption'
-    page.current_path.should eq line_item_collection_carts_path(locale: :en)
+    expect(page.current_path).to eq line_item_collection_carts_path(locale: :en)
   end
 
   it "should have a 'Go to counter' link" do
     click_link 'Go to counter'
-    page.current_path.should eq counter_index_path(locale: :en)
+    expect(page.current_path).to eq counter_index_path(locale: :en)
   end
 
   it "should not have a 'To selling overview' link" do
-    page.should_not have_link 'Go to selling overview'
+    expect(page).not_to have_link 'Go to selling overview'
   end
 
 end

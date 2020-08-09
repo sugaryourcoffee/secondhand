@@ -7,12 +7,12 @@ describe "Static pages" do
   describe "Home page" do
     it "should have the h1 'Secondhand'" do
       visit root_path(locale: :en)
-      page.should have_selector('h1', :text => 'Secondhand')
+      expect(page).to have_selector('h1', :text => 'Secondhand')
     end
 
     it "should have the title 'Home'" do
       visit root_path(locale: :en)
-      page.should have_title("#{base_title} | Home")
+      expect(page).to have_title("#{base_title} | Home")
     end
 
     it "should have version number" do
@@ -24,36 +24,36 @@ describe "Static pages" do
   describe "Help page" do
     it "should have the h1 'Help'" do
       visit help_path(locale: :en)
-      page.should have_selector('h1', :text => 'Help')
+      expect(page).to have_selector('h1', :text => 'Help')
     end
 
     it "should have the title 'Help'" do
       visit help_path(locale: :en)
-      page.should have_title("#{base_title} | Help")
+      expect(page).to have_title("#{base_title} | Help")
     end
   end
 
   describe "About page" do
     it "should have the h1 'About Us'" do
       visit about_path(locale: :en)
-      page.should have_selector('h1', :text => 'About Us')
+      expect(page).to have_selector('h1', :text => 'About Us')
     end
 
     it "should have the title 'About Us'" do
       visit about_path(locale: :en)
-      page.should have_title("#{base_title} | About Us")
+      expect(page).to have_title("#{base_title} | About Us")
     end
   end
 
   describe "Contact page" do
     it "should have the h1 'Contact'" do
       visit contact_path(locale: :en)
-      page.should have_selector('h1', :text => 'Contact')
+      expect(page).to have_selector('h1', :text => 'Contact')
     end
 
     it "should have the title 'Contact'" do
       visit contact_path(locale: :en)
-      page.should have_title("#{base_title} | Contact")
+      expect(page).to have_title("#{base_title} | Contact")
     end
   end
 end

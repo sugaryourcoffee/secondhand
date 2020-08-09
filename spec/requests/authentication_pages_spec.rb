@@ -5,8 +5,8 @@ describe "Authentication" do
   describe "signin page" do
     before { visit signin_path(locale: :en) }
       
-    it { should have_selector('h1', text: 'Sign in') }
-    it { should have_title('Sign in') } 
+    it { is_expected.to have_selector('h1', text: 'Sign in') }
+    it { is_expected.to have_title('Sign in') } 
   end
 
   describe "signin" do
@@ -15,12 +15,12 @@ describe "Authentication" do
     describe "with invalid information" do
       before { click_button "Sign in" }
 
-      it { should have_title('Sign in') }
-      it { should have_error_message('Invalid') }
+      it { is_expected.to have_title('Sign in') }
+      it { is_expected.to have_error_message('Invalid') }
 
       describe "after visiting another page" do
         before { click_link "Home" }
-        it { should_not have_selector('div.alert.alert-error') }
+        it { is_expected.not_to have_selector('div.alert.alert-error') }
       end
     end
 
@@ -28,18 +28,18 @@ describe "Authentication" do
       let(:user) { FactoryGirl.create(:user) }
       before { sign_in(user) }
       
-      it { should have_title("#{user.last_name}, #{user.first_name}") }
-      it { should_not have_link('Events', href: events_path(locale: :en)) }
-      it { should_not have_link('Lists', href: lists_path(locale: :en)) }
-      it { should_not have_link('Users', href: users_path(locale: :en)) }
-      it { should have_link('My Lists', href: user_path(user, locale: :en)) }
-      it { should have_link('Settings', href: edit_user_path(user, locale: :en)) }
-      it { should have_link('Sign out', href: signout_path(locale: :en)) }
-      it { should_not have_link('Sign in', href: signin_path(locale: :en)) }
+      it { is_expected.to have_title("#{user.last_name}, #{user.first_name}") }
+      it { is_expected.not_to have_link('Events', href: events_path(locale: :en)) }
+      it { is_expected.not_to have_link('Lists', href: lists_path(locale: :en)) }
+      it { is_expected.not_to have_link('Users', href: users_path(locale: :en)) }
+      it { is_expected.to have_link('My Lists', href: user_path(user, locale: :en)) }
+      it { is_expected.to have_link('Settings', href: edit_user_path(user, locale: :en)) }
+      it { is_expected.to have_link('Sign out', href: signout_path(locale: :en)) }
+      it { is_expected.not_to have_link('Sign in', href: signin_path(locale: :en)) }
 
       describe "followed by signout" do
         before { click_link 'Sign out' }
-        it { should have_link('Sign in') }
+        it { is_expected.to have_link('Sign in') }
       end
     end
   end
@@ -60,7 +60,7 @@ describe "Authentication" do
         describe "after signing in" do
 
           it "should render the desired protected page" do
-            page.should have_title('Edit user')
+            expect(page).to have_title('Edit user')
           end
         end
       end
@@ -69,17 +69,17 @@ describe "Authentication" do
 
         describe "visiting the edit page" do
           before { visit edit_user_path(user, locale: :en) }
-          it { should have_title('Sign in') }
+          it { is_expected.to have_title('Sign in') }
         end
 
         describe "submitting to the update action" do
           before { put user_path(user, locale: :en) }
-          specify { response.should redirect_to(signin_path(locale: :en)) }
+          specify { expect(response).to redirect_to(signin_path(locale: :en)) }
         end
 
         describe "visiting the user index" do
           before { visit users_path(locale: :en) }
-          it { should have_title('Sign in') }
+          it { is_expected.to have_title('Sign in') }
         end
       end
 
@@ -92,12 +92,12 @@ describe "Authentication" do
 
         describe "visiting Users#edit page" do
           before { visit edit_user_path(wrong_user, locale: :en) }
-          it { should_not have_title(full_title('Edit user')) }
+          it { is_expected.not_to have_title(full_title('Edit user')) }
         end
 
         describe "submitting a PUT request to the Users#update action" do
           before { put user_path(wrong_user, locale: :en) }
-          specify { response.should redirect_to(root_path(locale: :en)) }
+          specify { expect(response).to redirect_to(root_path(locale: :en)) }
         end
       end
 
@@ -109,7 +109,7 @@ describe "Authentication" do
 
         describe "submitting a DELETE request to the Users#destroy action" do
           before { delete user_path(user, locale: :en) }
-          specify { response.should redirect_to(root_path(locale: :en)) }
+          specify { expect(response).to redirect_to(root_path(locale: :en)) }
         end
       end
     end

@@ -24,8 +24,8 @@ describe "Import lists" do
 
     it "should not redirect to root path" do
       visit list_select_lists_path(locale: :en, list_id: list.id)
-      page.current_path.should eq root_path(locale: :en)
-      page.should have_text "The requested operation is not available!"
+      expect(page.current_path).to eq root_path(locale: :en)
+      expect(page).to have_text "The requested operation is not available!"
     end
 
   end
@@ -36,8 +36,8 @@ describe "Import lists" do
 
     it "should not allow to select lists to import" do
       visit list_select_lists_path(locale: :en, list_id: list.id)
-      page.current_path.should eq root_path(locale: :en)
-      page.should have_text "The requested operation is not available!"
+      expect(page.current_path).to eq root_path(locale: :en)
+      expect(page).to have_text "The requested operation is not available!"
     end
 
     it "should not allow to select items to import" do
@@ -70,31 +70,31 @@ describe "Import lists" do
     end
 
     it "should have title 'Import items from lists'" do
-      page.should have_title("Select Import Lists")
+      expect(page).to have_title("Select Import Lists")
     end
 
     it "should have drop down list with all user's old lists" do
       date = "#{old_event.event_date.month}/#{old_event.event_date.year}"
-      page.should have_text "#{old_event.title} (#{date}) - List #{list1.list_number}"
-      page.should have_text "#{old_event.title} (#{date}) - List #{list2.list_number}"
+      expect(page).to have_text "#{old_event.title} (#{date}) - List #{list1.list_number}"
+      expect(page).to have_text "#{old_event.title} (#{date}) - List #{list2.list_number}"
     end
 
     it "should not have lists from active event in drop down list" do
       date = "#{event.event_date.month}/#{event.event_date.year}"
-      page.should_not have_link "#{event.title} (#{date}) - List #{list.list_number}"
+      expect(page).not_to have_link "#{event.title} (#{date}) - List #{list.list_number}"
     end
 
     it "should import items from old list" do
       date = "#{old_event.event_date.month}/#{old_event.event_date.year}"
       select "#{old_event.title} (#{date}) - List #{list1.list_number}"
       click_button "Select"
-      page.current_path.should eq list_select_items_path(locale: :en, 
+      expect(page.current_path).to eq list_select_items_path(locale: :en, 
                                                          list_id: list.id)
-      page.should have_title "Select Items"
-      page.should have_text "Item"
-      page.should have_text "Description"
-      page.should have_text "Size"
-      page.should have_text "Price"
+      expect(page).to have_title "Select Items"
+      expect(page).to have_text "Item"
+      expect(page).to have_text "Description"
+      expect(page).to have_text "Size"
+      expect(page).to have_text "Price"
 
       check("selection_1")
       expect { click_button "Import" }.to change(Item, :count).by(1)

@@ -12,8 +12,8 @@ describe "User pages" do
       visit users_path(locale: :en)
     end
 
-    it { should_not have_title('All users') }
-    it { should_not have_selector('h1', text: 'All users') }
+    it { is_expected.not_to have_title('All users') }
+    it { is_expected.not_to have_selector('h1', text: 'All users') }
 
     describe "as admin user" do
       let(:admin) { FactoryGirl.create(:admin) }
@@ -23,11 +23,11 @@ describe "User pages" do
         visit users_path(locale: :en)
       end
 
-      it { should have_button('Search') }
+      it { is_expected.to have_button('Search') }
 
       it "should list each user" do
         User.paginate(page: 1).each do |user|
-          page.should have_selector('li', 
+          expect(page).to have_selector('li', 
                                    text: "#{user.first_name} #{user.last_name}")
         end
       end
@@ -35,7 +35,7 @@ describe "User pages" do
     end
 
     describe "delete links" do
-      it { should_not have_link('delete') }
+      it { is_expected.not_to have_link('delete') }
 
       describe "as an admin user" do
         let(:admin) { FactoryGirl.create(:admin) }
@@ -44,12 +44,12 @@ describe "User pages" do
           visit users_path(locale: :en)
         end
 
-        it { should have_link('delete', 
+        it { is_expected.to have_link('delete', 
                               href: user_path(User.first, locale: :en)) }
         it "should be able to delete another user" do
           expect { click_link('delete') }.to change(User, :count).by(-1)
         end
-        it { should_not have_link('delete', 
+        it { is_expected.not_to have_link('delete', 
                                   href: user_path(admin, locale: :en)) }
       end
 
@@ -69,16 +69,16 @@ describe "User pages" do
           visit users_path(locale: :en)
         end
 
-        it { should have_selector("li", 
+        it { is_expected.to have_selector("li", 
                                 text: "#{user.first_name} #{user.last_name}") }
-        it { should_not have_link("delete",
+        it { is_expected.not_to have_link("delete",
                                   href: user_path(user, locale: :en)) } 
 
       end
     end
 
     describe "deactivate links" do
-      it { should_not have_link('deactivate') }
+      it { is_expected.not_to have_link('deactivate') }
 
       describe "as an admin user" do
         let(:admin) { FactoryGirl.create(:admin) }
@@ -87,7 +87,7 @@ describe "User pages" do
           visit users_path(locale: :en)
         end
 
-        it { should_not have_link('deactivate', 
+        it { is_expected.not_to have_link('deactivate', 
                                    href: user_path(User.first, locale: :en)) }
       end
 
@@ -107,9 +107,9 @@ describe "User pages" do
           visit users_path(locale: :en)
         end
 
-        it { should have_selector("li", 
+        it { is_expected.to have_selector("li", 
                                 text: "#{user.first_name} #{user.last_name}") }
-        it { should have_link("deactivate",
+        it { is_expected.to have_link("deactivate",
                                href: deactivate_user_path(user, locale: :en)) } 
         it "should be able to deactivate another user" do
           user_last_name  = user.last_name
@@ -118,12 +118,12 @@ describe "User pages" do
           user_street     = user.street
           user_phone      = user.phone
           expect { click_link('deactivate') }.to change(User, :count).by(0)
-          should_not have_text(user_last_name)
-          should_not have_text(user_first_name)
-          should_not have_text(user_email)
-          should_not have_text(user_street)
-          should_not have_text(user_phone)
-          should_not have_link('deactivate', 
+          is_expected.not_to have_text(user_last_name)
+          is_expected.not_to have_text(user_first_name)
+          is_expected.not_to have_text(user_email)
+          is_expected.not_to have_text(user_street)
+          is_expected.not_to have_text(user_phone)
+          is_expected.not_to have_link('deactivate', 
                                href: deactivate_user_path(user, locale: :en))
         end
       end
@@ -134,15 +134,15 @@ describe "User pages" do
   describe "signup page" do
     before { visit signup_path(locale: :en) }
 
-    it { should have_selector('h1',    text: 'Sign up') }
-    it { should have_title('Sign up') }
-    it { should have_link('Open and read Privacy Statement') }
+    it { is_expected.to have_selector('h1',    text: 'Sign up') }
+    it { is_expected.to have_title('Sign up') }
+    it { is_expected.to have_link('Open and read Privacy Statement') }
   end
 
   describe "sign in page" do
     before { visit signin_path(locale: :en) }
 
-    it { should have_link('Reset password') }
+    it { is_expected.to have_link('Reset password') }
   end
 
   describe "another user's profile page" do
@@ -150,8 +150,8 @@ describe "User pages" do
 
     before { visit user_path(user, locale: :en) }
 
-    it { should_not have_selector('h1', text: user.first_name) }
-    it { should_not have_title(user.first_name) }
+    it { is_expected.not_to have_selector('h1', text: user.first_name) }
+    it { is_expected.not_to have_title(user.first_name) }
   end
 
   describe "own profile page" do
@@ -161,14 +161,14 @@ describe "User pages" do
       visit user_path(user, locale: :en) 
     end
 
-    it { should have_selector('h1', text: user.first_name) }
-    it { should have_title("#{user.first_name}") }
+    it { is_expected.to have_selector('h1', text: user.first_name) }
+    it { is_expected.to have_title("#{user.first_name}") }
 
-    it { should have_content('List Registration') }
-    it { should have_selector('label', text: 'Enter registration code') }
-    it { should have_button('Register List') }
-    it { should have_content('List Administration') }
-    it { should have_content('You have no registered lists yet') }
+    it { is_expected.to have_content('List Registration') }
+    it { is_expected.to have_selector('label', text: 'Enter registration code') }
+    it { is_expected.to have_button('Register List') }
+    it { is_expected.to have_content('List Administration') }
+    it { is_expected.to have_content('You have no registered lists yet') }
 
   end
 
@@ -189,23 +189,23 @@ describe "User pages" do
       visit user_path(user, locale: :en) 
     end
 
-    it { should have_selector('h1', text: user.first_name) }
-    it { should have_title("#{user.first_name}") }
+    it { is_expected.to have_selector('h1', text: user.first_name) }
+    it { is_expected.to have_title("#{user.first_name}") }
 
-    it { should have_content('List Registration') }
-    it { should have_selector('label', text: 'Enter registration code') }
-    it { should have_button('Register List') }
-    it { should have_content('List Administration') }
-    it { should have_content('You have no registered lists yet') }
+    it { is_expected.to have_content('List Registration') }
+    it { is_expected.to have_selector('label', text: 'Enter registration code') }
+    it { is_expected.to have_button('Register List') }
+    it { is_expected.to have_content('List Administration') }
+    it { is_expected.to have_content('You have no registered lists yet') }
 
     describe "with empty registration code" do
       before do
         register_list("")
       end
 
-      it { should_not have_content('List registered') }
-      it { should have_content('Registration code not valid') }
-      it { should have_content('You have no registered lists yet') }
+      it { is_expected.not_to have_content('List registered') }
+      it { is_expected.to have_content('Registration code not valid') }
+      it { is_expected.to have_content('You have no registered lists yet') }
     end
 
     describe "with wrong registration code show error" do
@@ -213,8 +213,8 @@ describe "User pages" do
         register_list("wrong")
       end
 
-      it { should have_content('Registration code not valid') }
-      it { should have_content('You have no registered lists yet') }
+      it { is_expected.to have_content('Registration code not valid') }
+      it { is_expected.to have_content('You have no registered lists yet') }
     end
     
     describe "with correct registration code" do
@@ -222,9 +222,9 @@ describe "User pages" do
         register_list("1abcde")
       end
       
-      it { should_not have_content('You have no registered lists yet') }
-      it { should have_content('List registered') }
-      it { should have_button('List 1') }
+      it { is_expected.not_to have_content('You have no registered lists yet') }
+      it { is_expected.to have_content('List registered') }
+      it { is_expected.to have_button('List 1') }
     end
 
     describe "with multiple lists" do
@@ -233,12 +233,12 @@ describe "User pages" do
         register_list("2fghij")
       end
 
-      it { list1.reload.user_id.should eq user.id }
+      it { expect(list1.reload.user_id).to eq user.id }
 
-      it { should_not have_content('You have no registered lists yet') }
-      it { should have_content('List registered') }
-      it { should have_button('List 1') }
-      it { should have_button('List 2') }
+      it { is_expected.not_to have_content('You have no registered lists yet') }
+      it { is_expected.to have_content('List registered') }
+      it { is_expected.to have_button('List 1') }
+      it { is_expected.to have_button('List 2') }
     end
 
     describe "with taken registration code" do
@@ -247,7 +247,7 @@ describe "User pages" do
         register_list("1abcde")
       end
 
-      it { should have_content('Registration code already taken') }
+      it { is_expected.to have_content('Registration code already taken') }
     end
 
     describe "with registration code from inactive event" do
@@ -260,7 +260,7 @@ describe "User pages" do
                                         list_number: 4) }
       before { register_list("3klmno") }
 
-      it { should have_content('Registration code not valid') }
+      it { is_expected.to have_content('Registration code not valid') }
     end
 
   end
@@ -285,7 +285,7 @@ describe "User pages" do
       visit user_path(user, locale: :en) 
     end
 
-    it { should have_content('You have no registered lists yet') }
+    it { is_expected.to have_content('You have no registered lists yet') }
 
     describe "with list asigned to user" do
       before do
@@ -294,13 +294,13 @@ describe "User pages" do
         list2.items.create(description: "Item 2", size: "S", price: "1.0")
       end
 
-      it { should have_content('List registered') }
-      it { should have_button('List 2') }
+      it { is_expected.to have_content('List registered') }
+      it { is_expected.to have_button('List 2') }
 
-      it { list2.items.size.should eq 2 }
-      it { list2.reload.user_id.should eq user.id }
+      it { expect(list2.items.size).to eq 2 }
+      it { expect(list2.reload.user_id).to eq user.id }
 
-      it { should_not have_link "Deregister" }
+      it { is_expected.not_to have_link "Deregister" }
 
       describe "deregister list as admin" do
         before do
@@ -309,10 +309,10 @@ describe "User pages" do
           click_link "Deregister"
         end
         
-        it { should have_content('List deregistered') }
-        it { should_not have_button "List 2" }
-        it { list2.reload.items.size.should eq 0 }
-        it { list2.user_id.should eq nil }
+        it { is_expected.to have_content('List deregistered') }
+        it { is_expected.not_to have_button "List 2" }
+        it { expect(list2.reload.items.size).to eq 0 }
+        it { expect(list2.user_id).to eq nil }
 
         describe "and register deregistered list as admin" do
           before do
@@ -320,8 +320,8 @@ describe "User pages" do
             register_list("2fghij")
           end
 
-          it { should have_content('List registered') }
-          it { should have_button "List 2" }
+          it { is_expected.to have_content('List registered') }
+          it { is_expected.to have_button "List 2" }
         end
       end
     end
@@ -334,8 +334,8 @@ describe "User pages" do
         list1.items.create(description: "Item 1.2", size: "L", price: 3.0)
       end
 
-      it { list1.items.size.should eq 2 }
-      it { list1.reload.user_id.should eq user.id }
+      it { expect(list1.items.size).to eq 2 }
+      it { expect(list1.reload.user_id).to eq user.id }
 
       describe "deregister other user's list with own user id" do
         before do
@@ -345,10 +345,10 @@ describe "User pages" do
                                          locale: :en)
         end
 
-        it { list1.items.size.should eq 2 }
-        it { list1.reload.user_id.should eq user.id }
+        it { expect(list1.items.size).to eq 2 }
+        it { expect(list1.reload.user_id).to eq user.id }
 
-        specify { response.should redirect_to user_path(other_user, 
+        specify { expect(response).to redirect_to user_path(other_user, 
                                                         locale: :en) }
       end
 
@@ -359,9 +359,9 @@ describe "User pages" do
           post deregister_list_user_path(user, list_id: list1.id, locale: :en)
         end
 
-        it { list1.items.size.should eq 2 }
-        it { list1.reload.user_id.should eq user.id }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        it { expect(list1.items.size).to eq 2 }
+        it { expect(list1.reload.user_id).to eq user.id }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
 
       end
 
@@ -381,33 +381,33 @@ describe "User pages" do
       visit user_path(user, locale: :en)
     end
 
-    it { should have_selector('h1', text: user.first_name) }
-    it { should have_title("#{user.first_name}") }
+    it { is_expected.to have_selector('h1', text: user.first_name) }
+    it { is_expected.to have_title("#{user.first_name}") }
 
-    it { should have_content('List Registration') }
-    it { should have_selector('label', text: 'Enter registration code') }
-    it { should have_button('Register List') }
-    it { should have_content('List Administration') }
-    it { should have_button('List 1') }
-    it { should have_content('Process') }
-    it { should have_link('Item collection', 
+    it { is_expected.to have_content('List Registration') }
+    it { is_expected.to have_selector('label', text: 'Enter registration code') }
+    it { is_expected.to have_button('Register List') }
+    it { is_expected.to have_content('List Administration') }
+    it { is_expected.to have_button('List 1') }
+    it { is_expected.to have_content('Process') }
+    it { is_expected.to have_link('Item collection', 
                           href: user_list_items_path(user, list, locale: :en)) }
-    it { should have_content('Print') }
-    it { should have_link('List', 
+    it { is_expected.to have_content('Print') }
+    it { is_expected.to have_link('List', 
                           href: print_list_user_list_path(user, list, 
                                                           locale: :en)) }
-    it { should have_link('Labels', 
+    it { is_expected.to have_link('Labels', 
                           href: print_labels_user_list_path(user, list, 
                                                             locale: :en)) }
-    it { should have_content('Enter container color:') }
-    it { should have_button('Save Container Color') }
+    it { is_expected.to have_content('Enter container color:') }
+    it { is_expected.to have_button('Save Container Color') }
 
     describe "enter container color" do
       before do
         fill_in "Enter container color:", with: "Red"
         click_button "Save Container Color"
       end
-      it { should have_text('List updated!') }
+      it { is_expected.to have_text('List updated!') }
     end
 
     describe "item collection" do
@@ -415,7 +415,7 @@ describe "User pages" do
       describe "with assigned list" do
         before { click_link 'Item collection', match: :first }
         
-        it { should have_text('Collect Items') }
+        it { is_expected.to have_text('Collect Items') }
       end
 
       describe "with unassigned list" do
@@ -425,7 +425,7 @@ describe "User pages" do
 
         before { visit user_list_items_path(user, list, locale: :en) }
 
-        it { should have_text('List number not assigned') }
+        it { is_expected.to have_text('List number not assigned') }
       end
 
       describe "admin accessing other users list" do
@@ -436,23 +436,23 @@ describe "User pages" do
           visit user_list_items_path(user, list, locale: :en)
         end
 
-        it { should have_text('Collect Items') }
+        it { is_expected.to have_text('Collect Items') }
       end
     end
 
     describe "print list" do
       before { visit print_list_user_list_path(user, list, format: 'pdf', locale: :en) }
       it "should render a pdf file" do
-        page.response_headers['Content-Disposition'].
-          should include("attachment")
+        expect(page.response_headers['Content-Disposition']).
+          to include("attachment")
       end
     end
 
     describe "create labels" do
       before { visit print_labels_user_list_path(user, list, format: 'pdf', locale: :en) }
       it "should render a pdf file" do
-        page.response_headers['Content-Disposition'].
-          should include("attachment")
+        expect(page.response_headers['Content-Disposition']).
+          to include("attachment")
       end
     end
 
@@ -506,8 +506,8 @@ describe "User pages" do
         before { click_button submit }
         let(:user) { User.find_by_email('user@example.com') }
 
-        it { should have_title("#{user.last_name}, #{user.first_name}") }
-        it { should have_link('Sign out') }
+        it { is_expected.to have_title("#{user.last_name}, #{user.first_name}") }
+        it { is_expected.to have_link('Sign out') }
       end
     end
 
@@ -521,9 +521,9 @@ describe "User pages" do
     end
 
     describe "page" do
-      it { should have_selector('h1', text: "Update your profile") }
-      it { should have_title("Edit user") }
-      it { should have_link('change', href: 'http://gravatar.com/emails') }
+      it { is_expected.to have_selector('h1', text: "Update your profile") }
+      it { is_expected.to have_title("Edit user") }
+      it { is_expected.to have_link('change', href: 'http://gravatar.com/emails') }
     end
 
     describe "with missing password confirmation" do
@@ -532,7 +532,7 @@ describe "User pages" do
         click_button "Save changes"
       end
 
-      it { should have_content('error') }
+      it { is_expected.to have_content('error') }
     end
 
     describe "with valid information" do
@@ -546,11 +546,11 @@ describe "User pages" do
         click_button "Save changes"
       end
 
-      it { should have_title("#{user.last_name}, #{new_first_name}") }
-      it { should have_selector('div.alert.alert-success') }
-      it { should have_link('Sign out', href: signout_path(locale: :en)) }
-      specify { user.reload.first_name.should == new_first_name }
-      specify { user.reload.email.should == new_email }
+      it { is_expected.to have_title("#{user.last_name}, #{new_first_name}") }
+      it { is_expected.to have_selector('div.alert.alert-success') }
+      it { is_expected.to have_link('Sign out', href: signout_path(locale: :en)) }
+      specify { expect(user.reload.first_name).to eq(new_first_name) }
+      specify { expect(user.reload.email).to eq(new_email) }
     end
   end
 end

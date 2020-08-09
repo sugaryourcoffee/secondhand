@@ -16,28 +16,28 @@ describe Reversal do
   it "should respond to attributes" do
     reversal = Reversal.new
 
-    reversal.should respond_to :line_items
+    expect(reversal).to respond_to :line_items
   end
 
   it "should add sold items" do
     reversal = Reversal.new
 
-    list_with_sold_items.items.first.sold?.should be_truthy # be_true
+    expect(list_with_sold_items.items.first.sold?).to be_truthy # be_true
 
     reversal.line_items << selling.line_items.first 
 
     expect { reversal.save }.to change(Reversal, :count).by(1)
 
-    reversal.line_items.should_not be_empty
+    expect(reversal.line_items).not_to be_empty
 
-    list_with_sold_items.reload.items.first.reversals.should_not be_empty
-    list_with_sold_items.items.first.sold?.should be_falsey # be_false
+    expect(list_with_sold_items.reload.items.first.reversals).not_to be_empty
+    expect(list_with_sold_items.items.first.sold?).to be_falsey # be_false
   end
 
   it "should not add unsold items" do
     add_items_to_list(list_with_unsold_items)
 
-    list_with_unsold_items.items.first.sold?.should be_falsey # be_false
+    expect(list_with_unsold_items.items.first.sold?).to be_falsey # be_false
 
     reversal = Reversal.new
 
@@ -45,7 +45,7 @@ describe Reversal do
     line_item.item = list_with_unsold_items.items.first
     reversal.save
 
-    reversal.reload.line_items.should be_empty
+    expect(reversal.reload.line_items).to be_empty
   end
 
   it "should not remove line items" do
@@ -55,13 +55,13 @@ describe Reversal do
     reversal.line_items << line_item
     reversal.save
 
-    reversal.line_items.should_not be_empty
+    expect(reversal.line_items).not_to be_empty
 
     line_item.destroy
-    line_item.errors.any?.should be_truthy # be_true
+    expect(line_item.errors.any?).to be_truthy # be_true
 
-    reversal.line_items.should_not be_empty
-    list_with_sold_items.items.first.sold?.should_not be_truthy # be_true
+    expect(reversal.line_items).not_to be_empty
+    expect(list_with_sold_items.items.first.sold?).not_to be_truthy # be_true
   end
 
   it "should not destroy a reversal with line items" do
@@ -71,22 +71,22 @@ describe Reversal do
     reversal.save
 
     expect { reversal.destroy }.to change(Reversal, :count).by(0)
-    reversal.errors.any?.should be_truthy # be_true
+    expect(reversal.errors.any?).to be_truthy # be_true
 
-    reversal.line_items.should_not be_empty
+    expect(reversal.line_items).not_to be_empty
   end
 
   it "should mark items as unsold and mark them as reversed in selling" do
     reversal = Reversal.new
 
-    selling.line_items.first.item.sold?.should be_truthy # be_true
+    expect(selling.line_items.first.item.sold?).to be_truthy # be_true
 
     reversal.line_items << selling.line_items.first
     reversal.save
 
-    reversal.line_items.should_not be_empty
+    expect(reversal.line_items).not_to be_empty
 
-    list_with_sold_items.items.first.sold?.should_not be_truthy # be_true
+    expect(list_with_sold_items.items.first.sold?).not_to be_truthy # be_true
   end
 
 end

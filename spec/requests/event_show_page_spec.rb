@@ -11,7 +11,7 @@ describe "event show page" do
     it "should not forward to show page" do
       visit event_path(event, locale: :en)
 
-      current_path.should eq signin_path(locale: :en)
+      expect(current_path).to eq signin_path(locale: :en)
     end
 
   end
@@ -22,7 +22,7 @@ describe "event show page" do
       sign_in user
 
       visit event_path(event, locale: :en)
-      current_path.should eq root_path(locale: :en)
+      expect(current_path).to eq root_path(locale: :en)
     end
 
   end
@@ -35,16 +35,16 @@ describe "event show page" do
      end
 
     it "should forward to show page" do
-      current_path.should eq event_path(event, locale: :en)
+      expect(current_path).to eq event_path(event, locale: :en)
     end
 
     it "should have a link to print pickup tickets" do
-      page.should have_link('Print Pickup Tickets',
+      expect(page).to have_link('Print Pickup Tickets',
                       href: print_pickup_tickets_event_path(event, locale: :en))
     end
 
     it "should have a link to print lists" do
-      page.should have_link('Print Lists', 
+      expect(page).to have_link('Print Lists', 
                             href: print_lists_event_path(event, locale: :en))
     end
 

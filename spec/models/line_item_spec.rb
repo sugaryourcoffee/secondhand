@@ -5,10 +5,10 @@ describe LineItem do
   it "should respond to attributes" do
     line_item = LineItem.new
 
-    line_item.should respond_to :item
-    line_item.should respond_to :cart
-    line_item.should respond_to :selling
-    line_item.should respond_to :reversal
+    expect(line_item).to respond_to :item
+    expect(line_item).to respond_to :cart
+    expect(line_item).to respond_to :selling
+    expect(line_item).to respond_to :reversal
   end
 
   describe "adding and removing items" do
@@ -32,23 +32,23 @@ describe LineItem do
         line_item = add_item_to_cart(cart, accepted_list.items.first)
         line_item.save
 
-        line_item.in_cart?(cart).should be_truthy # be_true
+        expect(line_item.in_cart?(cart)).to be_truthy # be_true
 
-        line_item.errors[:items].any?.should be_falsey # be_false
+        expect(line_item.errors[:items].any?).to be_falsey # be_false
       end
 
       it "should not add nil to items" do
         line_item = add_item_to_cart(cart, nil)
         line_item.save
 
-        line_item.errors[:item_id].any?.should be_truthy # be_true
+        expect(line_item.errors[:item_id].any?).to be_truthy # be_true
       end
 
       it "should not add items from not accepted lists" do
         line_item = add_item_to_cart(cart, list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_truthy # be_true
+        expect(line_item.errors[:items].any?).to be_truthy # be_true
       end
 
       it "should not add items contained in another cart" do
@@ -57,14 +57,14 @@ describe LineItem do
                                                 accepted_list.items.first)
         other_line_item.save
 
-        other_line_item.errors[:item].any?.should be_falsey # be_false
+        expect(other_line_item.errors[:item].any?).to be_falsey # be_false
 
-        other_line_item.in_other_cart?(cart).should be_truthy # be_true
+        expect(other_line_item.in_other_cart?(cart)).to be_truthy # be_true
 
         line_item = add_item_to_cart(cart, accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_truthy # be_true
+        expect(line_item.errors[:items].any?).to be_truthy # be_true
       end
 
       it "should not add sold items" do
@@ -73,21 +73,21 @@ describe LineItem do
         line_item = add_item_to_cart(cart, accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:item].any?.should be_truthy # be_true
+        expect(line_item.errors[:item].any?).to be_truthy # be_true
       end
 
       it "should add an item only once" do
         line_item = add_item_to_cart(cart, accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:item].any?.should be_falsey # be_false
+        expect(line_item.errors[:item].any?).to be_falsey # be_false
         
         line_item_other = add_item_to_cart(cart, accepted_list.items.first)
         line_item_other.save
 
-        line_item_other.errors[:item].any?.should be_truthy # be_true
+        expect(line_item_other.errors[:item].any?).to be_truthy # be_true
 
-        cart.line_items.reload.size.should eq 1
+        expect(cart.line_items.reload.size).to eq 1
       end
 
       it "should delete item" do
@@ -97,9 +97,9 @@ describe LineItem do
         cart.line_items eq [accepted_list.items.first]
 
         line_item.destroy
-        line_item.errors.any?.should be_falsey # be_false
+        expect(line_item.errors.any?).to be_falsey # be_false
 
-        cart.reload.line_items.empty?.should be_truthy # be_true
+        expect(cart.reload.line_items.empty?).to be_truthy # be_true
       end
     end
 
@@ -111,14 +111,14 @@ describe LineItem do
         line_item = add_item_to_cart(cart, accepted_list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_truthy # be_true
+        expect(line_item.errors[:items].any?).to be_truthy # be_true
       end
 
       it "should not add items from not accepted lists" do
         line_item = add_item_to_cart(cart, list.items.first)
         line_item.save
 
-        line_item.errors[:items].any?.should be_truthy # be_true
+        expect(line_item.errors[:items].any?).to be_truthy # be_true
       end
 
     end

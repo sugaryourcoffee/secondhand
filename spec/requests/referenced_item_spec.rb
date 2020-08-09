@@ -11,21 +11,21 @@ describe "Item referenced" do
 
     sign_in admin
 
-    page.current_path.should eq user_path(locale: :en, id: admin)
+    expect(page.current_path).to eq user_path(locale: :en, id: admin)
     
     click_link "Acceptance"
 
-    page.current_path.should eq acceptances_path(locale: :en)
+    expect(page.current_path).to eq acceptances_path(locale: :en)
 
     click_link "Acceptance Dialog"
     
-    page.current_path.should eq edit_acceptance_path(locale: :en, id: list.id)
+    expect(page.current_path).to eq edit_acceptance_path(locale: :en, id: list.id)
 
     click_button "Accept List"
 
-    page.current_path.should eq acceptances_path(locale: :en)
+    expect(page.current_path).to eq acceptances_path(locale: :en)
 
-    page.should_not have_link "Acceptances Dialog"
+    expect(page).not_to have_link "Acceptances Dialog"
 
     click_link "Cart"
 
@@ -42,12 +42,12 @@ describe "Item referenced" do
 
     click_button "Revoke Acceptance"
 
-    page.current_path.should eq edit_acceptance_path(locale: :en, id: list.id)
+    expect(page.current_path).to eq edit_acceptance_path(locale: :en, id: list.id)
 
     expect { click_link "delete-item-#{list.items.first.item_number}" }.
                                                    to change(Item, :count).by(0)
     
-    page.current_path.should eq delete_item_acceptance_path(locale: :en, 
+    expect(page.current_path).to eq delete_item_acceptance_path(locale: :en, 
                                                            id: list.items.first)
   end
 
@@ -60,10 +60,10 @@ describe "Item referenced" do
 
     click_button "Revoke Acceptance"
 
-    page.current_path.should eq edit_acceptance_path(locale: :en, id: list.id)
+    expect(page.current_path).to eq edit_acceptance_path(locale: :en, id: list.id)
 
     #replacement for below commented out
-    page.should_not have_button "delete-item-#{list.items.first.item_number}"
+    expect(page).not_to have_button "delete-item-#{list.items.first.item_number}"
 
 #    expect { click_link "delete-item-#{list.items.first.item_number}" }.
 #                                                   to change(Item, :count).by(0)
@@ -82,7 +82,7 @@ describe "Item referenced" do
 
     click_button "Add"
 
-    page.current_path.should eq line_item_collection_carts_path(locale: :en)
+    expect(page.current_path).to eq line_item_collection_carts_path(locale: :en)
 
     expect { click_button "Check out" }.to change(Reversal, :count).by(1)
 
@@ -92,12 +92,12 @@ describe "Item referenced" do
 
     click_button "Revoke Acceptance"
 
-    page.current_path.should eq edit_acceptance_path(locale: :en, id: list.id)
+    expect(page.current_path).to eq edit_acceptance_path(locale: :en, id: list.id)
 
     expect { click_link "delete-item-#{list.items.first.item_number}" }.
                                                    to change(Item, :count).by(0)
     
-    page.current_path.should eq delete_item_acceptance_path(locale: :en, 
+    expect(page.current_path).to eq delete_item_acceptance_path(locale: :en, 
                                                            id: list.items.first)
    end
 
@@ -127,7 +127,7 @@ describe "Item referenced" do
 
     click_button "Add"
 
-    page.current_path.should eq line_item_collection_carts_path(locale: :en)
+    expect(page.current_path).to eq line_item_collection_carts_path(locale: :en)
 
     expect { click_button "Check out" }.to change(Reversal, :count).by(1)
 

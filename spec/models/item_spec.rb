@@ -13,55 +13,55 @@ describe Item do
 
   subject { @item }
 
-  it { list.items.size.should eq(1) }
-  it { should respond_to(:item_number) }
-  it { should respond_to(:description) }
-  it { should respond_to(:size) }
-  it { should respond_to(:price) }
-  it { should respond_to(:list_id) }
-  it { @item.list.should eq(list) }
+  it { expect(list.items.size).to eq(1) }
+  it { is_expected.to respond_to(:item_number) }
+  it { is_expected.to respond_to(:description) }
+  it { is_expected.to respond_to(:size) }
+  it { is_expected.to respond_to(:price) }
+  it { is_expected.to respond_to(:list_id) }
+  it { expect(@item.list).to eq(list) }
 #  its(:list) { should == list }
 
-  it { should be_valid }
+  it { is_expected.to be_valid }
 
   describe "when list_id is not present" do
     before { @item.list_id = nil }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe "when description is not present" do
     before { @item.description = nil }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe "when size is not present" do
     before { @item.size = nil }
-    it { should be_valid }
+    it { is_expected.to be_valid }
   end
 
   describe "when price is not present" do
     before { @item.price = nil }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe "when price is less than 0.5" do
     before { @item.price = 0.4 }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe "when price is 0.5" do
     before { @item.price = 0.5 }
-    it { should be_valid }
+    it { is_expected.to be_valid }
   end
 
   describe "when price is not divisible by 0.5" do
     before { @item.price = 1.6 }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   describe "when price is zero" do
     before { @item.price = 0.0 }
-    it { should_not be_valid }
+    it { is_expected.not_to be_valid }
   end
 
 #  describe "accessible attributes" do
@@ -74,9 +74,9 @@ describe Item do
 
   describe "delete item" do
     it "should destroy item" do
-      list.items.size.should eq(1)
+      expect(list.items.size).to eq(1)
       list.items.destroy(@item)
-      list.items.should be_empty
+      expect(list.items).to be_empty
     end
   end
 

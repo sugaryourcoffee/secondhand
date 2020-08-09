@@ -14,11 +14,11 @@ describe "Reversal cart pages" do
   end
 
   it "should have title 'Redemption'" do
-    page.should have_title 'Redemption'
+    expect(page).to have_title 'Redemption'
   end
 
   it "should have selector Redemption" do
-    page.should have_selector 'h1', 'Redemption'
+    expect(page).to have_selector 'h1', 'Redemption'
   end
 
   describe "with no active event" do
@@ -26,12 +26,12 @@ describe "Reversal cart pages" do
     let!(:selling) { create_selling_and_items(event, list1) }
 
     it "should have warning about no active event" do
-      page.should have_text "Missing active Event"
+      expect(page).to have_text "Missing active Event"
     end
 
     it "should forward to events page to activate event" do
       click_link 'activate_event'
-      page.current_path.should eq events_path(locale: :en) 
+      expect(page.current_path).to eq events_path(locale: :en) 
     end
 
   end
@@ -52,13 +52,13 @@ describe "Reversal cart pages" do
         fill_in 'Item', with: list1.items.first.item_number
         click_button 'Add'
 
-        page.current_path.should eq line_item_collection_carts_path(locale: :en) 
+        expect(page.current_path).to eq line_item_collection_carts_path(locale: :en) 
 
-        page.should have_text list_item_number_for(list1.items.first)
-        page.should have_text list1.items.first.description
-        page.should have_text list1.items.first.size
-        page.should have_text list1.items.first.price
-        page.should have_link 'Delete'
+        expect(page).to have_text list_item_number_for(list1.items.first)
+        expect(page).to have_text list1.items.first.description
+        expect(page).to have_text list1.items.first.size
+        expect(page).to have_text list1.items.first.price
+        expect(page).to have_link 'Delete'
       end
 
       it "should add line item only once" do
@@ -66,17 +66,17 @@ describe "Reversal cart pages" do
         fill_in 'Item', with: list1.items.first.item_number
         click_button 'Add'
 
-        page.should have_text list_item_number_for(list1.items.first)
-        page.should have_text list1.items.first.description
-        page.should have_text list1.items.first.size
-        page.should have_text list1.items.first.price
-        page.should have_link 'Delete'
+        expect(page).to have_text list_item_number_for(list1.items.first)
+        expect(page).to have_text list1.items.first.description
+        expect(page).to have_text list1.items.first.size
+        expect(page).to have_text list1.items.first.price
+        expect(page).to have_link 'Delete'
 
         fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
         fill_in 'Item', with: list1.items.first.item_number
         click_button 'Add'
 
-        page.should have_text "Line item is already in cart"        
+        expect(page).to have_text "Line item is already in cart"        
       end
 
       it "should not add line items contained in another cart" do
@@ -90,13 +90,13 @@ describe "Reversal cart pages" do
         fill_in 'Item', with: item.item_number
         click_button 'Add'
 
-        page.should have_text "Line item is already in cart #{cart.id}"
+        expect(page).to have_text "Line item is already in cart #{cart.id}"
 
-        page.should_not have_text list_item_number_for(item)
-        page.should_not have_text item.description
-        page.should_not have_text item.size
-        page.should_not have_text item.price
-        page.should_not have_link 'Delete'
+        expect(page).not_to have_text list_item_number_for(item)
+        expect(page).not_to have_text item.description
+        expect(page).not_to have_text item.size
+        expect(page).not_to have_text item.price
+        expect(page).not_to have_link 'Delete'
       end
 
       it "should only add sold items" do
@@ -104,13 +104,13 @@ describe "Reversal cart pages" do
         fill_in 'Item', with: list2.items.first.item_number
         click_button 'Add'
 
-        page.should_not have_text list_item_number_for(list1.items.first)
-        page.should_not have_text list1.items.first.description
-        page.should_not have_text list1.items.first.size
-        page.should_not have_text list1.items.first.price
-        page.should_not have_link 'Delete'
+        expect(page).not_to have_text list_item_number_for(list1.items.first)
+        expect(page).not_to have_text list1.items.first.description
+        expect(page).not_to have_text list1.items.first.size
+        expect(page).not_to have_text list1.items.first.price
+        expect(page).not_to have_link 'Delete'
 
-        page.should have_text "Cannot redeem unsold item"
+        expect(page).to have_text "Cannot redeem unsold item"
       end
 
       it "should remove but not delete line item" do
@@ -118,17 +118,17 @@ describe "Reversal cart pages" do
         fill_in 'Item', with: list1.items.first.item_number
         click_button 'Add'
 
-        page.current_path.should eq line_item_collection_carts_path(locale: :en) 
+        expect(page.current_path).to eq line_item_collection_carts_path(locale: :en) 
 
         expect { click_link 'Delete' }.to change(LineItem, :count).by(0)
 
-        page.current_path.should eq line_item_collection_carts_path(locale: :en)
+        expect(page.current_path).to eq line_item_collection_carts_path(locale: :en)
 
-        page.should_not have_text list_item_number_for(list1.items.first)
-        page.should_not have_text list1.items.first.description
-        page.should_not have_text list1.items.first.size
-        page.should_not have_text list1.items.first.price
-        page.should_not have_link 'Delete'
+        expect(page).not_to have_text list_item_number_for(list1.items.first)
+        expect(page).not_to have_text list1.items.first.description
+        expect(page).not_to have_text list1.items.first.size
+        expect(page).not_to have_text list1.items.first.price
+        expect(page).not_to have_link 'Delete'
       end
 
       it "should forward to reversal check out" do
@@ -136,11 +136,11 @@ describe "Reversal cart pages" do
         fill_in 'Item', with: list1.items.first.item_number
         click_button 'Add'
 
-        page.current_path.should eq line_item_collection_carts_path(locale: :en) 
+        expect(page.current_path).to eq line_item_collection_carts_path(locale: :en) 
 
         expect { click_button 'Check out' }.to change(Reversal, :count).by(1)
         
-        page.current_path.should eq check_out_reversal_path(locale: :en, 
+        expect(page.current_path).to eq check_out_reversal_path(locale: :en, 
                                                             id: Reversal.last)
       end
     end
@@ -154,44 +154,44 @@ describe "Reversal cart pages" do
       end
 
       it "should have title 'Carts'" do
-        page.should have_title 'Carts'
+        expect(page).to have_title 'Carts'
       end
 
       it "should have 'h1' 'Carts'" do
-        page.should have_selector 'h1', 'Carts'
+        expect(page).to have_selector 'h1', 'Carts'
       end
 
       it "should show all carts" do
-        page.should have_text 'Number'
-        page.should have_text 'Type'
-        page.should have_text 'Items'
-        page.should have_text 'Cashier'
-        page.should have_link 'Show'
-        page.should have_link 'Delete'
-        page.should have_text cart.id
-        page.should have_text cart.cart_type
-        page.should have_text cart.line_items.count
+        expect(page).to have_text 'Number'
+        expect(page).to have_text 'Type'
+        expect(page).to have_text 'Items'
+        expect(page).to have_text 'Cashier'
+        expect(page).to have_link 'Show'
+        expect(page).to have_link 'Delete'
+        expect(page).to have_text cart.id
+        expect(page).to have_text cart.cart_type
+        expect(page).to have_text cart.line_items.count
       end
 
       it "should delete a cart but not the line items" do
         line_item = selling.line_items.first
         cart.line_items << line_item
 
-        cart.line_items.should_not be_empty
+        expect(cart.line_items).not_to be_empty
 
         expect { click_link "delete_cart_#{cart.id}" }.
           to change(Cart, :count).by(-1)
 
-        page.current_path.should eq carts_path(locale: :en)
+        expect(page.current_path).to eq carts_path(locale: :en)
 
-        page.should have_text "Successfully deleted cart #{cart.id}"
+        expect(page).to have_text "Successfully deleted cart #{cart.id}"
 
-        selling.reload.line_items.first.should eq line_item
+        expect(selling.reload.line_items.first).to eq line_item
       end
 
       it "should forward to cart's show page" do
         click_link "show_cart_#{cart.id}"
-        page.current_path.should eq cart_path(locale: :en, id: cart.id)
+        expect(page.current_path).to eq cart_path(locale: :en, id: cart.id)
       end
 
     end
@@ -209,48 +209,48 @@ describe "Reversal cart pages" do
       end
 
       it "should have title 'Cart'" do
-        page.should have_title "Cart"
+        expect(page).to have_title "Cart"
       end
 
       it "should have 'h1' 'Cart' with id" do
-        page.should have_selector 'h1', "Cart #{cart.id}"
-        page.should have_text 'Redemption'
+        expect(page).to have_selector 'h1', "Cart #{cart.id}"
+        expect(page).to have_text 'Redemption'
       end
 
       it "should show cart's line items" do
-        page.should have_text 'Item'
-        page.should have_text 'Description'
-        page.should have_text 'Size'
-        page.should have_text 'Price'
+        expect(page).to have_text 'Item'
+        expect(page).to have_text 'Description'
+        expect(page).to have_text 'Size'
+        expect(page).to have_text 'Price'
 
         cart.line_items.each do |line_item|
-          page.should have_text list_item_number_for(line_item.item)
-          page.should have_text line_item.description
-          page.should have_text line_item.size
-          page.should have_text line_item.price
+          expect(page).to have_text list_item_number_for(line_item.item)
+          expect(page).to have_text line_item.description
+          expect(page).to have_text line_item.size
+          expect(page).to have_text line_item.price
         end
       end
 
       it "should remove line item from cart but not delete line item" do
-        cart.line_items.size.should eq 1
+        expect(cart.line_items.size).to eq 1
 
         expect { click_link 'Delete' }.to change(LineItem, :count).by(0)
         
-        page.current_path.should eq cart_path(locale: :en, id: cart.id) 
+        expect(page.current_path).to eq cart_path(locale: :en, id: cart.id) 
 
         cart.line_items.each do |line_item|
-          page.should_not have_text list_item_number_for(line_item.item)
-          page.should_not have_text line_item.description
-          page.should_not have_text line_item.size
-          page.should_not have_text line_item.price
+          expect(page).not_to have_text list_item_number_for(line_item.item)
+          expect(page).not_to have_text line_item.description
+          expect(page).not_to have_text line_item.size
+          expect(page).not_to have_text line_item.price
         end
 
-        cart.reload.line_items.should be_empty
+        expect(cart.reload.line_items).to be_empty
       end
 
       it "should forward to carts index page" do
         click_link 'Back to carts overview'
-        page.current_path.should eq carts_path(locale: :en)
+        expect(page.current_path).to eq carts_path(locale: :en)
       end
     end
 

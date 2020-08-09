@@ -10,8 +10,8 @@ describe "event pages" do
     describe "with user not signed in" do
       before { visit events_path(locale: :en) }
 
-      it { should_not have_title("All events") }
-      it { should_not have_selector('h1', text: "All events") }
+      it { is_expected.not_to have_title("All events") }
+      it { is_expected.not_to have_selector('h1', text: "All events") }
     end
 
     describe "with non-admin user signed in" do
@@ -22,8 +22,8 @@ describe "event pages" do
         visit events_path(locale: :en)
       end
 
-      it { should_not have_title("All events") }
-      it { should_not have_selector('h1', text: "All events") }
+      it { is_expected.not_to have_title("All events") }
+      it { is_expected.not_to have_selector('h1', text: "All events") }
     end
 
     describe "with admin user signed in" do
@@ -35,29 +35,29 @@ describe "event pages" do
       before(:all) { 31.times { FactoryGirl.create(:event) } }
       after(:all) { Event.delete_all }
 
-      it { should have_title("All events") }
-      it { should have_selector('h1', text: "All events") }
-      it { should have_link('New Event', href: new_event_path(locale: :en)) }
+      it { is_expected.to have_title("All events") }
+      it { is_expected.to have_selector('h1', text: "All events") }
+      it { is_expected.to have_link('New Event', href: new_event_path(locale: :en)) }
 
       it "should list each event" do
         Event.paginate(page: 1).each do |event|
-          page.should have_selector('tr', text: event.title)
-          page.should have_link('Show', href: event_path(event, locale: :en))
-          page.should have_link('Edit', href: edit_event_path(event, locale: :en))
-          page.should have_link('Destroy', href: event_path(event, locale: :en))
+          expect(page).to have_selector('tr', text: event.title)
+          expect(page).to have_link('Show', href: event_path(event, locale: :en))
+          expect(page).to have_link('Edit', href: edit_event_path(event, locale: :en))
+          expect(page).to have_link('Destroy', href: event_path(event, locale: :en))
         end
       end
 
       describe "activate button" do
         before { visit events_path(locale: :en) }
         
-        it { should_not have_button('Deactivate') }
-        it { should have_button('Activate') }
+        it { is_expected.not_to have_button('Deactivate') }
+        it { is_expected.to have_button('Activate') }
 
         describe "click activate button" do
           before { first(:button, 'Activate').click }
 
-          it { should have_button('Deactivate') }
+          it { is_expected.to have_button('Deactivate') }
         end
         
       end
@@ -81,39 +81,39 @@ describe "event pages" do
 
         it "should delete lists along with the event" do
 #          event.lists.should have_exactly(1).items
-          event.lists.size.should eq(1)
+          expect(event.lists.size).to eq(1)
           
 #          List.all.should have(2).items
-          List.all.size.should eq(2)
+          expect(List.all.size).to eq(2)
 
           expect { event.destroy }.to change(Event, :count).by(-1)
           expect { Event.find(event.id) }.to raise_error #(ActiveRecord::RecordNotFound)
           
 #          List.all.should have(1).items
-          List.all.size.should eq(1)
+          expect(List.all.size).to eq(1)
         end
 
         it "should not delete active event" do
-          should_not have_button('Deactivate')
+          is_expected.not_to have_button('Deactivate')
           first(:button, 'Activate').click
-          should have_button('Deactivate') 
+          is_expected.to have_button('Deactivate') 
 
           expect { first(:link, 'Destroy').click }.
             to change(Event, :count).by(0)
 
-          should have_text('Cannot delete active event')
+          is_expected.to have_text('Cannot delete active event')
         end
 
         it "should not delete event with list register by a user" do
-          event_other.lists.size.should eq(1)
+          expect(event_other.lists.size).to eq(1)
 
-          List.all.size.should eq(2)
+          expect(List.all.size).to eq(2)
 
           expect { event_other.destroy }
                  .to raise_error(ActiveRecord::RecordNotDestroyed)
           expect { event_other.save }.not_to raise_error
 
-          List.all.size.should eq(2)
+          expect(List.all.size).to eq(2)
         end
 
       end

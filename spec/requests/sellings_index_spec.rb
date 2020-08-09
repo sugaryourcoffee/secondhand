@@ -17,18 +17,18 @@ describe "Selling index page" do
     end
 
     it "should have title Selling" do
-      page.should have_title 'Selling'   
+      expect(page).to have_title 'Selling'   
     end
 
     it "should have selector Selling" do
-      page.should have_text 'Selling'
+      expect(page).to have_text 'Selling'
     end
 
     it "should have warning about no active event" do
-      page.should have_text "For selling it is neccessary to have an active event"
-      page.should have_link "activate_event"
+      expect(page).to have_text "For selling it is neccessary to have an active event"
+      expect(page).to have_link "activate_event"
       click_link "activate_event"
-      current_path.should eq events_path(locale: :en)
+      expect(current_path).to eq events_path(locale: :en)
     end
   end
 
@@ -42,46 +42,46 @@ describe "Selling index page" do
     end
  
     it "should have title Selling" do
-      page.should have_title 'Selling'   
+      expect(page).to have_title 'Selling'   
     end
 
     it "should have selector Selling" do
-      page.should have_text 'Selling'
+      expect(page).to have_text 'Selling'
     end
 
     it "should have link to forward to cart" do
-      page.should have_link 'Go to cart'
+      expect(page).to have_link 'Go to cart'
     end
 
     it "should forward to cart" do
       click_link 'Go to cart'
-      page.current_path.should eq item_collection_carts_path(locale: :en) 
+      expect(page.current_path).to eq item_collection_carts_path(locale: :en) 
     end
 
     it "should list available sellings" do
-      page.should have_text selling.id
-      page.should have_text local_date_and_time selling.created_at
-      page.should have_text selling.total.to_s
-      page.should have_link 'Show'
-      page.should have_link 'Delete'
-      page.should have_link 'Print'
+      expect(page).to have_text selling.id
+      expect(page).to have_text local_date_and_time selling.created_at
+      expect(page).to have_text selling.total.to_s
+      expect(page).to have_link 'Show'
+      expect(page).to have_link 'Delete'
+      expect(page).to have_link 'Print'
     end
 
     it "should forward to selling show page when searching for existing selling" do
       fill_in "Selling", with: selling.id
       click_button "Search"
-      page.current_path.should eq selling_path(locale: :en, id: selling)
+      expect(page.current_path).to eq selling_path(locale: :en, id: selling)
     end
 
     it "should show warning when searching for not existing selling" do
       fill_in "Selling", with: 0
       click_button "Search"
-      page.should have_text "Sorry, didn't find a selling with number 0"
+      expect(page).to have_text "Sorry, didn't find a selling with number 0"
     end
 
     it "should forward to show selling page when pressing the show link on a selling" do
       click_link "Show"
-      page.current_path.should eq selling_path(locale: :en, id: selling)
+      expect(page.current_path).to eq selling_path(locale: :en, id: selling)
     end
 
     it "should not delete a selling with items", :js => true do
@@ -93,28 +93,28 @@ describe "Selling index page" do
       modal = page.driver.browser.switch_to.alert
       modal.accept
  
-      page.current_path.should eq sellings_path(locale: :en)
+      expect(page.current_path).to eq sellings_path(locale: :en)
 
-      page.should have_text selling_id
-      page.should have_text selling_revenue
+      expect(page).to have_text selling_id
+      expect(page).to have_text selling_revenue
 
-      page.should have_text "Cannot delete selling when containing items"
+      expect(page).to have_text "Cannot delete selling when containing items"
 
       items.reload.each do |item|
-        item.selling_id.should_not be_nil
+        expect(item.selling_id).not_to be_nil
       end
     end
 
     it "should show statistics of the sellings" do
-      page.should have_text "Selling Statistics"
-      page.should have_text "Sellings"
-      page.should have_text 0 
-      page.should have_text "Sold items"
-      page.should have_text 0 
-      page.should have_text "revenue per selling"
-      page.should have_text 0
-      page.should have_text "Revenue"
-      page.should have_text 0
+      expect(page).to have_text "Selling Statistics"
+      expect(page).to have_text "Sellings"
+      expect(page).to have_text 0 
+      expect(page).to have_text "Sold items"
+      expect(page).to have_text 0 
+      expect(page).to have_text "revenue per selling"
+      expect(page).to have_text 0
+      expect(page).to have_text "Revenue"
+      expect(page).to have_text 0
     end
 
   end

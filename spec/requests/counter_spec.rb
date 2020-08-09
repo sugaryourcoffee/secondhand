@@ -8,7 +8,7 @@ describe "Counter" do
 
   describe "as regular user" do
     it "should not be able to access Counter" do
-      page.current_path.should eq signin_path(locale: :en)
+      expect(page.current_path).to eq signin_path(locale: :en)
     end
   end
 
@@ -18,27 +18,27 @@ describe "Counter" do
     before { sign_in admin }
 
     it "should visit the counter page" do
-      page.current_path.should eq counter_index_path(locale: :en)
+      expect(page.current_path).to eq counter_index_path(locale: :en)
     end
 
     it "should have the title 'Counter'" do
-      page.should have_selector('h1', text: 'Counter')
+      expect(page).to have_selector('h1', text: 'Counter')
     end
 
     it "should have the h2 tag 'Cart'" do
-      page.should have_selector('h2', text: 'Cart')
+      expect(page).to have_selector('h2', text: 'Cart')
     end
 
     it "should have the h2 tag 'Statistic'" do
-      page.should have_selector('h2', text: 'Statistic')
+      expect(page).to have_selector('h2', text: 'Statistic')
     end
 
     it "should have the h2 tag 'Selling'" do
-      page.should have_selector('h2', text: 'Selling')
+      expect(page).to have_selector('h2', text: 'Selling')
     end
 
     it "should have the h2 tag 'Reversal'" do
-      page.should have_selector('h2', text: 'Redemption')
+      expect(page).to have_selector('h2', text: 'Redemption')
     end
 
     describe "with empty carts" do
@@ -47,15 +47,15 @@ describe "Counter" do
       before { visit counter_index_path(locale: :en) }
       
       it "should have table with cart headlines" do
-        page.should have_text "Number"
-        page.should have_text "Type"
-        page.should have_text "Items"
+        expect(page).to have_text "Number"
+        expect(page).to have_text "Type"
+        expect(page).to have_text "Items"
       end
 
       it "should show no cart if all carts are empty" do
-        page.should_not have_text "SALES"
-        page.should_not have_text "REVERSAL"
-        page.should_not have_link "Show"
+        expect(page).not_to have_text "SALES"
+        expect(page).not_to have_text "REVERSAL"
+        expect(page).not_to have_link "Show"
       end
     end
 
@@ -65,25 +65,25 @@ describe "Counter" do
       before { visit counter_index_path(locale: :en) }
       
       it "should show only carts with line items" do
-        page.should have_text "Cart (1)" 
+        expect(page).to have_text "Cart (1)" 
       end
 
       it "should forward to carts show page and return back" do
         click_link "Show"
-        page.current_path.should eq cart_path(locale: :en, id: loaded_cart)
+        expect(page.current_path).to eq cart_path(locale: :en, id: loaded_cart)
         click_link "Back to carts overview"
-        page.current_path.should eq counter_index_path(locale: :en)
+        expect(page.current_path).to eq counter_index_path(locale: :en)
       end
     end
 
     describe "Statistics section" do
       it "should have information about sellings and reversals" do
-        page.should have_text "Sellings"
-        page.should have_text "Reversals"
-        page.should have_text "Count"
-        page.should have_text "Items"
-        page.should have_text "Transaction Amount"
-        page.should have_text "Total"
+        expect(page).to have_text "Sellings"
+        expect(page).to have_text "Reversals"
+        expect(page).to have_text "Count"
+        expect(page).to have_text "Items"
+        expect(page).to have_text "Transaction Amount"
+        expect(page).to have_text "Total"
       end
     end
 
@@ -93,18 +93,18 @@ describe "Counter" do
       before { visit counter_index_path(locale: :en) }
       
       it "should have selling headings" do
-        page.should have_text "Selling (1)"
-        page.should have_text "Selling"
-        page.should have_text "Created"
-        page.should have_text "Revenue"
+        expect(page).to have_text "Selling (1)"
+        expect(page).to have_text "Selling"
+        expect(page).to have_text "Created"
+        expect(page).to have_text "Revenue"
       end
 
       it "should show all sellings" do
-        page.should have_text selling.id
-        page.should have_text local_date_and_time selling.created_at
-        page.should have_text selling.total
-        page.should have_link 'Show', selling_path(locale: :en, id: selling)
-        page.should have_link 'Print', 
+        expect(page).to have_text selling.id
+        expect(page).to have_text local_date_and_time selling.created_at
+        expect(page).to have_text selling.total
+        expect(page).to have_link 'Show', selling_path(locale: :en, id: selling)
+        expect(page).to have_link 'Print', 
                               print_selling_path(locale: :en, id: selling)
       end
 
@@ -112,15 +112,15 @@ describe "Counter" do
         second_selling = create_selling(event, 2)
         fill_in "selling_id", with: second_selling.id
         click_button "search_selling"
-        page.should     have_text second_selling.total
-        page.should_not have_text selling.total 
+        expect(page).to     have_text second_selling.total
+        expect(page).not_to have_text selling.total 
       end
 
       it "should forward to the sellings show page and return back" do
         click_link 'Show'
-        page.current_path.should eq selling_path(locale: :en, id: selling)
+        expect(page.current_path).to eq selling_path(locale: :en, id: selling)
         click_link 'Back to Sellings'
-        page.current_path.should eq counter_index_path(locale: :en)
+        expect(page.current_path).to eq counter_index_path(locale: :en)
       end
     end
 
@@ -130,18 +130,18 @@ describe "Counter" do
       before { visit counter_index_path(locale: :en) }
 
       it "should show all reversals" do
-        page.should have_text "Redemption (1)"
-        page.should have_text "Reversal"
-        page.should have_text "Created"
-        page.should have_text "Redemption"
+        expect(page).to have_text "Redemption (1)"
+        expect(page).to have_text "Reversal"
+        expect(page).to have_text "Created"
+        expect(page).to have_text "Redemption"
       end
 
       it "should forward to the reversal show page and return back" do
-        page.should have_text reversal.id
-        page.should have_text local_date_and_time reversal.created_at
-        page.should have_text reversal.total
-        page.should have_link 'Show', reversal_path(locale: :en, id: reversal)
-        page.should have_link 'Print', 
+        expect(page).to have_text reversal.id
+        expect(page).to have_text local_date_and_time reversal.created_at
+        expect(page).to have_text reversal.total
+        expect(page).to have_link 'Show', reversal_path(locale: :en, id: reversal)
+        expect(page).to have_link 'Print', 
                               print_reversal_path(locale: :en, id: reversal)
       end
 
@@ -149,15 +149,15 @@ describe "Counter" do
         second_reversal = create_reversal(event, nil, 0, 2)
         fill_in "reversal_id", with: second_reversal.id
         click_button "search_reversal"
-        page.should     have_text second_reversal.total
-        page.should_not have_text reversal.total 
+        expect(page).to     have_text second_reversal.total
+        expect(page).not_to have_text reversal.total 
       end
 
       it "should forward to the reversals show page and return back" do
         click_link "show_reversal_#{reversal.id}"
-        page.current_path.should eq reversal_path(locale: :en, id: reversal)
+        expect(page.current_path).to eq reversal_path(locale: :en, id: reversal)
         click_link "Back to Redemptions"
-        page.current_path.should eq counter_index_path(locale: :en)
+        expect(page.current_path).to eq counter_index_path(locale: :en)
       end
     end
   end

@@ -18,10 +18,10 @@ describe "Newsletter" do
 
       it 'should create new content' do
         visit new_news_path
-        page.find_field('Issue').
-          value.should eq "2/#{Time.now.year}"
-        page.find_field('Author').
-          value.should eq "#{admin.id}"
+        expect(page.find_field('Issue').
+          value).to eq "2/#{Time.now.year}"
+        expect(page.find_field('Author').
+          value).to eq "#{admin.id}"
         
         select 'Deutsch', from: 'news_news_translations_attributes_0_language'
         fill_in 'news_news_translations_attributes_0_title', with: "Titel"
@@ -43,12 +43,12 @@ describe "Newsletter" do
       it "should show errors on unclomplete input" do
         visit new_news_path
 
-        page.all('input', visible: true).size.should eq 8
+        expect(page.all('input', visible: true).size).to eq 8
 
         expect { click_button 'Create new news' }.to change(News, :count).by 0
-        page.should have_text "error"
+        expect(page).to have_text "error"
 
-        page.all('input', visible: true).size.should eq 8
+        expect(page.all('input', visible: true).size).to eq 8
       end
     end
 
@@ -58,7 +58,7 @@ describe "Newsletter" do
       it 'should not create new content' do
         visit new_news_path
 
-        page.current_path.should eq root_path(locale: :en)
+        expect(page.current_path).to eq root_path(locale: :en)
       end
     end
 
@@ -72,7 +72,7 @@ describe "Newsletter" do
       it "should not update news" do
         visit edit_news_path(news, locale: :en)
 
-        current_path.should eq root_path(locale: :en)
+        expect(current_path).to eq root_path(locale: :en)
       end
 
     end
@@ -88,10 +88,10 @@ describe "Newsletter" do
 
         expect { click_button 'Save changes' }.to change(News, :count).by 0
         
-        news.reload.news_translation(:de).title.should eq "Titel neu"
-        news.reload.news_translation(:en).title.should eq "Title new"
+        expect(news.reload.news_translation(:de).title).to eq "Titel neu"
+        expect(news.reload.news_translation(:en).title).to eq "Title new"
 
-        current_path.should eq news_path(news, locale: :en)
+        expect(current_path).to eq news_path(news, locale: :en)
       end
 
     end
@@ -105,7 +105,7 @@ describe "Newsletter" do
 
       it 'should not destroy news' do
         visit news_index_path(locale: :en)
-        current_path.should eq root_path(locale: :en)
+        expect(current_path).to eq root_path(locale: :en)
       end
     end
 
@@ -115,7 +115,7 @@ describe "Newsletter" do
       it 'should destroy news and associated news_translations' do
         visit news_index_path(locale: :en)
         expect { click_link 'Destroy' }.to change(News, :count).by -1
-        NewsTranslation.all.size.should eq 0
+        expect(NewsTranslation.all.size).to eq 0
       end
     end
   end
@@ -148,14 +148,14 @@ describe "Newsletter" do
     it "should not show unreleased news" do
       visit root_path
 
-      page.should     have_text promote_news.news_translation(:en).title
-      page.should_not have_text unreleased_promote_news.news_translation(:en).title
+      expect(page).to     have_text promote_news.news_translation(:en).title
+      expect(page).not_to have_text unreleased_promote_news.news_translation(:en).title
     end
 
     it "should show released news marked as promoted to frontpage" do
       visit root_path
 
-      page.should have_text promote_news.news_translation(:en).title
+      expect(page).to have_text promote_news.news_translation(:en).title
     end
 
   end
@@ -188,8 +188,8 @@ describe "Newsletter" do
     it "should not show released news not marked as promoted to frontpage" do
       visit root_path
 
-      page.should     have_text promote_news.news_translation(:en).title
-      page.should_not have_text released_news.news_translation(:en).title
+      expect(page).to     have_text promote_news.news_translation(:en).title
+      expect(page).not_to have_text released_news.news_translation(:en).title
     end
   end
 
@@ -200,7 +200,7 @@ describe "Newsletter" do
     describe 'behaviour for unreleased newsletters' do
       it 'should not show send link' do
         visit news_index_path(:en)
-        page.should_not have_link 'Send'
+        expect(page).not_to have_link 'Send'
       end
     end
 
@@ -213,26 +213,26 @@ describe "Newsletter" do
 
       it 'should show send link' do
         visit news_index_path(:en)
-        page.should have_link 'Send'
+        expect(page).to have_link 'Send'
       end
 
       it 'should not show send link for already send newsletters' do
         visit news_index_path(:en)
         click_link 'Send'
-        page.should have_text 'Newsletter has been sent to subscribers'
-        page.current_path.should eq news_index_path(locale: :en)
-        page.should_not have_link 'Send'
+        expect(page).to have_text 'Newsletter has been sent to subscribers'
+        expect(page.current_path).to eq news_index_path(locale: :en)
+        expect(page).not_to have_link 'Send'
       end
       
       it 'should show send link for already send but updated newsletters' do
         visit news_index_path(:en)
         click_link 'Send'
-        page.should have_text 'Newsletter has been sent to subscribers'
-        page.should_not have_link 'Send'
+        expect(page).to have_text 'Newsletter has been sent to subscribers'
+        expect(page).not_to have_link 'Send'
         click_link 'Edit'
         click_button 'Save changes'
         visit news_index_path(:en)
-        page.should have_link 'Send'
+        expect(page).to have_link 'Send'
       end
 
     end

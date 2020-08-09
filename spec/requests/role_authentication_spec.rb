@@ -12,17 +12,17 @@ describe 'Role authentication' do
       
       describe 'visiting the acceptances page' do
         before { get acceptances_path(locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
       describe 'accept list' do
         before { post accept_acceptance_path(list, locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
       describe 'edit list' do
         before { get edit_list_acceptance_path(list, locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
     end
@@ -31,17 +31,17 @@ describe 'Role authentication' do
 
       describe 'visiting the carts page' do
         before { get carts_path(locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
       describe 'collect items for sales' do
         before { get item_collection_carts_path(locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
       describe 'collect line items for redemption' do
         before { get line_item_collection_carts_path(locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
     end
@@ -50,7 +50,7 @@ describe 'Role authentication' do
 
       describe 'visiting the counter index page' do
         before { get counter_index_path(locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
     end
@@ -64,17 +64,17 @@ describe 'Role authentication' do
 
       describe 'visiting the sellings index page' do
         before { get sellings_path(locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
       describe 'show selling' do
         before { get selling_path(selling, locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
       describe 'check out selling' do
         before { get check_out_selling_path(selling, locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
     end
@@ -90,17 +90,17 @@ describe 'Role authentication' do
 
       describe 'visiting the reversals index page' do
         before { get reversals_path(locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
       describe 'show reversal' do
         before { get reversal_path(reversal, locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
       describe 'check_out_reversal' do
         before { get check_out_reversal_path(reversal, locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
     end
@@ -119,12 +119,12 @@ describe 'Role authentication' do
       
       describe 'visiting the acceptances page' do
         before { visit acceptances_path(locale: :en) }
-        it { page.current_path.should eq acceptances_path(locale: :en) }
+        it { expect(page.current_path).to eq acceptances_path(locale: :en) }
       end
 
       describe 'accept list' do
         before { post accept_acceptance_path(list, locale: :en) }
-        specify { response.should redirect_to(acceptances_path(locale: :en)) }
+        specify { expect(response).to redirect_to(acceptances_path(locale: :en)) }
       end
 
       describe 'edit list' do
@@ -140,18 +140,18 @@ describe 'Role authentication' do
 
       describe 'visiting the carts page' do
         before { visit carts_path(locale: :en) }
-        it { page.current_path.should eq carts_path(locale: :en) }
+        it { expect(page.current_path).to eq carts_path(locale: :en) }
       end
 
       describe 'collect items for sales' do
         before { visit item_collection_carts_path(locale: :en) }
-        it { page.current_path.should eq \
+        it { expect(page.current_path).to eq \
              item_collection_carts_path(locale: :en) }
       end
 
       describe 'collect line items for redemption' do
         before { visit line_item_collection_carts_path(locale: :en) }
-        it { page.current_path.should eq \
+        it { expect(page.current_path).to eq \
              line_item_collection_carts_path(locale: :en) }
       end
 
@@ -163,7 +163,7 @@ describe 'Role authentication' do
 
       describe 'visiting the counter index page' do
         before { visit counter_index_path(locale: :en) }
-        it { page.current_path.should eq counter_index_path(locale: :en) }
+        it { expect(page.current_path).to eq counter_index_path(locale: :en) }
       end
 
     end
@@ -178,17 +178,17 @@ describe 'Role authentication' do
 
       describe 'visiting the sellings index page' do
         before { get sellings_path(locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
       describe 'show selling' do
         before { visit selling_path(selling, locale: :en) }
-        it { page.current_path.should eq selling_path(selling, locale: :en) }
+        it { expect(page.current_path).to eq selling_path(selling, locale: :en) }
       end
 
       describe 'check out selling' do
         before { visit check_out_selling_path(selling, locale: :en) }
-        it { page.current_path.should eq check_out_selling_path(selling, 
+        it { expect(page.current_path).to eq check_out_selling_path(selling, 
                                                                 locale: :en) }
       end
 
@@ -205,17 +205,17 @@ describe 'Role authentication' do
 
       describe 'visiting the reversals index page' do
         before { get reversals_path(locale: :en) }
-        specify { response.should redirect_to(root_path(locale: :en)) }
+        specify { expect(response).to redirect_to(root_path(locale: :en)) }
       end
 
       describe 'show reversal' do
         before { visit reversal_path(reversal, locale: :en) }
-        it { page.current_path.should eq reversal_path(reversal, locale: :en) }
+        it { expect(page.current_path).to eq reversal_path(reversal, locale: :en) }
       end
 
       describe 'check_out_reversal' do
         before { visit check_out_reversal_path(reversal, locale: :en) }
-        it { page.current_path.should eq check_out_reversal_path(reversal,
+        it { expect(page.current_path).to eq check_out_reversal_path(reversal,
                                                                  locale: :en) }
       end
 
@@ -235,12 +235,12 @@ describe 'Role authentication' do
       
       describe 'visiting the acceptances page' do
         before { visit acceptances_path(locale: :en) }
-        it { page.current_path.should eq acceptances_path(locale: :en) }
+        it { expect(page.current_path).to eq acceptances_path(locale: :en) }
       end
 
       describe 'accept list' do
         before { post accept_acceptance_path(list, locale: :en) }
-        specify { response.should redirect_to(acceptances_path(locale: :en)) }
+        specify { expect(response).to redirect_to(acceptances_path(locale: :en)) }
       end
 
       describe 'edit list' do
@@ -256,17 +256,17 @@ describe 'Role authentication' do
 
       describe 'visiting the carts page' do
         before { visit carts_path(locale: :en) }
-        it { page.current_path.should eq carts_path(locale: :en) }
+        it { expect(page.current_path).to eq carts_path(locale: :en) }
       end
 
       describe 'collect items for sales' do
         before { visit item_collection_carts_path(locale: :en) }
-        it { page.current_path.should eq item_collection_carts_path(locale: :en) }
+        it { expect(page.current_path).to eq item_collection_carts_path(locale: :en) }
       end
 
       describe 'collect line items for redemption' do
         before { visit line_item_collection_carts_path(locale: :en) }
-        it { page.current_path.should eq line_item_collection_carts_path(locale: :en) }
+        it { expect(page.current_path).to eq line_item_collection_carts_path(locale: :en) }
       end
 
     end
@@ -277,7 +277,7 @@ describe 'Role authentication' do
 
       describe 'visiting the counter index page' do
         before { visit counter_index_path(locale: :en) }
-        it { page.current_path.should eq counter_index_path(locale: :en) }
+        it { expect(page.current_path).to eq counter_index_path(locale: :en) }
       end
 
     end
@@ -286,7 +286,7 @@ describe 'Role authentication' do
 
       describe 'visiting the sellings index page' do
         before { visit sellings_path(locale: :en) }
-        it { page.current_path.should eq sellings_path(locale: :en) }
+        it { expect(page.current_path).to eq sellings_path(locale: :en) }
       end
 
     end
@@ -295,7 +295,7 @@ describe 'Role authentication' do
 
       describe 'visiting the reversals index page' do
         before { visit reversals_path(locale: :en) }
-        it { page.current_path.should eq reversals_path(locale: :en) }
+        it { expect(page.current_path).to eq reversals_path(locale: :en) }
       end
 
     end

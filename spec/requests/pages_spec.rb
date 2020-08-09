@@ -29,15 +29,15 @@ describe "Pages" do
       fill_in "Title", with: "Page number 99"
       fill_in "Content", with: "Content with 99 pages"
       click_button "Update"
-      page.current_path.should eq terms_of_use_path(locale: :en, 
+      expect(page.current_path).to eq terms_of_use_path(locale: :en, 
                                                     id: terms_of_use)
-      page.should have_content "Page number 99"
-      page.should have_content "Content with 99 pages"
+      expect(page).to have_content "Page number 99"
+      expect(page).to have_content "Content with 99 pages"
     end
 
     it "should delete a page" do
       expect { click_link "Delete" }.to change(Page, :count).by(-1)
-      page.current_path.should eq terms_of_use_path(locale: :en,
+      expect(page.current_path).to eq terms_of_use_path(locale: :en,
                                                     id: terms_of_use)
     end
 
@@ -59,7 +59,7 @@ describe "Pages" do
     end
 
     it "should not access terms of use page" do
-      page.current_path.should eq root_path(locale: :en)
+      expect(page.current_path).to eq root_path(locale: :en)
     end
 
   end
@@ -69,7 +69,7 @@ describe "Pages" do
     before { visit terms_of_use_path(locale: :en, id: terms_of_use) }
 
     it "should not access terms of use page" do
-      page.current_path.should eq signin_path(locale: :en)
+      expect(page.current_path).to eq signin_path(locale: :en)
     end
 
   end

@@ -14,8 +14,8 @@ describe "Without active event" do
     end
 
     it "should indicate no active event" do
-      page.should have_text "No active event"
-      page.should have_text list.registration_code
+      expect(page).to have_text "No active event"
+      expect(page).to have_text list.registration_code
     end
 
   end

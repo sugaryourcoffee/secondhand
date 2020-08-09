@@ -15,8 +15,8 @@ describe List do
       visit user_list_items_path(user, list, locale: :en)
     end
 
-    it { should have_text("Collect Items") }
-    it { should have_link("Create New Item", 
+    it { is_expected.to have_text("Collect Items") }
+    it { is_expected.to have_link("Create New Item", 
                        href: new_user_list_item_path(user, list, locale: :en)) }
 
     it "should create item" do
@@ -27,11 +27,11 @@ describe List do
 
       expect { click_button("Create Item") }.to change(Item, :count).by(1)
 
-      should have_text("This is my first item")
+      is_expected.to have_text("This is my first item")
 
-      should have_link("Show")
-      should have_link("Edit")
-      should have_link("Destroy")
+      is_expected.to have_link("Show")
+      is_expected.to have_link("Edit")
+      is_expected.to have_link("Destroy")
 
     end
 
@@ -44,8 +44,8 @@ describe List do
         expect { click_button("Create Item") }.to change(Item, :count).by(1)
       end 
 
-      should_not have_link "Create New Item"
-      should have_text "Cannot add additional items"
+      is_expected.not_to have_link "Create New Item"
+      is_expected.to have_text "Cannot add additional items"
     end
 
     it "should not create item when list has accepted status" do
@@ -59,8 +59,8 @@ describe List do
       list.save!
 
       click_link "Create New Item"
-      current_path.should eq user_path(locale: :en, id: user)
-      should have_text "Cannot create item for accepted list number #{list.list_number}"
+      expect(current_path).to eq user_path(locale: :en, id: user)
+      is_expected.to have_text "Cannot create item for accepted list number #{list.list_number}"
     end
 
   end
@@ -88,21 +88,21 @@ describe List do
     it "should show item" do
       click_link "Show"
 
-      should have_selector('h1', text: "Show Item")
-      should have_text("Description: This is my item")
+      is_expected.to have_selector('h1', text: "Show Item")
+      is_expected.to have_text("Description: This is my item")
     end
 
     it "should edit item" do
       click_link "Edit"
 
-      should have_selector('h1', text: "Edit Item")
+      is_expected.to have_selector('h1', text: "Edit Item")
 
       fill_in "Description", with: "This is my changed item"
       
       click_button "Update Item"
 
-      should have_selector('h1', text: "Collect Items")
-      should have_text("This is my changed item")
+      is_expected.to have_selector('h1', text: "Collect Items")
+      is_expected.to have_text("This is my changed item")
     end
 
     it "should not edit item of accepted list" do
@@ -111,8 +111,8 @@ describe List do
 
       click_link "Edit"
 
-      current_path.should eq user_path(locale: :en, id: user)
-      should have_text "Cannot edit item of accepted list number #{list.list_number}"
+      expect(current_path).to eq user_path(locale: :en, id: user)
+      is_expected.to have_text "Cannot edit item of accepted list number #{list.list_number}"
     end
 
     it "should destroy item" do
@@ -125,8 +125,8 @@ describe List do
 
       click_link "Destroy"
 
-      current_path.should eq user_path(locale: :en, id: user)
-      should have_text "Cannot delete item of accepted list number #{list.list_number}"
+      expect(current_path).to eq user_path(locale: :en, id: user)
+      is_expected.to have_text "Cannot delete item of accepted list number #{list.list_number}"
     end
 
   end

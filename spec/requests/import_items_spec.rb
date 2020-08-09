@@ -20,8 +20,8 @@ describe "Import items from" do
 
       it "should not allow to select file to upload" do
         visit list_select_file_path(locale: :en, list_id: list.id)
-        page.current_path.should eq root_path(locale: :en)
-        page.should have_text "The requested operation is not available!"
+        expect(page.current_path).to eq root_path(locale: :en)
+        expect(page).to have_text "The requested operation is not available!"
       end
 
     end
@@ -31,8 +31,8 @@ describe "Import items from" do
 
       it "should not allow to select file to upload" do
         visit list_select_file_path(locale: :en, list_id: list.id)
-        page.current_path.should eq root_path(locale: :en)
-        page.should have_text "The requested operation is not available!"
+        expect(page.current_path).to eq root_path(locale: :en)
+        expect(page).to have_text "The requested operation is not available!"
       end
 
       it "should not allow to select items to import" do
@@ -62,25 +62,25 @@ describe "Import items from" do
         before { visit list_select_file_path(locale: :en, list_id: list.id) }
 
         it "should have title 'Select Import File'" do
-          page.should have_title "Select Import File"
+          expect(page).to have_title "Select Import File"
         end
 
         it "should have button 'Browse'" do
-          page.should have_selector "input", "file"
+          expect(page).to have_selector "input", "file"
         end
 
         it "should have button 'Upload'" do
-          page.should have_button "Upload"
+          expect(page).to have_button "Upload"
         end
 
         it "should show select items page" do
            page.attach_file("file", "spec/fixtures/files/list-005.csv")
            click_button "Upload"
-           page.should have_title "Select Items"
-           page.should have_text "Item"
-           page.should have_text "Description"
-           page.should have_text "Size"
-           page.should have_text "Price"
+           expect(page).to have_title "Select Items"
+           expect(page).to have_text "Item"
+           expect(page).to have_text "Description"
+           expect(page).to have_text "Size"
+           expect(page).to have_text "Price"
 
            check("selection_1")
            check("selection_4")
@@ -92,9 +92,9 @@ describe "Import items from" do
 
         it "should not allow to select file to upload" do
           visit list_select_file_path(locale: :en, list_id: accepted.id)
-          page.current_path.should eq user_path(locale: :en, id: seller)
+          expect(page.current_path).to eq user_path(locale: :en, id: seller)
           text = "Cannot add items to accepted list #{accepted.list_number}"
-          page.should have_text text
+          expect(page).to have_text text
         end
 
         it "should not allow to select items to import" do

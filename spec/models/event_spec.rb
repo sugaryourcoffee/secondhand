@@ -5,88 +5,88 @@ describe Event do
   it "should respond to attributes" do
     event = Event.new
 
-    event.should respond_to(:title)
-    event.should respond_to(:event_date)
-    event.should respond_to(:location)
-    event.should respond_to(:fee)
-    event.should respond_to(:deduction)
-    event.should respond_to(:provision)
-    event.should respond_to(:max_lists)
-    event.should respond_to(:max_items_per_list)
-    event.should respond_to(:active)
-    event.should respond_to(:list_closing_date)
-    event.should respond_to(:delivery_location)
-    event.should respond_to(:delivery_date)
-    event.should respond_to(:delivery_start_time)
-    event.should respond_to(:delivery_end_time)
-    event.should respond_to(:collection_location)
-    event.should respond_to(:collection_date)
-    event.should respond_to(:collection_start_time)
-    event.should respond_to(:collection_end_time)
-    event.should respond_to(:information)
-    event.should respond_to(:alert_terms)
-    event.should respond_to(:alert_value)
+    expect(event).to respond_to(:title)
+    expect(event).to respond_to(:event_date)
+    expect(event).to respond_to(:location)
+    expect(event).to respond_to(:fee)
+    expect(event).to respond_to(:deduction)
+    expect(event).to respond_to(:provision)
+    expect(event).to respond_to(:max_lists)
+    expect(event).to respond_to(:max_items_per_list)
+    expect(event).to respond_to(:active)
+    expect(event).to respond_to(:list_closing_date)
+    expect(event).to respond_to(:delivery_location)
+    expect(event).to respond_to(:delivery_date)
+    expect(event).to respond_to(:delivery_start_time)
+    expect(event).to respond_to(:delivery_end_time)
+    expect(event).to respond_to(:collection_location)
+    expect(event).to respond_to(:collection_date)
+    expect(event).to respond_to(:collection_start_time)
+    expect(event).to respond_to(:collection_end_time)
+    expect(event).to respond_to(:information)
+    expect(event).to respond_to(:alert_terms)
+    expect(event).to respond_to(:alert_value)
   end
 
   it "requires a title" do
     event = Event.new(title: " ")
 
-    event.should_not be_valid
-    event.errors[:title].any?.should be_truthy # be_true
+    expect(event).not_to be_valid
+    expect(event.errors[:title].any?).to be_truthy # be_true
   end
 
   it "requires an event_date" do
     event = Event.new(event_date: nil)
 
-    event.should_not be_valid
-    event.errors[:event_date].any?.should be_truthy # be_true
+    expect(event).not_to be_valid
+    expect(event.errors[:event_date].any?).to be_truthy # be_true
   end
 
   it "requires a location" do
     event = Event.new(location: " ")
 
-    event.should_not be_valid
-    event.errors[:location].any?.should be_truthy # be_true
+    expect(event).not_to be_valid
+    expect(event.errors[:location].any?).to be_truthy # be_true
   end
 
   it "requires a fee" do
     event = Event.new(fee: " ")
 
-    event.should_not be_valid
-    event.errors[:fee].any?.should be_truthy # be_true
+    expect(event).not_to be_valid
+    expect(event.errors[:fee].any?).to be_truthy # be_true
   end
 
   it "requires a deduction" do
     event = Event.new(deduction: " ")
 
-    event.should_not be_valid
-    event.errors[:deduction].any?.should be_truthy # be_true
+    expect(event).not_to be_valid
+    expect(event.errors[:deduction].any?).to be_truthy # be_true
   end
 
   it "requires a provision" do
     event = Event.new(provision: " ")
 
-    event.should_not be_valid
-    event.errors[:provision].any?.should be_truthy # be_true
+    expect(event).not_to be_valid
+    expect(event.errors[:provision].any?).to be_truthy # be_true
   end
 
   it "requires max_lists" do
     event = Event.new(max_lists: " ")
 
-    event.should_not be_valid
-    event.errors[:max_lists].any?.should be_truthy # be_true
+    expect(event).not_to be_valid
+    expect(event.errors[:max_lists].any?).to be_truthy # be_true
   end
 
   it "requires max_items_per_list" do
     event = Event.new(max_items_per_list: " ")
 
-    event.should_not be_valid
-    event.errors[:max_items_per_list].any?.should be_truthy # be_true
+    expect(event).not_to be_valid
+    expect(event.errors[:max_items_per_list].any?).to be_truthy # be_true
   end
 
   it "returns regex of alert terms" do
     event = Event.new(alert_terms: "house mouse yellow red")
 
-    event.alert_terms_regex.should eq /house|mouse|yellow|red/i
+    expect(event.alert_terms_regex).to eq /house|mouse|yellow|red/i
   end
 end

@@ -17,8 +17,8 @@ describe Cart do
     end
 
     it "should indicate missing active event" do
-      event.active.should be_falsey
-      page.should have_text "Missing active Event"
+      expect(event.active).to be_falsey
+      expect(page).to have_text "Missing active Event"
     end
   end
 
@@ -35,11 +35,11 @@ describe Cart do
     end
 
     it "should have title 'Cart'" do
-      page.should have_title 'Cart'
+      expect(page).to have_title 'Cart'
     end
 
     it "should have 'h1' 'Cart'" do
-      page.should have_selector 'h1', 'Cart'
+      expect(page).to have_selector 'h1', 'Cart'
     end
 
     it "should add item" do
@@ -47,13 +47,13 @@ describe Cart do
       fill_in 'Item', with: list1.items.first.item_number
       click_button 'Add'
 
-      page.current_path.should eq item_collection_carts_path(locale: :en) 
+      expect(page.current_path).to eq item_collection_carts_path(locale: :en) 
 
-      page.should have_text list_item_number_for(list1.items.first)
-      page.should have_text list1.items.first.description
-      page.should have_text list1.items.first.size
-      page.should have_text list1.items.first.price
-      page.should have_link 'Delete'
+      expect(page).to have_text list_item_number_for(list1.items.first)
+      expect(page).to have_text list1.items.first.description
+      expect(page).to have_text list1.items.first.size
+      expect(page).to have_text list1.items.first.price
+      expect(page).to have_link 'Delete'
     end
 
     it "should delete item" do
@@ -61,15 +61,15 @@ describe Cart do
       fill_in 'Item', with: list1.items.first.item_number
       click_button 'Add'
 
-      page.current_path.should eq item_collection_carts_path(locale: :en) 
+      expect(page.current_path).to eq item_collection_carts_path(locale: :en) 
 
       click_link 'Delete'
 
-      page.should_not have_text list_item_number_for(list1.items.first)
-      page.should_not have_text list1.items.first.description
-      page.should_not have_text list1.items.first.size
-      page.should_not have_text list1.items.first.price
-      page.should_not have_link 'Delete'
+      expect(page).not_to have_text list_item_number_for(list1.items.first)
+      expect(page).not_to have_text list1.items.first.description
+      expect(page).not_to have_text list1.items.first.size
+      expect(page).not_to have_text list1.items.first.price
+      expect(page).not_to have_link 'Delete'
     end
 
     it "should not add empty item" do
@@ -80,24 +80,24 @@ describe Cart do
       fill_in 'List', with: "#{list1.event_id}1000"
       fill_in 'Item', with: "4"
       click_button 'Add'
-      page.should have_text "Could not add item"
-      page.should have_text "List 1000 doesn't exist"
+      expect(page).to have_text "Could not add item"
+      expect(page).to have_text "List 1000 doesn't exist"
     end
 
     it "should indicate empty list" do
       fill_in 'List', with: ""
       fill_in 'Item', with: "4"
       click_button 'Add'
-      page.should have_text "Could not add item"
-      page.should have_text "List must not be empty"
+      expect(page).to have_text "Could not add item"
+      expect(page).to have_text "List must not be empty"
     end
 
     it "should indicate not existing item" do
       fill_in 'List', with: list_number_for_cart(list1) # list1.list_number
       fill_in 'Item', with: "4"
       click_button 'Add'
-      page.should have_text "Could not add item"
-      page.should have_text "Item 4 doesn't exist"
+      expect(page).to have_text "Could not add item"
+      expect(page).to have_text "Item 4 doesn't exist"
     end
 
     it "should not add item already in the cart" do
@@ -109,8 +109,8 @@ describe Cart do
       fill_in 'Item', with: list1.items.first.item_number
       click_button 'Add'
 
-      page.should have_text "Could not add item"
-      page.should have_text "Item is already in the cart"
+      expect(page).to have_text "Could not add item"
+      expect(page).to have_text "Item is already in the cart"
     end
 
     it "should not add item contained in another cart" do
@@ -122,14 +122,14 @@ describe Cart do
       fill_in 'Item', with: list1.items.first.item_number
       click_button 'Add'
 
-      page.should have_text "Could not add item"
-      page.should have_text "Item is already in cart #{cart.id}"
+      expect(page).to have_text "Could not add item"
+      expect(page).to have_text "Item is already in cart #{cart.id}"
 
-      page.should_not have_text list_item_number_for(list1.items.first)
-      page.should_not have_text list1.items.first.description
-      page.should_not have_text list1.items.first.size
-      page.should_not have_text list1.items.first.price
-      page.should_not have_link 'Delete'
+      expect(page).not_to have_text list_item_number_for(list1.items.first)
+      expect(page).not_to have_text list1.items.first.description
+      expect(page).not_to have_text list1.items.first.size
+      expect(page).not_to have_text list1.items.first.price
+      expect(page).not_to have_link 'Delete'
     end
 
     it "should not add sold item" do
@@ -139,8 +139,8 @@ describe Cart do
       fill_in 'Item', with: list1.items.first.item_number
       click_button 'Add'
 
-      page.should have_text "Could not add item"
-      page.should have_text "Item is already sold with selling #{selling.id}"
+      expect(page).to have_text "Could not add item"
+      expect(page).to have_text "Item is already sold with selling #{selling.id}"
     end
 
     it "should check out, create selling and empty cart" do
@@ -148,15 +148,15 @@ describe Cart do
       fill_in 'Item', with: list1.items.first.item_number
       click_button 'Add'
 
-      page.should have_text list_item_number_for(list1.items.first)
-      page.should have_text list1.items.first.description
-      page.should have_text list1.items.first.size
-      page.should have_text list1.items.first.price
-      page.should have_link 'Delete'
+      expect(page).to have_text list_item_number_for(list1.items.first)
+      expect(page).to have_text list1.items.first.description
+      expect(page).to have_text list1.items.first.size
+      expect(page).to have_text list1.items.first.price
+      expect(page).to have_link 'Delete'
 
       expect { click_button 'Check out' }.to change(Selling, :count).by(1)
       
-      page.current_path.should eq check_out_selling_path(locale: :en, id: Selling.last)
+      expect(page.current_path).to eq check_out_selling_path(locale: :en, id: Selling.last)
     end
   end
 
@@ -174,34 +174,34 @@ describe Cart do
     end
 
     it "should have title 'Cart'" do
-      page.should have_title 'Carts'
+      expect(page).to have_title 'Carts'
     end
 
     it "should have 'h1' 'Cart'" do
-      page.should have_selector 'h1', 'Carts'
+      expect(page).to have_selector 'h1', 'Carts'
     end
 
     it "should show all carts" do
-      page.should have_text 'Cart'
-      page.should have_text 'Items'
-      page.should have_text 'Cashier'
-      page.should have_link 'Show'
-      page.should have_link 'Delete'
-      page.should have_text cart.id
-      page.should have_text cart.line_items.count
+      expect(page).to have_text 'Cart'
+      expect(page).to have_text 'Items'
+      expect(page).to have_text 'Cashier'
+      expect(page).to have_link 'Show'
+      expect(page).to have_link 'Delete'
+      expect(page).to have_text cart.id
+      expect(page).to have_text cart.line_items.count
     end
 
     it "should delete a cart" do
       line_item = cart.add(list1.items.first)
       line_item.save
 
-      cart.line_items.should_not be_empty
+      expect(cart.line_items).not_to be_empty
 
       expect { click_link 'Delete' }.to change(Cart, :count).by(-1)
 
-      page.current_path.should eq carts_path(locale: :en)
+      expect(page.current_path).to eq carts_path(locale: :en)
 
-      page.should have_text "Successfully deleted cart #{cart.id}"
+      expect(page).to have_text "Successfully deleted cart #{cart.id}"
     end
 
   end
@@ -221,33 +221,33 @@ describe Cart do
     end
 
     it "should have title edit cart" do
-      page.should have_title 'Cart'
+      expect(page).to have_title 'Cart'
     end
 
     it "should have selector edit cart #" do
-      page.should have_selector 'h1', "Cart #{cart.id}"
+      expect(page).to have_selector 'h1', "Cart #{cart.id}"
     end
     
     it "should have information about the cart" do
-      page.should have_text 'Cart number'
-      page.should have_text cart.id
-      page.should have_text 'Items'
-      page.should have_text cart.line_items.size
-      page.should have_text 'Total'
-      page.should have_text cart.total
+      expect(page).to have_text 'Cart number'
+      expect(page).to have_text cart.id
+      expect(page).to have_text 'Items'
+      expect(page).to have_text cart.line_items.size
+      expect(page).to have_text 'Total'
+      expect(page).to have_text cart.total
     end
 
     it "should show the items" do
-      page.should have_text 'Item'
-      page.should have_text 'Description'
-      page.should have_text 'Size'
-      page.should have_text 'Price'
+      expect(page).to have_text 'Item'
+      expect(page).to have_text 'Description'
+      expect(page).to have_text 'Size'
+      expect(page).to have_text 'Price'
 
       cart.line_items.each do |line_item|
-        page.should have_text list_item_number_for(line_item.item)
-        page.should have_text line_item.description
-        page.should have_text line_item.size
-        page.should have_text line_item.price
+        expect(page).to have_text list_item_number_for(line_item.item)
+        expect(page).to have_text line_item.description
+        expect(page).to have_text line_item.size
+        expect(page).to have_text line_item.price
       end
     end
 

@@ -16,8 +16,8 @@ describe "news pages" do
     before { visit news_index_path(locale: :en) }
 
     describe "visting by not signed in user" do
-      it { should_not have_title("News") }
-      it { should_not have_selector('h1', text: "News") }
+      it { is_expected.not_to have_title("News") }
+      it { is_expected.not_to have_selector('h1', text: "News") }
     end
 
     describe "visiting by signed in user" do
@@ -28,8 +28,8 @@ describe "news pages" do
         visit news_index_path(locale: :en)
       end
 
-      it { should_not have_title("News") }
-      it { should_not have_selector('h1', text: "News") }
+      it { is_expected.not_to have_title("News") }
+      it { is_expected.not_to have_selector('h1', text: "News") }
     end
 
     describe "visiting by admin user" do
@@ -40,14 +40,14 @@ describe "news pages" do
         visit news_index_path(locale: :en)
       end
 
-      it { should have_title("News") }
-      it { should have_selector('h1', text: "News") }
+      it { is_expected.to have_title("News") }
+      it { is_expected.to have_selector('h1', text: "News") }
 
       it "should show news" do
         translation = news.news_translation("en")
-        page.should have_text translation.language 
-        page.should have_text translation.title 
-        page.should have_text translation.description
+        expect(page).to have_text translation.language 
+        expect(page).to have_text translation.title 
+        expect(page).to have_text translation.description
       end
 
     end
@@ -57,8 +57,8 @@ describe "news pages" do
     before { visit news_path(news, locale: :en) }
 
     describe "visting by not signed in user" do
-      it { should_not have_title("News") }
-      it { should_not have_selector('h1', text: "News") }
+      it { is_expected.not_to have_title("News") }
+      it { is_expected.not_to have_selector('h1', text: "News") }
     end
 
     describe "visiting by signed in user" do
@@ -69,8 +69,8 @@ describe "news pages" do
         visit news_path(news, locale: :en)
       end
 
-      it { should_not have_title("News") }
-      it { should_not have_selector('h1', text: "News") }
+      it { is_expected.not_to have_title("News") }
+      it { is_expected.not_to have_selector('h1', text: "News") }
     end
 
     describe "visiting by admin user" do
@@ -81,17 +81,17 @@ describe "news pages" do
         visit news_path(news, locale: :en)
       end
 
-      it { should have_title("Show news") }
-      it { should have_selector('h1', text: "Show news") }
+      it { is_expected.to have_title("Show news") }
+      it { is_expected.to have_selector('h1', text: "Show news") }
 
       it "should show news" do
-        page.should have_text news.author
-        page.should have_text news.issue
+        expect(page).to have_text news.author
+        expect(page).to have_text news.issue
       
         translation = news.news_translation("en")
-        page.should have_text translation.language 
-        page.should have_text translation.title 
-        page.should have_text translation.description
+        expect(page).to have_text translation.language 
+        expect(page).to have_text translation.title 
+        expect(page).to have_text translation.description
       end
 
     end

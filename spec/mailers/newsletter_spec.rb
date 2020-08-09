@@ -22,14 +22,14 @@ describe Newsletter do
                                       User.subscribers(:en)) }
 
       it "renders the headers" do
-        mail.subject.should eq("Title")
-        mail.to.should eq(["mail@boerse-burgthann.de"])
-        mail.bcc.should eq([user_english.email])
-        mail.from.should eq(["mail@boerse-burgthann.de"])
+        expect(mail.subject).to eq("Title")
+        expect(mail.to).to eq(["mail@boerse-burgthann.de"])
+        expect(mail.bcc).to eq([user_english.email])
+        expect(mail.from).to eq(["mail@boerse-burgthann.de"])
       end
 
       it "renders the body" do
-        mail.body.encoded.should match(news.news_translation(:en).description)
+        expect(mail.body.encoded).to match(news.news_translation(:en).description)
       end
     end
 
@@ -38,14 +38,14 @@ describe Newsletter do
                                       User.subscribers(:de)) }
 
       it "renders the headers" do
-        mail.subject.should eq(news.news_translation(:de).title)
-        mail.to.should eq(["mail@boerse-burgthann.de"])
-        mail.bcc.should eq([admin.email, user_german.email])
-        mail.from.should eq(["mail@boerse-burgthann.de"])
+        expect(mail.subject).to eq(news.news_translation(:de).title)
+        expect(mail.to).to eq(["mail@boerse-burgthann.de"])
+        expect(mail.bcc).to eq([admin.email, user_german.email])
+        expect(mail.from).to eq(["mail@boerse-burgthann.de"])
       end
 
       it "renders the body" do
-        mail.body.encoded.should match(news.news_translation(:de).description)
+        expect(mail.body.encoded).to match(news.news_translation(:de).description)
       end
     end
   end

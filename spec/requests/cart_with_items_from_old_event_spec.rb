@@ -20,14 +20,14 @@ describe "Cart" do
 
     it "should activate event" do
       click_button "Activate"
-      event1.reload.active.should be_falsey
-      event2.reload.active.should be_truthy
+      expect(event1.reload.active).to be_falsey
+      expect(event2.reload.active).to be_truthy
     end
 
     it "should deactivate event" do
       click_button "Deactivate"
-      event1.reload.active.should be_falsey
-      event2.reload.active.should be_falsey
+      expect(event1.reload.active).to be_falsey
+      expect(event2.reload.active).to be_falsey
     end
 
     it "should print lists" do
