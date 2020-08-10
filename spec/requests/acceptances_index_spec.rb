@@ -28,8 +28,7 @@ describe "Acceptances index page" do
     end
 
     it "should have warning about no active event" do
-      expect(page).to have_text "For list acceptance it is neccessary to have an \
-      active event"
+      expect(page).to have_text "For list acceptance it is neccessary to have an active event"
       expect(page).to have_link "activate_event"
       click_link "activate_event"
       expect(current_path).to eq events_path(locale: :en)

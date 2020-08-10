@@ -56,8 +56,7 @@ describe "Submit terms of use" do
 
       before { visit display_terms_of_use_path(locale: :en) }
 
-      it { expect(page).to have_text "To obtain the Terms of Sales please turn to \
-           your Secondhand organizer" }
+      it { expect(page).to have_text "To obtain the Terms of Sales please turn to your Secondhand organizer" }
 
     end
 
@@ -67,8 +66,7 @@ describe "Submit terms of use" do
 
       before { visit display_terms_of_use_path(locale: :en) }
 
-      it { expect(page).to have_text "To obtain the Terms of Sales please turn to \
-           your Secondhand organizer" }
+      it { expect(page).to have_text "To obtain the Terms of Sales please turn to your Secondhand organizer" }
 
     end
 
@@ -77,8 +75,7 @@ describe "Submit terms of use" do
 
       before { visit display_terms_of_use_path(locale: :en) }
 
-      it { expect(page).to have_text "To obtain the Terms of Sales please turn to \
-           your Secondhand organizer" }
+      it { expect(page).to have_text "To obtain the Terms of Sales please turn to your Secondhand organizer" }
 
     end
 
