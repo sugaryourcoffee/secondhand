@@ -22,7 +22,7 @@ gem 'jquery-turbolinks'
 
 group :development, :test do
   gem 'sqlite3', '~> 1.3.6'
-  gem 'rspec-rails', '~> 2.99.0'
+  gem 'rspec-rails', '~> 3.9'
  end
 
 group :development do
@@ -34,7 +34,7 @@ end
 group :test do
   gem 'guard-spork', '~> 2.1'
   gem 'spork', '~> 0.9'
-  gem 'capybara', '~> 2.1.0'
+  gem 'capybara', '~> 3.33'
   gem 'rb-inotify', '~> 0.9.0'
   gem 'libnotify', '~> 0.5.9'
   gem 'factory_girl_rails', '1.4.0'
