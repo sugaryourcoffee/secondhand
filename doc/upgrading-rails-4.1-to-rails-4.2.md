@@ -439,16 +439,19 @@ have a look at the deprecation warnings.
 This section describes deprecation warnings revealed by rspec after upgrading
 to Rails 4.2.11.3
 
-### 'name\_routes.helpers'
-`named_routes.helpers` is deprecated, please use `route_defined?(route_name)`
-to see if a named route was defined.
+### 'named\_routes.helpers'
+`named\_routes.helpers` is deprecated, please use 
+`route\_defined?(route\_name)` to see if a named route was defined.
 
-This is caused in combination with rails 4.2 and rspec 2.99.0 which doesn't go together. 
+This is caused in combination with rails 4.2 and rspec 2.99.0 which doesn't 
+go together. 
 
 Action is to upgrade to rspec 3 as described in [Project: RSpec Rails 3.9](https://relishapp.com/rspec/rspec-rails/v/3-9/docs/upgrade)
 
+After the upgrade to rspec-rails 3.9 the deprecation warning is gone.
+
 ### '#deliver'
-`#deliver` is deprecated and will be removed in Rails 5. Use `#deliver_now`
+`#deliver` is deprecated and will be removed in Rails 5. Use `#deliver\_now`
 
 ### URL Helpers
 Calling URL helpers with string keys controller, action is deprecated. Use 
@@ -580,6 +583,73 @@ RSpec first before we proceede. The upgrade process can be found
 [Rspec upgrade guide](https://relishapp.com/rspec/docs/upgrade)
  
     > gem install transpec
+
+Running transpec will replace all deprecated code from the specs. After that 
+update RSpec by adding the new version to the Gemfile
+
+    > gem 'rspec-rails', '~> 3.9'
+    > bundle update
+
+Running specs again will reveal that we need a higher capybara version
+
+    > rspec
+    RuntimeError:
+      You are using capybara 2.1.0 RSpec requires >= 2.2.0.
+
+We update to the newest version of capybara wich is 3.33.0 and add the 
+respective directive to the Gemfile
+
+    > gem 'capybara', '~> 3.33'
+    > bundle update
+
+We also require 'capybara/rspec' in 'spec/spec\_helper'.
+
+Another run of rspec brings up a load of errors, in total 145, and 1 
+deprecation warning. Let's fix them one by one with the help of the [Capybara Readme 3.33.0](https://github.com/teamcapybara/capybara/blob/3.33_stable/README.md#using-capybara-with-rspec).
+
+#### Decprecated 'rspec/autorun'
+
+    Requiring `rspec/autorun` when running RSpec via the `rspec` command is
+    deprecated. Called from 
+    /home/pierre/.rvm/gems/ruby-2.5.7@rails-4.2.11.3-secondhand-u
+    pgrade/gems/activesupport-4.2.11.3/lib/active_support/dependencies.rb:274
+    :in `require'.
+
+We remove the directive from 'spec/spec\_helper.rb' and run rspec again to 
+see if the deprecation warning is gone. Yep, it's gone.
+
+#### Capybara LoadError of puma server
+
+    Failure/Error: raise LoadError, 'Capybara is unable to load `puma` for 
+    its server, please add `puma` to your project or specify a different 
+    server via something like `Capybara.server = :webrick`.'
+
+We are using webrick an add to spec/spec\_helper.rb
+
+    Capybara.server = :webrick
+
+Running rspec again we reduced with this small change the from 145 to 27,
+that I call progress.
+
+#### WARNING: Using the `raise_error` matcher 
+
+    WARNING: Using the `raise_error` matcher without providing a specific
+    error or message risks false positives, since `raise_error` will match
+    when Ruby raises a `NoMethodError`, `NameError` or `ArgumentError`,
+    potentially allowing the expectation to pass without even executing the
+    method you are intending to call. Actual error raised was
+    #<ActiveRecord::RecordNotFound: Couldn't find Event with 'id'=32>.
+    Instead consider providing a specific error class or message. This
+    message can be suppressed by setting:
+    `RSpec::Expectations.configuration
+                        .on_potential_false_positives = :nothing`.
+                 
+The result was actually what we are testing for 
+
+    '#<ActiveRecord::RecordNotFound: Couldn't find Event with 'id'=32>'.
+
+Now test explicitly on 'ActiveRecord::RecordNotFound:'.
+    expect { Event.find(event.id) }.to raise_error(ActiveRecord::RecordNotFound) { |error| expect(error.data).to eq Couldn't find Event with 'id'=#{event.id} }
 
 ------------------old stuff-------------
 ## Runtime Errors
