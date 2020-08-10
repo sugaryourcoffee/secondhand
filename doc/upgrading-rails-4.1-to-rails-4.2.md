@@ -649,8 +649,25 @@ The result was actually what we are testing for
     '#<ActiveRecord::RecordNotFound: Couldn't find Event with 'id'=32>'.
 
 Now test explicitly on 'ActiveRecord::RecordNotFound:'.
-    expect { Event.find(event.id) }.to raise_error(ActiveRecord::RecordNotFound) { |error| expect(error.data).to eq Couldn't find Event with 'id'=#{event.id} }
 
+    expect { Event.find(event.id) }.to \
+      raise_error(ActiveRecord::RecordNotFound, /.*'id'=#{event.id}.*/)
+
+#### ArgumentError:
+
+We get quite some argument errors
+
+    ArgumentError:
+       13 Unused parameters passed to Capybara::Queries::SelectorQuery : 
+       ["Cart"]
+
+       3 wrong number of arguments (given 2, expected 0..1)
+
+    2 ActionController::RoutingError
+
+    7 Failure/Error
+       expected #has_text? which has whitespace because of \ line break
+    
 ------------------old stuff-------------
 ## Runtime Errors
 Runtime errors after upgrading to Rails 4.1.16.
