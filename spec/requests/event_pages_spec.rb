@@ -87,7 +87,8 @@ describe "event pages" do
           expect(List.all.size).to eq(2)
 
           expect { event.destroy }.to change(Event, :count).by(-1)
-          expect { Event.find(event.id) }.to raise_error #(ActiveRecord::RecordNotFound)
+          expect { Event.find(event.id) }.to \
+            raise_error(ActiveRecord::RecordNotFound, /.*'id'=#{event.id}.*/)
           
 #          List.all.should have(1).items
           expect(List.all.size).to eq(1)
