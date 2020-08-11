@@ -110,7 +110,12 @@ describe "Acceptances index page" do
       it "should show acceptance diaglog when scanning label", js: true do
         list.items.create!(item_attributes)
         fill_in "List", with: barcode_encoding_for(list, list.items.first)
-        expect(page.current_path).to eq edit_acceptance_path(locale: :en, id: list)
+        # The label is scanned and directly send by having a "\n" appended
+        # Capybara doesn't respect "\n" and therefore in the test the button
+        # has to be pressed
+        click_button "Search"
+        expect(page).to have_current_path(edit_acceptance_path(locale: :en, 
+                                                               id: list.id))
       end
 
       it "should show acceptance dialog when searching for an accepted list" do
