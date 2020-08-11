@@ -143,9 +143,9 @@ describe "Acceptances" do
           it "should have 'Revoke list acceptance' button" do
             expect(accepted_list.accepted_on).not_to be_nil
 
-            expect(accepted_list.items.first.sold?).to be_truthy # be_true
+            expect(accepted_list.items.first.sold?).to be_truthy 
 
-            expect(page).to have_text 'List contains sold items! To edit the list you may revoke the list acceptance by pressing the button' 
+            expect(page).to have_text("List contains sold items!\nTo edit the list you may revoke the list acceptance by pressing the button")
 
             expect(page).to have_button 'Revoke list acceptance'
 
