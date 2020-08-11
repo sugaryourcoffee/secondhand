@@ -149,8 +149,8 @@ describe 'List operation' do
     end
 
     describe "in acceptance dialog" do
-      before { visit edit_acceptance_path(locale: :en, id: list) } 
-      
+      before { visit edit_acceptance_path(locale: :en, id: list.id) } 
+
       it "should not reset sent_on when deleting item", js: true do
         click_link "Delete"
         modal = page.driver.browser.switch_to.alert
