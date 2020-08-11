@@ -125,8 +125,7 @@ describe "Acceptances index page" do
         click_button "Search"
         expect(page.current_path).to eq acceptances_path(locale: :en)
         expect(page).to have_text "Not Accepted Lists"
-        expect(page).to have_text "List #{unregistered_list.list_number} \
-        is not registered."
+        expect(page).to have_text "List #{unregistered_list.list_number} is not registered."
       end
 
       it "should show warning when searching for a not existing list" do
