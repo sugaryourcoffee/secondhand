@@ -40,15 +40,17 @@ describe "Newsletter" do
 
       end
 
-      it "should show errors on unclomplete input" do
+      it "should show errors on inclomplete input" do
         visit new_news_path
 
-        expect(page.all('input', visible: true).size).to eq 8
+        expect(page.all('input'   ).size).to eq 6
+        expect(page.all('textarea').size).to eq 2
 
         expect { click_button 'Create new news' }.to change(News, :count).by 0
         expect(page).to have_text "error"
 
-        expect(page.all('input', visible: true).size).to eq 8
+        expect(page.all('input'   ).size).to eq 6
+        expect(page.all('textarea').size).to eq 2
       end
     end
 
