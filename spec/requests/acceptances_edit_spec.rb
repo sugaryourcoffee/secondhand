@@ -199,7 +199,8 @@ describe "Acceptances" do
         modal = page.driver.browser.switch_to.alert
         modal.accept
         
-        expect(page).not_to have_text item.description
+        expect(page).to have_text(" ", wait: 5) # due to time issues
+        expect(page).not_to have_text(item.description)
         expect(page).not_to have_text item.size
         expect(page).not_to have_link "Delete"
         
