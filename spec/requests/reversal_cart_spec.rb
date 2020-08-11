@@ -18,7 +18,7 @@ describe "Reversal cart pages" do
   end
 
   it "should have selector Redemption" do
-    expect(page).to have_selector 'h1', 'Redemption'
+    expect(page).to have_selector('h1', text: 'Redemption')
   end
 
   describe "with no active event" do
@@ -158,7 +158,7 @@ describe "Reversal cart pages" do
       end
 
       it "should have 'h1' 'Carts'" do
-        expect(page).to have_selector 'h1', 'Carts'
+        expect(page).to have_selector('h1', text: 'Carts')
       end
 
       it "should show all carts" do
@@ -213,7 +213,7 @@ describe "Reversal cart pages" do
       end
 
       it "should have 'h1' 'Cart' with id" do
-        expect(page).to have_selector 'h1', "Cart #{cart.id}"
+        expect(page).to have_selector('h1', text: "Cart #{cart.id}")
         expect(page).to have_text 'Redemption'
       end
 

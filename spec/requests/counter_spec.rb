@@ -103,9 +103,10 @@ describe "Counter" do
         expect(page).to have_text selling.id
         expect(page).to have_text local_date_and_time selling.created_at
         expect(page).to have_text selling.total
-        expect(page).to have_link 'Show', selling_path(locale: :en, id: selling)
-        expect(page).to have_link 'Print', 
-                              print_selling_path(locale: :en, id: selling)
+        expect(page).to have_link('Show', 
+                            href: selling_path(locale: :en, id: selling))
+        expect(page).to have_link('Print', 
+                            href: print_selling_path(locale: :en, id: selling))
       end
 
       it "should filter on selling id" do
@@ -140,9 +141,10 @@ describe "Counter" do
         expect(page).to have_text reversal.id
         expect(page).to have_text local_date_and_time reversal.created_at
         expect(page).to have_text reversal.total
-        expect(page).to have_link 'Show', reversal_path(locale: :en, id: reversal)
-        expect(page).to have_link 'Print', 
-                              print_reversal_path(locale: :en, id: reversal)
+        expect(page).to have_link('Show',
+                          href: reversal_path(locale: :en, id: reversal))
+        expect(page).to have_link('Print', 
+                          href: print_reversal_path(locale: :en, id: reversal))
       end
 
       it "should filter on reversal id" do

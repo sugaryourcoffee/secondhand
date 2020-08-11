@@ -53,8 +53,8 @@ describe "List with sold items" do
 
     it "should have link to list selling status page" do
       expect(page.current_path).to eq lists_path(locale: :en)
-      expect(page).to have_link "Show", 
-                            sold_items_list_path(locale: :en, id: accepted_list)
+      expect(page).to have_link("Show", 
+                    href: sold_items_list_path(locale: :en, id: accepted_list))
     end
 
     it "should forward to list selling status page" do

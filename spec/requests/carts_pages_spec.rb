@@ -39,7 +39,7 @@ describe Cart do
     end
 
     it "should have 'h1' 'Cart'" do
-      expect(page).to have_selector 'h1', 'Cart'
+      expect(page).to have_selector('h1', text: 'Cart')
     end
 
     it "should add item" do
@@ -178,7 +178,7 @@ describe Cart do
     end
 
     it "should have 'h1' 'Cart'" do
-      expect(page).to have_selector 'h1', 'Carts'
+      expect(page).to have_selector('h1', text: 'Carts')
     end
 
     it "should show all carts" do
@@ -225,7 +225,7 @@ describe Cart do
     end
 
     it "should have selector edit cart #" do
-      expect(page).to have_selector 'h1', "Cart #{cart.id}"
+      expect(page).to have_selector('h1', text: "Cart #{cart.id}")
     end
     
     it "should have information about the cart" do

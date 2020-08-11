@@ -13,10 +13,10 @@ describe 'Statistic pages' do
   end
 
   it "should have statistics headings" do
-    expect(page).to have_selector("h1", "Statistics")
-    expect(page).to have_selector("h2", "General Information")
-    expect(page).to have_selector("h2", "Sellings")
-    expect(page).to have_selector("h2", "Reversals")
+    expect(page).to have_selector("h1", text: "Statistics")
+    expect(page).to have_selector("h2", text: "General Information")
+    expect(page).to have_selector("h2", text: "Sellings")
+    expect(page).to have_selector("h2", text: "Reversals")
   end
 
 end

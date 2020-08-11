@@ -20,7 +20,7 @@ describe "Reversal show page" do
   end
 
   it "should have headline 'Reversal #'" do
-    expect(page).to have_selector 'h1', "Redemption #{selling.id}"
+    expect(page).to have_selector('h1', text: "Redemption #{selling.id}")
   end
 
   it "should have information about the reversal" do

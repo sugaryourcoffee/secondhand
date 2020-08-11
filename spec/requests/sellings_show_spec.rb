@@ -19,7 +19,7 @@ describe "selling show page" do
   end
 
   it "should have heading 'Selling #'" do
-    expect(page).to have_selector 'h1', "Selling #{selling.id}"
+    expect(page).to have_selector('h1', text: "Selling #{selling.id}")
   end
 
   it "should have information about the selling" do

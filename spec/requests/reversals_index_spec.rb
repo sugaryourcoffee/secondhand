@@ -16,7 +16,7 @@ describe "Reversals index page" do
   end
 
   it "should have heading Reversals" do
-    expect(page).to have_selector 'h1', 'Redemptions'
+    expect(page).to have_selector('h1', text: 'Redemptions')
   end
 
   describe "with no active event" do

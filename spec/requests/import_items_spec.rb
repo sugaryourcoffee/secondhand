@@ -66,7 +66,7 @@ describe "Import items from" do
         end
 
         it "should have button 'Browse'" do
-          expect(page).to have_selector "input", "file"
+          expect(page).to have_selector("input", id: "file")
         end
 
         it "should have button 'Upload'" do

@@ -26,7 +26,7 @@ describe "Reversal check out page" do
                                                         id: Reversal.last)
 
     expect(page).to have_title    "Redemption #{Reversal.last.id}"
-    expect(page).to have_selector 'h1', "Redemption #{Reversal.last.id}"
+    expect(page).to have_selector('h1', text: "Redemption #{Reversal.last.id}")
     expect(page).to have_text     "Voucher"
     expect(page).to have_text     "Redemption number"
     expect(page).to have_text     "Total"
