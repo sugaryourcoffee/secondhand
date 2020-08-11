@@ -22,6 +22,9 @@ Spork.prefork do
   # are using WEBrick
   Capybara.server = :webrick
 
+  # Increase the max wait time to 5 seconds (default is 2 seconds)
+  Capybara.default_max_wait_time = 5
+
   RSpec.configure do |config|
     # ## Mock Framework
     #
