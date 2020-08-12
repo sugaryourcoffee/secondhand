@@ -152,17 +152,20 @@ describe 'List operation' do
       before { visit edit_acceptance_path(locale: :en, id: list.id) } 
 
       it "should not reset sent_on when deleting item", js: true do
-        click_link "Delete"
+        click_link "Delete", wait: 5
         modal = page.driver.browser.switch_to.alert
         modal.accept
         expect(list.reload.sent_on).not_to be_nil
       end
 
       it "should not reset sent_on when editing item", js: true do
+#        puts "in editing item"
         item = list.items.first
-        click_link "edit-item-#{item.item_number}"
+        click_link "edit-item-#{item.item_number}", wait: 5
+#        puts "clicked link edit-item"
         fill_in "item_price", with: 2.5
         click_button "Update"
+#        puts list.sent_on.inspect
         expect(list.reload.sent_on).not_to be_nil
       end
 
