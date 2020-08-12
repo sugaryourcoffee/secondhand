@@ -109,12 +109,12 @@ patch level of Ruby 2.0.0. We can check the latest available versions with
     $ rvm list known | grep 2.0.0
     [ruby-]2.0.0[-p648]
 
-    It happens that we are already on the lates Ruby v2.0.0 version. But asuming we wouldn't be the process how to install and create new gemsets is shown in the document [upgrading-rails-4.0-to-rails-4.1.md](https://github.com/sugaryourcoffee/secondhand/blob/master/doc/upgrading-rails-4.0-to-rails-4.1.md#update-ruby-to-the-latest-patch-level).
+It happens that we are already on the lates Ruby v2.0.0 version. But asuming we wouldn't be the process how to install and create new gemsets is shown in the document [upgrading-rails-4.0-to-rails-4.1.md](https://github.com/sugaryourcoffee/secondhand/blob/master/doc/upgrading-rails-4.0-to-rails-4.1.md#update-ruby-to-the-latest-patch-level).
 
 ## Update to the latest Rails 4.1 version
-We could start to upgrade our app from the current version to version 4.1, but 
-it is advised to upgrade from the most current version. To find the most recent
-version we can issue
+We could start to upgrade our app from the current version to version 4.2, but
+it is advised to upgrade from the most current version. To find the most 
+recent version we can issue
 
     $ gem list ^rails$ --remote --all | grep -oP "4.1(.\d{1,})*"
     4.1.16
@@ -143,7 +143,7 @@ again. If you get errors than try `$ rake db:test:prepare` and *rspec* again.
 Only move on if all your tests pass without errors.
 
 ## Merge the updated app to the master branch
-Now that we have updated our Secondhand app to the most current Ruby and Rails 
+Now that we have updated our Secondhand app to the most current Ruby and Rails
 versions we want to merge the changes back to the master branch. We first 
 checkout the master branch and then push them to github.
 
@@ -156,7 +156,7 @@ Just to be sure we run rspec again.
 Now we are ready to actually upgrade to Rails 4.2.
 
 # Stage 2 - Upgrade to Rails 4.2
-Now we are prepared to actually upgrade to Rails 4.1. We checkout a new branch
+Now we are prepared to actually upgrade to Rails 4.2. We checkout a new branch
 
     $ git checkout -b upgrade-to-rails-4.2
     $ git push --set-upstream origin upgrade-to-rails-4.2
@@ -357,7 +357,10 @@ Now we use a rake task that helps to interactively update configuration files.
 
     $ rake rails:update
 
-We get an error running the update tast. It is caused by rspec-rails 2.99 which is using an obsolete method 'last_comment' that has been replace in Rake.
+We get an error running the update task. It is caused by rspec-rails 2.99
+which is using an obsolete method 'last\_comment' that has been replaced in 
+Rake.
+
 To fix this we add to the Rakefile (source stackoverflow)
 
     # Fix no method error 'last_comment'
@@ -374,26 +377,26 @@ A description on how to update from Rspec 2.99.0 can be found at [Rspec upgrade 
 Now the update task runs and will ask whether to overwrite the old files with
 new files. With `d` we can diff the old and the new file. Here is how we process Secondhand.
 
-File                                    | Overwrite | After update action
---------------------------------------- | --------- | -------------------
-config/boot.rb                          | no        | no *
-config/routes.rb                        | no        | yes *
-config/application.rb                   | no        | no *
-config/environment.rb                   | no        | no *
-config/secrets.yml                      | yes       | no *
-conifg/environments/development.rb      | no        | yes *
-config/environsments/production.rb      | no        | yes *
-config/environments/staging.rb          | no        | no
-config/environments/test.rb             | no        | yes *
-config/environments/beta.rb             | no        | no
-config/initializers/assets.rb           | no        | no *
-config/initializers/cookies\_serializer.rb | yes       | no * 
-config/initializers/inflections.rb      | no        | no *
-config/initializers/mime\_types.rb      | no        | no *
-config/initializers/secret\_token.rb    | yes       | no -
-config/locales/en.yml                   | no        | no *
-bin/rails                               | yes       | no *
-bin/setup                               | create    | no *
+File                                       | Overwrite | After update action
+------------------------------------------ | --------- | -------------------
+config/boot.rb                             | no        | no
+config/routes.rb                           | no        | yes
+config/application.rb                      | no        | no
+config/environment.rb                      | no        | no
+config/secrets.yml                         | yes       | no
+conifg/environments/development.rb         | no        | yes
+config/environsments/production.rb         | no        | yes
+config/environments/staging.rb             | no        | no
+config/environments/test.rb                | no        | yes
+config/environments/beta.rb                | no        | no
+config/initializers/assets.rb              | no        | no
+config/initializers/cookies\_serializer.rb | yes       | no
+config/initializers/inflections.rb         | no        | no
+config/initializers/mime\_types.rb         | no        | no
+config/initializers/secret\_token.rb       | yes       | no
+config/locales/en.yml                      | no        | no
+bin/rails                                  | yes       | no
+bin/setup                                  | create    | no
 
 ### config/secrets.yml
 
@@ -403,20 +406,19 @@ Change of the scret\_key\_base by rake rails:update
 
 Rails 4.1.16                        | Rails 4.2.11.3
 ----------------------------------- | ---------------------------------------
-                                    | config.assets.digest = true
+n.a.                                | config.assets.digest = true
 
 ### config/environments/production.rb
 
 Rails 4.1.16                          | Rails 4.2.11.3
-------------------------------------- | ------------------------------------------------
-config\_serve\_static\_assets = false | config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
+------------------------------------- | --------------------------------------
+config\_serve\_static\_assets = false | config.serve\_static\_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
 ### config/environments/test.rb
 
 Action      | Description
 ----------- | --------------------------------------------  
-test\_order | # Randomize the order test cases are executed.
-            | config.active_support.test_order = :random
+test\_order | config.active\_support.test\_order = :random
 
 
 Rails 4.1.16                        | Rails 4.2.11.3
@@ -439,9 +441,9 @@ have a look at the deprecation warnings.
 This section describes deprecation warnings revealed by rspec after upgrading
 to Rails 4.2.11.3
 
-### 'named\_routes.helpers'
-`named\_routes.helpers` is deprecated, please use 
-`route\_defined?(route\_name)` to see if a named route was defined.
+### named\_routes.helpers
+`named_routes.helpers` is deprecated, please use 
+`route_defined?(route_name)` to see if a named route was defined.
 
 This is caused in combination with rails 4.2 and rspec 2.99.0 which doesn't 
 go together. 
@@ -451,7 +453,7 @@ Action is to upgrade to rspec 3 as described in [Project: RSpec Rails 3.9](https
 After the upgrade to rspec-rails 3.9 the deprecation warning is gone.
 
 ### '#deliver'
-`#deliver` is deprecated and will be removed in Rails 5. Use `#deliver\_now`
+`#deliver` is deprecated and will be removed in Rails 5. Use `#deliver_now`
 
 ### URL Helpers
 Calling URL helpers with string keys controller, action is deprecated. Use 
@@ -481,8 +483,9 @@ In this section error message are discussed that have arisen after upgrading
 to Rails 4.2.
 
 ### Fixing errors revealed by rspec runs
-When running rspec we get following 19 errors that worked with the previously
-used Rails 4.1.16 version.
+When running rspec we get 19 errors that worked with the previously
+used Rails 4.1.16 version. Most of the errors occur multiple times therfore we
+show the consolidated error messages
 
     1) List export to CSV should not have ';' in any field
        Failure/Error: list.as_csv.split(';').size.should eq 16
@@ -506,12 +509,12 @@ used Rails 4.1.16 version.
         [https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette/WebDriver](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette/WebDriver).
 
 #### 1) List export to CSV should not have ';' in any field
-The CSV module changed the UTF-8 encoding name from 'u' to 'UTF-8'.
+The CSV module changed the UTF-8 encoding name from `u` to `UTF-8`.
 
 #### 2) User when password is not present should not be valid
-With Rails 4.2 the validation of 'allow\_blank' now also includes empty
+With Rails 4.2 the validation of `allow_blank` now also includes empty
 strings, therefore the validation fails and hence the test. Changed the code
-from 'allow\_blank' to 'unless: -> { password.nil? || password.empty? }'
+from `allow_blank` to `unless: -> { password.nil? || password.empty? }`
 
 #### 17) Newsletter create by admin user should show errors on inclomplete input
 Somehow the version 3 of rspec/capybara is counting differently. The solution 
@@ -573,12 +576,12 @@ In `spec/spec_helper` we set `Capybara.max_waiting_time = 5` and `wait: 5` in
 the respective code.
 
 ### 4) Acceptance index page ...
-Capybara 3.33.0 doesn't consider "\n" as return key press anymore in input
+Capybara 3.33.0 doesn't consider "\n" as a return key press anymore in input
 fields. As a work around let's click the button.
 
 ### x2)/x3) WARN Selenium [DEPRECATION]
 The deprecation warning is probably from the RSpec version. Let's update
-RSpec first before we proceede. The upgrade process can be found 
+RSpec first before we proceed. The upgrade process can be found 
 [Rspec upgrade guide](https://relishapp.com/rspec/docs/upgrade)
  
     > gem install transpec
@@ -601,7 +604,7 @@ respective directive to the Gemfile
     > gem 'capybara', '~> 3.33'
     > bundle update
 
-We also require 'capybara/rspec' in 'spec/spec\_helper'.
+We also require `capybara/rspec` in `spec/spec_helper`.
 
 Another run of rspec brings up a load of errors, in total 145, and 1 
 deprecation warning. Let's fix them one by one with the help of the [Capybara Readme 3.33.0](https://github.com/teamcapybara/capybara/blob/3.33_stable/README.md#using-capybara-with-rspec).
@@ -614,7 +617,7 @@ deprecation warning. Let's fix them one by one with the help of the [Capybara Re
     pgrade/gems/activesupport-4.2.11.3/lib/active_support/dependencies.rb:274
     :in `require'.
 
-We remove the directive from 'spec/spec\_helper.rb' and run rspec again to 
+We remove the directive from `spec/spec_helper.rb` and run rspec again to 
 see if the deprecation warning is gone. Yep, it's gone.
 
 #### Capybara LoadError of puma server
@@ -657,14 +660,14 @@ Now test explicitly on 'ActiveRecord::RecordNotFound:'.
 We get quite some errors with the upgrade rspec and capybara versions
 
 ##### ArgumentError:
-    13 Unused parameters passed to Capybara::Queries::SelectorQuery : 
+    Unused parameters passed to Capybara::Queries::SelectorQuery : 
     ["Cart"]
 
-    3 wrong number of arguments (given 2, expected 0..1)
+    Wrong number of arguments (given 2, expected 0..1)
 
 This is a change on how capybara is accepting optional parameters now. Options
-have to be provided in a hash. Changing to hash (href:, text:) the errors are
-gone.
+have to be provided in a hash. Changing to hash (href:, text:, etc) the errors
+are gone.
 
 ##### ActionController::RoutingError
 That was a hard one. After hours of analyzing it turned out as timing issue.
@@ -677,7 +680,7 @@ spec was run, no error occured.
 
 ##### have\_text doesn't find text
 The `expect(page).to have_text "abc \
-                                def"
+                                def"`
 
 raised an error that "abc                        def" could not be found.
 Previous versions have omitted the extra white spaces. Now these are 
