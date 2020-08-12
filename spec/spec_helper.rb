@@ -18,32 +18,33 @@ Spork.prefork do
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
-  # Addition for Capybara 3.33.0 as this uses puma as the default server. We 
-  # are using WEBrick
-  Capybara.server = :webrick
-
-  # Increase the max wait time to 5 seconds (default is 2 seconds)
-  Capybara.default_max_wait_time = 5
+  Capybara.configure do |config|
+    config.server = :webrick # use webrick instead of puma (which is default)
+    config.default_max_wait_time = 5 # some tests need more waiting time
+    config.raise_server_errors = false
+  end
 
   RSpec.configure do |config|
     # ## Mock Framework
     #
-    # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
+    # If you prefer to use mocha, flexmock or RR, uncomment the appropriate 
+    # line:
     #
     # config.mock_with :mocha
     # config.mock_with :flexmock
     # config.mock_with :rr
     config.mock_with :rspec
 
-    # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+    # Remove this line if you're not using ActiveRecord or ActiveRecord 
+    # fixtures
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
     
-    # To test JavaScript we need to set transactional to false and clean database with
-    # DatabaseCleaner instead
+    # To test JavaScript we need to set transactional to false and clean 
+    # database with DatabaseCleaner instead
     # Uncomment to to use rack and comment DatabaseCleaner
     # config.use_transactional_fixtures = true
 
@@ -75,12 +76,12 @@ Spork.prefork do
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
-    config.infer_base_class_for_anonymous_controllers = false
+#    config.infer_base_class_for_anonymous_controllers = false
 
     config.include Capybara::DSL
 
     # SYC extension to suppress Capybara deprecation warnings
-    config.expose_current_running_example_as :example
+#    config.expose_current_running_example_as :example
 
     # SYC extension to suppress Capybara deprecation warnings
     config.infer_spec_type_from_file_location!
