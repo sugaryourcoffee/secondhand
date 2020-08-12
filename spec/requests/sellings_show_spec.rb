@@ -41,7 +41,7 @@ describe "selling show page" do
     expect(page).to have_text "Size"
     expect(page).to have_text "Price"
     expect(page).to have_text list_item_number_for(selling.line_items.first.item)
-    expect(page).to have_text selling.line_items.first.selling_opponent
+    # expect(page).to have_text selling.line_items.first.selling_opponent
     expect(page).to have_text selling.line_items.first.description
     expect(page).to have_text selling.line_items.first.size
     expect(page).to have_text selling.line_items.first.price
