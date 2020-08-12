@@ -471,7 +471,7 @@ changed due to changes in Rails 4.2 according to
 File         | Action
 ------------ | ----------------------------------------
 Gemfile      | add web-console and run 'bundle install'
-ActionMailer | replace 'deliver' with 'deliver_now'
+ActionMailer | replace 'deliver' with 'deliver\_now'
 
 There are more upgrade topics but not relevant for the Secondhand
 application.
@@ -513,7 +513,9 @@ With Rails 4.2 the validation of 'allow\_blank' now also includes empty
 strings, therefore the validation fails and hence the test. Changed the code
 from 'allow\_blank' to 'unless: -> { password.nil? || password.empty? }'
 
-#### 17) Newsletter create by admin user should show errors on unclomplete input
+#### 17) Newsletter create by admin user should show errors on inclomplete input
+Somehow the version 3 of rspec/capybara is counting differently. The solution 
+is to set count to 6 instead of 8.
 
 #### x1) Selenium::WebDriver::Error::WebDriverError:
 RSpec comes up with following error message
@@ -552,17 +554,6 @@ above.
         # ./spec/requests/acceptances_index_spec.rb:114:in `block (4 levels)
         in <top (required)>'
  
-    5) Newsletter create by admin user should show errors on unclomplete 
-       input
-        Failure/Error: page.all('input', visible: true).size.should eq 8
- 
-          expected: 8
-               got: 9
- 
-          (compared using ==)
-        # ./spec/requests/newsletter_pages_spec.rb:46:in `block (4 levels) in
-        <top (required)>
-
     x2) WARN Selenium [DEPRECATION] 
         Selenium::WebDriver::Error::UnhandledError is deprecated. Use 
         Selenium::WebDriver::Error::UnknownError (ensure the driver supports
@@ -575,7 +566,15 @@ above.
 
 ### 3) Acceptances JavaScript with unsold items should delete an item
 Running the spec individually it passes. Persumably previous tests have
-set a condition that interferes with the spec or maybe a timing issue.
+set a condition that interferes with the spec or maybe a timing issue. After
+some investigation it turned out that it is a timing issue.
+
+In `spec/spec_helper` we set `Capybara.max_waiting_time = 5` and `wait: 5` in
+the respective code.
+
+### 4) Acceptance index page ...
+Capybara 3.33.0 doesn't consider "\n" as return key press anymore in input
+fields. As a work around let's click the button.
 
 ### x2)/x3) WARN Selenium [DEPRECATION]
 The deprecation warning is probably from the RSpec version. Let's update
@@ -607,7 +606,7 @@ We also require 'capybara/rspec' in 'spec/spec\_helper'.
 Another run of rspec brings up a load of errors, in total 145, and 1 
 deprecation warning. Let's fix them one by one with the help of the [Capybara Readme 3.33.0](https://github.com/teamcapybara/capybara/blob/3.33_stable/README.md#using-capybara-with-rspec).
 
-#### Decprecated 'rspec/autorun'
+#### Deprecated 'rspec/autorun'
 
     Requiring `rspec/autorun` when running RSpec via the `rspec` command is
     deprecated. Called from 
@@ -653,43 +652,37 @@ Now test explicitly on 'ActiveRecord::RecordNotFound:'.
     expect { Event.find(event.id) }.to \
       raise_error(ActiveRecord::RecordNotFound, /.*'id'=#{event.id}.*/)
 
-#### ArgumentError:
+#### More errors
 
-We get quite some argument errors
+We get quite some errors with the upgrade rspec and capybara versions
 
-    ArgumentError:
-       13 Unused parameters passed to Capybara::Queries::SelectorQuery : 
-       ["Cart"]
+##### ArgumentError:
+    13 Unused parameters passed to Capybara::Queries::SelectorQuery : 
+    ["Cart"]
 
-       3 wrong number of arguments (given 2, expected 0..1)
+    3 wrong number of arguments (given 2, expected 0..1)
 
-    2 ActionController::RoutingError
+This is a change on how capybara is accepting optional parameters now. Options
+have to be provided in a hash. Changing to hash (href:, text:) the errors are
+gone.
 
-    7 Failure/Error
-       expected #has_text? which has whitespace because of \ line break
-    
-------------------old stuff-------------
-## Runtime Errors
-Runtime errors after upgrading to Rails 4.1.16.
+##### ActionController::RoutingError
+That was a hard one. After hours of analyzing it turned out as timing issue.
 
-### Asset filtered out and will not be served
-The error message in caused by Gritter. First update to the latest version with
+The error was a routing error, saying that the rack server cannot find the 
+route `en/lists/134/delete_item` which is actually a DELETE but it complains 
+that the route [GET] does not exist. More surprisingly, when running the 
+complete test suite it always was throwing this error. When only the single 
+spec was run, no error occured.
 
-    gem "gritter", "1.2.0"
+##### have\_text doesn't find text
+The `expect(page).to have_text "abc \
+                                def"
 
-Then run `bundle install`
-
-When starting the server with `rails s` and going to `localhost:3000` following
-error is thrown
-
-    Asset filtered out and will not be served: 
-    add `Rails.application.config.assets.precompile += 
-    %w( glyphicons-halflings.png )` to 
-    `config/initializers/assets.rb` and restart your server
-
-After adding the code and restarting the server, `localhost:3000` will show the
-next entry we have to add, go on until the application starts without error.
-
+raised an error that "abc                        def" could not be found.
+Previous versions have omitted the extra white spaces. Now these are 
+considered. Removing the line break was finally the solution.
+   
 # Stage 3 - Deploying the Beta Application
 The next step is to deploy the application to the beta server. We already have 
 a running application on the beta, staging and production machine. The initial 
