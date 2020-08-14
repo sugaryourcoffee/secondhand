@@ -8,7 +8,7 @@ gem 'bootstrap-will_paginate', '~> 1.0.0'
 gem 'prawn', '~> 1.3.0'
 gem 'prawn-table', '~> 0.2.2'
 gem 'syc-barcode', '~> 0.0.3'
-gem 'net-ssh', '~> 2.9.2'
+gem 'net-ssh', '~> 6.1.0' # 2.9.2'
 gem 'turbolinks'
 # SYC extension in order to make JavaScript links active after page load
 gem 'jquery-turbolinks'
