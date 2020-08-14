@@ -687,28 +687,28 @@ Previous versions have omitted the extra white spaces. Now these are
 considered. Removing the line break was finally the solution.
    
 # Stage 3 - Deploying the Beta Application
-The next step is to deploy the application to the beta server. We already have 
-a running application on the beta, staging and production machine. The initial 
+The next step is to deploy the application to the beta server. We already have
+a running application on the beta, staging and production machine. The initial
 deployment steps are described in 
 [deployment](https://github.com/sugaryourcoffee/secondhand/blob/master/doc/deployment.md). 
 The steps in this section describe how to update the beta server to 
-test our upgraded application. If everything works on the beta server we deploy
-to the staging sever and finally to the production server. 
+test our upgraded application. If everything works on the beta server we
+deploy to the staging sever and finally to the production server. 
 
-In the following we assume that our development machine is *saltspring* and our
-beta server is *uranus*. To upgrade the beta server we have to conduct following
-steps:
+In the following we assume that our development machine is *saltspring* and
+our beta server is *uranus*. To upgrade the beta server we have to conduct
+following steps:
 
 * ssh to the beta server *uranus*
-* install Ruby 2.0.0p648
-* create a gemspec rails-4116-secondhand
-* install Rails 4.1.16
+* install Ruby 2.5.7
+* create a gemspec rails-4.2.11.3-secondhand
+* install Rails 4.2.11.3
 * adjust the Apache's beta virtual host 
 * return to the development machine *saltspring*
 * update the beta environment
 * deploy the beta application
 
-### Install Ruby 2.0.0 and Rails 4.0.13 on the beta server
+### Install Ruby 2.5.7 and Rails 4.2.11 on the beta server
 First we ssh to the beta server
 
     saltspring$ ssh uranus
@@ -717,21 +717,25 @@ To make sure we have the latest RVM installed we upgrade with
 
     uranus$ rvm get stable
 
-Now we install and activate Ruby 2.0.0p648
+**Note**: if the `GPG signiture verification failed for ...` message pops up.
+Copy the provided `gpg --keyserver hkp://pool.sks-keyserver.net --re.....` and
+repeat `rvm get stable`
 
-    uranus$ rvm install 2.0.0 && rvm use 2.0.0
+Now we install and activate Ruby 2.5.7
+
+    uranus$ rvm install 2.5.7 && rvm use 2.5.7
 
 Then we create a gemset
 
-    uranus$ rvm gemset create rails-4116-secondhand
+    uranus$ rvm gemset create rails-4.2.11.3-secondhand
 
 and switch to the gemset
 
-    uranus$ rvm ruby-2.0.0-p648@rails-4116-secondhand
+    uranus$ rvm ruby-2.5.7@rails-4.2.11.3-secondhand
 
-Finally we install Rails 4.1.16
+Finally we install Rails 4.2.11
 
-    uranus$ gem install rails --version 4.1.16 --no-ri --no-rdoc
+    uranus$ gem install rails --version 4.2.11 --no-doc
 
 ### Adjust the virtual host for the beta server
 Open up secondhand-beta.conf and change the Ruby version in 
@@ -739,13 +743,13 @@ the Apache's secondhand-beta.conf virtual host
 
     uranus$ vi /etc/apache2/sites-available/secondhand-beta.conf
 
-We change following part
+We change `<VitualHost *:8083> .. </VirtualHosts>` part
 
 ```
 <VirtualHost *:8083>
   DocumentRoot /var/www/secondhand-beta/current/public
   Servername beta.secondhand.uranus
-  PassengerRuby /home/pierre/.rvm/gems/ruby-2.0.0-p648@rails-4116-secondhand/wrappers/ruby 
+  PassengerRuby /home/pierre/.rvm/gems/ruby-2.5.7@rails-4.2.11.3-secondhand/wrappers/ruby 
   <Directory /var/www/secondhand-beta/public>
     AllowOverride all
     Options -MultiViews
@@ -780,16 +784,10 @@ In `config/deploy.rb` check that `beta` is part of the stages
     set :stages, %w(production staging beta backup) 
 
 In `config/deploy/beta.rb` check the `domain`, `application`, `rvm_ruby_string`
-and the `rails_env` and also change `git_application` to `upgrade-to-rails-4.1`.
+and the `rails_env` and also change `git_application` to `secondhand`.
 
-    set :domain, 'beta.secondhand.uranus'
-    set :git_application, 'secondhand'
-    set :application, 'secondhand-beta'
     set :repository,  "git@github.com:#{git_user}/#{git_application}.git"
-    set :rvm_ruby_string, '2.0.0-p648@rails-4116-secondhand'
-    set :rails_env, :beta
-
-    set :branch, fetch(:branch, "master")
+    set :rvm_ruby_string, '2.5.7@rails-4.2.11.3-secondhand'
 
 Check that there is a beta group in database.yml. The database is the same as 
 with the staging version as they live on the same machine.
@@ -810,18 +808,87 @@ check that we have the hostname in `/etc/hosts`
       192.168.178.66 secondhand.uranus beta.secondhand.uranus
 
 ### Deploy to the beta server
-We deploy our branch `upgrade-to-rails-4.1` with following command
+We deploy our branch `upgrade-to-rails-4.2` with following command
 
-    saltspring$ cap -S branch=upgrade-to-rails-4.1 beta deploy
+    saltspring$ cap -S branch=upgrade-to-rails-4.2 beta deploy
 
 If we would ommit the branch directive we would deploy the master branch.
 
+We get a deprecation message and an error
+
+    net-ssh-2.9.4/lib/net/ssh/transport/session.rb:84: 
+    warning: Object#timeout is deprecated, use Timeout.timeout instead.
+
+    connection failed for: secondhand.uranus (NoMethodError: undefined method 
+    `e= 'for #<OpenSSL::PKey::RSA:0x0000561cb99dfef0> Did you mean?  e)
+
+We update net-ssh to see if the deprecation warning and error goes away.
+
+    bundle update net-ssh
+    Fetching net-ssh 6.1.0 (was 2.9.4)
+    Installing net-ssh 6.1.0 (was 2.9.4)
+    Using net-scp 3.0.0
+    Fetching net-sftp 3.0.0 (was 2.1.2)
+    Installing net-sftp 3.0.0 (was 2.1.2)
+    Fetching net-ssh-gateway 2.0.0 (was 1.3.0)
+    Installing net-ssh-gateway 2.0.0 (was 1.3.0)
+
+Another run of `cap -S branch=upgrade-to-rails-4.2` shows a deprecation
+message.
+    *** [err :: beta.secondhand.uranus] DEPRECATION WARNING: The configuration
+    option `config.serve_static_assets` has been renamed to
+    `config.serve_static_files` to clarify its role (it merely enables serving
+    everything in the `public` folder and is unrelated to the asset pipeline).
+    The `serve_static_assets` alias will be removed in Rails 5.0. Please
+    migrate your configuration files accordingly. (called from block in
+    <top (required)> at /var/www/secondhand-beta/releases
+    /20200814103553/config/environments/beta.rb:23) 
+      
+We change this now to get it out of the way and look up which files it
+concerns with
+
+    $ grep -r serve_static_assets config
+    
+After the change we do another deploy `cap -S branch=upgrade-to-rails-4.2`
+
 Check up your application at [secondhand:8083](http://syc.dyndns.org:8083).
 
+The page is showing the message *We're sorry, but something went wrong.*.
+Let's check the log-files.
+
+    $ ssh uranus
+    $ cd /var/www/secondhand-beta/current
+    $ tail -n 20 log/beta.log
+    I, [2020-08-14T15:32:58.372714 #26285]  INFO -- : Started GET "/" for
+    192.168.178.34 at 2020-08-14 15:32:58 +0200
+    I, [2020-08-14T15:32:58.373728 #26285]  INFO -- : Processing by
+    StaticPagesController#home as HTML
+    I, [2020-08-14T15:32:58.374555 #26285]  INFO -- : Completed 500
+    Internal Server Error in 1ms (ActiveRecord: 0.0ms)
+    F, [2020-08-14T15:32:58.376840 #26285] FATAL -- :
+    JSON::ParserError (765: unexpected token at
+    {I"session_id:ETI"%05ab6d22f4b16ef34d85820da6eaa357;'):
+    /home/pierre/.rvm/rubies/ruby-2.5.7/lib/ruby/2.5.0/json/common.rb:156:in
+    `parse'
+
+This is caused by a change on how cookies are serialized. But curiously this
+error should have already been happened after the upgrade from Rails 4.0 to
+4.1 but has shown up only now after the upgrade to Rails 4.2. What has to be
+changed is in `config/initializers/cookies_serializer.rb`
+
+from
+    Rails.application.config.action_dispatch.cookies_serializer = :json
+
+to
+    Rails.application.config.action_dispatch.cookies_serializer = :hybrid
+
+After the change the application starts up. 
+[secondhand:8083](http://syc.dyndns.org:8083).
+
 ## Deploying to the staging server
-The staging server is on the same server as the beta server. Therefore we don't 
-need to update Ruby and Rails and can concentrate on the configuration. We need 
-to do the configuration on the server and on the development machine.
+The staging server is on the same server as the beta server. Therefore we
+don't need to update Ruby and Rails and can concentrate on the configuration.
+We need to do the configuration on the server and on the development machine.
 
 On the server we have to configure the Ruby version in 
 
