@@ -17,6 +17,9 @@
 # Ignore the screen_shot files
 /doc/screen_shots
 
+# Ignore test files
+/doc/user-test-files
+
 # Ignore the tasks
 /.tasks
 
