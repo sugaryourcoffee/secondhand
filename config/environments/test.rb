@@ -14,7 +14,7 @@ Rails.application.configure do
 
   # Configure static file server for tests with Cache-Control for performance.
   # until 4.1.16: config.serve_static_assets  = true
-  config.service_static_files = true # since 4.2.11.3
+  config.serve_static_files = true # since 4.2.11.3
   config.static_cache_control = 'public, max-age=3600'
 
   # Show full error reports and disable caching.
