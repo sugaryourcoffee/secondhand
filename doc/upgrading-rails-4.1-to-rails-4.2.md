@@ -686,6 +686,38 @@ raised an error that "abc                        def" could not be found.
 Previous versions have omitted the extra white spaces. Now these are 
 considered. Removing the line break was finally the solution.
    
+##### lpr: Error - No default destination
+The tests fail that try to print. To make the tests pass that need a printer goto
+`localhost:631/prtiners` and click on one of the printers available. Select the 
+`Administration` tab and choose *set as server default*. Now the test should pass.
+The problem with this is that the printer starts to print. Therefore the best is to
+save paper to use a pdf printer. If you don't have one installed then install it with
+
+`sudo apt get install printer-driver-cups-pdf`
+
+and select as described above.
+
+##### `warning: rb_check_safe_obj will be removed in Ruby 3.0`
+With an update to Ruby 2.7 a warning is issued
+
+`/home/pierre/.rbenv/versions/2.7.2/lib/ruby/gems/2.7.0/gems/activesupport-4.2.11.3/
+lib/active_support/core_ext/big_decimal/conversions.rb:11: 
+warning: rb_check_safe_obj will be removed in Ruby 3.0`
+
+We live with the warning.
+
+##### ThreadError: already initialized
+This happens in the PasswordResetsController GET 'new' returns http success. This is a known issue caused by an
+incompatibility between Rails 4.2 and Ruby 2.6 and newer. Workaround is checking for the versions of Rails and
+Ruby and skipping the test if the incompatibility is given. After the next upgrade an output will be generated
+with an hint of deleting the if clause.
+
+##### Selenium: failed to start browser /snap/bin/firefox: Permission denied
+This happened when running *rspec*, selenium couldn't start the firefox browser. The solution to this was to
+update the project with `bundle update --all`.
+
+THIS IS WHERE I AM 2022-03-13
+
 # Stage 3 - Deploying the Beta Application
 The next step is to deploy the application to the beta server. We already have
 a running application on the beta, staging and production machine. The initial
