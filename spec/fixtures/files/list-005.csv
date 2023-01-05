@@ -1,0 +1,15 @@
+Listennummer;5
+Name;Sugar
+Vorname;Pierre
+Strasse;Mimberger strasse 52
+PLZ;90559
+Stadt;Burgthann
+Telefon;+49(9183)956252
+E-Mail;pierre@thesugars.de
+Korbfarbe;-
+Nummer;Beschreibung;Groesse;Preis
+1;One;1;1.0
+2;Two;2;2.50
+3;Three;3;3.06
+4;Four;4;4.5
+5;Five;5;5.0
