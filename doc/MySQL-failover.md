@@ -107,6 +107,15 @@ Note: If your MySQL server or your slave gets a new IP address you have to
 adjust the `bind-address` in **/etc/mysql/my.conf** and in **mysql** 
 accordingly.
 
+Otherwise you will get an error if you call the secondhand web page *something went wrong*. 
+The error in log/production.log is:
+
+`Mysql2::Error (Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2))`
+
+And if you start MySQL from the command line with `$ mysql` you will get the same error with slightly different text:
+
+`ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)`
+
 Restore database on slave server
 --------------------------------
 We now restore the previously dumped database from the server on the slave. This
