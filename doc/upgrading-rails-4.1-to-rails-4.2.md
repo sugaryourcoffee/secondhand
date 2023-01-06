@@ -732,7 +732,7 @@ our beta server is *uranus*. To upgrade the beta server we have to conduct
 following steps:
 
 * ssh to the beta server *uranus*
-* install Ruby 2.5.7
+* install Ruby 2.7.2
 * create a gemspec rails-4.2.11.3-secondhand
 * install Rails 4.2.11.3
 * adjust the Apache's beta virtual host 
