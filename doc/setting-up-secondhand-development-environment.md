@@ -67,13 +67,6 @@ To run rails we need a database and a JavaScript interpreter. The secondhand dev
 
     sudo apt-get install sqlite3 libsqlite3-dev nodejs
 
-## Install bundler
-With the installation of ruby the *gem* program is installed. This allows to install gems from [rubygems.org](https://rubygems.org/).
-
-To install bundler run
-
-    gem install bundler
-
 ## Install git
 
 Secondhand is managed in a Git repository. We install Git with
@@ -92,6 +85,8 @@ or if we want to clone a specific branch
     git --branch upgrade-to-rails-4.2 https://github.com/sugaryourcoffee/secondhand.git
 
 ## Install rails with bundler
+
+With the installation of ruby the *gem* program is installed. This allows to install gems from [rubygems.org](https://rubygems.org/).
 
 We can install rails with the gem, or we can use bundler to install rails based on our *Gemfile*. We need to make sure to install the correct *bundler* version. To find out which version of bundler is requested we can look it up in *Gemfile.lock*.
 
@@ -113,5 +108,5 @@ And if we start the server with
 
     rails -s
 
-we should be able to access the Secondhand application [Secondhand](localhost:3000).
+we should be able to access the Secondhand application at [localhost:3000](localhost:3000).
 
