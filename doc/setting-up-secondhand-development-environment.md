@@ -8,9 +8,8 @@ If you want to partcipate in the Secondhand development and contribute code, the
 * Install the ruby plug-in *ruby-build*
 * Install ruby
 * Setup the rails runtime environment
-* Install bundler
 * Install git
-* Pull Secondhand from github
+* Clone Secondhand from github
 * Install rails with bundler
 * Verify the installation
 
@@ -108,5 +107,5 @@ And if we start the server with
 
     rails -s
 
-we should be able to access the Secondhand application at [localhost:3000](localhost:3000).
+we should be able to access the Secondhand application at [localhost:3000](http://localhost:3000/).
 
