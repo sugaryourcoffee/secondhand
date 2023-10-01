@@ -114,6 +114,14 @@ On another machine we have running *bundler 1.17.3*
 
     gem install bundler:1.17.3
 
+To list the installed gems call
+
+    gem list
+
+or to list specific gems, like bundler
+
+    gem list bundler
+
 ## Verifying the installation
 
 We can verify the installation with
