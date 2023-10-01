@@ -3,12 +3,12 @@
 If you want to partcipate in the Secondhand development and contribute code, then you can conduct the following workflow
 
 * Creating a working directory
+* Install git
 * Install rbenv
 * Setup the ruby build environment
 * Install the ruby plug-in *ruby-build*
 * Install ruby
 * Setup the rails runtime environment
-* Install git
 * Clone Secondhand from github
 * Install rails with bundler
 * Verify the installation
@@ -21,6 +21,12 @@ My projects all go under '~/Work'.
 
     cd ~
     mkdir Work
+
+## Install git
+
+Secondhand is managed in a Git repository. We install Git with
+
+    sudo apt-get install git
 
 ## Install *rbenv*
 
@@ -65,12 +71,6 @@ List available ruby versions
 To run rails we need a database and a JavaScript interpreter. The secondhand development environment is using *SQLite3*. As JavaScript interpreter we use *node.js*.
 
     sudo apt-get install sqlite3 libsqlite3-dev nodejs
-
-## Install git
-
-Secondhand is managed in a Git repository. We install Git with
-
-    sudo apt-get install git
 
 ## Clone Secondhand from github
 
