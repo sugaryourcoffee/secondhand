@@ -122,6 +122,10 @@ or to list specific gems, like bundler
 
     gem list bundler
 
+Now we are ready to install rails with 
+
+    bundle install
+
 ## Verifying the installation
 
 We can verify the installation with
