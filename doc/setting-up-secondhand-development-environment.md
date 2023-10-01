@@ -102,9 +102,12 @@ or if we want to clone a specific branch
 
 With the installation of ruby the *gem* program is installed. This allows to install gems from [rubygems.org](https://rubygems.org/).
 
-We can install rails with the gem, or we can use bundler to install rails based on our *Gemfile*. We need to make sure to install the correct *bundler* version. To find out which version of bundler is requested we can look it up in *Gemfile.lock*.
+We can install rails with the gem, or we can use bundler to install rails based on our *Gemfile*. We need to make sure to install the correct *bundler* version. To find out which version of bundler is requested we can look it up in *Gemfile.lock* with
 
     cat Gemfile.lock | grep bundle
+
+we should get output like
+
     bundler (>= 1.3.0, < 2.0)
 
 On another machine we have running *bundler 1.17.3*
@@ -116,6 +119,9 @@ On another machine we have running *bundler 1.17.3*
 We can verify the installation with
 
     rails -v
+
+it should show 
+
     4.2.11.3
 
 And if we start the server with
