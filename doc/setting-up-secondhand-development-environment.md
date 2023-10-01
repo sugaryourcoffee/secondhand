@@ -44,8 +44,7 @@ Now ether restart bash, or issue `source ~/.bashrc` so the new added entry to *.
 
 Before installing ruby we need to set up the build environment. How to set it up can be looked up at [github](https://github.com/rbenv/ruby-build/wiki#suggested-build-environment).
 
-    apt-get install autoconf patch build-essential rustc libssl-dev libyaml-dev libreadline6-dev \
-    zlib1g-dev libgmp-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev uuid-dev
+    sudo apt-get install autoconf patch build-essential rustc libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libgmp-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev uuid-dev
 
 If if doesn't work, then look for additional information at above mentioned web-site.
 
