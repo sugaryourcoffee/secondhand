@@ -80,9 +80,9 @@ To also show all ruby versions, including unsupported run
 
 ## Setup the rails runtime environment
 
-To run rails we need a database and a JavaScript interpreter. The secondhand development environment is using *SQLite3*. As JavaScript interpreter we use *node.js*.
+To run rails we need a database and a JavaScript interpreter. The secondhand development environment is using *SQLite3*. In the production we use *MySQL*. As JavaScript interpreter we use *node.js*.
 
-    sudo apt-get install sqlite3 libsqlite3-dev nodejs
+    sudo apt-get install sqlite3 libsqlite3-dev libmysqlclient-dev nodejs
 
 ## Clone Secondhand from github
 
