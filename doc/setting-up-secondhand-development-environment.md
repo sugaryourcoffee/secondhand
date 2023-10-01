@@ -38,6 +38,8 @@ Add *rbenv* to *bashrc*
 
     echo 'eval "$(~/.rbenv/bin/rbenv init - bash)"' >> ~/.bashrc
 
+Now ether restart bash, or issue `source ~/.bashrc` so the new added entry to *.bashrc* takes effect.
+
 ## Setup the ruby build environment 
 
 Before installing ruby we need to set up the build environment. How to set it up can be looked up at [github](https://github.com/rbenv/ruby-build/wiki#suggested-build-environment).
