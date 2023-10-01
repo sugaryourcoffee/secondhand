@@ -96,7 +96,7 @@ then we clone Secondhand into the *Work* directory
 
 or if we want to clone a specific branch
 
-    git --branch upgrade-to-rails-4.2 https://github.com/sugaryourcoffee/secondhand.git
+    git clone --branch upgrade-to-rails-4.2 https://github.com/sugaryourcoffee/secondhand.git
 
 ## Install rails with bundler
 
