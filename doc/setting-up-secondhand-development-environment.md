@@ -66,9 +66,17 @@ Install ruby version 2.7.2
 
     rbenv install 2.7.2
 
-List available ruby versions
+Make ruby 2.7.2 the default version with
+
+    rbenv global 2.7.2
+
+List available ruby versions, that are still supported
 
     rbenv install -l
+
+To also show all ruby versions, including unsupported run
+
+    rbenv install -L
 
 ## Setup the rails runtime environment
 
