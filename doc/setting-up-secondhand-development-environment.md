@@ -34,6 +34,8 @@ Secondhand is managed in a Git repository. We install Git with
 
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 
+Add *rbenv* to *bashrc*
+
     echo 'eval "$(~/.rbenv/bin/rbenv init - bash)"' >> ~/.bashrc
 
 ## Setup the ruby build environment 
