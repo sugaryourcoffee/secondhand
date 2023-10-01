@@ -86,9 +86,12 @@ To run rails we need a database and a JavaScript interpreter. The secondhand dev
 
 ## Clone Secondhand from github
 
-We want to clone Secondhand from Github to the development machine.
+We want to clone Secondhand from Github to the development machine. We change into the *Work* directory
 
     cd ~/Work/
+
+then we clone Secondhand into the *Work* directory
+
     git clone https://github.com/sugaryourcoffee/secondhand.git
 
 or if we want to clone a specific branch
