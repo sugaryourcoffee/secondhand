@@ -33,6 +33,7 @@ Secondhand is managed in a Git repository. We install Git with
 *rbenv* allows to install (needs a plug-in see below) and manage different ruby versions. You can install *rbenv* from [github](https://github.com/rbenv/rbenv).
 
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+
     echo 'eval "$(~/.rbenv/bin/rbenv init - bash)"' >> ~/.bashrc
 
 ## Setup the ruby build environment 
