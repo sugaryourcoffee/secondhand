@@ -63,5 +63,5 @@ gem 'rvm-capistrano', '~> 1.5.6'
 # gem 'debugger'
 
 group :production do
-  gem 'mysql2', '~> 0.3.20'
+  gem 'mysql2', '~> 0.5.3'
 end
