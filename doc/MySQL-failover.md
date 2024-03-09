@@ -14,17 +14,22 @@ assuming we have both servers running with MySQL and Secondhand
   * Set the log file on the MySQL master server
   * Bind the IP address on the master that is visible to the slave server
   * Restart the server
-  * Set permission on MySQL master to give the MySQL slave access
+  * Add user and set permission on MySQL master to give the MySQL slave access
 * Create and copy the current master database dump to the slave server
 * Configure the slave
   * Check the connection from the slave to the master database
   * On the MySQL slave set the server ID and bind address
   * Configure the master server
+  * Add same user on slave with access rights for master replication
 * Restore the master database on the MySQL slave
 * Start replication on the MySQL slave
 
 Configure the MySQL server
 --------------------------
+Log into the MySQL master server
+
+    development$ ssh mercury
+
 On the MySQL server we have to set the server ID and the log file. We do that
 in `/etc/mysql/my.cnf` by uncommenting these two lines
 
@@ -39,11 +44,11 @@ master server
 
 After changing the configuration we have to restart the server
 
-    $ sudo service mysql restart
+    mercury$ sudo service mysql restart
 
 We can check up on the replication with
 
-    $ mysql -uroot -p
+    mercury$ mysql -uroot -p
     mysql> show master status;
 
 Next we create a replication user that is restricted to the rights needed for
@@ -101,6 +106,10 @@ user to connect
         -> master_host='192.168.178.61',
         -> master_user='repl',
         -> master_password='slavepass';
+
+Add the replication user also on the slave with the same credentials
+
+    mysql> create user 'repl'@'%' identified by 'slavepass';
     mysql> exit
 
 Note: If your MySQL server or your slave gets a new IP address you have to 
@@ -197,6 +206,14 @@ slave with
 If the error is gone. The slave might be gradually synced with the master. If
 data is not propperly synced then dump the database on the server and restore
 it on the slave as shown [Copy master database to the slave database](#copy-master-database-to-the-slave-database) and in [Restore database on slave server](#restore-database-on-slave-server).
+
+### Last_SQL_Errno: 1133
+The error message
+    Last_SQL_Error: Error 'Can't find any matching row in the user table' on 
+    query. Detault database: ''. Query: 'SET PASSWORD FOR 'repl'@'%'='*....''
+
+indicates that on the slave machine the user 'repl'@'%' is not set. The repl 
+user needs to be set on each of the machines that are part of the replication.
 
 Sources
 -------
