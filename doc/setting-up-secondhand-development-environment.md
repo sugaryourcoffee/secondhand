@@ -29,39 +29,6 @@ Secondhand is managed in a Git repository. We install Git with
 
     sudo apt-get install git
 
-## Create ssh key for git
-
-In order to push changes of our application to git we need to create and provide a ssh key to git.
-
-    $:~/Work/secondhand$ ssh-keygen -t ed25519 -C "pierre@sugaryourcoffee.de"
-    Generating public/private ed25519 key pair.
-
-Next we hit return to chose the default location
-
-    Enter file in which to save the key (/home/pierre/.ssh/id_ed25519): 
-
-We use a passphrase to secure the key
-
-    Enter passphrase (empty for no passphrase): 
-    Enter same passphrase again: 
-
-    Your identification has been saved in /home/pierre/.ssh/id_ed25519
-    Your public key has been saved in /home/pierre/.ssh/id_ed25519.pub
-    The key fingerprint is:
-    SHA256:4xC+plC9HSOYbqyD/YXO6nWu2D91s3uYBHR994yIewc pierre@sugaryourcoffee.de
-    The key's randomart image is:
-    +--[ED25519 256]--+
-    |           .     |
-    |        . . . . .|
-    |      .. . . o +.|
-    |     = .. . E . o|
-    |    + = S. . .   |
-    |   + . B.+= . .  |
-    | o. * *.oo * .   |
-    |. oX *.   + .    |
-    | .=+Boo.  .o     |
-    +----[SHA256]-----+
-
 ## Install *rbenv*
 
 *rbenv* allows to install (needs a plug-in see below) and manage different ruby versions. You can install *rbenv* from [github](https://github.com/rbenv/rbenv).
@@ -235,3 +202,4 @@ Finally add the key to the github account
 
 The description how to add the ssh-key to the github account is nicely described here [adding a new SSH key to your account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account#adding-a-new-ssh-key-to-your-account).
 
+Note: I have encountered a problem by issuing the command `git push`, that I was asked to provide username and password. This was because for what reason ever the `.git/config` file contained the URL *https://github.com/sugaryourcoffee/secondhand.git* instead of *git@github.com:sugaryourcoffee/secondhand.git*
