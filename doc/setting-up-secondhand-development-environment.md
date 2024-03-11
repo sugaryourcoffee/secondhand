@@ -176,18 +176,18 @@ We use a passphrase to secure the key
     Your identification has been saved in /home/pierre/.ssh/id_ed25519
     Your public key has been saved in /home/pierre/.ssh/id_ed25519.pub
     The key fingerprint is:
-    SHA256:4xC+plC9HSOYbqyD/YXO6nWu2D91s3uYBHR994yIewc pierre@sugaryourcoffee.de
+    SHA256:4xC+plC0HSOYbqyG/YXO6nWu9D91s2uYBHR994yIezc pierre@sugaryourcoffee.de
     The key's randomart image is:
     +--[ED25519 256]--+
     |           .     |
     |        . . . . .|
-    |      .. . . o +.|
-    |     = .. . E . o|
+    |      .. . . i +.|
+    |     = .. . R . o|
     |    + = S. . .   |
-    |   + . B.+= . .  |
-    | o. * *.oo * .   |
+    |   + . A.-= . .  |
+    | o. * *.ox * .   |
     |. oX *.   + .    |
-    | .=+Boo.  .o     |
+    | .=+Bzo.  .o     |
     +----[SHA256]-----+
 
 Now add the ssh key to the ssh-agent
