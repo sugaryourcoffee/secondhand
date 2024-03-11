@@ -104,7 +104,7 @@ With the installation of ruby the *gem* program is installed. This allows to ins
 
 We can install rails with the gem, or we can use bundler to install rails based on our *Gemfile*. We need to make sure to install the correct *bundler* version. To find out which version of bundler is requested we can look it up in *Gemfile.lock* with
 
-    cat Gemfile.lock | grep bundle
+    $ cat Gemfile.lock | grep bundle
 
 we should get output like
 
@@ -112,33 +112,47 @@ we should get output like
 
 On another machine we have running *bundler 1.17.3*
 
-    gem install bundler:1.17.3
+    $ gem install bundler:1.17.3
 
 To list the installed gems call
 
-    gem list
+    $ gem list
 
 or to list specific gems, like bundler
 
-    gem list bundler
+    $ gem list bundler
 
 Now we are ready to install rails with 
 
-    bundle install
+    $ bundle install
 
 ## Verifying the installation
 
 We can verify the installation with
 
-    rails -v
+    $ rails -v
 
 it should show 
 
     4.2.11.3
 
+## Create the test database and run tests
+
+Before we run the tests we have to create the test database with `$ bundle exec rake db:schema:load RAILS_ENV=test`
+
+Then we can run the tests with
+
+    $ bundle exec rspec
+
+## Run the application
+
+Same as with tests we first need to create the development database with
+
+    $ bundle exec rake db:schema:load RAILS_ENV=development
+
 And if we start the server with
 
-    rails -s
+    $ rails -s
 
 we should be able to access the Secondhand application at [localhost:3000](http://localhost:3000/).
 
