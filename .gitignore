@@ -33,5 +33,5 @@ bundler_stubs/
 /*.gzip
 /*.tar
 /*.tar.*
-
+*.swp
 open_topics.ods
