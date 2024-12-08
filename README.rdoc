@@ -14,6 +14,9 @@ The usual workflow is listed below
 * Admin prints pick-up tickets that are issued to sellers
 * Seller registers at the secondhand website
 * Seller enters the items to sell
+** Enter manually
+** Import csv. Check UTF 8 with `grep -axv '.*' file.txt`
+** Import unsold items from previous events
 * Seller marks lists with line items as finished and sends them to Admin
 * Seller ships items to sell to the secondhand event location
 * Operator marks items as shipped in the application

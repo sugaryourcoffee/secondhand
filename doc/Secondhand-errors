@@ -1,0 +1,93 @@
+###Error
+Started GET "/de/event_users" for 127.0.0.1 at 2024-03-10 20:56:53 +0100
+Processing by EventUsersController#index as HTML
+  Parameters: {"locale"=>"de"}
+  User Load (0.1ms)  SELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? LIMIT 1  [["remember_token", "X8bIYJYm-JJhy8-zuASLFg"]]
+  Event Load (0.0ms)  SELECT  "events".* FROM "events" WHERE "events"."active" = ? LIMIT 1  [["active", "t"]]
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.1ms)
+
+NoMethodError (undefined method `seller_lists' for nil:NilClass):
+  app/controllers/event_users_controller.rb:24:in `load_lists'
+  app/controllers/event_users_controller.rb:5:in `index'
+
+
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/actionpack-4.2.11.3/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.5ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/actionpack-4.2.11.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (0.8ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/actionpack-4.2.11.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.4ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/actionpack-4.2.11.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (7.6ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.2ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.1ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.2ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.1ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (6.0ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.1ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (11.1ms)
+
+
+###Error
+Started GET "/de/statistics/sales" for 127.0.0.1 at 2024-03-10 21:04:43 +0100
+Processing by StatisticsController#graphic as HTML
+  Parameters: {"locale"=>"de"}
+  User Load (0.1ms)  SELECT  "users".* FROM "users" WHERE "users"."remember_token" = ? LIMIT 1  [["remember_token", "X8bIYJYm-JJhy8-zuASLFg"]]
+   (0.2ms)  select e.id, e.title, count(distinct l.id) without_sold_items
+         from events e
+           left join lists l on l.event_id = e.id
+         where l.id not in 
+           (select l.id id from lists l 
+            join items i on i.list_id = l.id
+            join line_items li on li.item_id = i.id)
+        group by e.id
+  Rendered statistics/_zero.html.erb (2.0ms)
+   (0.3ms)  select e.id, e.title, count(l.id) below_min_revenue
+         from lists l
+         left join events e on l.event_id = e.id
+         join (select l.id, sum(i.price) total
+                 from lists l
+                 join items i on i.list_id = l.id
+                 join line_items li 
+                   on li.item_id = i.id and li.reversal_id is null
+               group by l.id) x on x.id = l.id and x.total < 20
+       group by e.id
+  Rendered statistics/_below.html.erb (1.8ms)
+   (0.1ms)  select * from (select sum(i.price) sum from lists l
+                        join items i on i.list_id = l.id
+                        join line_items li on li.item_id = i.id and
+                                              li.reversal_id is null
+                      group by l.id) x
+       order by x.sum
+  Rendered statistics/_histogram.html.erb (1.6ms)
+  Rendered statistics/graphic.html.erb within layouts/application (11.1ms)
+Completed 500 Internal Server Error in 13ms (ActiveRecord: 0.7ms)
+
+ActionView::Template::Error (undefined method `+' for nil:NilClass):
+    1: <h2><%= t('.revenues_histogram') %></h2>
+    2: 
+    3: <% hist = statistics.histogram_y_values(statistics.lists_revenue_histogram) %>
+    4: 
+    5: <%= render file: histogram.to_file(hist, "tmp/hist.svg") %>
+    6: 
+  lib/statistics.rb:342:in `median'
+  lib/statistics.rb:293:in `quartile'
+  lib/statistics.rb:131:in `lists_revenue_histogram'
+  app/views/statistics/_histogram.html.erb:3:in `_app_views_statistics__histogram_html_erb__4296387931195892212_66780'
+  app/views/statistics/graphic.html.erb:8:in `block in _app_views_statistics_graphic_html_erb__1528314180185489796_66720'
+  app/helpers/application_helper.rb:78:in `event_graphic_statistics'
+  app/views/statistics/graphic.html.erb:5:in `_app_views_statistics_graphic_html_erb__1528314180185489796_66720'
+
+
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/actionpack-4.2.11.3/lib/action_dispatch/middleware/templates/rescues/_source.erb (3.0ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/actionpack-4.2.11.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.1ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/actionpack-4.2.11.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.4ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/actionpack-4.2.11.3/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (10.8ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.2ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.1ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.1ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.1ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (5.2ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.1ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/pierre/.rbenv/versions/2.7.8/lib/ruby/gems/2.7.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (9.5ms)
+
+
+
