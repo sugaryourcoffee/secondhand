@@ -57,7 +57,8 @@ gem 'bcrypt', '~> 3.1.7'
 # gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'rvm-capistrano', '~> 1.5.6'
+# gem 'rvm-capistrano', '~> 1.5.6'
+gem 'capistrano'
 
 # To use debugger
 # gem 'debugger'
