@@ -336,11 +336,19 @@ After the gems have been installed we get following post install messages
 
 Finally check if _Secondhand_ starts up with `rails server`.
 
-### Prepare the production environment 
-
 ### Install _MySQL_
 
-### Migrate the database 
+In production we want to use the _MySQL_ database. For that we need the _mysql2_ gem, which we have previously installed with `bundle install`. Additionally we need to install the _MySQL_ database through _APT_ and create our production database.
+
+_MySQL_ is usually installed during the installation of the server operating system. If not then we can install it with 
+
+    $sudo apt-get install mysql-server libmysqlclient-dev
+
+`libmysqlclient-dev` is required by the `mysql2` gem.
+
+### Create the database 
+
+We need to login to _MySQL_ to create the database. If we lost the password then there is an article at [TheLinuxCode](https://thelinuxcode.com/change-mysql-password-ubuntu-22-04/) and a summary [here](reset-the-mysql-root-password.md).
 
 ### Make `secondhand.config` production ready
 
