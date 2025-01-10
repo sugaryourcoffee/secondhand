@@ -244,13 +244,107 @@ As a next step we create our production development. _Apache_ applications live 
 Configure Apache 2 to deploy secondhand (production)
 -----------------------------------------------------
 
-No we go the next step towards production. Still with manual interaction. We take it step by step, before we go for automation with _Capistrano_. 
+Now we go the next step towards production. Still with manual interaction and we don't have the actual production ready software. We are in the branch _upgrade-to-rails-4.2_. We take it step by step, before we go for automation with _Capistrano_. 
 
-During development we already have managed _Secondhand_ with _git_. We now clone _Secondhand_ into our directory. For that to work we have to define our proction environment. For that we need to 
+During development we already have managed _Secondhand_ with _git_. We now clone _Secondhand_ into our directory. For that to work we have to define our web directory. The default location for that is at `/var/www/secondhand`.
 
+What we do in this section is 
+
+* create our web directory `/var/www/secondhand`
+* clone our _Secondhand_ branch _upgrade-to-rails-4.2_ into `/var/www/seconhand`
+* install the gems required by _Secondhand_
+* prepare the production environment
 * install _MySQL_
 * migrate our database 
 * adopt our _Apache_'s `secondhand.config` file 
+* test the web application
+
+### Create the web directory 
+
+The default place to host websites is at `/var/www`, this is where we also host _Secondhand_. We create the directory with 
+
+    $ sudo mkdir -p /var/www/secondhand 
+
+This directory is owned by `root`, in order to deploy we need to change the owner, so no `root`-rights are necessary.
+
+    $ sudo chown pierre: /var/www/secondhand
+
+
+### Clone _Secondhand_ to the web directory 
+
+Next we `cd /var/www/secondhand` and clone the application under `secondhand` into `code`
+
+    $ git clone https://github.com/sugaryourcoffee/secondhand/ code
+
+We still want to test the upgraded _Secondhand_, that is why we have to checkout the branch `upgrade-to-rails-4.2` first 
+
+    $ git checkout upgrade-to-rails-4.2
+
+### Install gems for _Secondhand_
+
+In the newly created project directory `/var/www/secondhand/code/` we now have install the gems required by _secondhand_ and have to set the _Ruby_ version. The _Ruby_ version required by _secondhand_ is in the file `/var/www/secondhand/code/.ruby_version`. If we don't have the _Ruby_ version available in this directory we get an error like 
+
+    rbenv: version `2.7.8' is not installed (set by /var/www/secondhand/code/.ruby-version)
+
+_secondhand_ we have just cloned requires version 2.7.8. As this is not available. Therefore we need to install the requested _Ruby_ version with `rbenv install 2.7.8`. 
+
+Next we check if `bundler` is available with `bundler -v`. This presents us with the informations
+
+    Could not find 'bundler' (1.17.3) required by your /var/www/secondhand/code/Gemfile.lock. (Gem::GemNotFoundException)
+    To update to the latest version installed on your system, run `bundle update --bundler`.
+    To install the missing version, run `gem install bundler:1.17.3`
+
+We want to install the version that is requested, which is stated as _1.17.3_. We install bundler with `gem install bundler -v 1.17.3`. If we run now `bundler -v` we get the information `Bundler version 1.17.3`. Now we should be good to install. 
+
+    $ bundle install
+
+After the gems have been installed we get following post install messages 
+
+    Bundle complete! 37 Gemfile dependencies, 149 gems now installed.
+    Use `bundle info [gemname]` to see where a bundled gem is installed.
+    Post-install message from prawn:
+    
+      ********************************************
+    
+    
+      A lot has changed recently in Prawn.
+    
+      Please read the changelog for details:
+    
+      https://github.com/prawnpdf/prawn/wiki/CHANGELOG
+    
+    
+      ********************************************
+    
+    Post-install message from rubyzip:
+    RubyZip 3.0 is coming!
+    **********************
+    
+    The public API of some Rubyzip classes has been modernized to use named
+    parameters for optional arguments. Please check your usage of the
+    following classes:
+      * `Zip::File`
+      * `Zip::Entry`
+      * `Zip::InputStream`
+      * `Zip::OutputStream`
+    
+    Please ensure that your Gemfiles and .gemspecs are suitably restrictive
+    to avoid an unexpected breakage when 3.0 is released (e.g. ~> 2.3.0).
+    See https://github.com/rubyzip/rubyzip for details. The Changelog also
+    lists other enhancements and bugfixes that have been implemented since
+    version 2.3.0.
+
+Finally check if _Secondhand_ starts up with `rails server`.
+
+### Prepare the production environment 
+
+### Install _MySQL_
+
+### Migrate the database 
+
+### Make `secondhand.config` production ready
+
+### Test _Secondhand_
 
 
 
