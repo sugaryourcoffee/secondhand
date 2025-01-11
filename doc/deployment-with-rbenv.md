@@ -384,18 +384,18 @@ Now we are done
     mysql> exit 
     Bye 
 
-> *For future reference*
->
-> $ sudo mysql -uroot -p 
-> Enter password
-> mysql> create database secondhand_staging default character set utf8mb4 collate utf8mb4_0900_ai_ci;
-> Query OK, 1 row affected (0.12 sec)
-> mysql> create user 'pierre'@'localhost' identified by 'password';
-> Query OK, 0 rows affected (0.11 sec)
-> mysql> grant all privileges on secondhand_staging.* to 'pierre'@'localhost';
-> Query OK, 0 rows affected (0.08 sec)
-> mysql> exit 
-> Bye 
+*For future reference*
+    
+    $ sudo mysql -uroot -p 
+    Enter password
+    mysql> create database secondhand_staging default character set utf8mb4 collate utf8mb4_0900_ai_ci;
+    Query OK, 1 row affected (0.12 sec)
+    mysql> create user 'pierre'@'localhost' identified by 'password';
+    Query OK, 0 rows affected (0.11 sec)
+    mysql> grant all privileges on secondhand_staging.* to 'pierre'@'localhost';
+    Query OK, 0 rows affected (0.08 sec)
+    mysql> exit 
+    Bye 
 
 ### Make `secondhand.config` production ready
 
