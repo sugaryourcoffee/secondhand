@@ -18,7 +18,7 @@ mercury (production).
 
 The task now is to 
 
-* Install Ruby 2.7.2
+* Install Ruby 2.7.8
 * Copy secondhand to the staging server uranus
 * Install gems and rails 4.2.11.3
 * Test secondhand is working
@@ -397,7 +397,74 @@ Now we are done
     mysql> exit 
     Bye 
 
-### Make `secondhand.config` production ready
+Now that the database is created we want to create the tables based on our database migrations. Our `config/database.yml` is the information that is used to create the database. The part that is interesting for the next step is this:
+
+    staging:                          # staging is the environment we want to use with following settings
+      adapter: mysql2                 # the mysql2 gem that is bridging between Secondhand and the MySQL database
+      encoding: utf8                  
+      reconnect: false
+      database: secondhand_staging    # the database we have created in MySQL
+      pool: 5
+      timeout: 5000
+      username: pierre                # the user that we have granted all rights to access the database
+      password: password              # the password we have given the user
+      host: localhost
+
+So we have the database `secondhand_staging` created, we have the environment for `staging` set. Now we can create the tables for our database.
+
+    $ rake db:setup RAILS_ENV="staging"
+    secondhand_staging already exists
+    -- create_table("carts", {:force=>true})
+       -> 0.3473s
+    -- add_index("carts", ["user_id"], {:name=>"index_carts_on_user_id"})
+       -> 0.7274s
+    -- create_table("conditions", {:force=>true})
+       -> 0.5916s
+    -- create_table("events", {:force=>true})
+       -> 0.4591s
+    -- create_table("items", {:force=>true})
+       -> 0.4591s
+    -- create_table("line_items", {:force=>true})
+       -> 0.4842s
+    -- create_table("lists", {:force=>true})
+       -> 0.4507s
+    -- create_table("news", {:force=>true})
+       -> 0.3340s
+    -- create_table("news_translations", {:force=>true})
+       -> 0.4104s
+    -- create_table("pages", {:force=>true})
+       -> 0.4009s
+    -- add_index("pages", ["terms_of_use_id"], {:name=>"index_pages_on_terms_of_use_id"})
+       -> 0.8017s
+    -- create_table("reversals", {:force=>true})
+       -> 0.8330s
+    -- create_table("sellings", {:force=>true})
+       -> 0.7507s
+    -- create_table("terms_of_uses", {:force=>true})
+       -> 0.5008s
+    -- create_table("users", {:force=>true})
+       -> 0.5926s
+    -- add_index("users", ["email"], {:name=>"index_users_on_email", :unique=>true})
+       -> 0.3608s
+    -- add_index("users", ["remember_token"], {:name=>"index_users_on_remember_token"})
+       -> 0.4090s
+    -- initialize_schema_migrations_table()
+       -> 1.5028s
+    
+*Note:*
+
+If it happens that the password in the `config/database.yml` file doesn't match with the one we have given when we created the user, then you get a error message like this 
+
+    $ rake db:setup RAILS_ENV="staging"
+    WARNING: MYSQL_OPT_RECONNECT is deprecated and will be removed in a future version.
+    Access denied for user 'pierre'@'localhost' (using password: YES)Please provide the root password for your MySQL installation
+    >
+
+Check that the user and password match with the one you have given access to the `secondhand_staging` database.
+
+### Make _Secondhand_ staging ready
+    
+
 
 ### Test _Secondhand_
 
