@@ -348,7 +348,54 @@ _MySQL_ is usually installed during the installation of the server operating sys
 
 ### Create the database 
 
-We need to login to _MySQL_ to create the database. If we lost the password then there is an article at [TheLinuxCode](https://thelinuxcode.com/change-mysql-password-ubuntu-22-04/) and a summary [here](reset-the-mysql-root-password.md).
+We need to login to _MySQL_ to create the database. If we lost the password then there is an article how to recover the password at [TheLinuxCode](https://thelinuxcode.com/change-mysql-password-ubuntu-22-04/) and a summary [here](reset-the-mysql-root-password.md).
+
+Now we create the database for our staging server. 
+
+    $ sudo mysql -uroot -p 
+    Enter password
+    mysql> create database secondhand_staging default character set utf8;
+    Query OK, 1 row affected, 1 warning (0.12 sec)
+
+Why the warning? _MySQL_ has changed the character sets. `utf8` is automatically converted to `utf8mb3` with a collation of `utf8mb3_general_ci`. And this is not what we want. The _utf8mb3_ stores character with maximum 3 bytes, whereas `UTF8` stores up to 4 bytes. So the substitute for `UTF8` is `utf8mb4` with the collation of `utf8mb4_0900_ai_ci`. We alter the table to use `utf8mb4`
+
+    mysql>  alter database secondhand_staging character set utf8mb4 collate utf8mb4_0900_ai_ci;
+    Query OK, 1 row affected (0.10 sec)
+
+To see that it has been set correctly we can look at the character set with 
+    
+    mysql> select default_character_set_name, default_collation_name from information_schema.schemata where schema_name = 'secondhand_staging';
+    +----------------------------+------------------------+
+    | DEFAULT_CHARACTER_SET_NAME | DEFAULT_COLLATION_NAME |
+    +----------------------------+------------------------+
+    | utf8mb4                    | utf8mb4_0900_ai_ci     |
+    +----------------------------+------------------------+
+    1 row in set (0.00 sec)
+
+Next we create the user that is accessing the database from the _Secondhand_ application and the grant the privileges to that user
+
+    mysql> create user 'pierre'@'localhost' identified by 'password';
+    Query OK, 0 rows affected (0.11 sec)
+    mysql> grant all privileges on secondhand_staging.* to 'pierre'@'localhost';
+    Query OK, 0 rows affected (0.08 sec)
+
+Now we are done 
+
+    mysql> exit 
+    Bye 
+
+> *For future reference*
+>
+> $ sudo mysql -uroot -p 
+> Enter password
+> mysql> create database secondhand_staging default character set utf8mb4 collate utf8mb4_0900_ai_ci;
+> Query OK, 1 row affected (0.12 sec)
+> mysql> create user 'pierre'@'localhost' identified by 'password';
+> Query OK, 0 rows affected (0.11 sec)
+> mysql> grant all privileges on secondhand_staging.* to 'pierre'@'localhost';
+> Query OK, 0 rows affected (0.08 sec)
+> mysql> exit 
+> Bye 
 
 ### Make `secondhand.config` production ready
 
