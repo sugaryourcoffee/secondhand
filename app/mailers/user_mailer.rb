@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class UserMailer < ActionMailer::Base
   default from: "mail@boerse-burgthann.de"
 
@@ -14,13 +15,13 @@ class UserMailer < ActionMailer::Base
   def user_request(message)
     @message = message
     if message.copy_me
-      mail from: message.email, 
+      mail from: "mail@boerse-burgthann.de",
            to:   "mail@boerse-burgthann.de",
            cc:   message.email,
            bcc: "pierre@sugaryourcoffee.de", 
            subject: "[#{message.category}] #{message.subject}"
     else
-      mail from: message.email, 
+      mail from: "mail@boerse-burgthann.de",
            to:   "mail@boerse-burgthann.de",
            bcc: "pierre@sugaryourcoffee.de", 
            subject: "[#{message.category}] #{message.subject}"
@@ -29,8 +30,8 @@ class UserMailer < ActionMailer::Base
 
   def registered(user)
     @user = user
-    mail from: user.email,
-         to:   "mail@boerse-burgthann.de",
+    mail from: "mail@boerse-burgthann.de",
+         to:   "verkaufe@boerse-burgthann.de",
          bcc:  "pierre@sugaryourcoffee.de",
          subject: "[User registration] #{user.email}"
   end
@@ -38,8 +39,8 @@ class UserMailer < ActionMailer::Base
   def list_registered(user, list)
     @user = user
     @list = list
-    mail from: user.email,
-         to:   "mail@boerse-burgthann.de",
+    mail from: "mail@boerse-burgthann.de",
+         to:   "verkaufe@boerse-burgthann.de",
          bcc:  "pierre@sugaryourcoffee.de",
          subject: "[List registration] #{list.list_number}"
   end
@@ -47,8 +48,8 @@ class UserMailer < ActionMailer::Base
   def list_deregistered(user, list)
     @user = user
     @list = list
-    mail from: user.email,
-         to:   "mail@boerse-burgthann.de",
+    mail from: "mail@boerse-burgthann.de",
+         to:   "verkaufe@boerse-burgthann.de",
          bcc:  "pierre@sugaryourcoffee.de",
          subject: "[List deregistration] #{list.list_number}" 
   end
