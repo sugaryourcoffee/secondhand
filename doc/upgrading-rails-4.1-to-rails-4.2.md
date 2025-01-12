@@ -630,7 +630,7 @@ We are using webrick an add to spec/spec\_helper.rb
 
     Capybara.server = :webrick
 
-Running rspec again we reduced with this small change the from 145 to 27,
+Running rspec again we reduced with this small change the errors from 145 to 27,
 that I call progress.
 
 #### WARNING: Using the `raise_error` matcher 
@@ -695,7 +695,7 @@ save paper to use a pdf printer. If you don't have one installed then install it
 
 `sudo apt get install printer-driver-cups-pdf`
 
-and select as described above.
+and select as described above. Or select the default printer over the e.g., Gnome printer dialog.
 
 ##### `warning: rb_check_safe_obj will be removed in Ruby 3.0`
 With an update to Ruby 2.7 a warning is issued
@@ -716,7 +716,26 @@ with an hint of deleting the if clause.
 This happened when running *rspec*, selenium couldn't start the firefox browser. The solution to this was to
 update the project with `bundle update --all`.
 
-THIS IS WHERE I AM 2022-03-13
+### Intermediate test in staging 
+
+When registering a user an exception was raised. ... This bug was eliminated with `mail 2.8.1`. Upgrading the gem resulted in upgrading other gems as well. A test run with `rspec` revealed additional warnings.
+
+##### WARN Selenium [:logger_info]
+
+This was a warning from _Selenium_
+
+    WARN Selenium [:logger_info] Details on how to use and modify Selenium logger:
+      https://selenium.dev/documentation/webdriver/troubleshooting/logging#ruby
+    
+##### WARN Selenium applicable driver not found
+
+Another warning from _Selenium_
+
+    WARN Selenium applicable driver not found; attempting to install with Selenium Manager
+
+The _rspec_ test result was the same as before the upgrade.
+
+THIS IS WHERE I AM 2025-01-12
 
 # Stage 3 - Deploying the Beta Application
 The next step is to deploy the application to the beta server. We already have

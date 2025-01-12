@@ -14,6 +14,9 @@ gem 'will_paginate', '~> 3.3.0'
 # SYC extension in order to make JavaScript links active after page load
 gem 'jquery-turbolinks'
 
+# [SYC] update to 2.8.1 as 2.8.0 calls an undefined method smtp.disable_starttls_auto
+gem 'mail', '~> 2.8', '>= 2.8.1'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.9'
   gem 'ruby-lsp', require: false
