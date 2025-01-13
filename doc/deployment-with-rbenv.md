@@ -8,7 +8,7 @@ With the upgrade to Rails 4.2 I have changed from `rvm` to `rbenv`. That is, tha
 
 In this document we are deploying *Secondhand* with
 
-* Ruby 2.7.2
+* Ruby 2.7.8
 * Rails 4.2.11
 * Phusion Passenger(R) 6.0.24
 * Capistrano 
@@ -462,13 +462,132 @@ If it happens that the password in the `config/database.yml` file doesn't match 
 
 Check that the user and password match with the one you have given access to the `secondhand_staging` database.
 
+Just our of interest we want to look into _MySQL_ and look at our database.
+
+    $ mysql -upierre -p 
+    Enter password:
+    mysql> show databases;
+    +--------------------+
+    | Database           |
+    +--------------------+
+    | information_schema |
+    | performance_schema |
+    | secondhand_staging |
+    +--------------------+
+    3 rows in set (0.00 sec)
+    
+    mysql> use secondhand_staging;
+    Reading table information for completion of table and column names
+    You can turn off this feature to get a quicker startup with -A
+    
+    Database changed
+    mysql> show tables;
+    +------------------------------+
+    | Tables_in_secondhand_staging |
+    +------------------------------+
+    | carts                        |
+    | conditions                   |
+    | events                       |
+    | items                        |
+    | line_items                   |
+    | lists                        |
+    | news                         |
+    | news_translations            |
+    | pages                        |
+    | reversals                    |
+    | schema_migrations            |
+    | sellings                     |
+    | terms_of_uses                |
+    | users                        |
+    +------------------------------+
+    14 rows in set (0.00 sec)
+    
+    mysql> desc carts;
+    +------------+--------------+------+-----+---------+----------------+
+    | Field      | Type         | Null | Key | Default | Extra          |
+    +------------+--------------+------+-----+---------+----------------+
+    | id         | int          | NO   | PRI | NULL    | auto_increment |
+    | created_at | datetime     | NO   |     | NULL    |                |
+    | updated_at | datetime     | NO   |     | NULL    |                |
+    | cart_type  | varchar(255) | YES  |     | SALES   |                |
+    | user_id    | int          | YES  | MUL | NULL    |                |
+    +------------+--------------+------+-----+---------+----------------+
+    5 rows in set (0.00 sec)
+    
+    mysql> desc lists;
+    +-------------------+--------------+------+-----+---------+----------------+
+    | Field             | Type         | Null | Key | Default | Extra          |
+    +-------------------+--------------+------+-----+---------+----------------+
+    | id                | int          | NO   | PRI | NULL    | auto_increment |
+    | list_number       | int          | YES  |     | NULL    |                |
+    | registration_code | varchar(255) | YES  |     | NULL    |                |
+    | container         | varchar(255) | YES  |     | NULL    |                |
+    | event_id          | int          | YES  |     | NULL    |                |
+    | user_id           | int          | YES  |     | NULL    |                |
+    | created_at        | datetime     | NO   |     | NULL    |                |
+    | updated_at        | datetime     | NO   |     | NULL    |                |
+    | sent_on           | datetime     | YES  |     | NULL    |                |
+    | accepted_on       | datetime     | YES  |     | NULL    |                |
+    | labels_printed_on | datetime     | YES  |     | NULL    |                |
+    +-------------------+--------------+------+-----+---------+----------------+
+    11 rows in set (0.00 sec)
+    
+    mysql> exit 
+    Bye 
+
+So everything seems in order. Good!
+
 ### Make _Secondhand_ staging ready
     
+Now we basically repeat what we have done in the first deployment scenario, running in the development environment. We now change the `virtual host` from _Apache_ that currently is serving the development environment, so it's serving the _staging_ environment. We change the `/etc/apache2/sites_available/secondhand.conf` to `etc/apache2/sites-available/secondhand-staging.conf`
 
+    $ cd /etc/apache2/
+    $ cp sites-enabled/{secondhand.conf, secondhand-staging.conf}
+    $ vim sites-enabled/secondhand{,-staging}.conf 
+
+we change the content so it looks like this 
+
+    <VirtualHost *:8083>
+      ServerName staging.secondhand.uranus
+    
+      DocumentRoot /var/www/secondhand/code/
+    
+      PassengerRuby /home/pierre/.rbenv/versions/2.7.8/bin/ruby
+    
+      <Directory /var/www/secondhand/code/>
+        AllowOverride all
+        Options -MultiViews
+        Order allow,deny
+        Allow from all
+        Require all granted
+      </Directory>
+      RackEnv staging
+    </VirtualHost>
+
+The procedure is as previously. We have to enable the new virtual host and then re-start _Apache_.
+
+    $ sudo a2ensite secondhand-staging
+
+What we also need to do is to pre-compile our assets 
+
+    $ bundle exec rake assets:precompile RAILS_ENV=staging 
+
+And now we are ready to restart _Apache_
+
+    $ sudo apache2ctl restart 
 
 ### Test _Secondhand_
 
+The test with the staging server revealed an error when a user is signing up for _Secondhand_. The mail delivery raised an error.
 
+    NoMethodError (undefined method `disable_starttls_auto' for #<Net::SMTP localhost:25 started=false>
+    Did you mean?  disable_starttls
+                   enable_starttls_auto):
+      app/controllers/users_controller.rb:33:in `create'
+
+Regarding this [post](https://github.com/mikel/mail/issues/1550) the error is in the gem `mail 2.8.0`. The development environment didn't raise this error, neither on the development machine nor hosted by _Apache_. Finally it turned out that the development machine had set `config.action_mailer.delivery_method = :test` in `config/environments/development.rb`. This doesn't send e-mails using the `mail` gem. Coming back to the hint in the above mentioned post I have upgraded `mail` to 2.8.1 and it worked. On the development machine I upgraded as well and checked that the tests pass, what they did.
+
+Now we should be ready to deploy remotely with _Capistrano_.
 
 Setting up the client machine
 =============================
