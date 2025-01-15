@@ -46,7 +46,7 @@ To make it available we issue the command
 
     $ rbenv local 2.7
 
-To verify _Ruby 2.7_ is installed we issuer
+To verify _Ruby 2.7_ is installed we issue
 
     $ ruby -v 
     ruby 2.7.2p137 (2020-10-01 revision 5445e04352) [x86_64_linux]

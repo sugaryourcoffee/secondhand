@@ -215,6 +215,43 @@ The error message
 indicates that on the slave machine the user 'repl'@'%' is not set. The repl 
 user needs to be set on each of the machines that are part of the replication.
 
+### Could not initialize master info structure 
+
+If the following error message is raised while recovering the database to the backup server 
+
+    gunzip < secondhand-repl.sql.gz | mysql -uroot -p secondhand_production
+    Enter password:
+    ERROR 1201 (HY000) at line 22: Could not initialize master info structure; more error messages can be found in the MySQL error log
+    pierre@jupiter:~$ gunzip < secondhand-repl.sql.gz | mysql -uroot -p secondhand_production
+    Enter password:
+    ERROR 1201 (HY000) at line 22: Could not initialize master info structure; more error messages can be found in the MySQL error log
+
+This can be solved by **resetting the slave**
+
+    $ mysql -uroot -p
+    Enter password:
+    mysql> use secondhand_production;
+    Reading table information for completion of table and column names
+    You can turn off this feature to get a quicker startup with -A
+    Database changed
+    mysql> reset slave;
+    Query OK, 0 rows affected (0.28 sec)
+    mysql> exit
+    Bye
+
+The we repeat the command to recover the database to the backup server database 
+
+    $ gunzip < secondhand-repl.sql.gz | mysql -uroot -p secondhand_production
+    Enter password:
+    mysql> use secondhand_production;
+    Reading table information for completion of table and column names
+    You can turn off this feature to get a quicker startup with -A
+    Database changed
+    mysql> start slave;
+    Query OK, 0 rows affected (0.00 sec)
+    mysql> exit 
+    Bye
+
 Sources
 -------
 * [MySQL replication - YouTube](https://www.youtube.com/watch?v=JXDuVypcHNA)
