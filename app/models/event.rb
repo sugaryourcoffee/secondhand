@@ -119,7 +119,7 @@ class Event < ActiveRecord::Base
             align: :center,
             inline_format:true
 
-          message = "Termin Listenruecksendung #{list_closing_date}\n"+
+          message = "Termin Liste abschließen #{list_closing_date}\n"+
                     "Abgabe Koerbe: #{delivery_date}, "+
                     "#{delivery_start_time.to_s(:time)}"+
                     " bis #{delivery_end_time.to_s(:time)} Uhr "+
