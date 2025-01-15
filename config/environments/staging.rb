@@ -69,7 +69,7 @@ Rails.application.configure do
   # SYC extenstion
   config.action_mailer.perform_deliveries = true
   # SYC extenstion
-  config.action_mailer.default_url_options = { host: "syc.dyndns.org:8082" }
+  config.action_mailer.default_url_options = { host: "secondhand.sugaryourcoffee.de:8081" }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found).
