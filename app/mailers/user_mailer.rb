@@ -31,7 +31,7 @@ class UserMailer < ActionMailer::Base
   def registered(user)
     @user = user
     mail from: "mail@boerse-burgthann.de",
-         to:   "verkaufe@boerse-burgthann.de",
+         to:   "verkaeufe@boerse-burgthann.de",
          bcc:  "pierre@sugaryourcoffee.de",
          subject: "[User registration] #{user.email}"
   end
@@ -40,7 +40,7 @@ class UserMailer < ActionMailer::Base
     @user = user
     @list = list
     mail from: "mail@boerse-burgthann.de",
-         to:   "verkaufe@boerse-burgthann.de",
+         to:   "verkaeufe@boerse-burgthann.de",
          bcc:  "pierre@sugaryourcoffee.de",
          subject: "[List registration] #{list.list_number}"
   end
@@ -49,7 +49,7 @@ class UserMailer < ActionMailer::Base
     @user = user
     @list = list
     mail from: "mail@boerse-burgthann.de",
-         to:   "verkaufe@boerse-burgthann.de",
+         to:   "verkaeufe@boerse-burgthann.de",
          bcc:  "pierre@sugaryourcoffee.de",
          subject: "[List deregistration] #{list.list_number}" 
   end
