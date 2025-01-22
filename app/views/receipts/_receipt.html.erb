@@ -1,0 +1,31 @@
+<table class="table table-hover" >
+  <thead>
+    <tr>
+      <th><%= t('.item_number') %></th>
+      <th><%= t('.description') %></th>
+      <th><%= t('.size') %></th>
+      <th><%= t('.price') %></th><th/><th/><th/>  
+    </tr>
+  </thead>
+  <tbody>
+    <% @receipt.line_items.each do |line_item| %>
+      <tr>
+        <td><%= list_item_number_for(line_item.item) %></td>
+        <td><%= line_item.description %></td>
+        <td><%= line_item.size %></td>
+        <td><%= line_item.price %></td>
+      </tr>
+      <tr>
+        <td><%= t('.total') %></td>
+        <td></td>
+        <td></td>
+        <td><%= @receipt.total %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  <%= link_to t('.export'), export_receipt_path(@receipt, format: 'csv' ),
+                  class: "btn" %>
+  <%= link_to t('.print'), print_receipt_path(@receipt), 
+                  class: "btn" %>
+

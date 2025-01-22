@@ -1,0 +1,13 @@
+<% provide(:title, t('.title')) %>
+
+<h1><%= t('.heading') %></h1>
+
+<%= render 'header' %>
+
+<% if @receipt %>
+  <h2><%= @receipt.event.title %></h2>
+
+  <div id="receipt-table">
+    <%= render 'receipt' %>
+  </div>
+<% end %>
