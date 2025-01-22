@@ -15,13 +15,13 @@
         <td><%= line_item.size %></td>
         <td><%= line_item.price %></td>
       </tr>
-      <tr>
-        <td><%= t('.total') %></td>
-        <td></td>
-        <td></td>
-        <td><%= @receipt.total %></td>
-      </tr>
     <% end %>
+    <tr>
+      <td><%= t('.total') %></td>
+      <td></td>
+      <td></td>
+      <td><%= @receipt.total %></td>
+    </tr>
   </tbody>
 </table>
   <%= link_to t('.export'), export_receipt_path(@receipt, format: 'csv' ),
