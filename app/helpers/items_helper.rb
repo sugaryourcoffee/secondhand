@@ -1,7 +1,8 @@
 module ItemsHelper
 
-  def list_item_number_for(item)
-    sprintf("%03d/%02d", item.list.list_number, item.item_number) 
+  def list_item_number_for(item, separator = '/')
+    formatter = "%03d#{separator}%02d"
+    sprintf(formatter, item.list.list_number, item.item_number) 
   end
 
   def mark_alert_terms(description)
