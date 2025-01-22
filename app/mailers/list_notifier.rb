@@ -12,11 +12,9 @@ class ListNotifier < ActionMailer::Base
   def received(list)
     @list = list
     csv = list.as_csv_file
-#    attachments[csv] = File.read(csv)
-    attachments["List-#{list.list_number}.csv}"] = File.read(csv)
+    attachments["Liste-#{list.list_number}.csv"] = File.read(csv)
     pdf = list.labels_pdf(true)
-#    attachments[pdf] = File.read(pdf)
-    attachments["List-#{list.list_number}-Etiketten.pdf"] = File.read(pdf)
+    attachments["Liste-#{list.list_number}-Etiketten.pdf"] = File.read(pdf)
     mail to: list.user.email,
          bcc: 'verkaeufe@boerse-burgthann.de',
          subject: default_i18n_subject(
