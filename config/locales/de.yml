@@ -141,14 +141,14 @@ de:
       <p>Um die Liste zu bearbeiten müssen Sie die Listenannahme über die Schaltfläche rückgängig machen %{button}</p>"
       not_accepted_status_sold_items_html: "<p><strong>Liste enthält verkaufte Artikel</strong> und wurde zum Bearbeiten freigegeben.</p> <p>Stellen Sie sicher, dass Sie die Seite nur über die Schaltfläche <strong>Liste annehmen</strong> verlassen %{button}</p>"
       not_accepted_status_html: "<p><strong>Liste wurde noch nicht angenommen</strong></p>
-      <p>Vor der Listenannahme die folgenden Prüfungen durchführen</p>
-      <ul>
-        <li><strong>Korbfarbe</strong></li>
-        <li>Benutzer <strong>Name</strong> und <strong>Adresse</strong></li>
-        <li><strong>Etiketten</strong> mit richtiger <strong>Farbe</strong> und mit der richtigen 
-        <strong>Listennummer</strong></li>
-        <li>Liste enthält nur <strong>erlaubte Artikel</strong></li>
-      </ul>"
+                                 <p>Vor der Listenannahme die folgenden Prüfungen durchführen</p>
+                                 <ul>
+                                   <li><strong>Korbfarbe</strong></li>
+                                   <li>Benutzer <strong>Name</strong> und <strong>Adresse</strong></li>
+                                   <li><strong>Etiketten</strong> mit richtiger <strong>Farbe</strong> und mit der richtigen 
+                                   <strong>Listennummer</strong></li>
+                                   <li>Liste enthält nur <strong>erlaubte Artikel</strong></li>
+                                 </ul>"
       revoke_list: "Listenannahme rückgängig machen"
       accept_list: "Liste annehmen"
       cancel:      "Zurück zur Listenübersicht"
@@ -318,6 +318,24 @@ de:
       to_cart:        "Neue Gutschrift erfassen"
       to_selling:     "Verkauf beginnen"
       to_counter:     "Gehe zur Kassenübersicht"
+
+  receipts:
+    index:
+      title: "Beleg"
+      heading: "Belege"
+      receipt_number: "Beleg %{receipt_id}"
+      no_receipt_number: "Konnte Beleg-Nr %{receipt_id} nicht finden"
+    header:
+      select_receipt: "Beleg" 
+      search:         "Suchen"
+    receipt:
+      export:      "CSV Export"
+      print:       "Als PDF drucken"
+      item_number: "Artikelnummer"
+      description: "Beschreibung"
+      size:        "Größe"
+      price:       "Preis"
+      total:       "Gesamt"
 
   counter:
     index:

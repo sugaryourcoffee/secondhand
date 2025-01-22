@@ -133,18 +133,17 @@ en:
       <p>To edit the list you may revoke the list acceptance by pressing the button %{button}</p>
       <p>But make sure you leave the page by pressing the <strong>Accept list</strong> otherwise you cannot sell the items in this list.</p>"
       accepted_status_html:     "<p><strong>List has already been accepted</strong>.</p>
-      <p>To edit the list you have to revoke the list acceptance by pressing the button 
-      %{button}</p>"
+      <p>To edit the list you have to revoke the list acceptance by pressing the button %{button}</p>"
       not_accepted_status_sold_items_html: "<p><strong>List contains sold items</strong> and has been released for editing.</p> <p>Make sure to leave the page only by pressing the <strong>Accept list</strong> button %{button}</p>"
       not_accepted_status_html: "<p><strong>List has not been accepted</strong></p>
-      <p>Before accepting the list do check</p>
-      <ul>
-        <li>the <strong>container color</strong></li>
-        <li>the user's <strong>name</strong> and <strong>address</strong></li>
-        <li><strong>labels</strong> with correct <strong>label color</strong> and correct 
-        <strong>list number</strong></li>
-        <li>that list contains only <strong>allowed items</strong></li>
-      </ul>"
+                                 <p>Before accepting the list do check</p>
+                                 <ul>
+                                   <li>the <strong>container color</strong></li>
+                                   <li>the user's <strong>name</strong> and <strong>address</strong></li>
+                                   <li><strong>labels</strong> with correct <strong>label color</strong> and correct 
+                                   <strong>list number</strong></li>
+                                   <li>that list contains only <strong>allowed items</strong></li>
+                                 </ul>"
       revoke_list: "Revoke list acceptance"
       accept_list: "Accept list"
       cancel:      "Back to list overview"
@@ -311,6 +310,24 @@ en:
       to_cart:         "Start new redemption"
       to_selling:      "Start selling"
       to_counter:      "Go to counter"
+
+  receipts:
+    index:
+      title: "Receipts"
+      heading: "Receipts"
+      receipt_number: "Receipt %{receipt_id}"
+      no_receipt_number: "Sorry, don't find receipt with number %{receipt_id}"
+    header:
+      select_receipt: "Receipt" 
+      search:         "Search"
+    receipt:
+      export:      "CSV Export"
+      print:       "Print to PDF"
+      item_number: "Item Number"
+      description: "Description"
+      size:        "Size"
+      price:       "Price"
+      total:       "Total"
 
   counter:
     index:
