@@ -1,9 +1,29 @@
+require 'csv'
+
 module SellingsExporter
 
   include ActionView::Helpers::NumberHelper
   include ItemsHelper
 
-  def to_pdf(transaction = "Verkauf")
+  def as_csv
+    (data = "").tap do
+      CSV.generate(data, encoding: 'UTF-8', col_sep: ';') do |csv|
+        to_csv(csv)
+      end
+    end
+  end
+
+  def to_csv(csv)
+    csv << ["Nummer", "Beschreibung", "Groesse", "Preis"]
+    line_items.each do |line_item|
+      csv << [list_item_number_for(line_item.item, ''), 
+              line_item.item.description.gsub(';', ','), 
+              line_item.item.size.gsub(';', ','), 
+              line_item.item.price]
+    end
+  end
+
+  def to_pdf(transaction = "Verkauf", as_file = true)
 
     pdf_file      = "tmp/#{transaction}-#{id}.pdf"
     header_left   = event.title
@@ -99,9 +119,12 @@ module SellingsExporter
     end
 
     #pdf.render_file("tmp/selling_#{id}.pdf")
-    pdf.render_file(pdf_file)
-
-    File.absolute_path(pdf_file)
+    if as_file 
+      pdf.render_file(pdf_file)
+      File.absolute_path(pdf_file)
+    else
+      pdf.render
+    end
   end
 
   private
