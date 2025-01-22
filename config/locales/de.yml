@@ -336,6 +336,7 @@ de:
       size:        "Größe"
       price:       "Preis"
       total:       "Gesamt"
+    filename: "Verkauf-%{receipt_id}"
 
   counter:
     index:
