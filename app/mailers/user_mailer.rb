@@ -20,10 +20,10 @@ class UserMailer < ActionMailer::Base
 
   def user_request(message)
     @message = message
-    if message.copy_me
-      user_request_copy_me(message)
-    else
+    if message.copy_me == "0"
       user_request_do_not_copy_me(message)
+    else
+      user_request_copy_me(message)
     end
   end
 
